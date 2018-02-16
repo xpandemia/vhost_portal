@@ -1,0 +1,18 @@
+# Mod_Autoindex
+<IfModule mod_autoindex.c>
+	# Запрещаем просмотр содержимого папок
+	Options -Indexes
+</IfModule>
+
+# Mod_Rewrite
+<IfModule mod_rewrite.c>
+	Options +FollowSymlinks
+	# Включаем mod_rewrite
+	RewriteEngine On
+	IndexIgnore */*
+	# Если это папка или файл, открываем его
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	# Перенаправляем все запросы на входной скрипт
+	RewriteRule ^([^/].*)?$ index.php [L]
+</IfModule>

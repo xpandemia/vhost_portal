@@ -1,0 +1,608 @@
+<codestructure version="5.14">
+<phptree>
+<treenode node="ACTION;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\bootstrap.php;f8;65;14;65;;;;vpos;;v;;r$actionName;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="APP_CODE;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\index.php;f8;3;16;3;;;;vpos;;v;;r&apos;tinyframe&apos;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="APP_NAME;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\index.php;f8;2;16;2;;;;vpos;;v;;r&apos;Tiny MVC Framework&apos;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="APP_VERSION;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\index.php;f8;4;19;4;;;;vpos;;v;;r&apos;0.1.4&apos;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="BASEPATH;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\index.php;f8;47;16;47;;;;vpos;;v;;r&apos;http://&apos;.$_SERVER[&apos;SERVER_NAME&apos;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="BEHAVIOR;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\bootstrap.php;f8;28;16;28;;;;vpos;;v;;r$behavior;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="CAPTCHA_LEN;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\captcha_helper.php;f8;4;19;4;;;;vpos;;v;;r6;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="CONTROLLER;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\bootstrap.php;f8;59;18;59;;;;vpos;;v;;r$controllerName;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="DB_HOST;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\db_config.php;f8;11;15;11;;;;vpos;;v;;r&quot;localhost&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="DB_NAME;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\db_config.php;f8;14;15;14;;;;vpos;;v;;r&quot;tinyframe&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="DB_PASSWORD;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\db_config.php;f8;13;19;13;;;;vpos;;v;;r&quot;&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="DB_USER;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\db_config.php;f8;12;15;12;;;;vpos;;v;;r&quot;root&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="EMAIL_HELP;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;7;18;7;;;;vpos;;v;;r&quot;Адрес электронной почты должен быть в формате &lt;b&gt;user@domain&lt;/b&gt; и не более &lt;b&gt;45&lt;/b&gt; символов длиной.&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="EMAIL_PLC;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;12;17;12;;;;vpos;;v;;r&quot;user@domain&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="ENVIRONMENT;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\bootstrap.php;f8;33;19;33;;;;vpos;;v;;r$environment;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="LOGIN_HDR;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\form_config.php;f8;12;17;12;;;;vpos;;v;;r&quot;Авторизация&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="MAIL_FROM;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\mail_config.php;f8;15;17;15;;;;vpos;;v;;r&quot;nikitin_o@bsu.edu.ru&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="MAIL_FROM_NAME;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\mail_config.php;f8;16;22;16;;;;vpos;;v;;r&quot;Admin&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="MAIL_HOST;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\mail_config.php;f8;11;17;11;;;;vpos;;v;;r&quot;mail.bsu.edu.ru&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="MAIL_PASSWORD;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\mail_config.php;f8;13;21;13;;;;vpos;;v;;r&quot;153043qaz&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="MAIL_PORT;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\mail_config.php;f8;14;17;14;;;;vpos;;v;;r25;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="MAIL_REPLY;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\mail_config.php;f8;17;18;17;;;;vpos;;v;;r&quot;nikitin_o@bsu.edu.ru&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="MAIL_REPLY_NAME;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\mail_config.php;f8;18;23;18;;;;vpos;;v;;r&quot;Admin&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="MAIL_USER;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\mail_config.php;f8;12;17;12;;;;vpos;;v;;r&quot;nikitin_o@bsu.edu.ru&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="PATTERN_ALPHA;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;5;21;5;;;;vpos;;v;;r&quot;/^[a-zA-Z]*$/&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="PATTERN_ALPHA_NUMB;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;6;26;6;;;;vpos;;v;;r&quot;/^[a-zA-Z0-9]*$/&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="PATTERN_EMAIL_LIGHT;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;7;27;7;;;;vpos;;v;;r&quot;/^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9_\-.]+$/&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="PATTERN_EMAIL_STRONG;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;8;28;8;;;;vpos;;v;;r&quot;/^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9_\-]+\.[a-zA-Z0-9_\-]+$/&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="PWD_CONFIRM_HELP;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;9;24;9;;;;vpos;;v;;r&quot;Пароль должен содержать &lt;b&gt;только буквы и цифры&lt;/b&gt;, и быть &lt;b&gt;6-10&lt;/b&gt; символов длиной.&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="PWD_CONFIRM_PLC;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;14;23;14;;;;vpos;;v;;r&quot;Повторите пароль&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="PWD_HELP;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;8;16;8;;;;vpos;;v;;r&quot;Пароль должен содержать &lt;b&gt;только буквы и цифры&lt;/b&gt;, и быть &lt;b&gt;6-10&lt;/b&gt; символов длиной.&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="PWD_PLC;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;13;15;13;;;;vpos;;v;;r&quot;Пароль&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="RESET_PWD_HDR;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\form_config.php;f8;18;21;18;;;;vpos;;v;;r&quot;Восстановление пароля&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="RESET_PWD_REQUEST_HDR;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\form_config.php;f8;16;29;16;;;;vpos;;v;;r&quot;Восстановление пароля&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="ROOT_DIR;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\index.php;f8;53;16;53;;;;vpos;;v;;r$_SERVER[&apos;DOCUMENT_ROOT&apos;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="SIGNUP_HDR;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\form_config.php;f8;14;18;14;;;;vpos;;v;;r&quot;Регистрация&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="USERNAME_HELP;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;6;21;6;;;;vpos;;v;;r&quot;Логин должен содержать &lt;b&gt;только буквы&lt;/b&gt;, и быть не более &lt;b&gt;45&lt;/b&gt; символов длиной.&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="USERNAME_PLC;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;11;20;11;;;;vpos;;v;;r&quot;Логин&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="Basic_Helper;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\basic_helper.php;f0;4;1;36;;;;vpos;;v;;r;;d0,5;;b0,0;;m">
+<treenode node="baseUrl;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\basic_helper.php;f8;15;2;22;;;;vpos;;vstring;;r&#10;Definition&#10;    baseUrl($url = &apos;&apos;)&#10;&#10;Description&#10;     Creates URL with BASEPATH.;;d1,16;;b1,0;;murl;;p">
+</treenode>
+<treenode node="redirect;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\basic_helper.php;f8;29;2;35;;;;vpos;;vnothing;;r&#10;Definition&#10;    redirect($header, $response_code, $controller, $action)&#10;&#10;Description&#10;     Redirects to page.;;d1,30;;b1,0;;mheader;;presponse_code;;pcontroller;;paction;;p">
+</treenode>
+</treenode>
+<treenode node="Captcha_Helper;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\captcha_helper.php;f0;6;1;39;;;;vpos;;v;;r;;d0,7;;b0,0;;m">
+<treenode node="create;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\captcha_helper.php;f12;17;2;38;;;;vpos;;vstring;;r&#10;Definition&#10;    create()&#10;&#10;Description&#10;     Creates URL with BASEPATH.;;d1,18;;b1,0;;m">
+</treenode>
+</treenode>
+<treenode node="Controller;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\controller.php;f0;4;1;37;;;;vpos;;v;;r;;d0,5;;b0,0;;m">
+<treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\controller.php;f1;16;2;20;;;;vpos;;v;;r;;d1,17;;b0,0;;m">
+</treenode>
+<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\controller.php;f8;32;2;36;;;;vpos;;v;;r;;d1,33;;b1,0;;m">
+</treenode>
+<treenode node="actionIndex;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\controller.php;f1;27;2;30;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionIndex()&#10;&#10;Description&#10;     Displays a page.;;d1,28;;b0,0;;m">
+</treenode>
+</treenode>
+<treenode node="Controller_Login;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Login.php;f0;10;1;75;;;;vpos;;vController;;c;;r;;d0,11;;b0,0;;m">
+<treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Login.php;f8;18;2;22;;;;vpos;;v;;r;;d1,19;;b1,0;;m">
+</treenode>
+<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Login.php;f8;70;2;74;;;;vpos;;v;;r;;d1,71;;b1,0;;m">
+</treenode>
+<treenode node="actionIndex;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Login.php;f8;29;2;35;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionIndex()&#10;&#10;Description&#10;     Displays login page.;;d1,30;;b1,0;;m">
+</treenode>
+<treenode node="actionLogin;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Login.php;f8;53;2;68;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionLogin()&#10;&#10;Description&#10;     Logs user in.;;d1,54;;b1,0;;m">
+</treenode>
+<treenode node="actionReset;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Login.php;f8;42;2;46;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionReset()&#10;&#10;Description&#10;     Resets login page.;;d1,43;;b1,0;;m">
+</treenode>
+</treenode>
+<treenode node="Controller_Main;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Main.php;f0;7;1;38;;;;vpos;;vController;;c;;r;;d0,8;;b0,0;;m">
+<treenode node="actionIndex;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Main.php;f1;18;2;21;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionIndex()&#10;&#10;Description&#10;     Displays main page.;;d1,19;;b0,0;;m">
+</treenode>
+<treenode node="actionLogout;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Main.php;f8;28;2;37;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionLogout()&#10;&#10;Description&#10;     Logs user out.;;d1,29;;b1,0;;m">
+</treenode>
+</treenode>
+<treenode node="Controller_ResetPwd;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwd.php;f0;9;1;97;;;;vpos;;vController;;c;;r;;d0,10;;b0,0;;m">
+<treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwd.php;f8;17;2;21;;;;vpos;;v;;r;;d1,18;;b1,0;;m">
+</treenode>
+<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwd.php;f8;92;2;96;;;;vpos;;v;;r;;d1,93;;b1,0;;m">
+</treenode>
+<treenode node="actionCheckResetPwd;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwd.php;f8;77;2;90;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionCheckResetPwd()&#10;&#10;Description&#10;     Check reset password token.;;d1,78;;b1,0;;m">
+</treenode>
+<treenode node="actionIndex;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwd.php;f8;28;2;37;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionIndex()&#10;&#10;Description&#10;     Displays reset password page.;;d1,29;;b1,0;;m">
+</treenode>
+<treenode node="actionReset;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwd.php;f8;44;2;48;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionReset()&#10;&#10;Description&#10;     Resets reset password page.;;d1,45;;b1,0;;m">
+</treenode>
+<treenode node="actionResetPwd;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwd.php;f8;55;2;70;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionResetPwd()&#10;&#10;Description&#10;     Resets user password.;;d1,56;;b1,0;;m">
+</treenode>
+</treenode>
+<treenode node="Controller_ResetPwdRequest;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwdRequest.php;f0;9;1;72;;;;vpos;;vController;;c;;r;;d0,10;;b0,0;;m">
+<treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwdRequest.php;f8;17;2;21;;;;vpos;;v;;r;;d1,18;;b1,0;;m">
+</treenode>
+<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwdRequest.php;f8;67;2;71;;;;vpos;;v;;r;;d1,68;;b1,0;;m">
+</treenode>
+<treenode node="actionIndex;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwdRequest.php;f8;28;2;34;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionIndex()&#10;&#10;Description&#10;     Displays reset password request page.;;d1,29;;b1,0;;m">
+</treenode>
+<treenode node="actionReset;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwdRequest.php;f8;41;2;45;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionReset()&#10;&#10;Description&#10;     Resets reset password request page.;;d1,42;;b1,0;;m">
+</treenode>
+<treenode node="actionSendEmail;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwdRequest.php;f8;52;2;65;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionSendEmail()&#10;&#10;Description&#10;     Sends email reset password request.;;d1,53;;b1,0;;m">
+</treenode>
+</treenode>
+<treenode node="Controller_Signup;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Signup.php;f0;10;1;116;;;;vpos;;vController;;c;;r;;d0,11;;b0,0;;m">
+<treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Signup.php;f8;18;2;22;;;;vpos;;v;;r;;d1,19;;b1,0;;m">
+</treenode>
+<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Signup.php;f8;111;2;115;;;;vpos;;v;;r;;d1,112;;b1,0;;m">
+</treenode>
+<treenode node="actionActivation;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Signup.php;f8;88;2;109;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionActivation()&#10;&#10;Description&#10;     Activates user account.;;d1,89;;b1,0;;m">
+</treenode>
+<treenode node="actionCaptcha;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Signup.php;f8;44;2;49;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionCaptcha()&#10;&#10;Description&#10;     Refreshes CAPTCHA.;;d1,45;;b1,0;;m">
+</treenode>
+<treenode node="actionIndex;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Signup.php;f8;29;2;37;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionIndex()&#10;&#10;Description&#10;     Displays signup page.;;d1,30;;b1,0;;m">
+</treenode>
+<treenode node="actionReset;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Signup.php;f8;56;2;60;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionReset()&#10;&#10;Description&#10;     Resets signup page.;;d1,57;;b1,0;;m">
+</treenode>
+<treenode node="actionSignup;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Signup.php;f8;67;2;81;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionSignup()&#10;&#10;Description&#10;     Sign user up.;;d1,68;;b1,0;;m">
+</treenode>
+</treenode>
+<treenode node="Db_Helper;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f0;6;1;137;;;;vpos;;v;;r;;d0,7;;b0,0;;m">
+<treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f8;14;2;22;;;;vpos;;v;;r;;d1,15;;b1,0;;m">
+</treenode>
+<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f8;133;2;136;;;;vpos;;v;;r;;d1,134;;b1,0;;m">
+</treenode>
+<treenode node="checkHash;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f8;128;2;131;;;;vpos;;vboolean;;r&#10;Definition&#10;    checkHash($pwd, $hash)&#10;&#10;Description&#10;     Verifies string to HASH.;;d1,129;;b1,0;;mpwd;;phash;;p">
+</treenode>
+<treenode node="getHash;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f8;118;2;121;;;;vpos;;vstring;;r&#10;Definition&#10;    getHash($str)&#10;&#10;Description&#10;     Gets string HASH.;;d1,119;;b1,0;;mstr;;p">
+</treenode>
+<treenode node="rowDelete;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f8;96;2;111;;;;vpos;;vboolean;;r&#10;Definition&#10;    rowDelete($tables, $conds, $params)&#10;&#10;Description&#10;     Deletes table row.;;d1,97;;b1,0;;mtables;;pconds;;pparams;;p">
+</treenode>
+<treenode node="rowInsert;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f8;52;2;67;;;;vpos;;vboolean;;r&#10;Definition&#10;    rowInsert($fields, $tables, $conds, $params)&#10;&#10;Description&#10;     Inserts table row.;;d1,53;;b1,0;;mfields;;ptables;;pconds;;pparams;;p">
+</treenode>
+<treenode node="rowSelect;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f8;29;2;45;;;;vpos;;varray;;r&#10;Definition&#10;    rowSelect($fields, $tables, $conds, $params)&#10;&#10;Description&#10;     Gets table row.;;d1,30;;b1,0;;mfields;;ptables;;pconds;;pparams;;p">
+</treenode>
+<treenode node="rowUpdate;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f8;74;2;89;;;;vpos;;vboolean;;r&#10;Definition&#10;    rowUpdate($tables, $fields, $params)&#10;&#10;Description&#10;     Updates table row.;;d1,75;;b1,0;;mtables;;pfields;;pparams;;p">
+</treenode>
+</treenode>
+<treenode node="Exception;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\Exception.php;f0;27;1;38;;;;vpos;;vException;;c;;r&#10;Definition&#10;    class Exception extends \Exception&#10;&#10;Description&#10;     PHPMailer exception handler.;;d0,28;;b0,0;;m">
+<treenode node="errorMessage;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\Exception.php;f11;34;5;37;;;;vpos;;vstring;;r&#10;Definition&#10;    errorMessage()&#10;&#10;Description&#10;     Prettify error message output.;;d4,35;;b1,0;;m">
+</treenode>
+</treenode>
+<treenode node="Form_Helper;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f0;10;1;154;;;;vpos;;v;;r;;d0,11;;b0,0;;m">
+<treenode node="setError;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;150;2;153;;;;vpos;;vnothing;;r&#10;Definition&#10;    setError($form, $var, $msg)&#10;&#10;Description&#10;     Sets field error.;;d1,151;;b1,0;;mform;;pvar;;pmsg;;p">
+</treenode>
+<treenode node="validate;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;29;2;143;;;;vpos;;vboolean;;r&#10;Definition&#10;    validate($form, $data, $rules)&#10;&#10;Description&#10;     Validates form.;;d1,30;;b1,0;;mform;;pdata;;prules;;p">
+</treenode>
+</treenode>
+<treenode node="Mail_Helper;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\mail_helper.php;f0;7;1;72;;;;vpos;;v;;r;;d0,8;;b0,0;;m">
+<treenode node="sendEmail;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\mail_helper.php;f8;18;2;71;;;;vpos;;vstring;;r&#10;Definition&#10;    sendEmail($to, $to_name, $subject, $body, $ccs = null, $bccs = null, $body_plain = null, $attachment = null, $attachment_name = null)&#10;&#10;Description&#10;     Sends email.;;d1,19;;b1,0;;mto;;pto_name;;psubject;;pbody;;pccs;;pbccs;;pbody_plain;;pattachment;;pattachment_name;;p">
+</treenode>
+</treenode>
+<treenode node="Model;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\model.php;f0;4;1;34;;;;vpos;;v;;r;;d0,5;;b0,0;;m">
+<treenode node="resetForm;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\model.php;f8;22;2;33;;;;vpos;;vnothing;;r&#10;Definition&#10;    resetForm($vars, $form, $rules)&#10;&#10;Description&#10;     Form reset.;;d1,23;;b1,0;;mvars;;pform;;prules;;p">
+</treenode>
+</treenode>
+<treenode node="Model_Login;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Login.php;f0;8;1;108;;;;vpos;;vModel;;c;;r;;d0,9;;b0,0;;m">
+<treenode node="check;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Login.php;f8;78;2;107;;;;vpos;;vboolean;;r&#10;Definition&#10;    check()&#10;&#10;Description&#10;     Checks login data.;;d1,79;;b1,0;;m">
+</treenode>
+<treenode node="getPost;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Login.php;f8;54;2;59;;;;vpos;;vnothing;;r&#10;Definition&#10;    getPost($post)&#10;&#10;Description&#10;     Gets login page data.;;d1,55;;b1,0;;mpost;;p">
+</treenode>
+<treenode node="reset;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Login.php;f8;44;2;47;;;;vpos;;vnothing;;r&#10;Definition&#10;    reset($vars)&#10;&#10;Description&#10;     Login reset.;;d1,45;;b1,0;;mvars;;p">
+</treenode>
+<treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Login.php;f8;21;2;37;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Login rules.;;d1,22;;b1,0;;m">
+</treenode>
+<treenode node="validate;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Login.php;f8;66;2;71;;;;vpos;;vboolean;;r&#10;Definition&#10;    validate()&#10;&#10;Description&#10;     Validates login page.;;d1,67;;b1,0;;m">
+</treenode>
+</treenode>
+<treenode node="Model_ResetPwd;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwd.php;f0;8;1;104;;;;vpos;;vModel;;c;;r;;d0,9;;b0,0;;m">
+<treenode node="getPost;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwd.php;f8;52;2;57;;;;vpos;;vnothing;;r&#10;Definition&#10;    getPost($post)&#10;&#10;Description&#10;     Gets reset password page data.;;d1,53;;b1,0;;mpost;;p">
+</treenode>
+<treenode node="reset;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwd.php;f8;42;2;45;;;;vpos;;vnothing;;r&#10;Definition&#10;    reset($vars)&#10;&#10;Description&#10;     Reset password reset.;;d1,43;;b1,0;;mvars;;p">
+</treenode>
+<treenode node="resetPwd;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwd.php;f8;76;2;103;;;;vpos;;vboolean;;r&#10;Definition&#10;    resetPwd()&#10;&#10;Description&#10;     Resets user password.;;d1,77;;b1,0;;m">
+</treenode>
+<treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwd.php;f8;21;2;35;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Reset password rules.;;d1,22;;b1,0;;m">
+</treenode>
+<treenode node="validate;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwd.php;f8;64;2;69;;;;vpos;;vboolean;;r&#10;Definition&#10;    validate()&#10;&#10;Description&#10;     Validates reset password page.;;d1,65;;b1,0;;m">
+</treenode>
+</treenode>
+<treenode node="Model_ResetPwdRequest;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwdRequest.php;f0;9;1;109;;;;vpos;;vModel;;c;;r;;d0,10;;b0,0;;m">
+<treenode node="getPost;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwdRequest.php;f8;48;2;53;;;;vpos;;vnothing;;r&#10;Definition&#10;    getPost($post)&#10;&#10;Description&#10;     Gets reset password request page data.;;d1,49;;b1,0;;mpost;;p">
+</treenode>
+<treenode node="reset;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwdRequest.php;f8;38;2;41;;;;vpos;;vnothing;;r&#10;Definition&#10;    reset($vars)&#10;&#10;Description&#10;     Reset password request reset.;;d1,39;;b1,0;;mvars;;p">
+</treenode>
+<treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwdRequest.php;f8;22;2;31;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Reset password request rules.;;d1,23;;b1,0;;m">
+</treenode>
+<treenode node="sendEmail;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwdRequest.php;f8;72;2;108;;;;vpos;;vboolean;;r&#10;Definition&#10;    sendEmail()&#10;&#10;Description&#10;     Sets password token and sends confirmation email.;;d1,73;;b1,0;;m">
+</treenode>
+<treenode node="validate;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwdRequest.php;f8;60;2;65;;;;vpos;;vboolean;;r&#10;Definition&#10;    validate()&#10;&#10;Description&#10;     Validates reset password request page.;;d1,61;;b1,0;;m">
+</treenode>
+</treenode>
+<treenode node="Model_Signup;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Signup.php;f0;9;1;156;;;;vpos;;vModel;;c;;r;;d0,10;;b0,0;;m">
+<treenode node="activate;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Signup.php;f8;143;2;155;;;;vpos;;vboolean;;r&#10;Definition&#10;    activate($activation, $email)&#10;&#10;Description&#10;     Activates user account.;;d1,144;;b1,0;;mactivation;;pemail;;p">
+</treenode>
+<treenode node="getPost;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Signup.php;f8;71;2;76;;;;vpos;;vnothing;;r&#10;Definition&#10;    getPost($post)&#10;&#10;Description&#10;     Gets signup page data.;;d1,72;;b1,0;;mpost;;p">
+</treenode>
+<treenode node="reset;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Signup.php;f8;61;2;64;;;;vpos;;vnothing;;r&#10;Definition&#10;    reset($vars)&#10;&#10;Description&#10;     Signup reset.;;d1,62;;b1,0;;mvars;;p">
+</treenode>
+<treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Signup.php;f8;22;2;54;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Signup rules.;;d1,23;;b1,0;;m">
+</treenode>
+<treenode node="signup;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Signup.php;f8;95;2;136;;;;vpos;;vboolean;;r&#10;Definition&#10;    signup()&#10;&#10;Description&#10;     Saves user data.;;d1,96;;b1,0;;m">
+</treenode>
+<treenode node="validate;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Signup.php;f8;83;2;88;;;;vpos;;vboolean;;r&#10;Definition&#10;    validate()&#10;&#10;Description&#10;     Validates signup page.;;d1,84;;b1,0;;m">
+</treenode>
+</treenode>
+<treenode node="Model_User;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f0;16;1;144;;;;vpos;;vDb_Helper;;c;;r;;d0,17;;b0,0;;m">
+<treenode node="STATUS_ACTIVE;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f9;23;23;23;;;;vpos;;v;;r1;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="STATUS_DELETED;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f9;24;24;24;;;;vpos;;v;;r2;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="STATUS_NOTACTIVE;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f6;22;23;22;;;;vpos;;v;;r0;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;36;2;39;;;;vpos;;v;;r;;d1,37;;b1,0;;m">
+</treenode>
+<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;140;2;143;;;;vpos;;v;;r;;d1,141;;b1,0;;m">
+</treenode>
+<treenode node="changePwd;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;133;2;138;;;;vpos;;vboolean;;r&#10;Definition&#10;    changePwd()&#10;&#10;Description&#10;     Changes user password.;;d1,134;;b1,0;;m">
+</treenode>
+<treenode node="changePwdToken;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;121;2;126;;;;vpos;;vboolean;;r&#10;Definition&#10;    changePwdToken()&#10;&#10;Description&#10;     Changes user password token.;;d1,122;;b1,0;;m">
+</treenode>
+<treenode node="changeStatus;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;109;2;114;;;;vpos;;vboolean;;r&#10;Definition&#10;    changeStatus()&#10;&#10;Description&#10;     Changes user status.;;d1,110;;b1,0;;m">
+</treenode>
+<treenode node="existsEmail;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;81;2;89;;;;vpos;;vboolean;;r&#10;Definition&#10;    existsEmail()&#10;&#10;Description&#10;     Checks if email exists.;;d1,82;;b1,0;;m">
+</treenode>
+<treenode node="existsUsername;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;66;2;74;;;;vpos;;vboolean;;r&#10;Definition&#10;    existsUsername()&#10;&#10;Description&#10;     Checks if username exists.;;d1,67;;b1,0;;m">
+</treenode>
+<treenode node="getUserByEmail;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;56;2;59;;;;vpos;;varray;;r&#10;Definition&#10;    getUserByEmail()&#10;&#10;Description&#10;     Gets user by email.;;d1,57;;b1,0;;m">
+</treenode>
+<treenode node="getUserByName;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;46;2;49;;;;vpos;;varray;;r&#10;Definition&#10;    getUserByName()&#10;&#10;Description&#10;     Gets user by name.;;d1,47;;b1,0;;m">
+</treenode>
+<treenode node="save;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;96;2;102;;;;vpos;;vboolean;;r&#10;Definition&#10;    save()&#10;&#10;Description&#10;     Saves user data to database.;;d1,97;;b1,0;;m">
+</treenode>
+</treenode>
+<treenode node="PHPMailer;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f0;30;1;4419;;;;vpos;;v;;r&#10;Definition&#10;    class PHPMailer&#10;&#10;Description&#10;     PHPMailer - PHP email creation and transport class.;;d0,31;;b0,0;;m">
+<treenode node="MAX_LINE_LENGTH;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f9;706;25;706;;;;vposint;;v;;r998;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="STD_LINE_LENGTH;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f9;716;25;716;;;;vposint;;v;;r76;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="STOP_CONTINUE;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f9;685;23;685;;;;vposint;;v;;r1;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="STOP_CRITICAL;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f9;692;23;692;;;;vposint;;v;;r2;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="STOP_MESSAGE;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f9;678;22;678;;;;vposint;;v;;r0;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="VERSION;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f9;671;17;671;;;;vposstring;;v;;r&apos;6.0.3&apos;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;723;5;730;;;;vpos;;v;;r&#10;Definition&#10;    __construct($exceptions = null)&#10;&#10;Description&#10;     Constructor.&#10;&#10;Parameters:&#10;    bool $exceptions - Should we throw external exceptions?;;d4,724;;b1,0;;mbool $exceptions;;p">
+</treenode>
+<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;735;5;739;;;;vpos;;v;;r&#10;Definition&#10;    __destruct()&#10;&#10;Description&#10;     Destructor.;;d4,736;;b1,0;;m">
+</treenode>
+<treenode node="_mime_types;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f18;3817;5;3938;;;;vpos;;vstring;;r&#10;Definition&#10;    _mime_types($ext = &apos;&apos;)&#10;&#10;Description&#10;     Get the MIME type for a file extension.&#10;&#10;Parameters:&#10;    string $ext - File extension&#10;&#10;Return:&#10;   MIME type of file;;d4,3818;;b1,5;;mstring $ext;;p">
+</treenode>
+<treenode node="addAddress;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;899;5;902;;;;vpos;;vbool;;r&#10;Definition&#10;    addAddress($address, $name = &apos;&apos;)&#10;&#10;Description&#10;     Add a &quot;To&quot; address.&#10;&#10;Parameters:&#10;    string $address - The email address to send to&#10;    string $name&#10;&#10;Return:&#10;   true on success, false if address already used or invalid in some way;;d4,900;;b1,0;;mstring $address;;pstring $name;;p">
+</treenode>
+<treenode node="addAnAddress;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f14;1012;5;1055;;;;vpos;;vbool;;r&#10;Definition&#10;    addAnAddress($kind, $address, $name = &apos;&apos;)&#10;&#10;Description&#10;     Add an address to one of the recipient arrays or to the ReplyTo array. Addresses that have been added already return false, but do not throw exceptions.&#10;&#10;Parameters:&#10;    string $kind - One of &apos;to&apos;, &apos;cc&apos;, &apos;bcc&apos;, or &apos;ReplyTo&apos;&#10;    string $address - The email address to send, resp&#10;    string $name&#10;&#10;Return:&#10;   true on success, false if address already used or invalid in some way;;d4,1013;;b2,0;;mstring $kind;;pstring $address;;pstring $name;;p">
+</treenode>
+<treenode node="addAttachment;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;2756;5;2794;;;;vpos;;vbool;;r&#10;Definition&#10;    addAttachment($path, $name = &apos;&apos;, $encoding = &apos;base64&apos;, $type = &apos;&apos;, $disposition = &apos;attachment&apos;)&#10;&#10;Description&#10;     Add an attachment from a path on the filesystem. Never use a user-supplied path to a file! Returns false if the file could not be found or read.&#10;&#10;Parameters:&#10;    string $path - Path to the attachment&#10;    string $name - Overrides the attachment name&#10;    string $encoding - File encoding (see $Encoding)&#10;    string $type - File extension (MIME) type&#10;    string $disposition - Disposition to use;;d4,2757;;b1,0;;mstring $path;;pstring $name;;pstring $encoding;;pstring $type;;pstring $disposition;;p">
+</treenode>
+<treenode node="addBCC;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;925;5;928;;;;vpos;;vbool;;r&#10;Definition&#10;    addBCC($address, $name = &apos;&apos;)&#10;&#10;Description&#10;     Add a &quot;BCC&quot; address.&#10;&#10;Parameters:&#10;    string $address - The email address to send to&#10;    string $name&#10;&#10;Return:&#10;   true on success, false if address already used or invalid in some way;;d4,926;;b1,0;;mstring $address;;pstring $name;;p">
+</treenode>
+<treenode node="addCC;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;912;5;915;;;;vpos;;vbool;;r&#10;Definition&#10;    addCC($address, $name = &apos;&apos;)&#10;&#10;Description&#10;     Add a &quot;CC&quot; address.&#10;&#10;Parameters:&#10;    string $address - The email address to send to&#10;    string $name&#10;&#10;Return:&#10;   true on success, false if address already used or invalid in some way;;d4,913;;b1,0;;mstring $address;;pstring $name;;p">
+</treenode>
+<treenode node="addCustomHeader;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;3652;5;3660;;;;vpos;;v;;r&#10;Definition&#10;    addCustomHeader($name, $value = null)&#10;&#10;Description&#10;     Add a custom header. $name value can be overloaded to contain both header name and value (name:value).&#10;&#10;Parameters:&#10;    string $name - Custom header name&#10;    string|null $value - Header value;;d4,3653;;b1,0;;mstring $name;;pstring|null $value;;p">
+</treenode>
+<treenode node="addEmbeddedImage;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;3280;5;3311;;;;vpos;;vbool;;r&#10;Definition&#10;    addEmbeddedImage($path, $cid, $name = &apos;&apos;, $encoding = &apos;base64&apos;, $type = &apos;&apos;, $disposition = &apos;inline&apos;)&#10;&#10;Description&#10;     Add an embedded (inline) attachment from a file. This can include images, sounds, and just about any other document type. These differ from &apos;regular&apos; attachments in that they are intended to be displayed inline with the message, not just attached for download. This is used in HTML messages that embed the images the HTML refers to using the $cid value. Never use a user-supplied path to a file!&#10;&#10;Parameters:&#10;    string $path - Path to the attachment&#10;    string $cid - Content ID of the attachment;s Use this to reference&#10;    string $name - Overrides the attachment name&#10;    string $encoding - File encoding (see $Encoding)&#10;    string $type - File MIME type&#10;    string $disposition - Disposition to use&#10;&#10;Return:&#10;   True on successfully adding an attachment;;d4,3281;;b1,0;;mstring $path;;pstring $cid;;pstring $name;;pstring $encoding;;pstring $type;;pstring $disposition;;p">
+</treenode>
+<treenode node="addOrEnqueueAnAddress;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f14;957;5;998;;;;vpos;;vbool;;r&#10;Definition&#10;    addOrEnqueueAnAddress($kind, $address, $name)&#10;&#10;Description&#10;     Add an address to one of the recipient arrays or to the ReplyTo array. Because PHPMailer can&apos;t validate addresses with an IDN without knowing the PHPMailer::$CharSet (that can still be modified after calling this function), addition of such addresses is delayed until send(). Addresses that have been added already return false, but do not throw exceptions.&#10;&#10;Parameters:&#10;    string $kind - One of &apos;to&apos;, &apos;cc&apos;, &apos;bcc&apos;, or &apos;ReplyTo&apos;&#10;    string $address - The email address to send, resp&#10;    string $name&#10;&#10;Return:&#10;   true on success, false if address already used or invalid in some way;;d4,958;;b2,0;;mstring $kind;;pstring $address;;pstring $name;;p">
+</treenode>
+<treenode node="addrAppend;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;2041;5;2049;;;;vpos;;vstring;;r&#10;Definition&#10;    addrAppend($type, $addr)&#10;&#10;Description&#10;     Create recipient headers.&#10;&#10;Parameters:&#10;    string $type&#10;    array $addr - An array of recipients,;;d4,2042;;b1,0;;mstring $type;;parray $addr;;p">
+</treenode>
+<treenode node="addReplyTo;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;938;5;941;;;;vpos;;vbool;;r&#10;Definition&#10;    addReplyTo($address, $name = &apos;&apos;)&#10;&#10;Description&#10;     Add a &quot;Reply-To&quot; address.&#10;&#10;Parameters:&#10;    string $address - The email address to reply to&#10;    string $name&#10;&#10;Return:&#10;   true on success, false if address already used or invalid in some way;;d4,939;;b1,0;;mstring $address;;pstring $name;;p">
+</treenode>
+<treenode node="addrFormat;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;2059;5;2068;;;;vpos;;vstring;;r&#10;Definition&#10;    addrFormat($addr)&#10;&#10;Description&#10;     Format an address for use in a message header.&#10;&#10;Parameters:&#10;    array $addr - A 2-element indexed array, element 0 containing an address, element 1 containing a name like;;d4,2060;;b1,0;;marray $addr;;p">
+</treenode>
+<treenode node="addStringAttachment;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;3237;5;3259;;;;vpos;;v;;r&#10;Definition&#10;    addStringAttachment(&#10;        $string,&#10;        $filename,&#10;        $encoding = &apos;base64&apos;,&#10;        $type = &apos;&apos;,&#10;        $disposition = &apos;attachment&apos;&#10;    )&#10;&#10;Description&#10;     Add a string or binary attachment (non-filesystem). This method can be used to attach ascii or binary data, such as a BLOB record from a database.&#10;&#10;Parameters:&#10;    string $string - String attachment data&#10;    string $filename - Name of the attachment&#10;    string $encoding - File encoding (see $Encoding)&#10;    string $type - File extension (MIME) type&#10;    string $disposition - Disposition to use;;d6,3243;;b1,0;;mstring $string;;pstring $filename;;pstring $encoding;;pstring $type;;pstring $disposition;;p">
+</treenode>
+<treenode node="addStringEmbeddedImage;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;3330;5;3356;;;;vpos;;vbool;;r&#10;Definition&#10;    addStringEmbeddedImage(&#10;        $string,&#10;        $cid,&#10;        $name = &apos;&apos;,&#10;        $encoding = &apos;base64&apos;,&#10;        $type = &apos;&apos;,&#10;        $disposition = &apos;inline&apos;&#10;    )&#10;&#10;Description&#10;     Add an embedded stringified attachment. This can include images, sounds, and just about any other document type. If your filename doesn&apos;t contain an extension, be sure to set the $type to an appropriate MIME type.&#10;&#10;Parameters:&#10;    string $string - The attachment binary data&#10;    string $cid - Content ID of the attachment;s Use this to reference&#10;    string $name - A filename for the attachment&#10;    string $encoding - File encoding (see $Encoding), defaults to &apos;base64&apos;&#10;    string $type - MIME type - will be used in preference to any automatically derived type&#10;    string $disposition - Disposition to use&#10;&#10;Return:&#10;   True on successfully adding an attachment;;d6,3337;;b1,0;;mstring $string;;pstring $cid;;pstring $name;;pstring $encoding;;pstring $type;;pstring $disposition;;p">
+</treenode>
+<treenode node="alternativeExists;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;3413;5;3416;;;;vpos;;vbool;;r&#10;Definition&#10;    alternativeExists()&#10;&#10;Description&#10;     Check if this message has an alternative body set.;;d4,3414;;b1,0;;m">
+</treenode>
+<treenode node="attachAll;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f14;2815;5;2925;;;;vpos;;vstring;;r&#10;Definition&#10;    attachAll($disposition_type, $boundary)&#10;&#10;Description&#10;     Attach all file, string, and binary attachments to the message. Returns an empty string on failure.&#10;&#10;Parameters:&#10;    string $disposition_type&#10;    string $boundary;;d4,2816;;b2,0;;mstring $disposition_type;;pstring $boundary;;p">
+</treenode>
+<treenode node="attachmentExists;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;3397;5;3406;;;;vpos;;vbool;;r&#10;Definition&#10;    attachmentExists()&#10;&#10;Description&#10;     Check if an attachment (non-inline) is present.;;d4,3398;;b1,0;;m">
+</treenode>
+<treenode node="base64EncodeWrapMB;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;3127;5;3157;;;;vpos;;vstring;;r&#10;Definition&#10;    base64EncodeWrapMB($str, $linebreak = null)&#10;&#10;Description&#10;     Encode and wrap long multibyte strings for mail headers without breaking lines within a character. Adapted from a function by paravoid.&#10;&#10;Parameters:&#10;    string $str - multi-byte text to wrap encode&#10;    string $linebreak - string to use as linefeed/end-of-line;;d4,3128;;b1,0;;mstring $str;;pstring $linebreak;;p">
+</treenode>
+<treenode node="cidExists;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f14;3365;5;3374;;;;vpos;;vbool;;r&#10;Definition&#10;    cidExists($cid)&#10;&#10;Description&#10;     Check if an embedded attachment is present with this cid.&#10;&#10;Parameters:&#10;    string $cid;;d4,3366;;b2,0;;mstring $cid;;p">
+</treenode>
+<treenode node="clearAddresses;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;3436;5;3443;;;;vpos;;v;;r&#10;Definition&#10;    clearAddresses()&#10;&#10;Description&#10;     Clear all To recipients.;;d4,3437;;b1,0;;m">
+</treenode>
+<treenode node="clearAllRecipients;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;3481;5;3488;;;;vpos;;v;;r&#10;Definition&#10;    clearAllRecipients()&#10;&#10;Description&#10;     Clear all recipient types.;;d4,3482;;b1,0;;m">
+</treenode>
+<treenode node="clearAttachments;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;3493;5;3496;;;;vpos;;v;;r&#10;Definition&#10;    clearAttachments()&#10;&#10;Description&#10;     Clear all filesystem, string, and binary attachments.;;d4,3494;;b1,0;;m">
+</treenode>
+<treenode node="clearBCCs;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;3460;5;3467;;;;vpos;;v;;r&#10;Definition&#10;    clearBCCs()&#10;&#10;Description&#10;     Clear all BCC recipients.;;d4,3461;;b1,0;;m">
+</treenode>
+<treenode node="clearCCs;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;3448;5;3455;;;;vpos;;v;;r&#10;Definition&#10;    clearCCs()&#10;&#10;Description&#10;     Clear all CC recipients.;;d4,3449;;b1,0;;m">
+</treenode>
+<treenode node="clearCustomHeaders;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;3501;5;3504;;;;vpos;;v;;r&#10;Definition&#10;    clearCustomHeaders()&#10;&#10;Description&#10;     Clear all custom headers.;;d4,3502;;b1,0;;m">
+</treenode>
+<treenode node="clearQueuedAddresses;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;3423;5;3431;;;;vpos;;v;;r&#10;Definition&#10;    clearQueuedAddresses($kind)&#10;&#10;Description&#10;     Clear queued addresses of given kind.&#10;&#10;Parameters:&#10;    string $kind - &apos;to&apos;, &apos;cc&apos;, or &apos;bcc&apos;;;d4,3424;;b1,0;;mstring $kind;;p">
+</treenode>
+<treenode node="clearReplyTos;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;3472;5;3476;;;;vpos;;v;;r&#10;Definition&#10;    clearReplyTos()&#10;&#10;Description&#10;     Clear all ReplyTo recipients.;;d4,3473;;b1,0;;m">
+</treenode>
+<treenode node="createBody;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;2435;5;2645;;;;vpos;;vstring;;r&#10;Definition&#10;    createBody()&#10;&#10;Description&#10;     Assemble the message body. Returns an empty string on failure.&#10;&#10;Return:&#10;   The assembled message body;;d4,2436;;b1,0;;m">
+</treenode>
+<treenode node="createHeader;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;2250;5;2338;;;;vpos;;vstring;;r&#10;Definition&#10;    createHeader()&#10;&#10;Description&#10;     Assemble message headers.&#10;&#10;Return:&#10;   The assembled headers;;d4,2251;;b1,0;;m">
+</treenode>
+<treenode node="DKIM_Add;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;4240;5;4311;;;;vpos;;vstring;;r&#10;Definition&#10;    DKIM_Add($headers_line, $subject, $body)&#10;&#10;Description&#10;     Create the DKIM header and body in a new message header.&#10;&#10;Parameters:&#10;    string $headers_line - Header lines&#10;    string $subject - Subject&#10;    string $body - Body;;d4,4241;;b1,0;;mstring $headers_line;;pstring $subject;;pstring $body;;p">
+</treenode>
+<treenode node="DKIM_BodyC;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;4219;5;4229;;;;vpos;;vstring;;r&#10;Definition&#10;    DKIM_BodyC($body)&#10;&#10;Description&#10;     Generate a DKIM canonicalization body. Uses the &apos;simple&apos; algorithm from RFC6376 section 3.4.3. Canonicalized bodies should *always* use CRLF, regardless of mailer setting.&#10;&#10;Parameters:&#10;    string $body - Message Body;;d4,4220;;b1,0;;mstring $body;;p">
+</treenode>
+<treenode node="DKIM_HeaderC;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;4177;5;4206;;;;vpos;;vstring;;r&#10;Definition&#10;    DKIM_HeaderC($signHeader)&#10;&#10;Description&#10;     Generate a DKIM canonicalization header. Uses the &apos;relaxed&apos; algorithm from RFC6376 section 3.4.2. Canonicalized headers should *always* use CRLF, regardless of mailer setting.&#10;&#10;Parameters:&#10;    string $signHeader - Header;;d4,4178;;b1,0;;mstring $signHeader;;p">
+</treenode>
+<treenode node="DKIM_QP;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;4114;5;4128;;;;vpos;;vstring;;r&#10;Definition&#10;    DKIM_QP($txt)&#10;&#10;Description&#10;     Quoted-Printable-encode a DKIM header.&#10;&#10;Parameters:&#10;    string $txt;;d4,4115;;b1,0;;mstring $txt;;p">
+</treenode>
+<treenode node="DKIM_Sign;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;4139;5;4164;;;;vpos;;vstring;;r&#10;Definition&#10;    DKIM_Sign($signHeader)&#10;&#10;Description&#10;     Generate a DKIM signature.&#10;&#10;Parameters:&#10;    string $signHeader&#10;&#10;Return:&#10;   The DKIM signature value;;d4,4140;;b1,0;;mstring $signHeader;;p">
+</treenode>
+<treenode node="doCallback;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f14;4393;5;4398;;;;vpos;;v;;r&#10;Definition&#10;    doCallback($isSent, $to, $cc, $bcc, $subject, $body, $from, $extra)&#10;&#10;Description&#10;     Perform a callback.&#10;&#10;Parameters:&#10;    bool $isSent&#10;    array $to&#10;    array $cc&#10;    array $bcc&#10;    string $subject&#10;    string $body&#10;    string $from&#10;    array $extra;;d4,4394;;b2,0;;mbool $isSent;;parray $to;;parray $cc;;parray $bcc;;pstring $subject;;pstring $body;;pstring $from;;parray $extra;;p">
+</treenode>
+<treenode node="edebug;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f14;782;5;829;;;;vpos;;v;;r&#10;Definition&#10;    edebug($str)&#10;&#10;Description&#10;     Output debugging info via user-defined method. Only generates output if SMTP debug output is enabled ( see SMTP::$do_debug).&#10;&#10;Parameters:&#10;    string $str;;d4,783;;b2,0;;mstring $str;;p">
+</treenode>
+<treenode node="encodeFile;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f14;2938;5;2956;;;;vpos;;vstring;;r&#10;Definition&#10;    encodeFile($path, $encoding = &apos;base64&apos;)&#10;&#10;Description&#10;     Encode a file attachment in requested format. Returns an empty string on failure.&#10;&#10;Parameters:&#10;    string $path - The full path to the file&#10;    string $encoding - The encoding to use;s one of &apos;base64&apos;, &apos;7bit&apos;, &apos;8bit&apos;, &apos;binary&apos;, &apos;quoted-printable&apos;;;d4,2939;;b2,0;;mstring $path;;pstring $encoding;;p">
+</treenode>
+<treenode node="encodeHeader;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;3010;5;3084;;;;vpos;;vstring;;r&#10;Definition&#10;    encodeHeader($str, $position = &apos;text&apos;)&#10;&#10;Description&#10;     Encode a header value (not including its label) optimally. Picks shortest of Q, B, or none. Result includes folding if needed. See RFC822 definitions for phrase, comment and text positions.&#10;&#10;Parameters:&#10;    string $str - The header value to encode&#10;    string $position - What context the string will be used in;;d4,3011;;b1,0;;mstring $str;;pstring $position;;p">
+</treenode>
+<treenode node="encodeQ;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;3182;5;3224;;;;vpos;;vstring;;r&#10;Definition&#10;    encodeQ($str, $position = &apos;text&apos;)&#10;&#10;Description&#10;     Encode a string using Q encoding.&#10;&#10;Parameters:&#10;    string $str - the text to encode&#10;    string $position - Where the text is going to be used, see the RFC for what that means;;d4,3183;;b1,0;;mstring $str;;pstring $position;;p">
+</treenode>
+<treenode node="encodeQP;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;3167;5;3170;;;;vpos;;vstring;;r&#10;Definition&#10;    encodeQP($string)&#10;&#10;Description&#10;     Encode a string in quoted-printable format. According to RFC2045 section 6.7.&#10;&#10;Parameters:&#10;    string $string - The text to encode;;d4,3168;;b1,0;;mstring $string;;p">
+</treenode>
+<treenode node="encodeString;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;2967;5;2998;;;;vpos;;vstring;;r&#10;Definition&#10;    encodeString($str, $encoding = &apos;base64&apos;)&#10;&#10;Description&#10;     Encode a string in requested format. Returns an empty string on failure.&#10;&#10;Parameters:&#10;    string $str - The text to encode&#10;    string $encoding - The encoding to use;s one of &apos;base64&apos;, &apos;7bit&apos;, &apos;8bit&apos;, &apos;binary&apos;, &apos;quoted-printable;;d4,2968;;b1,0;;mstring $str;;pstring $encoding;;p">
+</treenode>
+<treenode node="endBoundary;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f14;2688;5;2691;;;;vpos;;vstring;;r&#10;Definition&#10;    endBoundary($boundary)&#10;&#10;Description&#10;     Return the end of a message boundary.&#10;&#10;Parameters:&#10;    string $boundary;;d4,2689;;b2,0;;mstring $boundary;;p">
+</treenode>
+<treenode node="filenameToType;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f18;3948;5;3958;;;;vpos;;vstring;;r&#10;Definition&#10;    filenameToType($filename)&#10;&#10;Description&#10;     Map a file name to a MIME type. Defaults to &apos;application/octet-stream&apos;, i.e.. arbitrary binary data.&#10;&#10;Parameters:&#10;    string $filename - A file name or full path, does not need to exist as a file;;d4,3949;;b1,5;;mstring $filename;;p">
+</treenode>
+<treenode node="generateId;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f14;2411;5;2425;;;;vpos;;vstring;;r&#10;Definition&#10;    generateId()&#10;&#10;Description&#10;     Create a unique ID to use for boundaries.;;d4,2412;;b2,0;;m">
+</treenode>
+<treenode node="getAllRecipientAddresses;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;4376;5;4379;;;;vpos;;varray;;r&#10;Definition&#10;    getAllRecipientAddresses()&#10;&#10;Description&#10;     Allows for public read access to &apos;all_recipients&apos; property. Before the send() call, queued addresses (i.e. with IDN) are not yet included.;;d4,4377;;b1,0;;m">
+</treenode>
+<treenode node="getAttachments;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;2801;5;2804;;;;vpos;;varray;;r&#10;Definition&#10;    getAttachments()&#10;&#10;Description&#10;     Return the array of attachments.;;d4,2802;;b1,0;;m">
+</treenode>
+<treenode node="getBccAddresses;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;4354;5;4357;;;;vpos;;varray;;r&#10;Definition&#10;    getBccAddresses()&#10;&#10;Description&#10;     Allows for public read access to &apos;bcc&apos; property. Before the send() call, queued addresses (i.e. with IDN) are not yet included.;;d4,4355;;b1,0;;m">
+</treenode>
+<treenode node="getBoundary;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f14;2657;5;2679;;;;vpos;;vstring;;r&#10;Definition&#10;    getBoundary($boundary, $charSet, $contentType, $encoding)&#10;&#10;Description&#10;     Return the start of a message boundary.&#10;&#10;Parameters:&#10;    string $boundary&#10;    string $charSet&#10;    string $contentType&#10;    string $encoding;;d4,2658;;b2,0;;mstring $boundary;;pstring $charSet;;pstring $contentType;;pstring $encoding;;p">
+</treenode>
+<treenode node="getCcAddresses;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;4343;5;4346;;;;vpos;;varray;;r&#10;Definition&#10;    getCcAddresses()&#10;&#10;Description&#10;     Allows for public read access to &apos;cc&apos; property. Before the send() call, queued addresses (i.e. with IDN) are not yet included.;;d4,4344;;b1,0;;m">
+</treenode>
+<treenode node="getCustomHeaders;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;3667;5;3670;;;;vpos;;varray;;r&#10;Definition&#10;    getCustomHeaders()&#10;&#10;Description&#10;     Returns all custom headers.;;d4,3668;;b1,0;;m">
+</treenode>
+<treenode node="getLastMessageID;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;1166;5;1169;;;;vpos;;vstring;;r&#10;Definition&#10;    getLastMessageID()&#10;&#10;Description&#10;     Return the Message-ID header of the last email. Technically this is the value from the last time the headers were created, but it&apos;s also the message ID of the last sent message except in pathological cases.;;d4,1167;;b1,0;;m">
+</treenode>
+<treenode node="getLE;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f18;4076;5;4079;;;;vpos;;vstring;;r&#10;Definition&#10;    getLE()&#10;&#10;Description&#10;     Return the current line break format string.;;d4,4077;;b1,5;;m">
+</treenode>
+<treenode node="getMailMIME;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;2345;5;2390;;;;vpos;;vstring;;r&#10;Definition&#10;    getMailMIME()&#10;&#10;Description&#10;     Get the message MIME type headers.;;d4,2346;;b1,0;;m">
+</treenode>
+<treenode node="getOAuth;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;4405;5;4408;;;;vpos;;vOAuth;;r&#10;Definition&#10;    getOAuth()&#10;&#10;Description&#10;     Get the OAuth instance.;;d4,4406;;b1,0;;m">
+</treenode>
+<treenode node="getReplyToAddresses;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;4365;5;4368;;;;vpos;;varray;;r&#10;Definition&#10;    getReplyToAddresses()&#10;&#10;Description&#10;     Allows for public read access to &apos;ReplyTo&apos; property. Before the send() call, queued addresses (i.e. with IDN) are not yet included.;;d4,4366;;b1,0;;m">
+</treenode>
+<treenode node="getSentMIMEMessage;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;2401;5;2404;;;;vpos;;vstring;;r&#10;Definition&#10;    getSentMIMEMessage()&#10;&#10;Description&#10;     Returns the whole MIME message. Includes complete headers and body. Only valid post preSend().;;d4,2402;;b1,0;;m">
+</treenode>
+<treenode node="getSMTPInstance;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;1683;5;1690;;;;vpos;;vSMTP;;r&#10;Definition&#10;    getSMTPInstance()&#10;&#10;Description&#10;     Get an instance to use for SMTP operations. Override this function to load your own SMTP implementation, or set one with setSMTPInstance.;;d4,1684;;b1,0;;m">
+</treenode>
+<treenode node="getToAddresses;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;4332;5;4335;;;;vpos;;varray;;r&#10;Definition&#10;    getToAddresses()&#10;&#10;Description&#10;     Allows for public read access to &apos;to&apos; property. Before the send() call, queued addresses (i.e. with IDN) are not yet included.;;d4,4333;;b1,0;;m">
+</treenode>
+<treenode node="getTranslations;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;2025;5;2028;;;;vpos;;varray;;r&#10;Definition&#10;    getTranslations()&#10;&#10;Description&#10;     Get the array of strings for the current language.;;d4,2026;;b1,0;;m">
+</treenode>
+<treenode node="has8bitChars;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;3110;5;3113;;;;vpos;;vbool;;r&#10;Definition&#10;    has8bitChars($text)&#10;&#10;Description&#10;     Does a string contain any 8-bit chars (in any charset)?&#10;&#10;Parameters:&#10;    string $text;;d4,3111;;b1,0;;mstring $text;;p">
+</treenode>
+<treenode node="hasLineLongerThanMax;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f18;4321;5;4324;;;;vpos;;vbool;;r&#10;Definition&#10;    hasLineLongerThanMax($str)&#10;&#10;Description&#10;     Detect if a string contains a line longer than the maximum line length allowed by RFC 2822 section 2.1.1.&#10;&#10;Parameters:&#10;    string $str;;d4,4322;;b1,5;;mstring $str;;p">
+</treenode>
+<treenode node="hasMultiBytes;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;3093;5;3101;;;;vpos;;vbool;;r&#10;Definition&#10;    hasMultiBytes($str)&#10;&#10;Description&#10;     Check if a string contains multi-byte characters.&#10;&#10;Parameters:&#10;    string $str - multi-byte text to wrap encode;;d4,3094;;b1,0;;mstring $str;;p">
+</treenode>
+<treenode node="headerLine;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;2724;5;2727;;;;vpos;;vstring;;r&#10;Definition&#10;    headerLine($name, $value)&#10;&#10;Description&#10;     Format a header line.&#10;&#10;Parameters:&#10;    string $name&#10;    string|int $value;;d4,2725;;b1,0;;mstring $name;;pstring|int $value;;p">
+</treenode>
+<treenode node="html2text;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;3797;5;3808;;;;vpos;;vstring;;r&#10;Definition&#10;    html2text($html, $advanced = false)&#10;&#10;Description&#10;     Convert an HTML string into plain text. This is used by msgHTML(). Note - older versions of this function used a bundled advanced converter which was removed for license reasons in #232. Example usage:&#10;&#10;Parameters:&#10;    string $html - The HTML text to convert&#10;    bool|callable $advanced - Any boolean value to use the internal converter,;;d4,3798;;b1,0;;mstring $html;;pbool|callable $advanced;;p">
+</treenode>
+<treenode node="idnSupported;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f18;1261;5;1264;;;;vpos;;vbool;;r&#10;Definition&#10;    idnSupported()&#10;&#10;Description&#10;     Tells whether IDNs (Internationalized Domain Names) are supported or not. This requires the `intl` and `mbstring` PHP extensions.&#10;&#10;Return:&#10;   `true` if required functions for IDN support are present;;d4,1262;;b1,5;;m">
+</treenode>
+<treenode node="inlineImageExists;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;3381;5;3390;;;;vpos;;vbool;;r&#10;Definition&#10;    inlineImageExists()&#10;&#10;Description&#10;     Check if an inline attachment is present.;;d4,3382;;b1,0;;m">
+</treenode>
+<treenode node="isError;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;3639;5;3642;;;;vpos;;vbool;;r&#10;Definition&#10;    isError()&#10;&#10;Description&#10;     Check if an error occurred.&#10;&#10;Return:&#10;   True if an error did occur;;d4,3640;;b1,0;;m">
+</treenode>
+<treenode node="isHTML;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;836;5;843;;;;vpos;;v;;r&#10;Definition&#10;    isHTML($isHtml = true)&#10;&#10;Description&#10;     Sets message type to HTML or plain.&#10;&#10;Parameters:&#10;    bool $isHtml - True for HTML mode;;d4,837;;b1,0;;mbool $isHtml;;p">
+</treenode>
+<treenode node="isMail;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;856;5;859;;;;vpos;;v;;r&#10;Definition&#10;    isMail()&#10;&#10;Description&#10;     Send messages using PHP&apos;s mail() function.;;d4,857;;b1,0;;m">
+</treenode>
+<treenode node="isQmail;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;879;5;889;;;;vpos;;v;;r&#10;Definition&#10;    isQmail()&#10;&#10;Description&#10;     Send messages using qmail.;;d4,880;;b1,0;;m">
+</treenode>
+<treenode node="isSendmail;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;864;5;874;;;;vpos;;v;;r&#10;Definition&#10;    isSendmail()&#10;&#10;Description&#10;     Send messages using $Sendmail.;;d4,865;;b1,0;;m">
+</treenode>
+<treenode node="isShellSafe;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f21;1593;5;1616;;;;vpos;;vbool;;r&#10;Definition&#10;    isShellSafe($string)&#10;&#10;Description&#10;     Fix CVE-2016-10033 and CVE-2016-10045 by disallowing potentially unsafe shell characters. Note that escapeshellarg and escapeshellcmd are inadequate for our purposes, especially on Windows.&#10;&#10;Parameters:&#10;    string $string - The string to be validated;;d4,1594;;b2,5;;mstring $string;;p">
+</treenode>
+<treenode node="isSMTP;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;848;5;851;;;;vpos;;v;;r&#10;Definition&#10;    isSMTP()&#10;&#10;Description&#10;     Send messages using SMTP.;;d4,849;;b1,0;;m">
+</treenode>
+<treenode node="isValidHost;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f18;3579;5;3604;;;;vpos;;vbool;;r&#10;Definition&#10;    isValidHost($host)&#10;&#10;Description&#10;     Validate whether a string contains a valid value to use as a hostname or IP address. IPv6 addresses must include [], e.g. `[::1]`, not just `::1`.&#10;&#10;Parameters:&#10;    string $host - The host name or IP address to check;;d4,3580;;b1,5;;mstring $host;;p">
+</treenode>
+<treenode node="lang;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f14;3613;5;3632;;;;vpos;;vstring;;r&#10;Definition&#10;    lang($key)&#10;&#10;Description&#10;     Get an error message in the current language.&#10;&#10;Parameters:&#10;    string $key;;d4,3614;;b2,0;;mstring $key;;p">
+</treenode>
+<treenode node="mailPassthru;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f12;755;5;771;;;;vpos;;vbool;;r&#10;Definition&#10;    mailPassthru($to, $subject, $body, $header, $params)&#10;&#10;Description&#10;     Call mail() in a safe_mode-aware fashion. Also, unless sendmail_path points to sendmail (or something that claims to be sendmail), don&apos;t pass params (not a perfect fix, but it will do).&#10;&#10;Parameters:&#10;    string $to - To&#10;    string $subject - Subject&#10;    string $body - Message Body&#10;    string $header - Additional Header(s)&#10;    string|null $params - Params;;d4,756;;b3,0;;mstring $to;;pstring $subject;;pstring $body;;pstring $header;;pstring|null $params;;p">
+</treenode>
+<treenode node="mailSend;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f14;1630;5;1674;;;;vpos;;vbool;;r&#10;Definition&#10;    mailSend($header, $body)&#10;&#10;Description&#10;     Send mail using the PHP mail() function.&#10;&#10;Parameters:&#10;    string $header - The message headers&#10;    string $body - The message body;;d4,1631;;b2,0;;mstring $header;;pstring $body;;p">
+</treenode>
+<treenode node="mb_pathinfo;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f18;3972;5;4006;;;;vpos;;vstring;;r&#10;Definition&#10;    mb_pathinfo($path, $options = null)&#10;&#10;Description&#10;     Multi-byte-safe pathinfo replacement. Drop-in replacement for pathinfo(), but multibyte- and cross-platform-safe.&#10;&#10;Parameters:&#10;    string $path - A filename or path, does not need to exist as a file&#10;    int|string $options - Either a PATHINFO_* constant,&#10;&#10;Return:&#10;   |array;;d4,3973;;b1,5;;mstring $path;;pint|string $options;;p">
+</treenode>
+<treenode node="msgHTML;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;3690;5;3772;;;;vpos;;vstring;;r&#10;Definition&#10;    msgHTML($message, $basedir = &apos;&apos;, $advanced = false)&#10;&#10;Description&#10;     Create a message body from an HTML string. Automatically inlines images and creates a plain-text version by converting the HTML, overwriting any existing values in Body and AltBody. Do not source $message content from user input! $basedir is prepended when handling relative URLs, e.g. &lt;img src=&quot;/images/a.png&quot;&gt; and must not be empty will look for an image file in $basedir/images/a.png and convert it to inline. If you don&apos;t provide a $basedir, relative paths will be left untouched (and thus probably break in email) Converts data-uri images into embedded attachments. If you don&apos;t want to apply these transformations to your HTML, just set Body and AltBody directly.&#10;&#10;Parameters:&#10;    string $message - HTML message string&#10;    string $basedir - Absolute path to a base directory to prepend to relative paths to images&#10;    bool|callable $advanced - Whether to use the internal HTML to text converter&#10;&#10;Return:&#10;   $message The transformed message Body;;d4,3691;;b1,0;;mstring $message;;pstring $basedir;;pbool|callable $advanced;;p">
+</treenode>
+<treenode node="normalizeBreaks;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f18;4056;5;4069;;;;vpos;;vstring;;r&#10;Definition&#10;    normalizeBreaks($text, $breaktype = null)&#10;&#10;Description&#10;     Normalize line breaks in a string. Converts UNIX LF, Mac CR and Windows CRLF line breaks into a single line break format. Defaults to CRLF (for message bodies) and preserves consecutive breaks.&#10;&#10;Parameters:&#10;    string $text&#10;    string $breaktype - What kind of line break to use;s defaults to static::$LE;;d4,4057;;b1,5;;mstring $text;;pstring $breaktype;;p">
+</treenode>
+<treenode node="parseAddresses;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f18;1070;5;1114;;;;vpos;;varray;;r&#10;Definition&#10;    parseAddresses($addrstr, $useimap = true)&#10;&#10;Description&#10;     Parse and validate a string containing one or more RFC822-style comma-separated email addresses of the form &quot;display name &lt;address&gt;&quot; into an array of name/address pairs. Uses the imap_rfc822_parse_adrlist function if the IMAP extension is available. Note that quotes in the name part are removed.&#10;&#10;Parameters:&#10;    string $addrstr - The address list string&#10;    bool $useimap - Whether to use the IMAP extension to parse the list;;d4,1071;;b1,5;;mstring $addrstr;;pbool $useimap;;p">
+</treenode>
+<treenode node="postSend;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;1471;5;1500;;;;vpos;;vbool;;r&#10;Definition&#10;    postSend()&#10;&#10;Description&#10;     Actually send a message via the selected mechanism.;;d4,1472;;b1,0;;m">
+</treenode>
+<treenode node="preSend;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;1338;5;1462;;;;vpos;;vbool;;r&#10;Definition&#10;    preSend()&#10;&#10;Description&#10;     Prepare a message for sending.;;d4,1339;;b1,0;;m">
+</treenode>
+<treenode node="punyencodeAddress;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;1280;5;1302;;;;vpos;;vstring;;r&#10;Definition&#10;    punyencodeAddress($address)&#10;&#10;Description&#10;     Converts IDN in given email address to its ASCII form, also known as punycode, if possible. Important: Address must be passed in same encoding as currently set in PHPMailer::$CharSet. This function silently returns unmodified address if: - No conversion is necessary (i.e. domain name is not an IDN, or is already in ASCII form) - Conversion to punycode is impossible (e.g. required PHP functions are not available) or fails for any reason (e.g. domain contains characters not allowed in an IDN).&#10;&#10;Parameters:&#10;    string $address - The email address to convert&#10;&#10;Return:&#10;   The encoded address in ASCII form;;d4,1281;;b1,0;;mstring $address;;p">
+</treenode>
+<treenode node="rfcDate;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f18;3537;5;3544;;;;vpos;;vstring;;r&#10;Definition&#10;    rfcDate()&#10;&#10;Description&#10;     Return an RFC 822 formatted date.;;d4,3538;;b1,5;;m">
+</treenode>
+<treenode node="secureHeader;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;4041;5;4044;;;;vpos;;vstring;;r&#10;Definition&#10;    secureHeader($str)&#10;&#10;Description&#10;     Strip newlines to prevent header injection.&#10;&#10;Parameters:&#10;    string $str;;d4,4042;;b1,0;;mstring $str;;p">
+</treenode>
+<treenode node="send;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;1312;5;1329;;;;vpos;;vbool;;r&#10;Definition&#10;    send()&#10;&#10;Description&#10;     Create a message and send it. Uses the sending method specified by $Mailer.&#10;&#10;Return:&#10;   false on error - See the ErrorInfo property for details of the error;;d4,1313;;b1,0;;m">
+</treenode>
+<treenode node="sendmailSend;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f14;1514;5;1581;;;;vpos;;vbool;;r&#10;Definition&#10;    sendmailSend($header, $body)&#10;&#10;Description&#10;     Send mail using the $Sendmail program.&#10;&#10;Parameters:&#10;    string $header - The message headers&#10;    string $body - The message body;;d4,1515;;b2,0;;mstring $header;;pstring $body;;p">
+</treenode>
+<treenode node="serverHostname;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f14;3552;5;3569;;;;vpos;;vstring;;r&#10;Definition&#10;    serverHostname()&#10;&#10;Description&#10;     Get the server hostname. Returns &apos;localhost.localdomain&apos; if unknown.;;d4,3553;;b2,0;;m">
+</treenode>
+<treenode node="set;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;4022;5;4032;;;;vpos;;vbool;;r&#10;Definition&#10;    set($name, $value = &apos;&apos;)&#10;&#10;Description&#10;     Set or reset instance properties. You should avoid this function - it&apos;s more verbose, less efficient, more error-prone and harder to debug than setting properties directly. Usage Example: `$mail-&gt;set(&apos;SMTPSecure&apos;, &apos;tls&apos;);s` is the same as: `$mail-&gt;SMTPSecure = &apos;tls&apos;;s`.&#10;&#10;Parameters:&#10;    string $name - The property name to set&#10;    mixed $value - The value to set the property to;;d4,4023;;b1,0;;mstring $name;;pmixed $value;;p">
+</treenode>
+<treenode node="setError;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f14;3511;5;3530;;;;vpos;;v;;r&#10;Definition&#10;    setError($msg)&#10;&#10;Description&#10;     Add an error message to the error container.&#10;&#10;Parameters:&#10;    string $msg;;d4,3512;;b2,0;;mstring $msg;;p">
+</treenode>
+<treenode node="setFrom;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;1127;5;1156;;;;vpos;;vbool;;r&#10;Definition&#10;    setFrom($address, $name = &apos;&apos;, $auto = true)&#10;&#10;Description&#10;     Set the From and FromName properties.&#10;&#10;Parameters:&#10;    string $address&#10;    string $name&#10;    bool $auto - Whether to also set the Sender address, defaults to true;;d4,1128;;b1,0;;mstring $address;;pstring $name;;pbool $auto;;p">
+</treenode>
+<treenode node="setLanguage;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;1956;5;2018;;;;vpos;;vbool;;r&#10;Definition&#10;    setLanguage($langcode = &apos;en&apos;, $lang_path = &apos;&apos;)&#10;&#10;Description&#10;     Set the language for error messages. Returns false if it cannot load the language file. The default language is English.&#10;&#10;Parameters:&#10;    string $langcode - ISO 639-1 2-character language code (e&#10;    string $lang_path - Path to the language file directory, with trailing separator (slash);;d4,1957;;b1,0;;mstring $langcode;;pstring $lang_path;;p">
+</treenode>
+<treenode node="setLE;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f21;4086;5;4089;;;;vpos;;v;;r&#10;Definition&#10;    setLE($le)&#10;&#10;Description&#10;     Set the line break format string, e.g. &quot;\r\n&quot;.&#10;&#10;Parameters:&#10;    string $le;;d4,4087;;b2,5;;mstring $le;;p">
+</treenode>
+<treenode node="setMessageType;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f14;2697;5;2714;;;;vpos;;v;;r&#10;Definition&#10;    setMessageType()&#10;&#10;Description&#10;     Set the message type. PHPMailer only supports some preset message types, not arbitrary MIME structures.;;d4,2698;;b2,0;;m">
+</treenode>
+<treenode node="setOAuth;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;4415;5;4418;;;;vpos;;v;;r&#10;Definition&#10;    setOAuth(OAuth $oauth)&#10;&#10;Description&#10;     Set an OAuth instance.&#10;&#10;Parameters:&#10;    OAuth $oauth;;d4,4416;;b1,0;;mOAuth $oauth;;p">
+</treenode>
+<treenode node="setSMTPInstance;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;1699;5;1704;;;;vpos;;vSMTP;;r&#10;Definition&#10;    setSMTPInstance(SMTP $smtp)&#10;&#10;Description&#10;     Provide an instance to use for SMTP operations.&#10;&#10;Parameters:&#10;    SMTP $smtp;;d4,1700;;b1,0;;mSMTP $smtp;;p">
+</treenode>
+<treenode node="setWordWrap;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;2226;5;2243;;;;vpos;;v;;r&#10;Definition&#10;    setWordWrap()&#10;&#10;Description&#10;     Apply word wrapping to the message body. Wraps the message body to the number of chars set in the WordWrap property. You should only do this to plain-text bodies as wrapping HTML tags may break them. This is called automatically by createBody(), so you don&apos;t need to call it yourself.;;d4,2227;;b1,0;;m">
+</treenode>
+<treenode node="sign;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;4099;5;4105;;;;vpos;;v;;r&#10;Definition&#10;    sign($cert_filename, $key_filename, $key_pass, $extracerts_filename = &apos;&apos;)&#10;&#10;Description&#10;     Set the public and private key files and password for S/MIME signing.&#10;&#10;Parameters:&#10;    string $cert_filename&#10;    string $key_filename&#10;    string $key_pass - Password for private key&#10;    string $extracerts_filename - Optional path to chain certificate;;d4,4100;;b1,0;;mstring $cert_filename;;pstring $key_filename;;pstring $key_pass;;pstring $extracerts_filename;;p">
+</treenode>
+<treenode node="smtpClose;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;1936;5;1944;;;;vpos;;v;;r&#10;Definition&#10;    smtpClose()&#10;&#10;Description&#10;     Close the active SMTP session if one exists.;;d4,1937;;b1,0;;m">
+</treenode>
+<treenode node="smtpConnect;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;1808;5;1931;;;;vpos;;vbool;;r&#10;Definition&#10;    smtpConnect($options = null)&#10;&#10;Description&#10;     Initiate a connection to an SMTP server. Returns false if the operation failed.&#10;&#10;Parameters:&#10;    array $options - An array of options compatible with stream_context_create();;d4,1809;;b1,0;;marray $options;;p">
+</treenode>
+<treenode node="smtpSend;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f14;1721;5;1794;;;;vpos;;vbool;;r&#10;Definition&#10;    smtpSend($header, $body)&#10;&#10;Description&#10;     Send mail via SMTP. Returns false if there is a bad MAIL FROM, RCPT, or DATA input.&#10;&#10;Parameters:&#10;    string $header - The message headers&#10;    string $body - The message body;;d4,1722;;b2,0;;mstring $header;;pstring $body;;p">
+</treenode>
+<treenode node="textLine;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;2736;5;2739;;;;vpos;;vstring;;r&#10;Definition&#10;    textLine($value)&#10;&#10;Description&#10;     Return a formatted mail line.&#10;&#10;Parameters:&#10;    string $value;;d4,2737;;b1,0;;mstring $value;;p">
+</treenode>
+<treenode node="utf8CharBoundary;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;2182;5;2218;;;;vpos;;vint;;r&#10;Definition&#10;    utf8CharBoundary($encodedText, $maxLength)&#10;&#10;Description&#10;     Find the last character boundary prior to $maxLength in a utf-8 quoted-printable encoded string. Original written by Colin Brown.&#10;&#10;Parameters:&#10;    string $encodedText - utf-8 QP text&#10;    int $maxLength - Find the last character boundary prior to this length;;d4,2183;;b1,0;;mstring $encodedText;;pint $maxLength;;p">
+</treenode>
+<treenode node="validateAddress;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f18;1195;5;1253;;;;vpos;;vbool;;r&#10;Definition&#10;    validateAddress($address, $patternselect = null)&#10;&#10;Description&#10;     Check that a string looks like an email address. Validation patterns supported: * `auto` Pick best pattern automatically;s * `pcre8` Use the squiloople.com pattern, requires PCRE &gt; 8.0;s * `pcre` Use old PCRE implementation;s * `php` Use PHP built-in FILTER_VALIDATE_EMAIL;s * `html5` Use the pattern given by the HTML5 spec for &apos;email&apos; type form input elements. * `noregex` Don&apos;t use a regex: super fast, really dumb. Alternatively you may pass in a callable to inject your own validator, for example:&#10;&#10;Parameters:&#10;    string $address - The email address to check&#10;    string|callable $patternselect - Which pattern to use;;d4,1196;;b1,5;;mstring $address;;pstring|callable $patternselect;;p">
+</treenode>
+<treenode node="wrapText;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f11;2082;5;2170;;;;vpos;;vstring;;r&#10;Definition&#10;    wrapText($message, $length, $qp_mode = false)&#10;&#10;Description&#10;     Word-wrap message. For use with mailers that do not automatically perform wrapping and for quoted-printable encoded messages. Original written by philippe.&#10;&#10;Parameters:&#10;    string $message - The message to wrap&#10;    int $length - The line length to wrap to&#10;    bool $qp_mode - Whether to run in Quoted-Printable mode;;d4,2083;;b1,0;;mstring $message;;pint $length;;pbool $qp_mode;;p">
+</treenode>
+</treenode>
+<treenode node="Routing;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\routing.php;f0;4;1;73;;;;vpos;;v;;r;;d0,5;;b0,0;;m">
+<treenode node="ErrorPage404;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\routing.php;f1;66;5;72;;;;vpos;;v;;r;;d1,67;;b0,0;;m">
+</treenode>
+<treenode node="execute;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\routing.php;f8;10;2;64;;;;vpos;;v;;r;;d1,11;;b0,5;;m">
+</treenode>
+</treenode>
+<treenode node="SMTP;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f0;29;1;1324;;;;vpos;;v;;r&#10;Definition&#10;    class SMTP&#10;&#10;Description&#10;     PHPMailer RFC821 SMTP email transport class. Implements RFC 821 SMTP commands and provides some utility methods for sending mail to an SMTP server.;;d0,30;;b0,0;;m">
+<treenode node="DEBUG_CLIENT;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f9;67;22;67;;;;vpos;;v;;r&#10;Description&#10;     Debug level to show client -&gt; server messages.;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="DEBUG_CONNECTION;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f9;77;26;77;;;;vpos;;v;;r&#10;Description&#10;     Debug level to show connection status, client -&gt; server and server -&gt; client messages.;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="DEBUG_LOWLEVEL;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f9;82;24;82;;;;vpos;;v;;r&#10;Description&#10;     Debug level to show all messages.;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="DEBUG_OFF;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f9;62;19;62;;;;vpos;;v;;r&#10;Description&#10;     Debug level for no output.;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="DEBUG_SERVER;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f9;72;22;72;;;;vpos;;v;;r&#10;Description&#10;     Debug level to show client -&gt; server and server -&gt; client messages.;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="DEFAULT_PORT;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f9;50;22;50;;;;vposint;;v;;r25;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="LE;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f9;43;12;43;;;;vposstring;;v;;r&quot;\r\n&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="MAX_LINE_LENGTH;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f9;57;25;57;;;;vposint;;v;;r998;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="VERSION;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f9;36;17;36;;;;vposstring;;v;;r&apos;6.0.3&apos;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="authenticate;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f11;423;5;542;;;;vpos;;vbool;;r&#10;Definition&#10;    authenticate(&#10;        $username,&#10;        $password,&#10;        $authtype = null,&#10;        $OAuth = null&#10;    )&#10;&#10;Description&#10;     Perform SMTP authentication. Must be run after hello().&#10;&#10;Parameters:&#10;    string $username - The user name&#10;    string $password - The password&#10;    string $authtype - The auth type (CRAM-MD5, PLAIN, LOGIN, XOAUTH2)&#10;    OAuth $OAuth - An optional OAuth instance for XOAUTH2 authentication&#10;&#10;Return:&#10;   True if successfully authenticated;;d6,428;;b1,0;;mstring $username;;pstring $password;;pstring $authtype;;pOAuth $OAuth;;p">
+</treenode>
+<treenode node="client_send;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f11;1011;5;1026;;;;vpos;;vint;;r&#10;Definition&#10;    client_send($data, $command = &apos;&apos;)&#10;&#10;Description&#10;     Send raw data to the server.&#10;&#10;Parameters:&#10;    string $data - The data to send&#10;    string $command - Optionally, the command this is part of, used only for controlling debug output&#10;&#10;Return:&#10;   |bool The number of bytes sent to the server or false on error;;d4,1012;;b1,0;;mstring $data;;pstring $command;;p">
+</treenode>
+<treenode node="close;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f11;613;5;624;;;;vpos;;v;;r&#10;Definition&#10;    close()&#10;&#10;Description&#10;     Close the socket and clean up the state of the class. Don&apos;t use this function without first trying to use QUIT.;;d4,614;;b1,0;;m">
+</treenode>
+<treenode node="connect;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f11;287;5;375;;;;vpos;;vbool;;r&#10;Definition&#10;    connect($host, $port = null, $timeout = 30, $options = [])&#10;&#10;Description&#10;     Connect to an SMTP server.&#10;&#10;Parameters:&#10;    string $host - SMTP server IP or host name&#10;    int $port - The port number to connect to&#10;    int $timeout - How long to wait for the connection to open&#10;    array $options - An array of options for stream_context_create();;d4,288;;b1,0;;mstring $host;;pint $port;;pint $timeout;;parray $options;;p">
+</treenode>
+<treenode node="connected;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f11;586;5;605;;;;vpos;;vbool;;r&#10;Definition&#10;    connected()&#10;&#10;Description&#10;     Check connection state.&#10;&#10;Return:&#10;   True if connected;;d4,587;;b1,0;;m">
+</treenode>
+<treenode node="data;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f11;639;5;718;;;;vpos;;vbool;;r&#10;Definition&#10;    data($msg_data)&#10;&#10;Description&#10;     Send an SMTP DATA command. Issues a data command and sends the msg_data to the server, finializing the mail transaction. $msg_data is the message that is to be send with the headers. Each header needs to be on a single line followed by a &lt;CRLF&gt; with the message headers and the message body being separated by an additional &lt;CRLF&gt;. Implements RFC 821: DATA &lt;CRLF&gt;.&#10;&#10;Parameters:&#10;    string $msg_data - Message data to send;;d4,640;;b1,0;;mstring $msg_data;;p">
+</treenode>
+<treenode node="edebug;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f14;228;5;275;;;;vpos;;v;;r&#10;Definition&#10;    edebug($str, $level = 0)&#10;&#10;Description&#10;     Output debugging info via a user-selected method.&#10;&#10;Parameters:&#10;    string $str - Debug string to output&#10;    int $level - The debug level of this message;s see DEBUG_* constants;;d4,229;;b2,0;;mstring $str;;pint $level;;p">
+</treenode>
+<treenode node="errorHandler;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f14;1269;5;1281;;;;vpos;;v;;r&#10;Definition&#10;    errorHandler($errno, $errmsg, $errfile = &apos;&apos;, $errline = 0)&#10;&#10;Description&#10;     Reports an error number and string.&#10;&#10;Parameters:&#10;    int $errno - The error number returned by PHP&#10;    string $errmsg - The error message returned by PHP&#10;    string $errfile - The file the error occurred in&#10;    int $errline - The line number the error occurred on;;d4,1270;;b2,0;;mint $errno;;pstring $errmsg;;pstring $errfile;;pint $errline;;p">
+</treenode>
+<treenode node="get_lines;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f14;1107;5;1161;;;;vpos;;vstring;;r&#10;Definition&#10;    get_lines()&#10;&#10;Description&#10;     Read the SMTP server&apos;s response. Either before eof or socket timeout occurs on the operation. With SMTP we can tell if we have more lines to read if the 4th character is &apos;-&apos; symbol. If it is a space then we don&apos;t need to read anything else.;;d4,1108;;b2,0;;m">
+</treenode>
+<treenode node="getDebugLevel;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f11;1236;5;1239;;;;vpos;;vint;;r&#10;Definition&#10;    getDebugLevel()&#10;&#10;Description&#10;     Get debug output level.;;d4,1237;;b1,0;;m">
+</treenode>
+<treenode node="getDebugOutput;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f11;1216;5;1219;;;;vpos;;vstring;;r&#10;Definition&#10;    getDebugOutput()&#10;&#10;Description&#10;     Get debug output method.;;d4,1217;;b1,0;;m">
+</treenode>
+<treenode node="getError;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f11;1033;5;1036;;;;vpos;;varray;;r&#10;Definition&#10;    getError()&#10;&#10;Description&#10;     Get the latest error.;;d4,1034;;b1,0;;m">
+</treenode>
+<treenode node="getLastReply;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f11;1093;5;1096;;;;vpos;;vstring;;r&#10;Definition&#10;    getLastReply()&#10;&#10;Description&#10;     Get the last reply from the server.;;d4,1094;;b1,0;;m">
+</treenode>
+<treenode node="getLastTransactionID;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f11;1320;5;1323;;;;vpos;;vbool;;r&#10;Definition&#10;    getLastTransactionID()&#10;&#10;Description&#10;     Get the queue/transaction ID of the last SMTP transaction If no reply has been received yet, it will return null. If no pattern was matched, it will return false.&#10;&#10;Return:&#10;   |null|string;;d4,1321;;b1,0;;m">
+</treenode>
+<treenode node="getServerExt;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f11;1065;5;1086;;;;vpos;;vmixed;;r&#10;Definition&#10;    getServerExt($name)&#10;&#10;Description&#10;     Get metadata about the SMTP server from its HELO/EHLO response. The method works in three ways, dependent on argument value and current state: 1. HELO/EHLO has not been sent - returns null and populates $this-&gt;error. 2. HELO has been sent - $name == &apos;HELO&apos;: returns server name $name == &apos;EHLO&apos;: returns boolean false $name == any other string: returns null and populates $this-&gt;error 3. EHLO has been sent - $name == &apos;HELO&apos;|&apos;EHLO&apos;: returns the server name $name == any other string: if extension $name exists, returns True or its options (e.g. AUTH mechanisms supported). Otherwise returns False.&#10;&#10;Parameters:&#10;    string $name - Name of SMTP extension or &apos;HELO&apos;|&apos;EHLO&apos;;;d4,1066;;b1,0;;mstring $name;;p">
+</treenode>
+<treenode node="getServerExtList;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f11;1043;5;1046;;;;vpos;;varray;;r&#10;Definition&#10;    getServerExtList()&#10;&#10;Description&#10;     Get SMTP extensions available on the server.&#10;&#10;Return:&#10;   |null;;d4,1044;;b1,0;;m">
+</treenode>
+<treenode node="getTimeout;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f11;1256;5;1259;;;;vpos;;vint;;r&#10;Definition&#10;    getTimeout()&#10;&#10;Description&#10;     Get SMTP timeout.;;d4,1257;;b1,0;;m">
+</treenode>
+<treenode node="getVerp;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f11;1178;5;1181;;;;vpos;;vbool;;r&#10;Definition&#10;    getVerp()&#10;&#10;Description&#10;     Get VERP address generation mode.;;d4,1179;;b1,0;;m">
+</treenode>
+<treenode node="hello;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f11;731;5;735;;;;vpos;;vbool;;r&#10;Definition&#10;    hello($host = &apos;&apos;)&#10;&#10;Description&#10;     Send an SMTP HELO or EHLO command. Used to identify the sending server to the receiving server. This makes sure that client and server are in a known state. Implements RFC 821: HELO &lt;SP&gt; &lt;domain&gt; &lt;CRLF&gt; and RFC 2821 EHLO.&#10;&#10;Parameters:&#10;    string $host - The host name or IP to connect to;;d4,732;;b1,0;;mstring $host;;p">
+</treenode>
+<treenode node="hmac;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f14;554;5;579;;;;vpos;;vstring;;r&#10;Definition&#10;    hmac($data, $key)&#10;&#10;Description&#10;     Calculate an MD5 HMAC hash. Works like hash_hmac(&apos;md5&apos;, $data, $key) in case that function is not available.&#10;&#10;Parameters:&#10;    string $data - The data to hash&#10;    string $key - The key to hash with;;d4,555;;b2,0;;mstring $data;;pstring $key;;p">
+</treenode>
+<treenode node="mail;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f11;815;5;824;;;;vpos;;vbool;;r&#10;Definition&#10;    mail($from)&#10;&#10;Description&#10;     Send an SMTP MAIL command. Starts a mail transaction from the email address specified in $from. Returns true if successful or false otherwise. If True the mail transaction is started and then one or more recipient commands may be called followed by a data command. Implements RFC 821: MAIL &lt;SP&gt; FROM:&lt;reverse-path&gt; &lt;CRLF&gt;.&#10;&#10;Parameters:&#10;    string $from - Source address of this message;;d4,816;;b1,0;;mstring $from;;p">
+</treenode>
+<treenode node="noop;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f11;981;5;984;;;;vpos;;vbool;;r&#10;Definition&#10;    noop()&#10;&#10;Description&#10;     Send an SMTP NOOP command. Used to keep keep-alives alive, doesn&apos;t actually do anything.;;d4,982;;b1,0;;m">
+</treenode>
+<treenode node="parseHelloFields;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f14;767;5;801;;;;vpos;;v;;r&#10;Definition&#10;    parseHelloFields($type)&#10;&#10;Description&#10;     Parse a reply to HELO/EHLO command to discover server extensions. In case of HELO, the only parameter that can be discovered is a server name.&#10;&#10;Parameters:&#10;    string $type - `HELO` or `EHLO`;;d4,768;;b2,0;;mstring $type;;p">
+</treenode>
+<treenode node="quit;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f11;835;5;845;;;;vpos;;vbool;;r&#10;Definition&#10;    quit($close_on_error = true)&#10;&#10;Description&#10;     Send an SMTP QUIT command. Closes the socket if there is no error or the $close_on_error argument is true. Implements from RFC 821: QUIT &lt;CRLF&gt;.&#10;&#10;Parameters:&#10;    bool $close_on_error - Should the connection close if an error occurs?;;d4,836;;b1,0;;mbool $close_on_error;;p">
+</treenode>
+<treenode node="recipient;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f11;857;5;864;;;;vpos;;vbool;;r&#10;Definition&#10;    recipient($address)&#10;&#10;Description&#10;     Send an SMTP RCPT command. Sets the TO argument to $toaddr. Returns true if the recipient was accepted false if it was rejected. Implements from RFC 821: RCPT &lt;SP&gt; TO:&lt;forward-path&gt; &lt;CRLF&gt;.&#10;&#10;Parameters:&#10;    string $address - The address the message is being sent to;;d4,858;;b1,0;;mstring $address;;p">
+</treenode>
+<treenode node="recordLastTransactionID;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f14;1292;5;1309;;;;vpos;;vbool;;r&#10;Definition&#10;    recordLastTransactionID()&#10;&#10;Description&#10;     Extract and return the ID of the last SMTP transaction based on a list of patterns provided in SMTP::$smtp_transaction_id_patterns. Relies on the host providing the ID in response to a DATA command. If no reply has been received yet, it will return null. If no pattern was matched, it will return false.&#10;&#10;Return:&#10;   |null|string;;d4,1293;;b2,0;;m">
+</treenode>
+<treenode node="reset;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f11;873;5;876;;;;vpos;;vbool;;r&#10;Definition&#10;    reset()&#10;&#10;Description&#10;     Send an SMTP RSET command. Abort any transaction that is currently in progress. Implements RFC 821: RSET &lt;CRLF&gt;.&#10;&#10;Return:&#10;   True on success;;d4,874;;b1,0;;m">
+</treenode>
+<treenode node="sendAndMail;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f11;958;5;961;;;;vpos;;vbool;;r&#10;Definition&#10;    sendAndMail($from)&#10;&#10;Description&#10;     Send an SMTP SAML command. Starts a mail transaction from the email address specified in $from. Returns true if successful or false otherwise. If True the mail transaction is started and then one or more recipient commands may be called followed by a data command. This command will send the message to the users terminal if they are logged in and send them an email. Implements RFC 821: SAML &lt;SP&gt; FROM:&lt;reverse-path&gt; &lt;CRLF&gt;.&#10;&#10;Parameters:&#10;    string $from - The address the message is from;;d4,959;;b1,0;;mstring $from;;p">
+</treenode>
+<treenode node="sendCommand;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f14;887;5;942;;;;vpos;;vbool;;r&#10;Definition&#10;    sendCommand($command, $commandstring, $expect)&#10;&#10;Description&#10;     Send a command to an SMTP server and check its return code.&#10;&#10;Parameters:&#10;    string $command - The command name - not sent to the server&#10;    string $commandstring - The actual command to send&#10;    int|array $expect - One or more expected integer success codes&#10;&#10;Return:&#10;   True on success;;d4,888;;b2,0;;mstring $command;;pstring $commandstring;;pint|array $expect;;p">
+</treenode>
+<treenode node="sendHello;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f14;748;5;759;;;;vpos;;vbool;;r&#10;Definition&#10;    sendHello($hello, $host)&#10;&#10;Description&#10;     Send an SMTP HELO or EHLO command. Low-level implementation used by hello().&#10;&#10;Parameters:&#10;    string $hello - The HELO string&#10;    string $host - The hostname to say we are;;d4,749;;b2,0;;mstring $hello;;pstring $host;;p">
+</treenode>
+<treenode node="setDebugLevel;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f11;1226;5;1229;;;;vpos;;v;;r&#10;Definition&#10;    setDebugLevel($level = 0)&#10;&#10;Description&#10;     Set debug output level.&#10;&#10;Parameters:&#10;    int $level;;d4,1227;;b1,0;;mint $level;;p">
+</treenode>
+<treenode node="setDebugOutput;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f11;1206;5;1209;;;;vpos;;v;;r&#10;Definition&#10;    setDebugOutput($method = &apos;echo&apos;)&#10;&#10;Description&#10;     Set debug output method.&#10;&#10;Parameters:&#10;    string|callable $method - The name of the mechanism to use for debugging output, or a callable to handle it;;d4,1207;;b1,0;;mstring|callable $method;;p">
+</treenode>
+<treenode node="setError;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f14;1191;5;1199;;;;vpos;;v;;r&#10;Definition&#10;    setError($message, $detail = &apos;&apos;, $smtp_code = &apos;&apos;, $smtp_code_ex = &apos;&apos;)&#10;&#10;Description&#10;     Set error messages and codes.&#10;&#10;Parameters:&#10;    string $message - The error message&#10;    string $detail - Further detail on the error&#10;    string $smtp_code - An associated SMTP error code&#10;    string $smtp_code_ex - Extended SMTP code;;d4,1192;;b2,0;;mstring $message;;pstring $detail;;pstring $smtp_code;;pstring $smtp_code_ex;;p">
+</treenode>
+<treenode node="setTimeout;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f11;1246;5;1249;;;;vpos;;v;;r&#10;Definition&#10;    setTimeout($timeout = 0)&#10;&#10;Description&#10;     Set SMTP timeout.&#10;&#10;Parameters:&#10;    int $timeout - The timeout duration in seconds;;d4,1247;;b1,0;;mint $timeout;;p">
+</treenode>
+<treenode node="setVerp;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f11;1168;5;1171;;;;vpos;;v;;r&#10;Definition&#10;    setVerp($enabled = false)&#10;&#10;Description&#10;     Enable or disable VERP address generation.&#10;&#10;Parameters:&#10;    bool $enabled;;d4,1169;;b1,0;;mbool $enabled;;p">
+</treenode>
+<treenode node="startTLS;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f11;382;5;408;;;;vpos;;vbool;;r&#10;Definition&#10;    startTLS()&#10;&#10;Description&#10;     Initiate a TLS (encrypted) session.;;d4,383;;b1,0;;m">
+</treenode>
+<treenode node="turn;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f11;995;5;1001;;;;vpos;;vbool;;r&#10;Definition&#10;    turn()&#10;&#10;Description&#10;     Send an SMTP TURN command. This is an optional command for SMTP that this class does not support. This method is here to make the RFC821 Definition complete for this class and _may_ be implemented in future. Implements from RFC 821: TURN &lt;CRLF&gt;.;;d4,996;;b1,0;;m">
+</treenode>
+<treenode node="verify;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php;f11;970;5;973;;;;vpos;;vbool;;r&#10;Definition&#10;    verify($name)&#10;&#10;Description&#10;     Send an SMTP VRFY command.&#10;&#10;Parameters:&#10;    string $name - The name to verify;;d4,971;;b1,0;;mstring $name;;p">
+</treenode>
+</treenode>
+<treenode node="View;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\view.php;f0;4;1;16;;;;vpos;;v;;r;;d0,5;;b0,0;;m">
+<treenode node="generate;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\view.php;f8;12;2;15;;;;vpos;;v;;r;;d1,13;;b1,0;;mcontent_view;;playout_view;;ptitle;;pdata;;p">
+</treenode>
+</treenode>
+</phptree>
+</codestructure>
