@@ -12,4 +12,4 @@ namespace tinyframe\core\config;
 define("DB_HOST", "localhost"); // MySQL hostname
 define("DB_USER", "root"); // MySQL database username
 define("DB_PASSWORD", ""); // MySQL database password
-define("DB_NAME", "tinyframe"); // MySQL database name
+define("DB_NAME", "portalbsu"); // MySQL database name
