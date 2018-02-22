@@ -6,7 +6,7 @@ use tinyframe\core\helpers\Captcha_Helper as Captcha_Helper;
 	$captcha->create();
 	
 	// check login
-	if (isset($_SESSION['user_logon']) && $_SESSION['user_logon'] == 1) {
+	if (isset($_SESSION['user']['id'])) {
 		$basic_helper->redirect(APP_NAME, 202, BEHAVIOR.'/Main', 'Index');
 	}
 	
@@ -14,7 +14,7 @@ use tinyframe\core\helpers\Captcha_Helper as Captcha_Helper;
 ?>
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
 	<form action="/<?php echo BEHAVIOR; ?>/Signup/Signup" method="post" id="form_signup" novalidate>
-		<legend><?php echo SIGNUP_HDR; ?></legend>
+		<legend class="font-weight-bold"><?php echo SIGNUP_HDR; ?></legend>
 		<div class="form-group row">
 			<label class="form-control-label text-danger" for="username"><i class="fas fa-user fa-2x"></i></label>
 			<div class="col">
@@ -68,7 +68,7 @@ use tinyframe\core\helpers\Captcha_Helper as Captcha_Helper;
 		<div class="form-group">
 			<div class="col">
 				<button type="submit" class="btn btn-success" id="btn_signup" name="btn_signup">Зарегистрироваться</button>
-				<a href="/<?php echo BEHAVIOR; ?>/Signup/Reset" class="btn btn-danger">Сбросить</a>
+				<a href="/<?php echo BEHAVIOR; ?>/Signup/Reset" class="btn btn-danger">Очистить</a>
 				<a href="/<?php echo BEHAVIOR; ?>/Login/Index" class="btn btn-primary">Войти</a>
 			</div>
 		</div>

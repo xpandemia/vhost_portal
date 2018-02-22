@@ -23,50 +23,20 @@ class Model_ResetPwd extends Model
 	{
 		return [
                 'pwd' => [
-                            'required' => ['value' => 'true', 'default' => '', 'msg' => 'Пароль обязателен для заполнения!'],
+                            'type' => 'password',
+                            'class' => 'form-control',
+                            'required' => ['default' => '', 'msg' => 'Пароль обязателен для заполнения!'],
                             'pattern' => ['value' => PATTERN_ALPHA_NUMB, 'msg' => 'Пароль должен быть буквенно-цифровым!'],
-                            'width' => ['value' => 'true', 'format' => 'string', 'min' => 6, 'max' => 10, 'msg' => 'Пароль должен быть 6-10 символов длиной!']
+                            'width' => ['format' => 'string', 'min' => 6, 'max' => 10, 'msg' => 'Пароль должен быть 6-10 символов длиной!']
                            ],
 				'pwd_confirm' => [
-                            'required' => ['value' => 'true', 'default' => '', 'msg' => 'Пароль обязателен для заполнения!'],
+                            'type' => 'password',
+                            'class' => 'form-control',
+                            'required' => ['default' => '', 'msg' => 'Пароль обязателен для заполнения!'],
                             'pattern' => ['value' => PATTERN_ALPHA_NUMB, 'msg' => 'Пароль должен быть буквенно-цифровым!'],
-                            'width' => ['value' => 'true', 'format' => 'string', 'min' => 6, 'max' => 10, 'msg' => 'Пароль должен быть 6-10 символов длиной!']
+                            'width' => ['format' => 'string', 'min' => 6, 'max' => 10, 'msg' => 'Пароль должен быть 6-10 символов длиной!']
                            ]
             ];
-	}
-
-	/**
-     * Reset password reset.
-     *
-     * @return nothing
-     */
-	public function reset($vars)
-	{
-		$this->resetForm($vars, $this->form, $this->rules());
-	}
-
-	/**
-     * Gets reset password page data.
-     *
-     * @return nothing
-     */
-	public function getPost($post)
-	{
-		foreach ($post as $varname => $varvalue) {
-			$_SESSION[$this->form][$varname] = htmlspecialchars($varvalue);
-		}
-	}
-
-	/**
-     * Validates reset password page.
-     *
-     * @return boolean
-     */
-	public function validate()
-	{
-		$this->reset(false);
-		$form_helper = new Form_Helper();
-		return $form_helper->validate($this->form, $_SESSION[$this->form], $this->rules());
 	}
 
 	/**

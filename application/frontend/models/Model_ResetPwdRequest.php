@@ -24,45 +24,13 @@ class Model_ResetPwdRequest extends Model
 	{
 		return [
                 'email' => [
-                                'required' => ['value' => 'true', 'default' => '', 'msg' => 'Адрес эл. почты обязателен для заполнения!'],
-                                'pattern' => ['value' => PATTERN_EMAIL_LIGHT, 'msg' => 'Адрес электронной почты должен быть в формате user@domain.ru'],
-                                'width' => ['value' => 'true', 'format' => 'string', 'min' => 0, 'max' => 45, 'msg' => 'Слишком длинный адрес эл. почты!']
+							'type' => 'email',
+                            'class' => 'form-control',
+                            'required' => ['default' => '', 'msg' => 'Адрес эл. почты обязателен для заполнения!'],
+                            'pattern' => ['value' => PATTERN_EMAIL_LIGHT, 'msg' => 'Адрес электронной почты должен быть в формате user@domain.ru'],
+                            'width' => ['format' => 'string', 'min' => 0, 'max' => 45, 'msg' => 'Слишком длинный адрес эл. почты!']
                             ]
             ];
-	}
-
-	/**
-     * Reset password request reset.
-     *
-     * @return nothing
-     */
-	public function reset($vars)
-	{
-		$this->resetForm($vars, $this->form, $this->rules());
-	}
-
-	/**
-     * Gets reset password request page data.
-     *
-     * @return nothing
-     */
-	public function getPost($post)
-	{
-		foreach ($post as $varname => $varvalue) {
-			$_SESSION[$this->form][$varname] = htmlspecialchars($varvalue);
-		}
-	}
-
-	/**
-     * Validates reset password request page.
-     *
-     * @return boolean
-     */
-	public function validate()
-	{
-		$this->reset(false);
-		$form_helper = new Form_Helper();
-		return $form_helper->validate($this->form, $_SESSION[$this->form], $this->rules());
 	}
 
 	/**

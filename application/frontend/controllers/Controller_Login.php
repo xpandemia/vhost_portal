@@ -30,7 +30,7 @@ class Controller_Login extends Controller
 	public function actionIndex()
 	{
 		if (!isset($_SESSION[$this->form])) {
-			$this->model->reset(true);
+			$this->model->setForm($this->form, $this->model->rules(), null);
 		}
 		return $this->view->generate('login.php', 'form.php', LOGIN_HDR);
 	}
@@ -42,7 +42,7 @@ class Controller_Login extends Controller
      */
 	public function actionReset()
 	{
-		$this->model->reset(true);
+		$this->model->resetForm(true, $this->form, $this->model->rules());
 		return $this->actionIndex();
 	}
 
@@ -53,19 +53,14 @@ class Controller_Login extends Controller
      */
 	public function actionLogin()
 	{
-		$basic_helper = new Basic_Helper;
-		$form_helper = new Form_Helper();
-		$this->model->getpost($_POST);
-		if ($this->model->validate()) {
+		$this->model->getForm($this->model->rules(), $_POST);
+		if ($this->model->validateForm($this->form, $this->model->rules())) {
 			if ($this->model->check()) {
-				$_SESSION['user_id'] = $_SESSION['login']['username'];
-				$_SESSION['user_role'] = 'guest';
-				$_SESSION['user_logon'] = 1;
-				$this->model->reset(true);
-				return $basic_helper->redirect(APP_NAME, 202, BEHAVIOR.'/Main', 'Index');
+				$this->model->resetForm(true, $this->form, $this->model->rules());
+				return Basic_Helper::redirect(APP_NAME, 202, BEHAVIOR.'/Main', 'Index');
 			}
 		}
-		return $basic_helper->redirect(LOGIN_HDR, 202, BEHAVIOR.'/Login', 'Index');
+		return Basic_Helper::redirect(LOGIN_HDR, 202, BEHAVIOR.'/Login', 'Index');
 	}
 
 	public function __destruct()

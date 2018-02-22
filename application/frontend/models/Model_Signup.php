@@ -24,68 +24,44 @@ class Model_Signup extends Model
 	{
 		return [
                 'username' => [
-                                'required' => ['value' => 'true', 'default' => '', 'msg' => 'Логин обязателен для заполнения!'],
+                                'type' => 'text',
+                                'class' => 'form-control',
+                                'required' => ['default' => '', 'msg' => 'Логин обязателен для заполнения!'],
                                 'pattern' => ['value' => PATTERN_ALPHA, 'msg' => 'Для логина можно использовать только буквы!'],
-                                'width' => ['value' => 'true', 'format' => 'string', 'min' => 1, 'max' => 45, 'msg' => 'Слишком длинный логин!'],
-                                'unique' => ['value' => 'true', 'class' => 'common\\models\\Model_User', 'method' => 'ExistsUsername', 'msg' => 'Такой логин уже есть!']
+                                'width' => ['format' => 'string', 'min' => 1, 'max' => 45, 'msg' => 'Слишком длинный логин!'],
+                                'unique' => ['class' => 'common\\models\\Model_User', 'method' => 'ExistsUsername', 'msg' => 'Такой логин уже есть!']
                                ],
                 'email' => [
-                                'required' => ['value' => 'true', 'default' => '', 'msg' => 'Адрес эл. почты обязателен для заполнения!'],
-                                'pattern' => ['value' => PATTERN_EMAIL_LIGHT, 'msg' => 'Адрес электронной почты должен быть в формате user@domain.ru'],
-                                'width' => ['value' => 'true', 'format' => 'string', 'min' => 0, 'max' => 45, 'msg' => 'Слишком длинный адрес эл. почты!'],
-                                'unique' => ['value' => 'true', 'class' => 'common\\models\\Model_User', 'method' => 'ExistsEmail', 'msg' => 'Такой адрес эл. почты уже есть!']
-                               ],
-                'pwd' => [
-                            'required' => ['value' => 'true', 'default' => '', 'msg' => 'Пароль обязателен для заполнения!'],
-                            'pattern' => ['value' => PATTERN_ALPHA_NUMB, 'msg' => 'Пароль должен быть буквенно-цифровым!'],
-                            'width' => ['value' => 'true', 'format' => 'string', 'min' => 6, 'max' => 10, 'msg' => 'Пароль должен быть 6-10 символов длиной!']
+                            'type' => 'email',
+                            'class' => 'form-control',
+                            'required' => ['default' => '', 'msg' => 'Адрес эл. почты обязателен для заполнения!'],
+                            'pattern' => ['value' => PATTERN_EMAIL_LIGHT, 'msg' => 'Адрес электронной почты должен быть в формате user@domain.ru'],
+                            'width' => ['format' => 'string', 'min' => 0, 'max' => 45, 'msg' => 'Слишком длинный адрес эл. почты!'],
+                            'unique' => ['class' => 'common\\models\\Model_User', 'method' => 'ExistsEmail', 'msg' => 'Такой адрес эл. почты уже есть!']
                            ],
+                'pwd' => [
+							'type' => 'password',
+                            'class' => 'form-control',
+	                        'required' => ['default' => '', 'msg' => 'Пароль обязателен для заполнения!'],
+	                        'pattern' => ['value' => PATTERN_ALPHA_NUMB, 'msg' => 'Пароль должен быть буквенно-цифровым!'],
+	                        'width' => ['format' => 'string', 'min' => 6, 'max' => 10, 'msg' => 'Пароль должен быть 6-10 символов длиной!']
+	                       ],
 				'pwd_confirm' => [
-                            'required' => ['value' => 'true', 'default' => '', 'msg' => 'Пароль обязателен для заполнения!'],
+                            'type' => 'password',
+                            'class' => 'form-control',
+                            'required' => ['default' => '', 'msg' => 'Пароль обязателен для заполнения!'],
                             'pattern' => ['value' => PATTERN_ALPHA_NUMB, 'msg' => 'Пароль должен быть буквенно-цифровым!'],
-                            'width' => ['value' => 'true', 'format' => 'string', 'min' => 6, 'max' => 10, 'msg' => 'Пароль должен быть 6-10 символов длиной!']
+                            'width' => ['format' => 'string', 'min' => 6, 'max' => 10, 'msg' => 'Пароль должен быть 6-10 символов длиной!']
                            ],
                 'captcha' => [
-                            'required' => ['value' => 'true', 'default' => '', 'msg' => 'Указанный на изображении код обязателен!'],
+                            'type' => 'text',
+                            'class' => 'form-control',
+                            'required' => ['default' => '', 'msg' => 'Указанный на изображении код обязателен!'],
                             'pattern' => ['value' => PATTERN_ALPHA_NUMB, 'msg' => 'Код, указанный на изображении, должен быть буквенно-цифровым!'],
-                            'width' => ['value' => 'true', 'format' => 'string', 'min' => CAPTCHA_LEN, 'max' => CAPTCHA_LEN, 'msg' => 'Код, указанный на изображении, должен быть '.CAPTCHA_LEN.' символов длиной!'],
+                            'width' => ['format' => 'string', 'min' => CAPTCHA_LEN, 'max' => CAPTCHA_LEN, 'msg' => 'Код, указанный на изображении, должен быть '.CAPTCHA_LEN.' символов длиной!'],
                             'compared' => ['type' => '==', 'value' => $_SESSION['captcha'], 'msg' => 'Введен неверный код, указанный на изображении!']
                            ]
             ];
-	}
-
-	/**
-     * Signup reset.
-     *
-     * @return nothing
-     */
-	public function reset($vars)
-	{
-		$this->resetForm($vars, $this->form, $this->rules());
-	}
-
-	/**
-     * Gets signup page data.
-     *
-     * @return nothing
-     */
-	public function getPost($post)
-	{
-		foreach ($post as $varname => $varvalue) {
-			$_SESSION[$this->form][$varname] = htmlspecialchars($varvalue);
-		}
-	}
-
-	/**
-     * Validates signup page.
-     *
-     * @return boolean
-     */
-	public function validate()
-	{
-		$this->reset(false);
-		$form_helper = new Form_Helper();
-		return $form_helper->validate($this->form, $_SESSION[$this->form], $this->rules());
 	}
 
 	/**
@@ -121,18 +97,18 @@ class Model_Signup extends Model
 							    </body>
 							</html>';
 				if ($mail->sendEmail($_SESSION[$this->form]['email'], $_SESSION[$this->form]['username'], $subject, $message)) {
-					return TRUE;
+					return true;
 				} else {
 					$_SESSION[$this->form]['error_msg'] = 'Ошибка при отправке эл. сообщения!';
-					return FALSE;
+					return false;
 				}
 			} else {
 				$_SESSION[$this->form]['error_msg'] = 'Ошибка при сохранении пользователя!';
-				return FALSE;
+				return false;
 			}
 		} else {
 			$_SESSION[$this->form]['error_msg'] = 'Пароли не совпадают!';
-			return FALSE;
+			return false;
 		}
 	}
 
@@ -147,11 +123,18 @@ class Model_Signup extends Model
 		$user->email = $email;
 		$row = $user->getUserByEmail();
 		if ($activation == $row['activation']) {
-			$_SESSION[$this->form]['username'] = $row['username'];
 			$user->status = $user::STATUS_ACTIVE;
-			return $user->changeStatus();
+			if ($user->changeStatus()) {
+				$user->id = $row['id'];
+				$user->username = $row['username'];
+				$user->role = $row['role'];
+				$user->setUser();
+				return true;
+			} else {
+				return false;
+			}
 		} else {
-			return FALSE;
+			return false;
 		}
 	}
 }

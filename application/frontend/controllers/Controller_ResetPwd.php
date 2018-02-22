@@ -29,7 +29,7 @@ class Controller_ResetPwd extends Controller
 	public function actionIndex()
 	{
 		if (!isset($_SESSION[$this->form])) {
-			$this->model->reset(true);
+			$this->model->setForm($this->form, $this->model->rules(), null);
 		}
 		if (isset($_SESSION[$this->form]['pwd_token']) && isset($_SESSION[$this->form]['email'])) {
 			$_SESSION[$this->form]['success_msg'] = 'Ваш запрос на восстановление пароля подтвержден';	
@@ -44,7 +44,7 @@ class Controller_ResetPwd extends Controller
      */
 	public function actionReset()
 	{
-		$this->model->reset(true);
+		$this->model->resetForm(true, $this->form, $this->model->rules());
 		return $this->actionIndex();
 	}
 
@@ -55,19 +55,18 @@ class Controller_ResetPwd extends Controller
      */
 	public function actionResetPwd()
 	{
-		$basic_helper = new Basic_Helper;
-		$this->model->getpost($_POST);
-		if ($this->model->validate()) {
+		$this->model->getForm($this->model->rules(), $_POST);
+		if ($this->model->validateForm($this->form, $this->model->rules())) {
 			if ($this->model->resetPwd()) {
-				$this->model->reset(true);
-				$_SESSION[$form]['pwd_token'] = null;
-				$_SESSION[$form]['email'] = null;
+				$this->model->resetForm(true, $this->form, $this->model->rules());
+				$_SESSION[$this->form]['pwd_token'] = null;
+				$_SESSION[$this->form]['email'] = null;
 				$_SESSION['login']['error_msg'] = null;
 				$_SESSION['login']['success_msg'] = 'Ваш пароль успешно изменён.';
-				return $basic_helper->redirect(LOGIN_HDR, 202, BEHAVIOR.'/Login', 'Index');
+				return Basic_Helper::redirect(LOGIN_HDR, 202, BEHAVIOR.'/Login', 'Index');
 			}
 		}
-		return $basic_helper->redirect(RESET_PWD_REQUEST_HDR, 202, BEHAVIOR.'/ResetPwd', 'Index');
+		return Basic_Helper::redirect(RESET_PWD_REQUEST_HDR, 202, BEHAVIOR.'/ResetPwd', 'Index');
 	}
 
 	/**

@@ -17,3 +17,5 @@ define("SIGNUP_HDR", "Регистрация");
 define("RESET_PWD_REQUEST_HDR", "Восстановление пароля");
 // Reset password form
 define("RESET_PWD_HDR", "Восстановление пароля");
+// Personal data form
+define("RESUME_HDR", "Личные данные");

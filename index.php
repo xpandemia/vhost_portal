@@ -2,15 +2,10 @@
 
 define('APP_NAME', 'Портал БелГУ');
 define('APP_CODE', 'portalbsu');
-define('APP_VERSION', '0.1');
+define('APP_VERSION', '0.1.1');
 
-# Tinyframe
-# Build with curiosity by Fiben
-# Powered with Bootstrap 4.0.0, JQuery 3.3.1, FontAwesome 5.0.4 and PHPMailer 6.0.3
-
-# Please set your application configuration here
-# If you do not have any configuration, please leave the
-# following variables blank
+# Портал БелГУ
+# Build with curiosity by Fiben on Tinyframe 0.1.5
 
 // These headers tell the browser to not load anything from cache at all
 // and force the browser to make a server request even on a Back click
@@ -22,6 +17,10 @@ header("Pragma: no-cache"); // HTTP/1.0
 
 session_start();
 ob_start();
+
+# Please set your application configuration here
+# If you do not have any configuration, please leave the
+# following variables blank
 
 # ---------------------------------------------------------------
 # ENVIRONMENT

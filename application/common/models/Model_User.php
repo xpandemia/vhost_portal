@@ -4,10 +4,10 @@ namespace common\models;
 
 use tinyframe\core\helpers\Db_Helper as Db_Helper;
 
-define("USERNAME_HELP", "Логин должен содержать <b>только буквы</b>, и быть не более <b>45</b> символов длиной.");
-define("EMAIL_HELP", "Адрес электронной почты должен быть в формате <b>user@domain</b> и не более <b>45</b> символов длиной.");
-define("PWD_HELP", "Пароль должен содержать <b>только буквы и цифры</b>, и быть <b>6-10</b> символов длиной.");
-define("PWD_CONFIRM_HELP", "Пароль должен содержать <b>только буквы и цифры</b>, и быть <b>6-10</b> символов длиной.");
+define("USERNAME_HELP", "Логин должен содержать <b>только латинские буквы</b>, и быть не более <b>45</b> символов длиной.");
+define("EMAIL_HELP", "Адрес электронной почты должен быть в формате <b>user@domain</b>, содержать <b>только латинские буквы</b> и не более <b>45</b> символов длиной.");
+define("PWD_HELP", "Пароль должен содержать <b>только латинские буквы и цифры</b>, и быть <b>6-10</b> символов длиной.");
+define("PWD_CONFIRM_HELP", "Пароль должен содержать <b>только латинские буквы и цифры</b>, и быть <b>6-10</b> символов длиной.");
 
 define("USERNAME_PLC", "Логин");
 define("EMAIL_PLC", "user@domain");
@@ -20,15 +20,19 @@ class Model_User extends Db_Helper
 		Users processing
 	*/
 
+	public $form = 'user';
+
 	const STATUS_NOTACTIVE = 0;
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 2;
 
+	public $id;
 	public $username;
 	public $email;
 	public $pwd_hash;
 	public $activation;
 	public $pwd_token;
+	public $role;
 	public $status;
 	public $dt_created;
 
@@ -136,6 +140,32 @@ class Model_User extends Db_Helper
 		return $this->rowUpdate('user',
 								'pwd_hash = :pwd_hash, dt_updated = :dt_updated',
 								[':pwd_hash' => $this->pwd_hash, ':dt_updated' => date('Y-m-d H:i:s')]);
+	}
+
+	/**
+     * Sets user session.
+     *
+     * @return nothing
+     */
+	public function setUser()
+	{
+		$_SESSION[$this->form]['id'] = $this->id;
+		$_SESSION[$this->form]['username'] = $this->username;
+		$_SESSION[$this->form]['role'] = $this->role;
+		$_SESSION[$this->form]['status'] = $this->status;
+	}
+
+	/**
+     * Unsets user session.
+     *
+     * @return nothing
+     */
+	public function unsetUser()
+	{
+		unset($_SESSION[$this->form]['id']);
+		unset($_SESSION[$this->form]['username']);
+		unset($_SESSION[$this->form]['role']);
+		unset($_SESSION[$this->form]['status']);
 	}
 
 	public function __destruct()

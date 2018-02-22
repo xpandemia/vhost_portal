@@ -12,14 +12,24 @@
 
 	<!-- Bootstrap core CSS -->
 	<link rel="stylesheet" href="<?php echo $basic_helper->baseUrl('/vendors/bootstrap/css/bootstrap.min.css'); ?>">
-	<!-- jQuery library -->
+	<!-- jQuery -->
 	<script src="<?php echo $basic_helper->baseUrl('/vendors/jquery/jquery.min.js'); ?>"></script>
-	<!-- JavaScript -->
+	<!-- JQuery Masked Input -->
+	<script src="<?php echo $basic_helper->baseUrl('/vendors/maskedinput/jquery.maskedinput.min.js'); ?>"></script>
+	<!-- Popper JS -->
+	<script src="<?php echo $basic_helper->baseUrl('/vendors/popper/popper.min.js'); ?>"></script>
+	<!-- Bootstrap JS -->
     <script src="<?php echo $basic_helper->baseUrl('/vendors/bootstrap/js/bootstrap.min.js'); ?>"></script>
-    <!-- Font Awesome -->
+	<!-- Font Awesome -->
 	<script defer src="<?php echo $basic_helper->baseUrl('/vendors/fontawesome/fontawesome-all.js'); ?>"></script>
 </head>
 <body class="bg-primary">
 	<?php include ROOT_DIR.'/application/frontend/views/'.$content_view; ?>
+
+	<script>
+		$(document).ready(function(){
+		    $('[data-toggle="tooltip"]').tooltip();
+		});
+	</script>
 </body>
 </html>

@@ -23,52 +23,20 @@ class Model_Login extends Model
 	{
 		return [
                 'username' => [
-                                'required' => ['value' => 'true', 'default' => '', 'msg' => 'Логин обязателен для заполнения!'],
+                                'type' => 'text',
+                                'class' => 'form-control',
+                                'required' => ['default' => '', 'msg' => 'Логин обязателен для заполнения!'],
                                 'pattern' => ['value' => PATTERN_ALPHA, 'msg' => 'Для логина можно использовать только буквы!'],
-                                'width' => ['value' => 'true', 'format' => 'string', 'min' => 1, 'max' => 45, 'msg' => 'Слишком длинный логин!'],
-                                'unique' => ['value' => 'false', 'class' => '', 'method' => '', 'msg' => '']
+                                'width' => ['format' => 'string', 'min' => 1, 'max' => 45, 'msg' => 'Слишком длинный логин!']
                                ],
                 'pwd' => [
-                            'required' => ['value' => 'true', 'default' => '', 'msg' => 'Пароль обязателен для заполнения!'],
+                            'type' => 'password',
+                            'class' => 'form-control',
+                            'required' => ['default' => '', 'msg' => 'Пароль обязателен для заполнения!'],
                             'pattern' => ['value' => PATTERN_ALPHA_NUMB, 'msg' => 'Пароль должен быть буквенно-цифровым!'],
-                            'width' => ['value' => 'true', 'format' => 'string', 'min' => 6, 'max' => 10, 'msg' => 'Пароль должен быть 6-10 символов длиной!'],
-                            'unique' => ['value' => 'false', 'class' => '', 'method' => '', 'msg' => '']
+                            'width' => ['format' => 'string', 'min' => 6, 'max' => 10, 'msg' => 'Пароль должен быть 6-10 символов длиной!']
                            ]
             ];
-	}
-
-	/**
-     * Login reset.
-     *
-     * @return nothing
-     */
-	public function reset($vars)
-	{
-		$this->resetForm($vars, $this->form, $this->rules());
-	}
-
-	/**
-     * Gets login page data.
-     *
-     * @return nothing
-     */
-	public function getPost($post)
-	{
-		foreach ($post as $varname => $varvalue) {
-			$_SESSION[$this->form][$varname] = htmlspecialchars($varvalue);
-		}
-	}
-
-	/**
-     * Validates login page.
-     *
-     * @return boolean
-     */
-	public function validate()
-	{
-		$this->reset(false);
-		$form_helper = new Form_Helper();
-		return $form_helper->validate($this->form, $_SESSION[$this->form], $this->rules());
 	}
 
 	/**
@@ -84,25 +52,33 @@ class Model_Login extends Model
 		if (empty($row['id'])) {
 			// user not found
 			$_SESSION[$this->form]['error_msg'] = 'Пользователь не найден!';
-			return FALSE;
+			return false;
 		} else if (!$user->checkHash($_SESSION[$this->form]['pwd'], $row['pwd_hash'])) {
 			// invalid password
 			$_SESSION[$this->form]['error_msg'] = 'Неверный пароль!';
-			return FALSE;
+			return false;
 		} else {
+			$user->id = $row['id'];
+			$user->username = $row['username'];
+			$user->role = $row['role'];
+			$user->status = $row['status'];
 			switch ($row['status']) {
 				case $user::STATUS_NOTACTIVE:
 					$_SESSION[$this->form]['error_msg'] = 'Учетная запись не активирована!';
-					return FALSE;
+					$user->unsetUser();
+					return false;
 				case $user::STATUS_ACTIVE:
 					$_SESSION[$this->form]['error_msg'] = null;
-					return TRUE;
+					$user->setUser();
+					return true;
 				case $user::DELETED:
 					$_SESSION[$this->form]['error_msg'] = 'Учетная запись удалена!';
-					return FALSE;
+					$user->unsetUser();
+					return false;
 				default:
 					$_SESSION[$this->form]['error_msg'] = 'Учетная запись в неизвестном состоянии!';
-					return FALSE;
+					$user->unsetUser();
+					return false;
 			}
 		}
 	}

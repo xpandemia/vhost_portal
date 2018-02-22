@@ -32,7 +32,7 @@ class Controller_Signup extends Controller
 		if (!isset($_SESSION[$this->form])) {
 			$captcha = new Captcha_Helper();
 			$captcha->create();
-			$this->model->reset(true);
+			$this->model->setForm($this->form, $this->model->rules(), null);
 		}
 		return $this->view->generate('signup.php', 'form.php', SIGNUP_HDR);
 	}
@@ -56,7 +56,7 @@ class Controller_Signup extends Controller
      */
 	public function actionReset()
 	{
-		$this->model->reset(true);
+		$this->model->resetForm(true, $this->form, $this->model->rules());
 		return $this->actionIndex();
 	}
 
@@ -67,18 +67,17 @@ class Controller_Signup extends Controller
      */
 	public function actionSignup()
 	{
-		$basic_helper = new Basic_Helper;
-		$this->model->getpost($_POST);
-		if ($this->model->validate()) {
+		$this->model->getForm($this->model->rules(), $_POST);
+		if ($this->model->validateForm($this->form, $this->model->rules())) {
 			if ($this->model->signup()) {
-				$this->model->reset(true);
+				$this->model->resetForm(true, $this->form, $this->model->rules());
 				$_SESSION['login']['error_msg'] = null;
 				$_SESSION['login']['success_msg'] = 'Регистрация выполнена успешно. Пожалуйста, проверьте электронную почту.';
 				unlink(ROOT_DIR.'/images/temp/captcha/captcha_'.session_id().'.png');
-				return $basic_helper->redirect(LOGIN_HDR, 202, BEHAVIOR.'/Login', 'Index');
+				return Basic_Helper::redirect(LOGIN_HDR, 202, BEHAVIOR.'/Login', 'Index');
 			}
 		}
-		return $basic_helper->redirect(SIGNUP_HDR, 202, BEHAVIOR.'/Signup', 'Index');
+		return Basic_Helper::redirect(SIGNUP_HDR, 202, BEHAVIOR.'/Signup', 'Index');
 	}
 
 	/**
@@ -99,11 +98,7 @@ class Controller_Signup extends Controller
 			exit("<p><strong>Ошибка!</strong> Отсутствует Email.</p>");
 		}
 		if ($this->model->activate($code, $email)) {
-			$_SESSION['user_id'] = $_SESSION[$this->form]['username'];
-			$_SESSION['user_role'] = 'guest';
-			$_SESSION['user_logon'] = 1;
-			$basic_helper = new Basic_Helper;
-			return $basic_helper->redirect(APP_NAME, 202, BEHAVIOR.'/Main', 'Index');
+			return Basic_Helper::redirect(APP_NAME, 202, BEHAVIOR.'/Main', 'Index');
 		} else {
 			exit("<p><strong>Ошибка!</strong> Активация не выполнена.</p>");
 		}

@@ -18,6 +18,7 @@ use tinyframe\core\Routing as Routing;
 	require_once ROOT_DIR.'/application/core/controller.php';
 	// data classes
 	include_once ROOT_DIR.'/application/common/models/Model_User.php'; // users
+	include_once ROOT_DIR.'/application/common/models/Model_Personal.php'; // personal data
 	// vendors
 	require_once ROOT_DIR.'/vendors/PHPMailer/src/Exception.php';
 	require_once ROOT_DIR.'/vendors/PHPMailer/src/PHPMailer.php';

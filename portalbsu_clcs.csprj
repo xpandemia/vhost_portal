@@ -1,20 +1,20 @@
 <codestructure version="5.14">
 <phptree>
-<treenode node="ACTION;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\bootstrap.php;f8;65;14;65;;;;vpos;;v;;r$actionName;;d-1,-1;;b0,0;;m">
+<treenode node="ACTION;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\bootstrap.php;f8;66;14;66;;;;vpos;;v;;r$actionName;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="APP_CODE;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\index.php;f8;3;16;3;;;;vpos;;v;;r&apos;tinyframe&apos;;;d-1,-1;;b0,0;;m">
+<treenode node="APP_CODE;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\index.php;f8;3;16;3;;;;vpos;;v;;r&apos;portalbsu&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="APP_NAME;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\index.php;f8;2;16;2;;;;vpos;;v;;r&apos;Tiny MVC Framework&apos;;;d-1,-1;;b0,0;;m">
+<treenode node="APP_NAME;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\index.php;f8;2;16;2;;;;vpos;;v;;r&apos;Портал БелГУ&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="APP_VERSION;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\index.php;f8;4;19;4;;;;vpos;;v;;r&apos;0.1.4&apos;;;d-1,-1;;b0,0;;m">
+<treenode node="APP_VERSION;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\index.php;f8;4;19;4;;;;vpos;;v;;r&apos;0.1.1&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="BASEPATH;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\index.php;f8;47;16;47;;;;vpos;;v;;r&apos;http://&apos;.$_SERVER[&apos;SERVER_NAME&apos;;;d-1,-1;;b0,0;;m">
+<treenode node="BASEPATH;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\index.php;f8;46;16;46;;;;vpos;;v;;r&apos;http://&apos;.$_SERVER[&apos;SERVER_NAME&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="BEHAVIOR;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\bootstrap.php;f8;28;16;28;;;;vpos;;v;;r$behavior;;d-1,-1;;b0,0;;m">
+<treenode node="BEHAVIOR;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\bootstrap.php;f8;29;16;29;;;;vpos;;v;;r$behavior;;d-1,-1;;b0,0;;m">
 </treenode>
 <treenode node="CAPTCHA_LEN;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\captcha_helper.php;f8;4;19;4;;;;vpos;;v;;r6;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="CONTROLLER;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\bootstrap.php;f8;59;18;59;;;;vpos;;v;;r$controllerName;;d-1,-1;;b0,0;;m">
+<treenode node="CONTROLLER;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\bootstrap.php;f8;60;18;60;;;;vpos;;v;;r$controllerName;;d-1,-1;;b0,0;;m">
 </treenode>
 <treenode node="DB_HOST;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\db_config.php;f8;11;15;11;;;;vpos;;v;;r&quot;localhost&quot;;;d-1,-1;;b0,0;;m">
 </treenode>
@@ -24,11 +24,19 @@
 </treenode>
 <treenode node="DB_USER;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\db_config.php;f8;12;15;12;;;;vpos;;v;;r&quot;root&quot;;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="EMAIL_HELP;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;7;18;7;;;;vpos;;v;;r&quot;Адрес электронной почты должен быть в формате &lt;b&gt;user@domain&lt;/b&gt; и не более &lt;b&gt;45&lt;/b&gt; символов длиной.&quot;;;d-1,-1;;b0,0;;m">
+<treenode node="EMAIL_HELP;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;7;18;7;;;;vpos;;v;;r&quot;Адрес электронной почты должен быть в формате &lt;b&gt;user@domain&lt;/b&gt;, содержать &lt;b&gt;только латинские буквы&lt;/b&gt; и не более &lt;b&gt;45&lt;/b&gt; символов длиной.&quot;;;d-1,-1;;b0,0;;m">
 </treenode>
 <treenode node="EMAIL_PLC;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;12;17;12;;;;vpos;;v;;r&quot;user@domain&quot;;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="ENVIRONMENT;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\bootstrap.php;f8;33;19;33;;;;vpos;;v;;r$environment;;d-1,-1;;b0,0;;m">
+<treenode node="ENVIRONMENT;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\bootstrap.php;f8;34;19;34;;;;vpos;;v;;r$environment;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="FIRSTNAME_HELP;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;6;22;6;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Personal.php;f8;6;22;6;;;;vpos;;v;;r&quot;Имя должно содержать &lt;b&gt;только русские буквы&lt;/b&gt;, и быть не более &lt;b&gt;50&lt;/b&gt; символов длиной.&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="FIRSTNAME_PLC;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;8;21;8;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Personal.php;f8;10;21;10;;;;vpos;;v;;r&quot;Имя&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="LASTNAME_HELP;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Personal.php;f8;8;21;8;;;;vpos;;v;;r&quot;Фамилия должна содержать &lt;b&gt;только русские буквы&lt;/b&gt;, и быть не более &lt;b&gt;50&lt;/b&gt; символов длиной.&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="LASTNAME_PLC;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Personal.php;f8;12;20;12;;;;vpos;;v;;r&quot;Фамилия&quot;;;d-1,-1;;b0,0;;m">
 </treenode>
 <treenode node="LOGIN_HDR;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\form_config.php;f8;12;17;12;;;;vpos;;v;;r&quot;Авторизация&quot;;;d-1,-1;;b0,0;;m">
 </treenode>
@@ -48,19 +56,33 @@
 </treenode>
 <treenode node="MAIL_USER;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\mail_config.php;f8;12;17;12;;;;vpos;;v;;r&quot;nikitin_o@bsu.edu.ru&quot;;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="PATTERN_ALPHA;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;5;21;5;;;;vpos;;v;;r&quot;/^[a-zA-Z]*$/&quot;;;d-1,-1;;b0,0;;m">
+<treenode node="MIDDLENAME_HELP;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Personal.php;f8;7;23;7;;;;vpos;;v;;r&quot;Отчество должно содержать &lt;b&gt;только русские буквы&lt;/b&gt;, и быть не более &lt;b&gt;50&lt;/b&gt; символов длиной.&quot;;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="PATTERN_ALPHA_NUMB;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;6;26;6;;;;vpos;;v;;r&quot;/^[a-zA-Z0-9]*$/&quot;;;d-1,-1;;b0,0;;m">
+<treenode node="MIDDLENAME_PLC;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Personal.php;f8;11;22;11;;;;vpos;;v;;r&quot;Отчество&quot;;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="PATTERN_EMAIL_LIGHT;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;7;27;7;;;;vpos;;v;;r&quot;/^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9_\-.]+$/&quot;;;d-1,-1;;b0,0;;m">
+<treenode node="PATTERN_ALPHA;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;5;21;5;;;;vpos;;v;;r&quot;/^[a-zA-Z]*$/u&quot;;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="PATTERN_EMAIL_STRONG;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;8;28;8;;;;vpos;;v;;r&quot;/^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9_\-]+\.[a-zA-Z0-9_\-]+$/&quot;;;d-1,-1;;b0,0;;m">
+<treenode node="PATTERN_ALPHA_NUMB;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;9;26;9;;;;vpos;;v;;r&quot;/^[a-zA-Z0-9]*$/u&quot;;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="PWD_CONFIRM_HELP;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;9;24;9;;;;vpos;;v;;r&quot;Пароль должен содержать &lt;b&gt;только буквы и цифры&lt;/b&gt;, и быть &lt;b&gt;6-10&lt;/b&gt; символов длиной.&quot;;;d-1,-1;;b0,0;;m">
+<treenode node="PATTERN_ALPHA_RUS;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;6;25;6;;;;vpos;;v;;r&quot;/^[ёЁа-яА-Я]*$/u&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="PATTERN_DATE_LIGHT;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;12;26;12;;;;vpos;;v;;r&quot;/^(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}$/&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="PATTERN_DATE_STRONG;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;13;27;13;;;;vpos;;v;;r&quot;/^(?:(?:0[1-9]|1[0-9]|2[0-9]).(?:0[1-9]|1[0-2])|(?:(?:30).(?!02)(?:0[1-9]|1[0-2]))|(?:31.(?:0[13578]|1[02]))).(?:19|20)[0-9]{2}$/&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="PATTERN_EMAIL_LIGHT;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;10;27;10;;;;vpos;;v;;r&quot;/^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9_\-.]+$/&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="PATTERN_EMAIL_STRONG;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;11;28;11;;;;vpos;;v;;r&quot;/^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9_\-]+\.[a-zA-Z0-9_\-]+$/&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="PATTERN_TEXT;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;7;20;7;;;;vpos;;v;;r&quot;/^[a-zA-Z-\.\,\s]*$/u&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="PATTERN_TEXT_RUS;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;8;24;8;;;;vpos;;v;;r&quot;/^[ёЁа-яА-Я-.,\s]*$/u&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="PWD_CONFIRM_HELP;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;9;24;9;;;;vpos;;v;;r&quot;Пароль должен содержать &lt;b&gt;только латинские буквы и цифры&lt;/b&gt;, и быть &lt;b&gt;6-10&lt;/b&gt; символов длиной.&quot;;;d-1,-1;;b0,0;;m">
 </treenode>
 <treenode node="PWD_CONFIRM_PLC;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;14;23;14;;;;vpos;;v;;r&quot;Повторите пароль&quot;;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="PWD_HELP;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;8;16;8;;;;vpos;;v;;r&quot;Пароль должен содержать &lt;b&gt;только буквы и цифры&lt;/b&gt;, и быть &lt;b&gt;6-10&lt;/b&gt; символов длиной.&quot;;;d-1,-1;;b0,0;;m">
+<treenode node="PWD_HELP;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;8;16;8;;;;vpos;;v;;r&quot;Пароль должен содержать &lt;b&gt;только латинские буквы и цифры&lt;/b&gt;, и быть &lt;b&gt;6-10&lt;/b&gt; символов длиной.&quot;;;d-1,-1;;b0,0;;m">
 </treenode>
 <treenode node="PWD_PLC;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;13;15;13;;;;vpos;;v;;r&quot;Пароль&quot;;;d-1,-1;;b0,0;;m">
 </treenode>
@@ -68,11 +90,13 @@
 </treenode>
 <treenode node="RESET_PWD_REQUEST_HDR;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\form_config.php;f8;16;29;16;;;;vpos;;v;;r&quot;Восстановление пароля&quot;;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="ROOT_DIR;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\index.php;f8;53;16;53;;;;vpos;;v;;r$_SERVER[&apos;DOCUMENT_ROOT&apos;;;d-1,-1;;b0,0;;m">
+<treenode node="RESUME_HDR;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\form_config.php;f8;20;18;20;;;;vpos;;v;;r&quot;Личные данные&quot;;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="ROOT_DIR;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\index.php;f8;52;16;52;;;;vpos;;v;;r$_SERVER[&apos;DOCUMENT_ROOT&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
 <treenode node="SIGNUP_HDR;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\form_config.php;f8;14;18;14;;;;vpos;;v;;r&quot;Регистрация&quot;;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="USERNAME_HELP;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;6;21;6;;;;vpos;;v;;r&quot;Логин должен содержать &lt;b&gt;только буквы&lt;/b&gt;, и быть не более &lt;b&gt;45&lt;/b&gt; символов длиной.&quot;;;d-1,-1;;b0,0;;m">
+<treenode node="USERNAME_HELP;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;6;21;6;;;;vpos;;v;;r&quot;Логин должен содержать &lt;b&gt;только латинские буквы&lt;/b&gt;, и быть не более &lt;b&gt;45&lt;/b&gt; символов длиной.&quot;;;d-1,-1;;b0,0;;m">
 </treenode>
 <treenode node="USERNAME_PLC;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;11;20;11;;;;vpos;;v;;r&quot;Логин&quot;;;d-1,-1;;b0,0;;m">
 </treenode>
@@ -94,56 +118,74 @@
 <treenode node="actionIndex;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\controller.php;f1;27;2;30;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionIndex()&#10;&#10;Description&#10;     Displays a page.;;d1,28;;b0,0;;m">
 </treenode>
 </treenode>
-<treenode node="Controller_Login;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Login.php;f0;10;1;75;;;;vpos;;vController;;c;;r;;d0,11;;b0,0;;m">
-<treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Login.php;f8;18;2;22;;;;vpos;;v;;r;;d1,19;;b1,0;;m">
+<treenode node="Controller_Login;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Login.php;f0;10;1;70;;;;vpos;;vController;;c;;r;;d0,11;;b0,0;;m">
+<treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\NewFile.php;f8;16;2;20;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Login.php;f8;18;2;22;;;;vpos;;v;;r;;d1,19;;b1,0;;m">
 </treenode>
-<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Login.php;f8;70;2;74;;;;vpos;;v;;r;;d1,71;;b1,0;;m">
+<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\NewFile.php;f8;68;2;72;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Login.php;f8;65;2;69;;;;vpos;;v;;r;;d1,66;;b1,0;;m">
 </treenode>
-<treenode node="actionIndex;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Login.php;f8;29;2;35;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionIndex()&#10;&#10;Description&#10;     Displays login page.;;d1,30;;b1,0;;m">
+<treenode node="actionIndex;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\NewFile.php;f8;27;2;33;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Login.php;f8;29;2;35;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionIndex()&#10;&#10;Description&#10;     Displays login page.;;d1,30;;b1,0;;m">
 </treenode>
-<treenode node="actionLogin;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Login.php;f8;53;2;68;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionLogin()&#10;&#10;Description&#10;     Logs user in.;;d1,54;;b1,0;;m">
+<treenode node="actionLogin;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\NewFile.php;f8;51;2;66;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Login.php;f8;53;2;63;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionLogin()&#10;&#10;Description&#10;     Logs user in.;;d1,54;;b1,0;;m">
 </treenode>
-<treenode node="actionReset;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Login.php;f8;42;2;46;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionReset()&#10;&#10;Description&#10;     Resets login page.;;d1,43;;b1,0;;m">
-</treenode>
-</treenode>
-<treenode node="Controller_Main;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Main.php;f0;7;1;38;;;;vpos;;vController;;c;;r;;d0,8;;b0,0;;m">
-<treenode node="actionIndex;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Main.php;f1;18;2;21;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionIndex()&#10;&#10;Description&#10;     Displays main page.;;d1,19;;b0,0;;m">
-</treenode>
-<treenode node="actionLogout;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Main.php;f8;28;2;37;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionLogout()&#10;&#10;Description&#10;     Logs user out.;;d1,29;;b1,0;;m">
+<treenode node="actionReset;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\NewFile.php;f8;40;2;44;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Login.php;f8;42;2;46;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionReset()&#10;&#10;Description&#10;     Resets login page.;;d1,43;;b1,0;;m">
 </treenode>
 </treenode>
-<treenode node="Controller_ResetPwd;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwd.php;f0;9;1;97;;;;vpos;;vController;;c;;r;;d0,10;;b0,0;;m">
+<treenode node="Controller_Main;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Main.php;f0;8;1;55;;;;vpos;;vController;;c;;r;;d0,9;;b0,0;;m">
+<treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Main.php;f8;14;2;18;;;;vpos;;v;;r;;d1,15;;b1,0;;m">
+</treenode>
+<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Main.php;f8;50;2;54;;;;vpos;;v;;r;;d1,51;;b1,0;;m">
+</treenode>
+<treenode node="actionIndex;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Main.php;f1;25;2;28;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionIndex()&#10;&#10;Description&#10;     Displays main page.;;d1,26;;b0,0;;m">
+</treenode>
+<treenode node="actionLogout;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Main.php;f8;45;2;48;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionLogout()&#10;&#10;Description&#10;     Logs user out.;;d1,46;;b1,0;;m">
+</treenode>
+<treenode node="actionResume;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Main.php;f1;35;2;38;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionResume()&#10;&#10;Description&#10;     Calls to resume.;;d1,36;;b0,0;;m">
+</treenode>
+</treenode>
+<treenode node="Controller_ResetPwd;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwd.php;f0;9;1;96;;;;vpos;;vController;;c;;r;;d0,10;;b0,0;;m">
 <treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwd.php;f8;17;2;21;;;;vpos;;v;;r;;d1,18;;b1,0;;m">
 </treenode>
-<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwd.php;f8;92;2;96;;;;vpos;;v;;r;;d1,93;;b1,0;;m">
+<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwd.php;f8;91;2;95;;;;vpos;;v;;r;;d1,92;;b1,0;;m">
 </treenode>
-<treenode node="actionCheckResetPwd;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwd.php;f8;77;2;90;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionCheckResetPwd()&#10;&#10;Description&#10;     Check reset password token.;;d1,78;;b1,0;;m">
+<treenode node="actionCheckResetPwd;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwd.php;f8;76;2;89;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionCheckResetPwd()&#10;&#10;Description&#10;     Check reset password token.;;d1,77;;b1,0;;m">
 </treenode>
 <treenode node="actionIndex;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwd.php;f8;28;2;37;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionIndex()&#10;&#10;Description&#10;     Displays reset password page.;;d1,29;;b1,0;;m">
 </treenode>
 <treenode node="actionReset;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwd.php;f8;44;2;48;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionReset()&#10;&#10;Description&#10;     Resets reset password page.;;d1,45;;b1,0;;m">
 </treenode>
-<treenode node="actionResetPwd;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwd.php;f8;55;2;70;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionResetPwd()&#10;&#10;Description&#10;     Resets user password.;;d1,56;;b1,0;;m">
+<treenode node="actionResetPwd;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwd.php;f8;55;2;69;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionResetPwd()&#10;&#10;Description&#10;     Resets user password.;;d1,56;;b1,0;;m">
 </treenode>
 </treenode>
-<treenode node="Controller_ResetPwdRequest;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwdRequest.php;f0;9;1;72;;;;vpos;;vController;;c;;r;;d0,10;;b0,0;;m">
+<treenode node="Controller_ResetPwdRequest;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwdRequest.php;f0;9;1;71;;;;vpos;;vController;;c;;r;;d0,10;;b0,0;;m">
 <treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwdRequest.php;f8;17;2;21;;;;vpos;;v;;r;;d1,18;;b1,0;;m">
 </treenode>
-<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwdRequest.php;f8;67;2;71;;;;vpos;;v;;r;;d1,68;;b1,0;;m">
+<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwdRequest.php;f8;66;2;70;;;;vpos;;v;;r;;d1,67;;b1,0;;m">
 </treenode>
 <treenode node="actionIndex;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwdRequest.php;f8;28;2;34;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionIndex()&#10;&#10;Description&#10;     Displays reset password request page.;;d1,29;;b1,0;;m">
 </treenode>
 <treenode node="actionReset;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwdRequest.php;f8;41;2;45;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionReset()&#10;&#10;Description&#10;     Resets reset password request page.;;d1,42;;b1,0;;m">
 </treenode>
-<treenode node="actionSendEmail;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwdRequest.php;f8;52;2;65;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionSendEmail()&#10;&#10;Description&#10;     Sends email reset password request.;;d1,53;;b1,0;;m">
+<treenode node="actionSendEmail;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwdRequest.php;f8;52;2;64;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionSendEmail()&#10;&#10;Description&#10;     Sends email reset password request.;;d1,53;;b1,0;;m">
 </treenode>
 </treenode>
-<treenode node="Controller_Signup;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Signup.php;f0;10;1;116;;;;vpos;;vController;;c;;r;;d0,11;;b0,0;;m">
+<treenode node="Controller_Resume;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\NewFile.php;f0;8;1;51;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Resume.php;f0;9;1;74;;;;vpos;;vController;;c;;r;;d0,10;;b0,0;;m">
+<treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\NewFile.php;f8;16;2;20;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Resume.php;f8;17;2;21;;;;vpos;;v;;r;;d1,18;;b1,0;;m">
+</treenode>
+<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\NewFile.php;f8;46;2;50;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Resume.php;f8;69;2;73;;;;vpos;;v;;r;;d1,70;;b1,0;;m">
+</treenode>
+<treenode node="actionIndex;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\NewFile.php;f8;27;2;33;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Resume.php;f8;28;2;34;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionIndex()&#10;&#10;Description&#10;     Displays resume page.;;d1,29;;b1,0;;m">
+</treenode>
+<treenode node="actionReset;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\NewFile.php;f8;40;2;44;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Resume.php;f8;41;2;45;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionReset()&#10;&#10;Description&#10;     Resets resume page.;;d1,42;;b1,0;;m">
+</treenode>
+<treenode node="actionResume;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Resume.php;f8;52;2;67;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionResume()&#10;&#10;Description&#10;     Logs user in.;;d1,53;;b1,0;;m">
+</treenode>
+</treenode>
+<treenode node="Controller_Signup;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Signup.php;f0;10;1;111;;;;vpos;;vController;;c;;r;;d0,11;;b0,0;;m">
 <treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Signup.php;f8;18;2;22;;;;vpos;;v;;r;;d1,19;;b1,0;;m">
 </treenode>
-<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Signup.php;f8;111;2;115;;;;vpos;;v;;r;;d1,112;;b1,0;;m">
+<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Signup.php;f8;106;2;110;;;;vpos;;v;;r;;d1,107;;b1,0;;m">
 </treenode>
-<treenode node="actionActivation;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Signup.php;f8;88;2;109;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionActivation()&#10;&#10;Description&#10;     Activates user account.;;d1,89;;b1,0;;m">
+<treenode node="actionActivation;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Signup.php;f8;87;2;104;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionActivation()&#10;&#10;Description&#10;     Activates user account.;;d1,88;;b1,0;;m">
 </treenode>
 <treenode node="actionCaptcha;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Signup.php;f8;44;2;49;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionCaptcha()&#10;&#10;Description&#10;     Refreshes CAPTCHA.;;d1,45;;b1,0;;m">
 </treenode>
@@ -151,7 +193,7 @@
 </treenode>
 <treenode node="actionReset;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Signup.php;f8;56;2;60;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionReset()&#10;&#10;Description&#10;     Resets signup page.;;d1,57;;b1,0;;m">
 </treenode>
-<treenode node="actionSignup;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Signup.php;f8;67;2;81;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionSignup()&#10;&#10;Description&#10;     Sign user up.;;d1,68;;b1,0;;m">
+<treenode node="actionSignup;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Signup.php;f8;67;2;80;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionSignup()&#10;&#10;Description&#10;     Sign user up.;;d1,68;;b1,0;;m">
 </treenode>
 </treenode>
 <treenode node="Db_Helper;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f0;6;1;137;;;;vpos;;v;;r;;d0,7;;b0,0;;m">
@@ -176,96 +218,120 @@
 <treenode node="errorMessage;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\Exception.php;f11;34;5;37;;;;vpos;;vstring;;r&#10;Definition&#10;    errorMessage()&#10;&#10;Description&#10;     Prettify error message output.;;d4,35;;b1,0;;m">
 </treenode>
 </treenode>
-<treenode node="Form_Helper;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f0;10;1;154;;;;vpos;;v;;r;;d0,11;;b0,0;;m">
-<treenode node="setError;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;150;2;153;;;;vpos;;vnothing;;r&#10;Definition&#10;    setError($form, $var, $msg)&#10;&#10;Description&#10;     Sets field error.;;d1,151;;b1,0;;mform;;pvar;;pmsg;;p">
+<treenode node="Form_Helper;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f0;15;1;173;;;;vpos;;v;;r;;d0,16;;b0,0;;m">
+<treenode node="setError;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;169;2;172;;;;vpos;;vnothing;;r&#10;Definition&#10;    setError($form, $var, $msg)&#10;&#10;Description&#10;     Sets field error.;;d1,170;;b1,0;;mform;;pvar;;pmsg;;p">
 </treenode>
-<treenode node="validate;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;29;2;143;;;;vpos;;vboolean;;r&#10;Definition&#10;    validate($form, $data, $rules)&#10;&#10;Description&#10;     Validates form.;;d1,30;;b1,0;;mform;;pdata;;prules;;p">
+<treenode node="validate;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;37;2;162;;;;vpos;;vboolean;;r&#10;Definition&#10;    validate($form, $data, $rules)&#10;&#10;Description&#10;     Validates form.;;d1,38;;b1,0;;mform;;pdata;;prules;;p">
 </treenode>
 </treenode>
 <treenode node="Mail_Helper;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\mail_helper.php;f0;7;1;72;;;;vpos;;v;;r;;d0,8;;b0,0;;m">
 <treenode node="sendEmail;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\mail_helper.php;f8;18;2;71;;;;vpos;;vstring;;r&#10;Definition&#10;    sendEmail($to, $to_name, $subject, $body, $ccs = null, $bccs = null, $body_plain = null, $attachment = null, $attachment_name = null)&#10;&#10;Description&#10;     Sends email.;;d1,19;;b1,0;;mto;;pto_name;;psubject;;pbody;;pccs;;pbccs;;pbody_plain;;pattachment;;pattachment_name;;p">
 </treenode>
 </treenode>
-<treenode node="Model;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\model.php;f0;4;1;34;;;;vpos;;v;;r;;d0,5;;b0,0;;m">
-<treenode node="resetForm;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\model.php;f8;22;2;33;;;;vpos;;vnothing;;r&#10;Definition&#10;    resetForm($vars, $form, $rules)&#10;&#10;Description&#10;     Form reset.;;d1,23;;b1,0;;mvars;;pform;;prules;;p">
+<treenode node="Model;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\model.php;f0;6;1;98;;;;vpos;;v;;r;;d0,7;;b0,0;;m">
+<treenode node="getForm;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\model.php;f8;24;2;44;;;;vpos;;vnothing;;r&#10;Definition&#10;    getForm($rules, $post)&#10;&#10;Description&#10;     Gets form data.;;d1,25;;b1,0;;mrules;;ppost;;p">
+</treenode>
+<treenode node="resetForm;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\model.php;f8;86;2;97;;;;vpos;;vnothing;;r&#10;Definition&#10;    resetForm($vars, $form, $rules)&#10;&#10;Description&#10;     Resets form data.;;d1,87;;b1,0;;mvars;;pform;;prules;;p">
+</treenode>
+<treenode node="setForm;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\model.php;f8;63;2;79;;;;vpos;;vnothing;;r&#10;Definition&#10;    setForm($form, $rules, $row)&#10;&#10;Description&#10;     Sets form data.;;d1,64;;b1,0;;mform;;prules;;prow;;p">
+</treenode>
+<treenode node="validateForm;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\model.php;f8;51;2;56;;;;vpos;;vboolean;;r&#10;Definition&#10;    validateForm($form, $rules)&#10;&#10;Description&#10;     Validates form data.;;d1,52;;b1,0;;mform;;prules;;p">
 </treenode>
 </treenode>
-<treenode node="Model_Login;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Login.php;f0;8;1;108;;;;vpos;;vModel;;c;;r;;d0,9;;b0,0;;m">
-<treenode node="check;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Login.php;f8;78;2;107;;;;vpos;;vboolean;;r&#10;Definition&#10;    check()&#10;&#10;Description&#10;     Checks login data.;;d1,79;;b1,0;;m">
+<treenode node="Model_Login;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Login.php;f0;8;1;84;;;;vpos;;vModel;;c;;r;;d0,9;;b0,0;;m">
+<treenode node="check;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\NewFile.php;f8;72;2;103;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Login.php;f8;46;2;83;;;;vpos;;vboolean;;r&#10;Definition&#10;    check()&#10;&#10;Description&#10;     Checks login data.;;d1,47;;b1,0;;m">
 </treenode>
-<treenode node="getPost;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Login.php;f8;54;2;59;;;;vpos;;vnothing;;r&#10;Definition&#10;    getPost($post)&#10;&#10;Description&#10;     Gets login page data.;;d1,55;;b1,0;;mpost;;p">
+<treenode node="getPost;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\NewFile.php;f8;48;2;53;;;;vpos;;vnothing;;r&#10;Definition&#10;    getPost($post)&#10;&#10;Description&#10;     Gets login page data.;;d1,57;;b1,0;;mpost;;p">
 </treenode>
-<treenode node="reset;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Login.php;f8;44;2;47;;;;vpos;;vnothing;;r&#10;Definition&#10;    reset($vars)&#10;&#10;Description&#10;     Login reset.;;d1,45;;b1,0;;mvars;;p">
+<treenode node="reset;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\NewFile.php;f8;38;2;41;;;;vpos;;vnothing;;r&#10;Definition&#10;    reset($vars)&#10;&#10;Description&#10;     Login reset.;;d1,47;;b1,0;;mvars;;p">
 </treenode>
-<treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Login.php;f8;21;2;37;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Login rules.;;d1,22;;b1,0;;m">
+<treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\NewFile.php;f8;21;2;31;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Login.php;f8;21;2;39;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Login rules.;;d1,22;;b1,0;;m">
 </treenode>
-<treenode node="validate;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Login.php;f8;66;2;71;;;;vpos;;vboolean;;r&#10;Definition&#10;    validate()&#10;&#10;Description&#10;     Validates login page.;;d1,67;;b1,0;;m">
-</treenode>
-</treenode>
-<treenode node="Model_ResetPwd;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwd.php;f0;8;1;104;;;;vpos;;vModel;;c;;r;;d0,9;;b0,0;;m">
-<treenode node="getPost;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwd.php;f8;52;2;57;;;;vpos;;vnothing;;r&#10;Definition&#10;    getPost($post)&#10;&#10;Description&#10;     Gets reset password page data.;;d1,53;;b1,0;;mpost;;p">
-</treenode>
-<treenode node="reset;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwd.php;f8;42;2;45;;;;vpos;;vnothing;;r&#10;Definition&#10;    reset($vars)&#10;&#10;Description&#10;     Reset password reset.;;d1,43;;b1,0;;mvars;;p">
-</treenode>
-<treenode node="resetPwd;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwd.php;f8;76;2;103;;;;vpos;;vboolean;;r&#10;Definition&#10;    resetPwd()&#10;&#10;Description&#10;     Resets user password.;;d1,77;;b1,0;;m">
-</treenode>
-<treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwd.php;f8;21;2;35;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Reset password rules.;;d1,22;;b1,0;;m">
-</treenode>
-<treenode node="validate;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwd.php;f8;64;2;69;;;;vpos;;vboolean;;r&#10;Definition&#10;    validate()&#10;&#10;Description&#10;     Validates reset password page.;;d1,65;;b1,0;;m">
+<treenode node="validate;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\NewFile.php;f8;60;2;65;;;;vpos;;vboolean;;r&#10;Definition&#10;    validate()&#10;&#10;Description&#10;     Validates login page.;;d1,47;;b1,0;;m">
 </treenode>
 </treenode>
-<treenode node="Model_ResetPwdRequest;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwdRequest.php;f0;9;1;109;;;;vpos;;vModel;;c;;r;;d0,10;;b0,0;;m">
-<treenode node="getPost;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwdRequest.php;f8;48;2;53;;;;vpos;;vnothing;;r&#10;Definition&#10;    getPost($post)&#10;&#10;Description&#10;     Gets reset password request page data.;;d1,49;;b1,0;;mpost;;p">
+<treenode node="Model_Main;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\NewFile.php;f0;7;1;22;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Main.php;f0;12;1;53;;;;vpos;;vModel;;c;;r;;d0,13;;b0,0;;m">
+<treenode node="logout;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Main.php;f8;45;2;52;;;;vpos;;vnothing;;r&#10;Definition&#10;    logout()&#10;&#10;Description&#10;     Stops session user.;;d1,46;;b1,0;;m">
 </treenode>
-<treenode node="reset;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwdRequest.php;f8;38;2;41;;;;vpos;;vnothing;;r&#10;Definition&#10;    reset($vars)&#10;&#10;Description&#10;     Reset password request reset.;;d1,39;;b1,0;;mvars;;p">
+<treenode node="resetUser;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\NewFile.php;f8;18;2;21;;;;vpos;;vnothing;;r&#10;Definition&#10;    resetUser()&#10;&#10;Description&#10;     Makes resume view.;;d1,20;;b1,0;;m">
 </treenode>
-<treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwdRequest.php;f8;22;2;31;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Reset password request rules.;;d1,23;;b1,0;;m">
-</treenode>
-<treenode node="sendEmail;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwdRequest.php;f8;72;2;108;;;;vpos;;vboolean;;r&#10;Definition&#10;    sendEmail()&#10;&#10;Description&#10;     Sets password token and sends confirmation email.;;d1,73;;b1,0;;m">
-</treenode>
-<treenode node="validate;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwdRequest.php;f8;60;2;65;;;;vpos;;vboolean;;r&#10;Definition&#10;    validate()&#10;&#10;Description&#10;     Validates reset password request page.;;d1,61;;b1,0;;m">
+<treenode node="resume;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Main.php;f8;23;2;38;;;;vpos;;vnothing;;r&#10;Definition&#10;    resume()&#10;&#10;Description&#10;     Makes resume view.;;d1,24;;b1,0;;m">
 </treenode>
 </treenode>
-<treenode node="Model_Signup;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Signup.php;f0;9;1;156;;;;vpos;;vModel;;c;;r;;d0,10;;b0,0;;m">
-<treenode node="activate;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Signup.php;f8;143;2;155;;;;vpos;;vboolean;;r&#10;Definition&#10;    activate($activation, $email)&#10;&#10;Description&#10;     Activates user account.;;d1,144;;b1,0;;mactivation;;pemail;;p">
+<treenode node="Model_Personal;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f0;10;1;45;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Personal.php;f0;14;1;88;;;;vpos;;vDb_Helper;;c;;r;;d0,15;;b0,0;;m">
+<treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;26;2;29;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Personal.php;f8;33;2;36;;;;vpos;;v;;r;;d1,34;;b1,0;;m">
 </treenode>
-<treenode node="getPost;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Signup.php;f8;71;2;76;;;;vpos;;vnothing;;r&#10;Definition&#10;    getPost($post)&#10;&#10;Description&#10;     Gets signup page data.;;d1,72;;b1,0;;mpost;;p">
+<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;41;2;44;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Personal.php;f8;84;2;87;;;;vpos;;v;;r;;d1,85;;b1,0;;m">
 </treenode>
-<treenode node="reset;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Signup.php;f8;61;2;64;;;;vpos;;vnothing;;r&#10;Definition&#10;    reset($vars)&#10;&#10;Description&#10;     Signup reset.;;d1,62;;b1,0;;mvars;;p">
+<treenode node="changeAll;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Personal.php;f8;72;2;82;;;;vpos;;vboolean;;r&#10;Definition&#10;    changeAll()&#10;&#10;Description&#10;     Changes all personal data.;;d1,73;;b1,0;;m">
 </treenode>
-<treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Signup.php;f8;22;2;54;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Signup rules.;;d1,23;;b1,0;;m">
+<treenode node="getPersonalByUser;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Personal.php;f8;43;2;46;;;;vpos;;varray;;r&#10;Definition&#10;    getPersonalByUser()&#10;&#10;Description&#10;     Gets personal by username.;;d1,44;;b1,0;;m">
 </treenode>
-<treenode node="signup;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Signup.php;f8;95;2;136;;;;vpos;;vboolean;;r&#10;Definition&#10;    signup()&#10;&#10;Description&#10;     Saves user data.;;d1,96;;b1,0;;m">
+<treenode node="getPersonalByUsername;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;36;2;39;;;;vpos;;varray;;r&#10;Definition&#10;    getPersonalByUsername()&#10;&#10;Description&#10;     Gets ersonal by username.;;d1,37;;b1,0;;m">
 </treenode>
-<treenode node="validate;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Signup.php;f8;83;2;88;;;;vpos;;vboolean;;r&#10;Definition&#10;    validate()&#10;&#10;Description&#10;     Validates signup page.;;d1,84;;b1,0;;m">
+<treenode node="save;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Personal.php;f8;53;2;65;;;;vpos;;vboolean;;r&#10;Definition&#10;    save()&#10;&#10;Description&#10;     Saves personal data to database.;;d1,54;;b1,0;;m">
 </treenode>
 </treenode>
-<treenode node="Model_User;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f0;16;1;144;;;;vpos;;vDb_Helper;;c;;r;;d0,17;;b0,0;;m">
-<treenode node="STATUS_ACTIVE;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f9;23;23;23;;;;vpos;;v;;r1;;d-1,-1;;b0,0;;m">
+<treenode node="Model_ResetPwd;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwd.php;f0;8;1;74;;;;vpos;;vModel;;c;;r;;d0,9;;b0,0;;m">
+<treenode node="resetPwd;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwd.php;f8;46;2;73;;;;vpos;;vboolean;;r&#10;Definition&#10;    resetPwd()&#10;&#10;Description&#10;     Resets user password.;;d1,47;;b1,0;;m">
 </treenode>
-<treenode node="STATUS_DELETED;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f9;24;24;24;;;;vpos;;v;;r2;;d-1,-1;;b0,0;;m">
+<treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwd.php;f8;21;2;39;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Reset password rules.;;d1,22;;b1,0;;m">
 </treenode>
-<treenode node="STATUS_NOTACTIVE;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f6;22;23;22;;;;vpos;;v;;r0;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;36;2;39;;;;vpos;;v;;r;;d1,37;;b1,0;;m">
+<treenode node="Model_ResetPwdRequest;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwdRequest.php;f0;9;1;77;;;;vpos;;vModel;;c;;r;;d0,10;;b0,0;;m">
+<treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwdRequest.php;f8;22;2;33;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Reset password request rules.;;d1,23;;b1,0;;m">
 </treenode>
-<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;140;2;143;;;;vpos;;v;;r;;d1,141;;b1,0;;m">
+<treenode node="sendEmail;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwdRequest.php;f8;40;2;76;;;;vpos;;vboolean;;r&#10;Definition&#10;    sendEmail()&#10;&#10;Description&#10;     Sets password token and sends confirmation email.;;d1,41;;b1,0;;m">
 </treenode>
-<treenode node="changePwd;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;133;2;138;;;;vpos;;vboolean;;r&#10;Definition&#10;    changePwd()&#10;&#10;Description&#10;     Changes user password.;;d1,134;;b1,0;;m">
 </treenode>
-<treenode node="changePwdToken;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;121;2;126;;;;vpos;;vboolean;;r&#10;Definition&#10;    changePwdToken()&#10;&#10;Description&#10;     Changes user password token.;;d1,122;;b1,0;;m">
+<treenode node="Model_Resume;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Resume.php;f0;8;1;98;;;;vpos;;vModel;;c;;r;;d0,9;;b0,0;;m">
+<treenode node="check;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Resume.php;f8;71;2;97;;;;vpos;;vboolean;;r&#10;Definition&#10;    check()&#10;&#10;Description&#10;     Checks resume data.;;d1,72;;b1,0;;m">
 </treenode>
-<treenode node="changeStatus;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;109;2;114;;;;vpos;;vboolean;;r&#10;Definition&#10;    changeStatus()&#10;&#10;Description&#10;     Changes user status.;;d1,110;;b1,0;;m">
+<treenode node="resetUser;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\NewFile.php;f8;17;2;20;;;;vpos;;vnothing;;r&#10;Definition&#10;    resetUser()&#10;&#10;Description&#10;     Resume reset.;;d1,18;;b1,0;;m">
 </treenode>
-<treenode node="existsEmail;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;81;2;89;;;;vpos;;vboolean;;r&#10;Definition&#10;    existsEmail()&#10;&#10;Description&#10;     Checks if email exists.;;d1,82;;b1,0;;m">
+<treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Resume.php;f8;21;2;64;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Resume rules.;;d1,22;;b1,0;;m">
 </treenode>
-<treenode node="existsUsername;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;66;2;74;;;;vpos;;vboolean;;r&#10;Definition&#10;    existsUsername()&#10;&#10;Description&#10;     Checks if username exists.;;d1,67;;b1,0;;m">
 </treenode>
-<treenode node="getUserByEmail;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;56;2;59;;;;vpos;;varray;;r&#10;Definition&#10;    getUserByEmail()&#10;&#10;Description&#10;     Gets user by email.;;d1,57;;b1,0;;m">
+<treenode node="Model_Signup;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Signup.php;f0;9;1;139;;;;vpos;;vModel;;c;;r;;d0,10;;b0,0;;m">
+<treenode node="activate;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Signup.php;f8;119;2;138;;;;vpos;;vboolean;;r&#10;Definition&#10;    activate($activation, $email)&#10;&#10;Description&#10;     Activates user account.;;d1,120;;b1,0;;mactivation;;pemail;;p">
 </treenode>
-<treenode node="getUserByName;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;46;2;49;;;;vpos;;varray;;r&#10;Definition&#10;    getUserByName()&#10;&#10;Description&#10;     Gets user by name.;;d1,47;;b1,0;;m">
+<treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Signup.php;f8;22;2;64;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Signup rules.;;d1,23;;b1,0;;m">
 </treenode>
-<treenode node="save;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;96;2;102;;;;vpos;;vboolean;;r&#10;Definition&#10;    save()&#10;&#10;Description&#10;     Saves user data to database.;;d1,97;;b1,0;;m">
+<treenode node="signup;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Signup.php;f8;71;2;112;;;;vpos;;vboolean;;r&#10;Definition&#10;    signup()&#10;&#10;Description&#10;     Saves user data.;;d1,72;;b1,0;;m">
+</treenode>
+</treenode>
+<treenode node="Model_User;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f0;16;1;174;;;;vpos;;vDb_Helper;;c;;r;;d0,17;;b0,0;;m">
+<treenode node="STATUS_ACTIVE;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f9;25;23;25;;;;vpos;;v;;r1;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="STATUS_DELETED;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f9;26;24;26;;;;vpos;;v;;r2;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="STATUS_NOTACTIVE;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f6;24;23;24;;;;vpos;;v;;r0;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;22;2;25;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;40;2;43;;;;vpos;;v;;r;;d1,41;;b1,0;;m">
+</treenode>
+<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;37;2;40;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;170;2;173;;;;vpos;;v;;r;;d1,171;;b1,0;;m">
+</treenode>
+<treenode node="changePwd;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;137;2;142;;;;vpos;;vboolean;;r&#10;Definition&#10;    changePwd()&#10;&#10;Description&#10;     Changes user password.;;d1,138;;b1,0;;m">
+</treenode>
+<treenode node="changePwdToken;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;125;2;130;;;;vpos;;vboolean;;r&#10;Definition&#10;    changePwdToken()&#10;&#10;Description&#10;     Changes user password token.;;d1,126;;b1,0;;m">
+</treenode>
+<treenode node="changeStatus;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;113;2;118;;;;vpos;;vboolean;;r&#10;Definition&#10;    changeStatus()&#10;&#10;Description&#10;     Changes user status.;;d1,114;;b1,0;;m">
+</treenode>
+<treenode node="existsEmail;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;85;2;93;;;;vpos;;vboolean;;r&#10;Definition&#10;    existsEmail()&#10;&#10;Description&#10;     Checks if email exists.;;d1,86;;b1,0;;m">
+</treenode>
+<treenode node="existsUsername;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;70;2;78;;;;vpos;;vboolean;;r&#10;Definition&#10;    existsUsername()&#10;&#10;Description&#10;     Checks if username exists.;;d1,71;;b1,0;;m">
+</treenode>
+<treenode node="getPersonalByUsername;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;32;2;35;;;;vpos;;varray;;r&#10;Definition&#10;    getPersonalByUsername()&#10;&#10;Description&#10;     Gets ersonal by username.;;d1,33;;b1,0;;m">
+</treenode>
+<treenode node="getUserByEmail;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;60;2;63;;;;vpos;;varray;;r&#10;Definition&#10;    getUserByEmail()&#10;&#10;Description&#10;     Gets user by email.;;d1,61;;b1,0;;m">
+</treenode>
+<treenode node="getUserByName;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;50;2;53;;;;vpos;;varray;;r&#10;Definition&#10;    getUserByName()&#10;&#10;Description&#10;     Gets user by name.;;d1,51;;b1,0;;m">
+</treenode>
+<treenode node="save;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;100;2;106;;;;vpos;;vboolean;;r&#10;Definition&#10;    save()&#10;&#10;Description&#10;     Saves user data to database.;;d1,101;;b1,0;;m">
+</treenode>
+<treenode node="setUser;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;149;2;155;;;;vpos;;vnothing;;r&#10;Definition&#10;    setUser()&#10;&#10;Description&#10;     Sets user session.;;d1,150;;b1,0;;m">
+</treenode>
+<treenode node="unsetUser;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;162;2;168;;;;vpos;;vnothing;;r&#10;Definition&#10;    unsetUser()&#10;&#10;Description&#10;     Unsets user session.;;d1,163;;b1,0;;m">
 </treenode>
 </treenode>
 <treenode node="PHPMailer;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php;f0;30;1;4419;;;;vpos;;v;;r&#10;Definition&#10;    class PHPMailer&#10;&#10;Description&#10;     PHPMailer - PHP email creation and transport class.;;d0,31;;b0,0;;m">

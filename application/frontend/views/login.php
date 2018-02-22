@@ -1,13 +1,13 @@
 <?php
 	// check login
-	if (isset($_SESSION['user_logon']) && $_SESSION['user_logon'] == 1) {
+	if (isset($_SESSION['user']['id'])) {
 		$basic_helper->redirect(APP_NAME, 202, BEHAVIOR.'/Main', 'Index');
 	}
 	$form = 'login';
 ?>
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
 	<form action="/<?php echo BEHAVIOR; ?>/Login/Login" method="post" id="form_login" novalidate>
-		<legend><?php echo LOGIN_HDR; ?></legend>
+		<legend class="font-weight-bold"><?php echo LOGIN_HDR; ?></legend>
 		<div class="form-group row">
 			<label class="form-control-label text-danger" for="username"><i class="fas fa-user fa-2x"></i></label>
 			<div class="col">
@@ -31,7 +31,7 @@
 		<div class="form-group">
 			<div class="col">
 				<button type="submit" class="btn btn-success" id="btn_login" name="btn_login">Войти</button>
-				<a href="/<?php echo BEHAVIOR; ?>/Login/Reset" class="btn btn-danger">Сбросить</a>
+				<a href="/<?php echo BEHAVIOR; ?>/Login/Reset" class="btn btn-danger">Очистить</a>
 			</div>
 		</div>
 	</form>

@@ -7,7 +7,7 @@
 ?>
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
 	<form action="/<?php echo BEHAVIOR; ?>/ResetPwd/ResetPwd" method="post" id="form_reset_pwd" novalidate>
-		<legend><?php echo RESET_PWD_REQUEST_HDR; ?></legend>
+		<legend class="font-weight-bold"><?php echo RESET_PWD_REQUEST_HDR; ?></legend>
 		<div class="form-group row">
 			<label class="form-control-label text-danger" for="pwd"><i class="fas fa-keyboard fa-2x"></i></label>
 			<div class="col">
@@ -31,7 +31,7 @@
 		<div class="form-group">
 			<div class="col">
 				<button type="submit" class="btn btn-success" id="btn_reset_pwd" name="btn_reset_pwd">Сменить</button>
-				<a href="/<?php echo BEHAVIOR; ?>/ResetPwd/Reset" class="btn btn-danger">Сбросить</a>
+				<a href="/<?php echo BEHAVIOR; ?>/ResetPwd/Reset" class="btn btn-danger">Очистить</a>
 			</div>
 		</div>
 	</form>

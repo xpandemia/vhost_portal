@@ -1,7 +1,7 @@
 <?php $form = 'reset_pwd_request'; ?>
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
 	<form action="/<?php echo BEHAVIOR; ?>/ResetPwdRequest/SendEmail" method="post" id="form_send_email" novalidate>
-		<legend><?php echo RESET_PWD_REQUEST_HDR; ?></legend>
+		<legend class="font-weight-bold"><?php echo RESET_PWD_REQUEST_HDR; ?></legend>
 		<div class="form-group row">
 			<label class="form-control-label text-danger" for="email"><i class="fas fa-envelope fa-2x"></i></label>
 			<div class="col">
@@ -15,7 +15,7 @@
 		<div class="form-group">
 			<div class="col">
 				<button type="submit" class="btn btn-success" id="btn_send_email" name="btn_send_email">Выслать письмо</button>
-				<a href="/<?php echo BEHAVIOR; ?>/ResetPwdRequest/Reset" class="btn btn-danger">Сбросить</a>
+				<a href="/<?php echo BEHAVIOR; ?>/ResetPwdRequest/Reset" class="btn btn-danger">Очистить</a>
 				<a href="/<?php echo BEHAVIOR; ?>/Login/Index" class="btn btn-primary">Войти</a>
 			</div>
 		</div>
