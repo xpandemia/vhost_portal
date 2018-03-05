@@ -2,28 +2,26 @@
 
 namespace tinyframe\core\helpers;
 
-define("CAPTCHA_LEN", 6);
+define('CAPTCHA_LEN', 6);
 
 class Captcha_Helper
 {
 	/*
-		Captcha processing
+		CAPTCHA processing
 	*/
 
 	/**
-     * Creates URL with BASEPATH.
+     * Creates CAPTCHA.
      *
      * @return string
      */
-     public function create()
+     public static function create()
 	{
 		$captchastring = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz';
 		// gets first CAPTCHA_LEN sybmols after str_shuffle
 		$captchastring = substr(str_shuffle($captchastring), 0, CAPTCHA_LEN);
 		// saves CAPTCHA code
-		if (isset($_SESSION)) {
-			$_SESSION['captcha'] = $captchastring;
-		}
+		$_SESSION[APP_CODE]['captcha'] = $captchastring;
 
 		// generates CAPTCHA image
 		$image = imagecreatefrompng(ROOT_DIR.'/images/captcha.png');

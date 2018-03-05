@@ -4,7 +4,6 @@ namespace frontend\controllers;
 
 use tinyframe\core\Controller as Controller;
 use tinyframe\core\View as View;
-use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 use frontend\models\Model_ResetPwd as Model_ResetPwd;
 
 class Controller_ResetPwd extends Controller
@@ -13,7 +12,7 @@ class Controller_ResetPwd extends Controller
 		Reset password actions
 	*/
 
-	public $form = 'reset_pwd';
+	public $form;
 
 	public function __construct()
 	{
@@ -28,13 +27,13 @@ class Controller_ResetPwd extends Controller
      */
 	public function actionIndex()
 	{
-		if (!isset($_SESSION[$this->form])) {
-			$this->model->setForm($this->form, $this->model->rules(), null);
+		if (!isset($this->form)) {
+			$this->form = $this->model->setForm($this->model->rules(), null);
 		}
-		if (isset($_SESSION[$this->form]['pwd_token']) && isset($_SESSION[$this->form]['email'])) {
-			$_SESSION[$this->form]['success_msg'] = 'Ваш запрос на восстановление пароля подтвержден';	
+		if (isset($_SESSION[APP_CODE]['pwd_token']) && isset($_SESSION[APP_CODE]['email'])) {
+			$this->form['success_msg'] = 'Ваш запрос на восстановление пароля подтвержден.';
 		}
-		return $this->view->generate('reset-pwd.php', 'form.php', RESET_PWD_HDR);
+		return $this->view->generate('reset-pwd.php', 'form.php', RESET_PWD_HDR, $this->form);
 	}
 
 	/**
@@ -55,18 +54,22 @@ class Controller_ResetPwd extends Controller
      */
 	public function actionResetPwd()
 	{
-		$this->model->getForm($this->model->rules(), $_POST);
-		if ($this->model->validateForm($this->form, $this->model->rules())) {
-			if ($this->model->resetPwd()) {
-				$this->model->resetForm(true, $this->form, $this->model->rules());
-				$_SESSION[$this->form]['pwd_token'] = null;
-				$_SESSION[$this->form]['email'] = null;
-				$_SESSION['login']['error_msg'] = null;
-				$_SESSION['login']['success_msg'] = 'Ваш пароль успешно изменён.';
-				return Basic_Helper::redirect(LOGIN_HDR, 202, BEHAVIOR.'/Login', 'Index');
+		if (isset($_SESSION[APP_CODE]['pwd_token']) && isset($_SESSION[APP_CODE]['email'])) {
+			$this->form = $this->model->getForm($this->model->rules(), $_POST);
+			$this->form = $this->model->validateForm($this->form, $this->model->rules());
+			if ($this->form['validate']) {
+				$this->form = $this->model->resetPwd($this->form);
+				if (!$this->form['error_msg']) {
+					$this->form = $this->model->resetForm(true, $this->form, $this->model->rules());
+					$_SESSION[APP_CODE]['pwd_token'] = null;
+					$_SESSION[APP_CODE]['email'] = null;
+					$this->form['success_msg'] = 'Ваш пароль успешно изменён.';
+				}
 			}
+		} else {
+			$this->form['error_msg'] = 'Отсутствует признак изменения пароля или адрес эл. почты.';
 		}
-		return Basic_Helper::redirect(RESET_PWD_REQUEST_HDR, 202, BEHAVIOR.'/ResetPwd', 'Index');
+		return $this->view->generate('reset-pwd.php', 'form.php', RESET_PWD_HDR, $this->form);
 	}
 
 	/**
@@ -77,16 +80,16 @@ class Controller_ResetPwd extends Controller
 	public function actionCheckResetPwd()
 	{
 		if (isset($_GET['pwd_token']) && !empty($_GET['pwd_token'])) {
-			$_SESSION[$this->form]['pwd_token'] = $_GET['pwd_token'];
+			$_SESSION[APP_CODE]['pwd_token'] = $_GET['pwd_token'];
 		} else {
 			exit("<p><strong>Ошибка!</strong> Отсутствует признак изменения пароля.</p>");
 		}
 		if (isset($_GET['email']) && !empty($_GET['email'])) {
-			$_SESSION[$this->form]['email'] = $_GET['email'];
+			$_SESSION[APP_CODE]['email'] = $_GET['email'];
 		} else {
-			exit("<p><strong>Ошибка!</strong> Отсутствует Email.</p>");
+			exit("<p><strong>Ошибка!</strong> Отсутствует адрес эл. почты.</p>");
 		}
-		return $this->actionReset();
+		return $this->actionIndex();
 	}
 
 	public function __destruct()

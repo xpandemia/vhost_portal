@@ -12,8 +12,6 @@ class Model_Login extends Model
 		Login processing
 	*/
 
-	public $form = 'login';
-
 	/**
      * Login rules.
      *
@@ -27,14 +25,16 @@ class Model_Login extends Model
                                 'class' => 'form-control',
                                 'required' => ['default' => '', 'msg' => 'Логин обязателен для заполнения!'],
                                 'pattern' => ['value' => PATTERN_ALPHA, 'msg' => 'Для логина можно использовать только буквы!'],
-                                'width' => ['format' => 'string', 'min' => 1, 'max' => 45, 'msg' => 'Слишком длинный логин!']
+                                'width' => ['format' => 'string', 'min' => 1, 'max' => 45, 'msg' => 'Слишком длинный логин!'],
+                                'success' => 'Логин заполнен верно.'
                                ],
                 'pwd' => [
                             'type' => 'password',
                             'class' => 'form-control',
                             'required' => ['default' => '', 'msg' => 'Пароль обязателен для заполнения!'],
                             'pattern' => ['value' => PATTERN_ALPHA_NUMB, 'msg' => 'Пароль должен быть буквенно-цифровым!'],
-                            'width' => ['format' => 'string', 'min' => 6, 'max' => 10, 'msg' => 'Пароль должен быть 6-10 символов длиной!']
+                            'width' => ['format' => 'string', 'min' => 6, 'max' => 10, 'msg' => 'Пароль должен быть 6-10 символов длиной!'],
+                            'success' => 'Пароль заполнен верно.'
                            ]
             ];
 	}
@@ -42,21 +42,19 @@ class Model_Login extends Model
 	/**
      * Checks login data.
      *
-     * @return boolean
+     * @return array
      */
-	public function check()
+	public function check($form)
 	{
 		$user = new Model_User();
-		$user->username = $_SESSION[$this->form]['username'];
+		$user->username = $form['username'];
 		$row = $user->getUserByName();
 		if (empty($row['id'])) {
 			// user not found
-			$_SESSION[$this->form]['error_msg'] = 'Пользователь не найден!';
-			return false;
-		} else if (!$user->checkHash($_SESSION[$this->form]['pwd'], $row['pwd_hash'])) {
+			$form['error_msg'] = 'Пользователь не найден!';
+		} else if (!$user->checkHash($form['pwd'], $row['pwd_hash'])) {
 			// invalid password
-			$_SESSION[$this->form]['error_msg'] = 'Неверный пароль!';
-			return false;
+			$form['error_msg'] = 'Неверный пароль!';
 		} else {
 			$user->id = $row['id'];
 			$user->username = $row['username'];
@@ -64,22 +62,22 @@ class Model_Login extends Model
 			$user->status = $row['status'];
 			switch ($row['status']) {
 				case $user::STATUS_NOTACTIVE:
-					$_SESSION[$this->form]['error_msg'] = 'Учетная запись не активирована!';
+					$form['error_msg'] = 'Учетная запись не активирована!';
 					$user->unsetUser();
-					return false;
+					break;
 				case $user::STATUS_ACTIVE:
-					$_SESSION[$this->form]['error_msg'] = null;
+					$form['error_msg'] = null;
 					$user->setUser();
-					return true;
+					break;
 				case $user::DELETED:
-					$_SESSION[$this->form]['error_msg'] = 'Учетная запись удалена!';
+					$form['error_msg'] = 'Учетная запись удалена!';
 					$user->unsetUser();
-					return false;
+					break;
 				default:
-					$_SESSION[$this->form]['error_msg'] = 'Учетная запись в неизвестном состоянии!';
+					$form['error_msg'] = 'Учетная запись в неизвестном состоянии!';
 					$user->unsetUser();
-					return false;
 			}
 		}
+		return $form;
 	}
 }

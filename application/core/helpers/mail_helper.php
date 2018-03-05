@@ -18,16 +18,16 @@ class Mail_Helper
      */
 	public function sendEmail($to, $to_name, $subject, $body, $ccs = null, $bccs = null, $body_plain = null, $attachment = null, $attachment_name = null)
 	{
-		$mail = new PHPMailer(true);                              // Passing `true` enables exceptions
+		$mail = new PHPMailer(true);                              // Passing 'true' enables exceptions
 		try {
 			// Server settings
-		    $mail->SMTPDebug = 2;                                 // Enable verbose debug output
+		    $mail->SMTPDebug = SMTP_DEBUG;                        // Enable verbose debug output
 		    $mail->isSMTP();                                      // Set mailer to use SMTP
 		    $mail->Host = MAIL_HOST;  							  // Specify main and backup SMTP servers
 		    $mail->SMTPAuth = true;                               // Enable SMTP authentication
 		    $mail->Username = MAIL_USER;                 		  // SMTP username
 		    $mail->Password = MAIL_PASSWORD;                      // SMTP password
-		    $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+		    $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, 'ssl' also accepted
 		    $mail->Port = MAIL_PORT;                              // TCP port to connect to
 
 		    // Recipients
@@ -62,7 +62,6 @@ class Mail_Helper
 			}
 
 		    $mail->send();
-		    echo 'Message has been sent';
 		    return TRUE;
 		}
 		catch (Exception $e) {

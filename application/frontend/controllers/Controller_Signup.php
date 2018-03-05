@@ -14,7 +14,7 @@ class Controller_Signup extends Controller
 		Signup actions
 	*/
 
-	public $form = 'signup';
+	public $form;
 
 	public function __construct()
 	{
@@ -29,12 +29,11 @@ class Controller_Signup extends Controller
      */
 	public function actionIndex()
 	{
-		if (!isset($_SESSION[$this->form])) {
-			$captcha = new Captcha_Helper();
-			$captcha->create();
-			$this->model->setForm($this->form, $this->model->rules(), null);
+		if (!isset($this->form)) {
+			$this->form = $this->model->setForm($this->model->rules(), null);
 		}
-		return $this->view->generate('signup.php', 'form.php', SIGNUP_HDR);
+		Captcha_Helper::create();
+		return $this->view->generate('signup.php', 'form.php', SIGNUP_HDR, $this->form);
 	}
 
 	/**
@@ -44,8 +43,7 @@ class Controller_Signup extends Controller
      */
 	public function actionCaptcha()
 	{
-		$captcha = new Captcha_Helper();
-		$captcha->create();
+		Captcha_Helper::create();
 		return $this->actionIndex();
 	}
 
@@ -67,17 +65,20 @@ class Controller_Signup extends Controller
      */
 	public function actionSignup()
 	{
-		$this->model->getForm($this->model->rules(), $_POST);
-		if ($this->model->validateForm($this->form, $this->model->rules())) {
-			if ($this->model->signup()) {
-				$this->model->resetForm(true, $this->form, $this->model->rules());
-				$_SESSION['login']['error_msg'] = null;
-				$_SESSION['login']['success_msg'] = 'Регистрация выполнена успешно. Пожалуйста, проверьте электронную почту.';
-				unlink(ROOT_DIR.'/images/temp/captcha/captcha_'.session_id().'.png');
-				return Basic_Helper::redirect(LOGIN_HDR, 202, BEHAVIOR.'/Login', 'Index');
+		$this->form = $this->model->getForm($this->model->rules(), $_POST);
+		$this->form = $this->model->validateForm($this->form, $this->model->rules());
+		if ($this->form['validate']) {
+			$this->form = $this->model->signup($this->form);
+			if (!$this->form['error_msg']) {
+				$this->form = $this->model->resetForm(true, $this->form, $this->model->rules());
+				$this->form['success_msg'] = 'Регистрация выполнена успешно. Пожалуйста, проверьте электронную почту.';
 			}
 		}
-		return Basic_Helper::redirect(SIGNUP_HDR, 202, BEHAVIOR.'/Signup', 'Index');
+		Captcha_Helper::create();
+		if (!$this->form['captcha_err']) {
+			$this->form['captcha'] = null;
+		}
+		return $this->view->generate('signup.php', 'form.php', SIGNUP_HDR, $this->form);
 	}
 
 	/**
@@ -95,7 +96,7 @@ class Controller_Signup extends Controller
 		if (isset($_GET['email']) && !empty($_GET['email'])) {
 			$email = $_GET['email'];
 		} else {
-			exit("<p><strong>Ошибка!</strong> Отсутствует Email.</p>");
+			exit("<p><strong>Ошибка!</strong> Отсутствует адрес эл. почты.</p>");
 		}
 		if ($this->model->activate($code, $email)) {
 			return Basic_Helper::redirect(APP_NAME, 202, BEHAVIOR.'/Main', 'Index');

@@ -4,23 +4,21 @@ namespace common\models;
 
 use tinyframe\core\helpers\Db_Helper as Db_Helper;
 
-define("USERNAME_HELP", "Логин должен содержать <b>только латинские буквы</b>, и быть не более <b>45</b> символов длиной.");
-define("EMAIL_HELP", "Адрес электронной почты должен быть в формате <b>user@domain</b>, содержать <b>только латинские буквы</b> и не более <b>45</b> символов длиной.");
-define("PWD_HELP", "Пароль должен содержать <b>только латинские буквы и цифры</b>, и быть <b>6-10</b> символов длиной.");
-define("PWD_CONFIRM_HELP", "Пароль должен содержать <b>только латинские буквы и цифры</b>, и быть <b>6-10</b> символов длиной.");
+define('USERNAME_HELP', 'Логин должен содержать <b>только латинские буквы</b>, и быть не более <b>45</b> символов длиной.');
+define('EMAIL_HELP', 'Адрес электронной почты должен быть в формате <b>user@domain</b>, содержать <b>только латинские буквы</b> и не более <b>45</b> символов длиной.');
+define('PWD_HELP', 'Пароль должен содержать <b>только латинские буквы и цифры</b>, и быть <b>6-10</b> символов длиной.');
+define('PWD_CONFIRM_HELP', 'Пароль должен содержать <b>только латинские буквы и цифры</b>, и быть <b>6-10</b> символов длиной.');
 
-define("USERNAME_PLC", "Логин");
-define("EMAIL_PLC", "user@domain");
-define("PWD_PLC", "Пароль");
-define("PWD_CONFIRM_PLC", "Повторите пароль");
+define('USERNAME_PLC', 'Логин');
+define('EMAIL_PLC', 'user@domain');
+define('PWD_PLC', 'Пароль');
+define('PWD_CONFIRM_PLC', 'Повторите пароль');
 
 class Model_User extends Db_Helper
 {
 	/*
 		Users processing
 	*/
-
-	public $form = 'user';
 
 	const STATUS_NOTACTIVE = 0;
     const STATUS_ACTIVE = 1;
@@ -40,7 +38,7 @@ class Model_User extends Db_Helper
 
 	public function __construct()
 	{
-		$this->db = new Db_Helper();
+		$this->db = Db_Helper::getInstance();
 	}
 
 	/**
@@ -145,27 +143,27 @@ class Model_User extends Db_Helper
 	/**
      * Sets user session.
      *
-     * @return nothing
+     * @return void
      */
 	public function setUser()
 	{
-		$_SESSION[$this->form]['id'] = $this->id;
-		$_SESSION[$this->form]['username'] = $this->username;
-		$_SESSION[$this->form]['role'] = $this->role;
-		$_SESSION[$this->form]['status'] = $this->status;
+		$_SESSION[APP_CODE]['user_id'] = $this->id;
+		$_SESSION[APP_CODE]['user_name'] = $this->username;
+		$_SESSION[APP_CODE]['user_role'] = $this->role;
+		$_SESSION[APP_CODE]['user_status'] = $this->status;
 	}
 
 	/**
      * Unsets user session.
      *
-     * @return nothing
+     * @return void
      */
 	public function unsetUser()
 	{
-		unset($_SESSION[$this->form]['id']);
-		unset($_SESSION[$this->form]['username']);
-		unset($_SESSION[$this->form]['role']);
-		unset($_SESSION[$this->form]['status']);
+		unset($_SESSION[APP_CODE]['user_id']);
+		unset($_SESSION[APP_CODE]['user_name']);
+		unset($_SESSION[APP_CODE]['user_role']);
+		unset($_SESSION[APP_CODE]['user_status']);
 	}
 
 	public function __destruct()

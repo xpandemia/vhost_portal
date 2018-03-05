@@ -12,8 +12,6 @@ class Model_ResetPwd extends Model
 		Reset password processing
 	*/
 
-	public $form = 'reset_pwd';
-
 	/**
      * Reset password rules.
      *
@@ -27,14 +25,16 @@ class Model_ResetPwd extends Model
                             'class' => 'form-control',
                             'required' => ['default' => '', 'msg' => 'Пароль обязателен для заполнения!'],
                             'pattern' => ['value' => PATTERN_ALPHA_NUMB, 'msg' => 'Пароль должен быть буквенно-цифровым!'],
-                            'width' => ['format' => 'string', 'min' => 6, 'max' => 10, 'msg' => 'Пароль должен быть 6-10 символов длиной!']
+                            'width' => ['format' => 'string', 'min' => 6, 'max' => 10, 'msg' => 'Пароль должен быть 6-10 символов длиной!'],
+                            'success' => 'Пароль заполнен верно.'
                            ],
 				'pwd_confirm' => [
                             'type' => 'password',
                             'class' => 'form-control',
                             'required' => ['default' => '', 'msg' => 'Пароль обязателен для заполнения!'],
                             'pattern' => ['value' => PATTERN_ALPHA_NUMB, 'msg' => 'Пароль должен быть буквенно-цифровым!'],
-                            'width' => ['format' => 'string', 'min' => 6, 'max' => 10, 'msg' => 'Пароль должен быть 6-10 символов длиной!']
+                            'width' => ['format' => 'string', 'min' => 6, 'max' => 10, 'msg' => 'Пароль должен быть 6-10 символов длиной!'],
+                            'success' => 'Пароль заполнен верно.'
                            ]
             ];
 	}
@@ -42,34 +42,31 @@ class Model_ResetPwd extends Model
 	/**
      * Resets user password.
      *
-     * @return boolean
+     * @return array
      */
-	public function resetPwd()
+	public function resetPwd($form)
 	{
 		$user = new Model_User();
-		$user->email = $_SESSION[$this->form]['email'];
+		$user->email = $_SESSION[APP_CODE]['email'];
 		$row = $user->getUserByEmail();
 		if (!empty($row)) {
-			if ($_SESSION[$this->form]['pwd_token'] === $row['pwd_token']) {
-				if ($_SESSION[$this->form]['pwd'] === $_SESSION[$this->form]['pwd_confirm']) {
-					$user->pwd_hash = $user->GetHash($_SESSION[$this->form]['pwd']);
+			if ($_SESSION[APP_CODE]['pwd_token'] === $row['pwd_token']) {
+				if ($form['pwd'] === $form['pwd_confirm']) {
+					$user->pwd_hash = $user->GetHash($form['pwd']);
 					if ($user->changePwd()) {
-						return TRUE;
+						$form['error_msg'] = null;
 					} else {
-						$_SESSION[$this->form]['error_msg'] = 'Ошибка изменения пароля!';
-						return FALSE;
+						$form['error_msg'] = 'Ошибка изменения пароля!';
 					}
 				} else {
-					$_SESSION[$this->form]['error_msg'] = 'Пароли не совпадают!';
-					return FALSE;
+					$form['error_msg'] = 'Пароли не совпадают!';
 				}
 			} else {
-				$_SESSION[$this->form]['error_msg'] = 'Признак изменения пароля неверен!';
-				return FALSE;
+				$form['error_msg'] = 'Признак изменения пароля неверен!';
 			}
 		} else {
-			$_SESSION[$this->form]['error_msg'] = 'Адрес эл. почты не найден!';
-			return FALSE;
+			$form['error_msg'] = 'Адрес эл. почты не найден!';
 		}
+		return $form;
 	}
 }

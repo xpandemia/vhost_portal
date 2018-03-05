@@ -13,8 +13,6 @@ class Model_ResetPwdRequest extends Model
 		Reset password request processing
 	*/
 
-	public $form = 'reset_pwd_request';
-
 	/**
      * Reset password request rules.
      *
@@ -27,8 +25,9 @@ class Model_ResetPwdRequest extends Model
 							'type' => 'email',
                             'class' => 'form-control',
                             'required' => ['default' => '', 'msg' => 'Адрес эл. почты обязателен для заполнения!'],
-                            'pattern' => ['value' => PATTERN_EMAIL_LIGHT, 'msg' => 'Адрес электронной почты должен быть в формате user@domain.ru'],
-                            'width' => ['format' => 'string', 'min' => 0, 'max' => 45, 'msg' => 'Слишком длинный адрес эл. почты!']
+                            'pattern' => ['value' => PATTERN_EMAIL_LIGHT, 'msg' => 'Адрес электронной почты должен быть в формате user@domain'],
+                            'width' => ['format' => 'string', 'min' => 0, 'max' => 45, 'msg' => 'Слишком длинный адрес эл. почты!'],
+                            'success' => 'Адрес эл. почты заполнен верно.'
                             ]
             ];
 	}
@@ -36,13 +35,13 @@ class Model_ResetPwdRequest extends Model
 	/**
      * Sets password token and sends confirmation email.
      *
-     * @return boolean
+     * @return array
      */
-	public function sendEmail()
+	public function sendEmail($form)
 	{
 		$user = new Model_User();
-		$user->email = $_SESSION[$this->form]['email'];
-		$user->pwd_token = $user->GetHash($_SESSION[$this->form]['email'].date('Y-m-d H:i:s'));
+		$user->email = $form['email'];
+		$user->pwd_token = $user->GetHash($form['email'].date('Y-m-d H:i:s'));
 		$row = $user->getUserByEmail();
 		if (!empty($row)) {
 			if ($user->changePwdToken()) {
@@ -61,18 +60,16 @@ class Model_ResetPwdRequest extends Model
 							    </body>
 							</html>';
 				if ($mail->sendEmail($row['email'], $row['username'], $subject, $message)) {
-					return TRUE;
+					$form['error_msg'] = null;
 				} else {
-					$_SESSION[$this->form]['error_msg'] = 'Ошибка при отправке эл. сообщения!';
-					return FALSE;
+					$form['error_msg'] = 'Ошибка при отправке эл. сообщения!';
 				}
 			} else {
-				$_SESSION[$this->form]['error_msg'] = 'Ошибка установки признака изменения пароля!';
-				return FALSE;
+				$form['error_msg'] = 'Ошибка установки признака изменения пароля!';
 			}
 		} else {
-			$_SESSION[$this->form]['error_msg'] = 'Адрес эл. почты не найден!';
-			return FALSE;
+			$form['error_msg'] = 'Адрес эл. почты не найден!';
 		}
+		return $form;
 	}
 }

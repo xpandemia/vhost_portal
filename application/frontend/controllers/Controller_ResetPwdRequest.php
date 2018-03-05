@@ -4,7 +4,6 @@ namespace frontend\controllers;
 
 use tinyframe\core\Controller as Controller;
 use tinyframe\core\View as View;
-use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 use frontend\models\Model_ResetPwdRequest as Model_ResetPwdRequest;
 
 class Controller_ResetPwdRequest extends Controller
@@ -13,7 +12,7 @@ class Controller_ResetPwdRequest extends Controller
 		Reset password request actions
 	*/
 
-	public $form = 'reset_pwd_request';
+	public $form;
 
 	public function __construct()
 	{
@@ -28,10 +27,10 @@ class Controller_ResetPwdRequest extends Controller
      */
 	public function actionIndex()
 	{
-		if (!isset($_SESSION[$this->form])) {
-			$this->model->setForm($this->form, $this->model->rules(), null);
+		if (!isset($this->form)) {
+			$this->form = $this->model->setForm($this->model->rules(), null);
 		}
-		return $this->view->generate('reset-pwd-request.php', 'form.php', RESET_PWD_REQUEST_HDR);
+		return $this->view->generate('reset-pwd-request.php', 'form.php', RESET_PWD_REQUEST_HDR, $this->form);
 	}
 
 	/**
@@ -52,16 +51,16 @@ class Controller_ResetPwdRequest extends Controller
      */
 	public function actionSendEmail()
 	{
-		$this->model->getForm($this->model->rules(), $_POST);
-		if ($this->model->validateForm($this->form, $this->model->rules())) {
-			if ($this->model->sendEmail()) {
-				$this->model->resetForm(true, $this->form, $this->model->rules());
-				$_SESSION['login']['error_msg'] = null;
-				$_SESSION['login']['success_msg'] = 'Вам отправлено письмо с инструкцией об изменении пароля. Пожалуйста, проверьте электронную почту.';
-				return Basic_Helper::redirect(LOGIN_HDR, 202, BEHAVIOR.'/Login', 'Index');
+		$this->form = $this->model->getForm($this->model->rules(), $_POST);
+		$this->form = $this->model->validateForm($this->form, $this->model->rules());
+		if ($this->form['validate']) {
+			$this->form = $this->model->sendEmail($this->form);
+			if (!$this->form['error_msg']) {
+				$this->form = $this->model->resetForm(true, $this->form, $this->model->rules());
+				$this->form['success_msg'] = 'Вам отправлено письмо с инструкцией об изменении пароля. Пожалуйста, проверьте электронную почту.';
 			}
 		}
-		return Basic_Helper::redirect(RESET_PWD_REQUEST_HDR, 202, BEHAVIOR.'/ResetPwdRequest', 'Index');
+		return $this->view->generate('reset-pwd-request.php', 'form.php', RESET_PWD_REQUEST_HDR, $this->form);
 	}
 
 	public function __destruct()

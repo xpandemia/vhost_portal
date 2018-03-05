@@ -2,33 +2,51 @@
 
 use tinyframe\core\Routing as Routing;
 
+	// helpers
+	require_once ROOT_DIR.'/application/core/helpers/basic_helper.php'; // BASE processing
+	require_once ROOT_DIR.'/application/core/helpers/captcha_helper.php'; // CAPTCHA processing
+	require_once ROOT_DIR.'/application/core/helpers/form_helper.php'; // FORMS processing
+	require_once ROOT_DIR.'/application/core/helpers/html_helper.php'; // HTML processing
+	require_once ROOT_DIR.'/application/core/helpers/db_helper.php'; // DB processing
+	require_once ROOT_DIR.'/application/core/helpers/mail_helper.php'; // EMAIL processing
 	// configs
 	require_once ROOT_DIR.'/application/core/config/db_config.php'; // DB configuration
 	require_once ROOT_DIR.'/application/core/config/form_config.php'; // FORMS configuration
 	require_once ROOT_DIR.'/application/core/config/mail_config.php'; // EMAIL configuration
-	// helpers
-	require_once ROOT_DIR.'/application/core/helpers/basic_helper.php'; // base processing
-	require_once ROOT_DIR.'/application/core/helpers/captcha_helper.php'; // CAPTCHA processing
-	require_once ROOT_DIR.'/application/core/helpers/form_helper.php'; // forms processing
-	require_once ROOT_DIR.'/application/core/helpers/db_helper.php'; // DB processing
-	require_once ROOT_DIR.'/application/core/helpers/mail_helper.php'; // email processing
 	// base classes
 	require_once ROOT_DIR.'/application/core/model.php';
 	require_once ROOT_DIR.'/application/core/view.php';
 	require_once ROOT_DIR.'/application/core/controller.php';
 	// data classes
-	include_once ROOT_DIR.'/application/common/models/Model_User.php'; // users
-	include_once ROOT_DIR.'/application/common/models/Model_Personal.php'; // personal data
+	if (defined('DB_TABLES')) {
+		if (is_array(DB_TABLES)) {
+			foreach (DB_TABLES as $table_name) {
+		        $model = explode('_', $table_name);
+		        $model_name = '';
+		        foreach ($model as $model_value) {
+		            $model_name .= ucfirst($model_value);
+		        }
+		        require_once ROOT_DIR.'/application/common/models/Model_'.$model_name.'.php';
+		    }
+		}
+	}
 	// vendors
 	require_once ROOT_DIR.'/vendors/PHPMailer/src/Exception.php';
 	require_once ROOT_DIR.'/vendors/PHPMailer/src/PHPMailer.php';
 	require_once ROOT_DIR.'/vendors/PHPMailer/src/SMTP.php';
 
+
+# ---------------------------------------------------------------
+# BEHAVIOR
+# ---------------------------------------------------------------
 if ($behavior === '') {
 	$behavior = 'frontend';
 }
 define('BEHAVIOR', $behavior);
 
+# ---------------------------------------------------------------
+# ENVIRONMENT
+# ---------------------------------------------------------------
 if ($environment === '') {
 	$environment = 'development';
 }
@@ -66,7 +84,16 @@ if ($actionName == '') {
 }
 define('ACTION', $actionName);
 
-# Start routing
+# Set SESSION vars
+if (!isset($_SESSION[APP_CODE]['captcha'])) {
+	$_SESSION[APP_CODE]['captcha'] = null;
+}
 
+# Clear TEMP
+if (file_exists(ROOT_DIR.'/images/temp/captcha/captcha_'.session_id().'.png')) {
+	unlink(ROOT_DIR.'/images/temp/captcha/captcha_'.session_id().'.png');
+}
+
+# Start routing
 require_once ROOT_DIR.'/application/core/routing.php';
 Routing::execute(); // запускаем маршрутизатор

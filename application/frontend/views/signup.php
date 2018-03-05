@@ -1,86 +1,86 @@
 <?php
 	
-use tinyframe\core\helpers\Captcha_Helper as Captcha_Helper;
+use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
+use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
+use tinyframe\core\helpers\Form_Helper as Form_Helper;
 
-	$captcha = new Captcha_Helper();
-	$captcha->create();
-	
 	// check login
-	if (isset($_SESSION['user']['id'])) {
-		$basic_helper->redirect(APP_NAME, 202, BEHAVIOR.'/Main', 'Index');
+	if (isset($_SESSION[APP_CODE]['user_id'])) {
+		Basic_Helper::redirect(APP_NAME, 202, BEHAVIOR.'/Main', 'Index');
 	}
-	
-	$form = 'signup';
 ?>
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
-	<form action="/<?php echo BEHAVIOR; ?>/Signup/Signup" method="post" id="form_signup" novalidate>
-		<legend class="font-weight-bold"><?php echo SIGNUP_HDR; ?></legend>
-		<div class="form-group row">
-			<label class="form-control-label text-danger" for="username"><i class="fas fa-user fa-2x"></i></label>
-			<div class="col">
-				<input id="username" name="username" type="text" class="<?php echo $_SESSION[$form]['username_cls']; ?>" aria-describedby="usernameHelpBlock" placeholder="<?php echo USERNAME_PLC; ?>" value="<?php echo $_SESSION[$form]['username'] ?>">
-<?php if (!empty($_SESSION[$form]['username_err'])) { ?>
-				<div class="invalid-feedback"><?php echo $_SESSION[$form]['username_err']; ?></div>
-<?php } ?>
-				<p id="usernameHelpBlock" class="form-text text-muted"><?php echo USERNAME_HELP; ?></p>
-			</div>
-		</div>
-		<div class="form-group row">
-			<label class="form-control-label text-danger" for="email"><i class="fas fa-envelope fa-2x"></i></label>
-			<div class="col">
-				<input id="email" name="email" type="email" class="<?php echo $_SESSION[$form]['email_cls']; ?>" aria-describedby="emailHelpBlock" placeholder="<?php echo EMAIL_PLC; ?>" value="<?php echo $_SESSION[$form]['email'] ?>">
-<?php if (!empty($_SESSION[$form]['email_err'])) { ?>
-				<div class="invalid-feedback"><?php echo $_SESSION[$form]['email_err']; ?></div>
-<?php } ?>
-				<p id="emailHelpBlock" class="form-text text-muted"><?php echo EMAIL_HELP; ?></p>
-			</div>
-		</div>
-		<div class="form-group row">
-			<label class="form-control-label text-danger" for="pwd"><i class="fas fa-keyboard fa-2x"></i></label>
-			<div class="col">
-				<input id="pwd" name="pwd" type="password" class="<?php echo $_SESSION[$form]['pwd_cls']; ?>" aria-describedby="pwdHelpBlock" placeholder="<?php echo PWD_PLC; ?>" value="<?php echo $_SESSION[$form]['pwd'] ?>">
-<?php if (!empty($_SESSION[$form]['pwd_err'])) { ?>
-				<div class="invalid-feedback"><?php echo $_SESSION[$form]['pwd_err']; ?></div>
-<?php } ?>
-				<p id="pwdHelpBlock" class="form-text text-muted"><?php echo PWD_HELP; ?></p>
-			</div>
-		</div>
-		<div class="form-group row">
-			<label class="form-control-label text-danger" for="pwd_confirm"><i class="fas fa-keyboard fa-2x"></i></label>
-			<div class="col">
-				<input id="pwd_confirm" name="pwd_confirm" type="password" class="<?php echo $_SESSION[$form]['pwd_confirm_cls']; ?>" aria-describedby="pwd_confirmHelpBlock" placeholder="<?php echo PWD_CONFIRM_PLC; ?>" value="<?php echo $_SESSION[$form]['pwd_confirm'] ?>">
-<?php if (!empty($_SESSION[$form]['pwd_confirm_err'])) { ?>
-				<div class="invalid-feedback"><?php echo $_SESSION[$form]['pwd_confirm_err']; ?></div>
-<?php } ?>
-				<p id="pwd_confirmHelpBlock" class="form-text text-muted"><?php echo PWD_CONFIRM_HELP; ?></p>
-			</div>
-		</div>
+	<?php echo Form_Helper::setFormBegin('Signup/Signup', 'form_signup', SIGNUP_HDR); ?>
+
+		<!-- username -->
+		<?php echo Form_Helper::setFormInput(['label' => '<i class="fas fa-user fa-2x"></i>',
+											'control' => 'username',
+											'type' => 'text',
+											'class' => $data['username_cls'],
+											'required' => 'yes',
+											'required_style' => 'RedBold',
+											'placeholder' => USERNAME_PLC,
+											'value' => $data['username'],
+											'success' => $data['username_scs'],
+											'error' => $data['username_err'],
+											'help' => USERNAME_HELP]); ?>
+		<!-- email -->
+		<?php echo Form_Helper::setFormInput(['label' => '<i class="fas fa-envelope fa-2x"></i>',
+											'control' => 'email',
+											'type' => 'email',
+											'class' => $data['email_cls'],
+											'required' => 'yes',
+											'required_style' => 'RedBold',
+											'placeholder' => EMAIL_PLC,
+											'value' => $data['email'],
+											'success' => $data['email_scs'],
+											'error' => $data['email_err'],
+											'help' => EMAIL_HELP]); ?>
+		<!-- pwd -->
+		<?php echo Form_Helper::setFormInput(['label' => '<i class="fas fa-keyboard fa-2x"></i>',
+											'control' => 'pwd',
+											'type' => 'password',
+											'class' => $data['pwd_cls'],
+											'required' => 'yes',
+											'required_style' => 'RedBold',
+											'placeholder' => PWD_PLC,
+											'value' => $data['pwd'],
+											'success' => $data['pwd_scs'],
+											'error' => $data['pwd_err'],
+											'help' => PWD_HELP]); ?>
+		<!-- pwd_confirm -->
+		<?php echo Form_Helper::setFormInput(['label' => '<i class="fas fa-keyboard fa-2x"></i>',
+											'control' => 'pwd_confirm',
+											'type' => 'password',
+											'class' => $data['pwd_confirm_cls'],
+											'required' => 'yes',
+											'required_style' => 'RedBold',
+											'placeholder' => PWD_CONFIRM_PLC,
+											'value' => $data['pwd_confirm'],
+											'success' => $data['pwd_confirm_scs'],
+											'error' => $data['pwd_confirm_err'],
+											'help' => PWD_CONFIRM_HELP]); ?>
+		<!-- captcha -->
 		<hr>
-		<img id="img-captcha" src="/images/temp/captcha/captcha_<?php echo session_id(); ?>.png">
-		<a href="/<?php echo BEHAVIOR; ?>/Signup/Captcha" class="btn btn-primary"><i class="fas fa-sync"></i> Обновить</a>
-		<div class="form-group has-feedback">
-            <label id="label-captcha" for="captcha" class="control-label">Пожалуйста, введите указанный на изображении код:</label>
-	    	<input id="captcha" name="captcha" type="text" class="<?php echo $_SESSION[$form]['captcha_cls']; ?>" value="<?php echo $_SESSION[$form]['captcha'] ?>">
-<?php if (!empty($_SESSION[$form]['captcha_err'])) { ?>
-			<div class="invalid-feedback"><?php echo $_SESSION[$form]['captcha_err']; ?></div>
-<?php } ?>
-        </div>
+		<?php echo Form_Helper::setFormCaptcha(['action' => 'Signup/Captcha',
+												'class' => $data['captcha_cls'],
+												'value' => $data['captcha'],
+												'success' => $data['captcha_scs'],
+												'error' => $data['captcha_err']]); ?>
+		<!-- controls -->
 		<div class="form-group">
 			<div class="col">
-				<button type="submit" class="btn btn-success" id="btn_signup" name="btn_signup">Зарегистрироваться</button>
-				<a href="/<?php echo BEHAVIOR; ?>/Signup/Reset" class="btn btn-danger">Очистить</a>
-				<a href="/<?php echo BEHAVIOR; ?>/Login/Index" class="btn btn-primary">Войти</a>
+				<?php
+					echo HTML_Helper::setSubmit('btn btn-success', 'btn_signup', 'Зарегистрироваться');
+					echo HTML_Helper::setHrefButton('Signup/Reset', 'btn btn-danger', 'Очистить');
+					echo HTML_Helper::setHrefButton('Login/Index', 'btn btn-primary', 'Войти');
+				?>
 			</div>
 		</div>
-	</form>
-	<?php if (!empty($_SESSION[$form]['success_msg'])) { ?>
-		<div class="alert alert-success">
-			<?php echo $_SESSION[$form]['success_msg']; ?>
-	    </div>
-	<?php } ?>
-	<?php if (!empty($_SESSION[$form]['error_msg'])) { ?>
-		<div class="alert alert-danger">
-			<?php echo $_SESSION[$form]['error_msg']; ?>
-	    </div>
-	<?php } ?>
+
+	<?php
+		echo Form_Helper::setFormEnd();
+		echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
+		echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
+	?>
 </div>

@@ -1,18 +1,11 @@
 <?php
+
+use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
+use tinyframe\core\helpers\Form_Helper as Form_Helper;
+
 	// check login
-	if (!isset($_SESSION['user']['id'])) {
-		$basic_helper->redirect(LOGIN_HDR, 401, BEHAVIOR.'/Login', 'Index');
+	if (!isset($_SESSION[APP_CODE]['user_id'])) {
+		Basic_Helper::redirect(LOGIN_HDR, 401, BEHAVIOR.'/Login', 'Index');
 	}
-	$form = 'main';
 ?>
-<h1 class="text-center text-white">Добро пожаловать, <?php echo $_SESSION['user']['username']; ?>!</h1>
-<?php if (!empty($_SESSION[$form]['success_msg'])) { ?>
-	<div class="alert alert-success">
-		<?php echo $_SESSION[$form]['success_msg']; ?>
-    </div>
-<?php } ?>
-<?php if (!empty($_SESSION[$form]['error_msg'])) { ?>
-	<div class="alert alert-danger">
-		<?php echo $_SESSION[$form]['error_msg']; ?>
-    </div>
-<?php } ?>
+<h1 class="text-center text-white">Добро пожаловать, <?php echo $_SESSION[APP_CODE]['user_name']; ?>!</h1>

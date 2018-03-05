@@ -6,13 +6,17 @@ use PDO;
 
 class Db_Helper
 {
-	/*
-		Database processing
-	*/
+	// Database processing *Singleton*
 
 	public static $pdo;
 
-	public function __construct()
+	/**
+     * Protected constructor to prevent creating a new instance of the
+     * Db_Helper via the 'new' operator from outside of this class.
+     *
+     * @return void
+     */
+	protected function __construct()
 	{
 		try {
 	        self::$pdo = new PDO('mysql:host='.DB_HOST.';charset=utf8;dbname='.DB_NAME, DB_USER, DB_PASSWORD, array(PDO::ATTR_PERSISTENT => true));
@@ -23,6 +27,42 @@ class Db_Helper
 	}
 
 	/**
+     * Private clone method to prevent cloning of the instance of the
+     * Db_Helper instance.
+     *
+     * @return void
+     */
+    private function __clone()
+    {
+    }
+
+    /**
+     * Private unserialize method to prevent unserializing of the Db_Helper
+     * instance.
+     *
+     * @return void
+     */
+    private function __wakeup()
+    {
+    }
+
+	/**
+     * Returns the Db_Helper instance.
+     *
+     * @staticvar Db_Helper $instance.
+     *
+     * @return Db_Helper instance.
+     */
+    public static function getInstance()
+    {
+        static $instance = null;
+        if (null === $instance) {
+            $instance = new static;
+        }
+        return $instance;
+    }
+
+	/**
      * Gets table row.
      *
      * @return array
@@ -31,9 +71,15 @@ class Db_Helper
 	{
 		try {
 			self::$pdo->beginTransaction();
-			$sql = self::$pdo->prepare('SELECT '.$fields.' FROM '.$tables.' WHERE '.$conds);
-		    $sql->execute($params);
-		    $row = $sql->fetch(PDO::FETCH_ASSOC);
+			if (!empty($conds) && (!empty($params))) {
+				$sql = self::$pdo->prepare('SELECT '.$fields.' FROM '.$tables.' WHERE '.$conds);
+				$sql->execute($params);
+				$row = $sql->fetch(PDO::FETCH_ASSOC);
+			} else {
+				$sql = self::$pdo->prepare('SELECT '.$fields.' FROM '.$tables);
+				$sql->execute();
+				$row = $sql->fetchAll();
+			}
 		    self::$pdo->commit();
 		    $sql = null;
 		    return $row;
@@ -129,10 +175,5 @@ class Db_Helper
 	public function checkHash($pwd, $hash)
 	{
 		return password_verify($pwd, $hash);
-	}
-
-	public function __destruct()
-	{
-		//self::$pdo = null;
 	}
 }

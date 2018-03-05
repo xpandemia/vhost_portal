@@ -1,48 +1,48 @@
 <?php
-	$form = 'reset_pwd';
-	// check password token
-	if (!isset($_SESSION[$form]['pwd_token']) && !isset($_SESSION[$form]['email'])) {
-		$basic_helper->redirect(APP_NAME, 202, BEHAVIOR.'/Login', 'Index');
-	}
+use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
+use tinyframe\core\helpers\Form_Helper as Form_Helper;
 ?>
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
-	<form action="/<?php echo BEHAVIOR; ?>/ResetPwd/ResetPwd" method="post" id="form_reset_pwd" novalidate>
-		<legend class="font-weight-bold"><?php echo RESET_PWD_REQUEST_HDR; ?></legend>
-		<div class="form-group row">
-			<label class="form-control-label text-danger" for="pwd"><i class="fas fa-keyboard fa-2x"></i></label>
-			<div class="col">
-				<input id="pwd" name="pwd" type="password" class="<?php echo $_SESSION[$form]['pwd_cls']; ?>" aria-describedby="pwdHelpBlock" placeholder="<?php echo PWD_PLC; ?>" value="<?php echo $_SESSION[$form]['pwd'] ?>">
-<?php if (!empty($_SESSION[$form]['pwd_err'])) { ?>
-				<div class="invalid-feedback"><?php echo $_SESSION[$form]['pwd_err']; ?></div>
-<?php } ?>
-				<p id="pwdHelpBlock" class="form-text text-muted"><?php echo PWD_HELP; ?></p>
-			</div>
-		</div>
-		<div class="form-group row">
-			<label class="form-control-label text-danger" for="pwd_confirm"><i class="fas fa-keyboard fa-2x"></i></label>
-			<div class="col">
-				<input id="pwd_confirm" name="pwd_confirm" type="password" class="<?php echo $_SESSION[$form]['pwd_confirm_cls']; ?>" aria-describedby="pwd_confirmHelpBlock" placeholder="<?php echo PWD_CONFIRM_PLC; ?>" value="<?php echo $_SESSION[$form]['pwd_confirm'] ?>">
-<?php if (!empty($_SESSION[$form]['pwd_confirm_err'])) { ?>
-				<div class="invalid-feedback"><?php echo $_SESSION[$form]['pwd_confirm_err']; ?></div>
-<?php } ?>
-				<p id="pwd_confirmHelpBlock" class="form-text text-muted"><?php echo PWD_CONFIRM_HELP; ?></p>
-			</div>
-		</div>
+	<?php echo Form_Helper::setFormBegin('ResetPwd/ResetPwd', 'form_reset_pwd', RESET_PWD_REQUEST_HDR); ?>
+
+		<!-- pwd -->
+		<?php echo Form_Helper::setFormInput(['label' => '<i class="fas fa-keyboard fa-2x"></i>',
+											'control' => 'pwd',
+											'type' => 'password',
+											'class' => $data['pwd_cls'],
+											'required' => 'yes',
+											'required_style' => 'RedBold',
+											'placeholder' => PWD_PLC,
+											'value' => $data['pwd'],
+											'success' => $data['pwd_scs'],
+											'error' => $data['pwd_err'],
+											'help' => PWD_HELP]); ?>
+		<!-- pwd_confirm -->
+		<?php echo Form_Helper::setFormInput(['label' => '<i class="fas fa-keyboard fa-2x"></i>',
+											'control' => 'pwd_confirm',
+											'type' => 'password',
+											'class' => $data['pwd_confirm_cls'],
+											'required' => 'yes',
+											'required_style' => 'RedBold',
+											'placeholder' => PWD_CONFIRM_PLC,
+											'value' => $data['pwd_confirm'],
+											'success' => $data['pwd_confirm_scs'],
+											'error' => $data['pwd_confirm_err'],
+											'help' => PWD_CONFIRM_HELP]); ?>
+		<!-- controls -->
 		<div class="form-group">
 			<div class="col">
-				<button type="submit" class="btn btn-success" id="btn_reset_pwd" name="btn_reset_pwd">Сменить</button>
-				<a href="/<?php echo BEHAVIOR; ?>/ResetPwd/Reset" class="btn btn-danger">Очистить</a>
+				<?php
+					echo HTML_Helper::setSubmit('btn btn-success', 'btn_reset_pwd', 'Сменить');
+					echo HTML_Helper::setHrefButton('ResetPwd/Reset', 'btn btn-danger', 'Очистить');
+					echo HTML_Helper::setHrefButton('Login/Index', 'btn btn-primary', 'Войти');
+				?>
 			</div>
 		</div>
-	</form>
-	<?php if (!empty($_SESSION[$form]['success_msg'])) { ?>
-		<div class="alert alert-success">
-			<?php echo $_SESSION[$form]['success_msg']; ?>
-	    </div>
-	<?php } ?>
-	<?php if (!empty($_SESSION[$form]['error_msg'])) { ?>
-		<div class="alert alert-danger">
-			<?php echo $_SESSION[$form]['error_msg']; ?>
-	    </div>
-	<?php } ?>
+
+	<?php
+		echo Form_Helper::setFormEnd();
+		echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
+		echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
+	?>
 </div>

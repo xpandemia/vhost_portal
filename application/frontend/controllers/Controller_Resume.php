@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use tinyframe\core\Controller as Controller;
 use tinyframe\core\View as View;
 use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
+use common\models\Model_Personal as Model_Personal;
 use frontend\models\Model_Resume as Model_Resume;
 
 class Controller_Resume extends Controller
@@ -13,7 +14,7 @@ class Controller_Resume extends Controller
 		Resume actions
 	*/
 
-	public $form = 'resume';
+	public $form;
 
 	public function __construct()
 	{
@@ -28,10 +29,17 @@ class Controller_Resume extends Controller
      */
 	public function actionIndex()
 	{
-		if (!isset($_SESSION[$this->form])) {
-			$this->model->setForm($this->form, $this->model->rules(), null);
+		$personal = new Model_Personal();
+		$personal->id_user = $_SESSION[APP_CODE]['user_id'];
+		$row = $personal->getPersonalByUser();
+		if ($row) {
+			$this->form = $this->model->setForm($this->model->rules(), $row);
+			$this->form['is_edit'] = true;
+		} else {
+			$this->form = $this->model->setForm($this->model->rules(), null);
+			$this->form['is_edit'] = false;
 		}
-		return $this->view->generate('resume.php', 'main.php', RESUME_HDR);
+		return $this->view->generate('resume.php', 'form.php', RESUME_HDR, $this->form);
 	}
 
 	/**
@@ -41,8 +49,16 @@ class Controller_Resume extends Controller
      */
 	public function actionReset()
 	{
-		$this->model->resetForm(true, $this->form, $this->model->rules());
-		return $this->actionIndex();
+		$this->form = $this->model->resetForm(true, $this->form, $this->model->rules());
+			$personal = new Model_Personal();
+			$personal->id_user = $_SESSION[APP_CODE]['user_id'];
+			$row = $personal->getPersonalByUser();
+			if ($row) {
+				$this->form['is_edit'] = true;
+			} else {
+				$this->form['is_edit'] = false;
+			}
+		return $this->view->generate('resume.php', 'form.php', RESUME_HDR, $this->form);
 	}
 
 	/**
@@ -52,19 +68,27 @@ class Controller_Resume extends Controller
      */
 	public function actionResume()
 	{
-		if (!isset($_SESSION[$this->form]['is_edit'])) {
-			$_SESSION['main']['error_msg'] = 'Признак изменения персональных данных не установлен!';
-			$basic_helper->redirect(APP_NAME, 202, BEHAVIOR.'/Main', 'Index');
-		} else {
-			$this->model->getForm($this->model->rules(), $_POST);
-			if ($this->model->validateForm($this->form, $this->model->rules())) {
-				if ($this->model->check()) {
-					$_SESSION[$this->form]['success_msg'] = 'Персональные данные успешно сохранены!';
-					$_SESSION['resume']['is_edit'] = true;
-				}
+		$this->form = $this->model->getForm($this->model->rules(), $_POST);
+			$personal = new Model_Personal();
+			$personal->id_user = $_SESSION[APP_CODE]['user_id'];
+			$row = $personal->getPersonalByUser();
+			if ($row) {
+				$this->form['is_edit'] = true;
+				$this->form['personal_vis'] = false;
+			} else {
+				$this->form['is_edit'] = false;
+				$this->form['personal_vis'] = true;
 			}
-			return Basic_Helper::redirect(LOGIN_HDR, 202, BEHAVIOR.'/Resume', 'Index');
+		$this->form = $this->model->validateForm($this->form, $this->model->rules());
+		if ($this->form['validate']) {
+			$this->form = $this->model->check($this->form);
+			if (!$this->form['error_msg']) {
+				$this->form['error_msg'] = null;
+				$this->form['success_msg'] = 'Анкета успешно сохранена!';
+				$this->form['is_edit'] = true;
+			}
 		}
+		return $this->view->generate('resume.php', 'form.php', RESUME_HDR, $this->form);
 	}
 
 	public function __destruct()

@@ -1,33 +1,36 @@
-<?php $form = 'reset_pwd_request'; ?>
+<?php
+use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
+use tinyframe\core\helpers\Form_Helper as Form_Helper;
+?>
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
-	<form action="/<?php echo BEHAVIOR; ?>/ResetPwdRequest/SendEmail" method="post" id="form_send_email" novalidate>
-		<legend class="font-weight-bold"><?php echo RESET_PWD_REQUEST_HDR; ?></legend>
-		<div class="form-group row">
-			<label class="form-control-label text-danger" for="email"><i class="fas fa-envelope fa-2x"></i></label>
-			<div class="col">
-				<input id="email" name="email" type="email" class="<?php echo $_SESSION[$form]['email_cls']; ?>" aria-describedby="emailHelpBlock" placeholder="<?php echo EMAIL_PLC; ?>" value="<?php echo $_SESSION[$form]['email'] ?>">
-<?php if (!empty($_SESSION[$form]['email_err'])) { ?>
-				<div class="invalid-feedback"><?php echo $_SESSION[$form]['email_err']; ?></div>
-<?php } ?>
-				<p id="emailHelpBlock" class="form-text text-muted"><?php echo EMAIL_HELP; ?></p>
-			</div>
-		</div>
+	<?php echo Form_Helper::setFormBegin('ResetPwdRequest/SendEmail', 'form_send_email', RESET_PWD_REQUEST_HDR); ?>
+
+		<!-- email -->
+		<?php echo Form_Helper::setFormInput(['label' => '<i class="fas fa-envelope fa-2x"></i>',
+											'control' => 'email',
+											'type' => 'email',
+											'class' => $data['email_cls'],
+											'required' => 'yes',
+											'required_style' => 'RedBold',
+											'placeholder' => EMAIL_PLC,
+											'value' => $data['email'],
+											'success' => $data['email_scs'],
+											'error' => $data['email_err'],
+											'help' => EMAIL_HELP]); ?>
+		<!-- controls -->
 		<div class="form-group">
 			<div class="col">
-				<button type="submit" class="btn btn-success" id="btn_send_email" name="btn_send_email">Выслать письмо</button>
-				<a href="/<?php echo BEHAVIOR; ?>/ResetPwdRequest/Reset" class="btn btn-danger">Очистить</a>
-				<a href="/<?php echo BEHAVIOR; ?>/Login/Index" class="btn btn-primary">Войти</a>
+				<?php
+					echo HTML_Helper::setSubmit('btn btn-success', 'btn_send_email', 'Выслать письмо');
+					echo HTML_Helper::setHrefButton('ResetPwdRequest/Reset', 'btn btn-danger', 'Очистить');
+					echo HTML_Helper::setHrefButton('Login/Index', 'btn btn-primary', 'Войти');
+				?>
 			</div>
 		</div>
-	</form>
-	<?php if (!empty($_SESSION[$form]['success_msg'])) { ?>
-		<div class="alert alert-success">
-			<?php echo $_SESSION[$form]['success_msg']; ?>
-	    </div>
-	<?php } ?>
-	<?php if (!empty($_SESSION[$form]['error_msg'])) { ?>
-		<div class="alert alert-danger">
-			<?php echo $_SESSION[$form]['error_msg']; ?>
-	    </div>
-	<?php } ?>
+
+	<?php
+		echo Form_Helper::setFormEnd();
+		echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
+		echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
+	?>
 </div>

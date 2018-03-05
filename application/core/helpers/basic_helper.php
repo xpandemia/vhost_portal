@@ -5,7 +5,7 @@ namespace tinyframe\core\helpers;
 class Basic_Helper
 {
 	/*
-		Base processing
+		Basic processing
 	*/
 
 	/**
@@ -13,7 +13,7 @@ class Basic_Helper
      *
      * @return string
      */
-	public function baseUrl($url = '')
+	public static function baseUrl($url = '')
 	{
 		if ($url != '') {
 			return BASEPATH.$url;
@@ -25,9 +25,9 @@ class Basic_Helper
 	/**
      * Redirects to page.
      *
-     * @return nothing
+     * @return void
      */
-	public function redirect($header, $response_code, $controller, $action)
+	public static function redirect($header, $response_code, $controller, $action)
 	{
 		header($_SERVER['SERVER_PROTOCOL'].' '.$header);
 		header("Status: ".http_response_code($response_code));

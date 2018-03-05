@@ -4,8 +4,6 @@ namespace frontend\controllers;
 
 use tinyframe\core\Controller as Controller;
 use tinyframe\core\View as View;
-use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
-use tinyframe\core\helpers\Form_Helper as Form_Helper;
 use frontend\models\Model_Login as Model_Login;
 
 class Controller_Login extends Controller
@@ -14,7 +12,7 @@ class Controller_Login extends Controller
 		Login actions
 	*/
 
-	public $form = 'login';
+	public $form;
 
 	public function __construct()
 	{
@@ -29,10 +27,10 @@ class Controller_Login extends Controller
      */
 	public function actionIndex()
 	{
-		if (!isset($_SESSION[$this->form])) {
-			$this->model->setForm($this->form, $this->model->rules(), null);
+		if (!isset($this->form)) {
+			$this->form = $this->model->setForm($this->model->rules(), null);
 		}
-		return $this->view->generate('login.php', 'form.php', LOGIN_HDR);
+		return $this->view->generate('login.php', 'form.php', LOGIN_HDR, $this->form);
 	}
 
 	/**
@@ -42,8 +40,8 @@ class Controller_Login extends Controller
      */
 	public function actionReset()
 	{
-		$this->model->resetForm(true, $this->form, $this->model->rules());
-		return $this->actionIndex();
+		$this->form = $this->model->resetForm(true, $this->form, $this->model->rules());
+		return $this->view->generate('login.php', 'form.php', LOGIN_HDR, $this->form);
 	}
 
 	/**
@@ -53,14 +51,16 @@ class Controller_Login extends Controller
      */
 	public function actionLogin()
 	{
-		$this->model->getForm($this->model->rules(), $_POST);
-		if ($this->model->validateForm($this->form, $this->model->rules())) {
-			if ($this->model->check()) {
-				$this->model->resetForm(true, $this->form, $this->model->rules());
-				return Basic_Helper::redirect(APP_NAME, 202, BEHAVIOR.'/Main', 'Index');
+		$this->form = $this->model->getForm($this->model->rules(), $_POST);
+		$this->form = $this->model->validateForm($this->form, $this->model->rules());
+		if ($this->form['validate']) {
+			$this->form = $this->model->check($this->form);
+			if (!$this->form['error_msg']) {
+				$this->form = $this->model->resetForm(true, $this->form, $this->model->rules());
+				return $this->view->generate('main.php', 'main.php', APP_NAME);
 			}
 		}
-		return Basic_Helper::redirect(LOGIN_HDR, 202, BEHAVIOR.'/Login', 'Index');
+		return $this->view->generate('login.php', 'form.php', LOGIN_HDR, $this->form);
 	}
 
 	public function __destruct()

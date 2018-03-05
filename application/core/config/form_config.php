@@ -10,12 +10,12 @@ namespace tinyframe\core\config;
 # NOTE: Leave them blank if you not use forms
 
 // Login form
-define("LOGIN_HDR", "Авторизация");
+define('LOGIN_HDR', 'Авторизация');
 // Signup form
-define("SIGNUP_HDR", "Регистрация");
+define('SIGNUP_HDR', 'Регистрация');
 // Reset password request form
-define("RESET_PWD_REQUEST_HDR", "Восстановление пароля");
+define('RESET_PWD_REQUEST_HDR', 'Запрос изменения пароля');
 // Reset password form
-define("RESET_PWD_HDR", "Восстановление пароля");
+define('RESET_PWD_HDR', 'Изменение пароля');
 // Personal data form
-define("RESUME_HDR", "Личные данные");
+define('RESUME_HDR', 'Анкета');

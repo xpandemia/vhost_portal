@@ -25,15 +25,15 @@ class Controller_Main extends Controller
      */
 	function actionIndex()
 	{
-		$this->view->generate('main.php', 'main.php', APP_NAME);
+		return $this->view->generate('main.php', 'main.php', APP_NAME);
 	}
 
 	/**
      * Calls to resume.
      *
-     * @return mixed
+     * @return void
      */
-	function actionResume()
+	function actionResume() : void
 	{
 		$this->model->resume();
 	}
@@ -45,7 +45,7 @@ class Controller_Main extends Controller
      */
 	public function actionLogout()
 	{
-		$this->model->logout();
+		return $this->model->logout();
 	}
 
 	public function __destruct()

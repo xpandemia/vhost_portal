@@ -1,7 +1,5 @@
 <?php
 use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
-
-$basic_helper = new Basic_Helper();
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -12,17 +10,17 @@ $basic_helper = new Basic_Helper();
 	<title><?php echo $title ?></title>
 
 	<!-- Bootstrap core CSS -->
-	<link rel="stylesheet" href="<?php echo $basic_helper->baseUrl('/vendors/bootstrap/css/bootstrap.min.css'); ?>">
+	<link rel="stylesheet" href="<?php echo Basic_Helper::baseUrl('/vendors/bootstrap/css/bootstrap.min.css'); ?>">
 	<!-- jQuery -->
-	<script src="<?php echo $basic_helper->baseUrl('/vendors/jquery/jquery.min.js'); ?>"></script>
+	<script src="<?php echo Basic_Helper::baseUrl('/vendors/jquery/jquery.min.js'); ?>"></script>
 	<!-- JQuery Masked Input -->
-	<script src="<?php echo $basic_helper->baseUrl('/vendors/maskedinput/jquery.maskedinput.min.js'); ?>"></script>
+	<script src="<?php echo Basic_Helper::baseUrl('/vendors/maskedinput/jquery.maskedinput.min.js'); ?>"></script>
 	<!-- Popper JS -->
-	<script src="<?php echo $basic_helper->baseUrl('/vendors/popper/popper.min.js'); ?>"></script>
+	<script src="<?php echo Basic_Helper::baseUrl('/vendors/popper/popper.min.js'); ?>"></script>
 	<!-- Bootstrap JS -->
-    <script src="<?php echo $basic_helper->baseUrl('/vendors/bootstrap/js/bootstrap.min.js'); ?>"></script>
+    <script src="<?php echo Basic_Helper::baseUrl('/vendors/bootstrap/js/bootstrap.min.js'); ?>"></script>
 	<!-- Font Awesome -->
-	<script defer src="<?php echo $basic_helper->baseUrl('/vendors/fontawesome/fontawesome-all.js'); ?>"></script>
+	<script defer src="<?php echo Basic_Helper::baseUrl('/vendors/fontawesome/fontawesome-all.js'); ?>"></script>
 </head>
 <body class="bg-primary">
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
@@ -31,7 +29,7 @@ $basic_helper = new Basic_Helper();
 	    <li class="nav-item">
 	      <a class="nav-link" data-toggle="tooltip" title="<?php echo RESUME_HDR; ?>" href="/<?php echo BEHAVIOR; ?>/Main/Resume"><i class="fas fa-id-card fa-2x"></i></a>
 	    </li>
-	    <?php if (isset($_SESSION['user']['id'])) { ?>
+	    <?php if (isset($_SESSION[APP_CODE]['user_id'])) { ?>
 	    <li class="nav-item">
 	      <a class="nav-link" data-toggle="tooltip" title="Выход" href="/<?php echo BEHAVIOR; ?>/Main/Logout"><i class="fas fa-sign-out-alt fa-2x"></i></a>
 	    </li>
