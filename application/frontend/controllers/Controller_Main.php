@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use tinyframe\core\Controller as Controller;
 use tinyframe\core\View as View;
+use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 use frontend\models\Model_Main as Model_Main;
 
 class Controller_Main extends Controller
@@ -35,7 +36,7 @@ class Controller_Main extends Controller
      */
 	function actionResume() : void
 	{
-		$this->model->resume();
+		Basic_Helper::redirect(RESUME['hdr'], 202, RESUME['ctr'], 'Index');
 	}
 
 	/**

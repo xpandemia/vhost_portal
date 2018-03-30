@@ -9,10 +9,12 @@ use tinyframe\core\Routing as Routing;
 	require_once ROOT_DIR.'/application/core/helpers/html_helper.php'; // HTML processing
 	require_once ROOT_DIR.'/application/core/helpers/db_helper.php'; // DB processing
 	require_once ROOT_DIR.'/application/core/helpers/mail_helper.php'; // EMAIL processing
+	require_once ROOT_DIR.'/application/core/helpers/xml_helper.php'; // XML processing
 	// configs
 	require_once ROOT_DIR.'/application/core/config/db_config.php'; // DB configuration
 	require_once ROOT_DIR.'/application/core/config/form_config.php'; // FORMS configuration
 	require_once ROOT_DIR.'/application/core/config/mail_config.php'; // EMAIL configuration
+	require_once ROOT_DIR.'/application/core/config/1c_config.php'; // 1C configuration
 	// base classes
 	require_once ROOT_DIR.'/application/core/model.php';
 	require_once ROOT_DIR.'/application/core/view.php';

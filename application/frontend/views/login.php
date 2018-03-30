@@ -6,11 +6,11 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 
 	// check login
 	if (isset($_SESSION[APP_CODE]['user_id'])) {
-		Basic_Helper::redirect(APP_NAME, 202, BEHAVIOR.'/Main', 'Index');
+		Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Index');
 	}
 ?>
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
-	<?php echo Form_Helper::setFormBegin('Login/Login', 'form_login', LOGIN_HDR); ?>
+	<?php echo Form_Helper::setFormBegin(LOGIN['ctr'], 'Login', LOGIN['id'], LOGIN['hdr']); ?>
 
 		<!-- username -->
 		<?php echo Form_Helper::setFormInput(['label' => '<i class="fas fa-user fa-2x"></i>',
@@ -41,15 +41,15 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 			<div class="col">
 				<?php
 					echo HTML_Helper::setSubmit('btn btn-success', 'btn_login', 'Войти');
-					echo HTML_Helper::setHrefButton('Login/Reset', 'btn btn-danger', 'Очистить');
+					echo HTML_Helper::setHrefButton(LOGIN['ctr'], 'Reset', 'btn btn-danger', 'Очистить');
 				?>
 			</div>
 		</div>
 
 	<?php
 		echo Form_Helper::setFormEnd();
-		echo HTML_Helper::setHrefText('Signup/Index', 'Ещё нет учётной записи? Зарегистрируйтесь.');
-		echo HTML_Helper::setHrefText('ResetPwdRequest/Index', 'Забыли пароль? Восстановите.');
+		echo HTML_Helper::setHrefText(SIGNUP['ctr'], 'Index', 'Ещё нет учётной записи? Зарегистрируйтесь.');
+		echo HTML_Helper::setHrefText(RESET_PWD_REQUEST['ctr'], 'Index', 'Забыли пароль? Восстановите.');
 		echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
 		echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
 	?>

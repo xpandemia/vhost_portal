@@ -23,6 +23,16 @@ class Basic_Helper
 	}
 
 	/**
+     * Creates URL with behavior/controller/action.
+     *
+     * @return string
+     */
+	public static function appUrl($controller, $action)
+	{
+		return '/'.BEHAVIOR.'/'.$controller.'/'.$action;
+	}
+
+	/**
      * Redirects to page.
      *
      * @return void
@@ -31,7 +41,7 @@ class Basic_Helper
 	{
 		header($_SERVER['SERVER_PROTOCOL'].' '.$header);
 		header("Status: ".http_response_code($response_code));
-		header('Location: /'.$controller.'/'.$action);
+		header('Location: '.self::appUrl($controller, $action));
 		exit();
 	}
 }

@@ -6,14 +6,41 @@ PORTALBSU
 +---application
 |   |   bootstrap.php - загрузчик приложения, детальные настройки, конфигурации, подключение классов
 |   |   
-|   +---backend - админка
+|   +---backend- админка
+|   |   +---controllers - контроллеры (админка)
+|   |   |       Controller_DictionaryManager.php - контроллер управления справочниками (админка)
+|   |   |       Controller_Login.php - контроллер авторизации (админка)
+|   |   |       Controller_Main.php - контроллер главной страницы (админка)
+|   |   |
+|   |   +---models - модели (админка)
+|   |   |       Model_DictionaryManager.php - модель управления справочниками (админка)
+|   |   |       Model_Login.php - модель авторизации (админка)
+|   |   |       Model_Main.php - модель главной страницы (админка)
+|   |   |
+|   |   +---views - представления/формы (админка)
+|   |   |   |   dictionary-manager.php - форма управления справочниками (админка)
+|   |   |   |   login.php - форма авторизации (админка)
+|   |   |   |   main.php - представление главной страницы (админка)
+|   |   |   |
+|   |   |   \---layouts - шаблоны представлений (админка)
+|   |   |           form.php - шаблон формы (админка)
+|   |   |           main.php - главный шаблон (админка)
+|   |   |
 |   |   \---web - корень админки
 |   |           .htaccess - настройка перенаправлений и управление конфигурацией веб-сервера (админка)
 |   |           index.php - точка входа (админка), запуск движка приложения
 |   |           
 |   +---common - общее
 |   |   \---models - общие модели
-|   |           Model_User.php - модель блока USER (пользователи)
+|   |           Model_Address.php - модель ADDRESS (адреса)
+|   |           Model_DictCitizenship.php - модель DICT_CITIZENSHIP (справочник гражданств)
+|   |           Model_DictCountries.php - модель DICT_COUNTRIES (справочник стран мира)
+|   |           Model_DictionaryManager.php - модель DICTIONARY_MANAGER (управление справочниками)
+|   |           Model_DictionaryManagerLog.php - модель DICTIONARY_MANAGER_LOG (журнал управления справочниками)
+|   |           Model_KladrAbbrs.php - модель KLADR_ABBRS (адресные сокращения КЛАДР)
+|   |           Model_Personal.php - модель PERSONAL (личные данные)
+|   |           Model_Resume.php - модель RESUME (анкеты)
+|   |           Model_User.php - модель USER (пользователи)
 |   |           
 |   +---core - движок приложения
 |   |   |   controller.php - базовый контроллер (контроллеры обрабатывают действия пользователя)
@@ -22,6 +49,7 @@ PORTALBSU
 |   |   |   view.php - базовое представление (представления отображают результаты работы приложения)
 |   |   |   
 |   |   +---config - настройки
+|   |   |       1c_config.php - настройки связи с 1С (ODATA)
 |   |   |       db_config.php - настройки БД
 |   |   |       form_config.php - настройки форм
 |   |   |       mail_config.php - настройки эл. почты
@@ -31,7 +59,9 @@ PORTALBSU
 |   |   |        captcha_helper.php - помощник для капчи
 |   |   |        db_helper.php - помощник для работы с БД
 |   |   |        form_helper.php - помощник для работы с формами
+|   |   |        html_helper.php - помощник для работы с HTML
 |   |   |        mail_helper.php - помощник для работы с эл. почтой
+|   |   |        xml_helper.php - помощник для работы с XML
 |   |   |       
 |   |   \---views - системные представления
 |   |       |   404.php - представление 404 ("не найдено")
@@ -42,16 +72,21 @@ PORTALBSU
 |   |           
 |   \---frontend - клиентская сторона
 |       +---controllers - контроллеры (клиент)
+|       |       Controller_Kladr.php - контроллер КЛАДР (клиент)
 |       |       Controller_Login.php - контроллер авторизации (клиент)
 |       |       Controller_Main.php - контроллер главной страницы (клиент)
 |       |       Controller_ResetPwd.php - контроллер изменения пароля (клиент)
 |       |       Controller_ResetPwdRequest.php - контроллер запроса изменения пароля (клиент)
+|       |       Controller_Resume.php - контроллер анкеты (клиент)
 |       |       Controller_Signup.php - контроллер регистрации (клиент)
 |       |       
 |       +---models - модели (клиент)
+|       |       Model_Kladr.php - модель КЛАДР (клиент)
 |       |       Model_Login.php - модель авторизации (клиент)
+|       |       Model_Main.php - модель главной страницы (клиент)
 |       |       Model_ResetPwd.php - модель изменения пароля (клиент)
 |       |       Model_ResetPwdRequest.php - модель запроса изменения пароля (клиент)
+|       |       Model_Resume.php - модель анкеты (клиент)
 |       |       Model_Signup.php - модель регистрации (клиент)
 |       |       
 |       +---views - представления/формы (клиент)
@@ -59,6 +94,7 @@ PORTALBSU
 |       |   |   main.php - представление главной страницы (клиент)
 |       |   |   reset-pwd-request.php - форма запроса изменения пароля (клиент)
 |       |   |   reset-pwd.php - форма изменения пароля (клиент)
+|       |   |   resume.php - форма анкеты (клиент)
 |       |   |   signup.php - форма регистрации (клиент)
 |       |   |   
 |       |   \---layouts - шаблоны представлений (клиент)
@@ -75,6 +111,7 @@ PORTALBSU
 +---images - изображения
 |   |   404.jpg - изображение 404 ("не найдено")
 |   |   500.jpg - изображение 500 ("внутренняя ошибка сервера")
+|   |   big_roller.gif - анимация загрузки AJAX-запросов
 |   |   captcha.png - фон для капчи
 |   |   
 |   \---temp - хранилище временных изображений
@@ -83,19 +120,28 @@ PORTALBSU
     +---bootstrap - Bootstrap (версия 4.0.0) - HTML- и CSS-шаблоны оформления для типографики, веб-форм, кнопок, меток, блоков навигации и прочих компонентов веб-интерфейса, включая JavaScript-расширения
     |   +---css
     |   |       bootstrap.min.css
+    |   |       bootstrap.min.css.map
     |   |       
     |   \---js
     |           bootstrap.min.js
+    |           bootstrap.min.js.map
     |           
     +---fontawesome - Font Awesome (версия 5.0.4) - набор масштабируемых векторных иконок
     |       fontawesome-all.js
     |       
     +---jquery JQuery (версия 3.3.1) - библиотека JavaScript, фокусирующаяся на взаимодействии JavaScript и HTML
     |       jquery.min.js
+    |
+    +---maskedinput - JQuery Masked Input (версия 1.4.1) - "маски" ввода
+    |       jquery.maskedinput.min.js
     |       
-    \---PHPMailer - PHPMailer (версия 6.0.3) - работа с эл. почтой
-        \---src
-                Exception.php
-                PHPMailer.php
-                SMTP.php
+    +---PHPMailer - PHPMailer (версия 6.0.3) - работа с эл. почтой
+    |   \---src
+    |           Exception.php
+    |           PHPMailer.php
+    |           SMTP.php
+    |
+    \---popper - Popper JS (версия 1.12.9) - всплывающие подсказки
+            popper.min.js
+            popper.min.js.map
                 

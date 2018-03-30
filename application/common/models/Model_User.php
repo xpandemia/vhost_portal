@@ -20,6 +20,10 @@ class Model_User extends Db_Helper
 		Users processing
 	*/
 
+	const ROLE_GUEST = 0;
+	const ROLE_MANAGER = 1;
+	const ROLE_ADMIN = 2;
+
 	const STATUS_NOTACTIVE = 0;
     const STATUS_ACTIVE = 1;
     const STATUS_DELETED = 2;
@@ -46,9 +50,9 @@ class Model_User extends Db_Helper
      *
      * @return array
      */
-	public function getUserByName()
+	public function getByUsername()
 	{
-		return $this->rowSelect('*', 'user', 'username = :username', [':username' => $this->username]);
+		return $this->rowSelectOne('*', 'user', 'username = :username', [':username' => $this->username]);
 	}
 
 	/**
@@ -56,9 +60,9 @@ class Model_User extends Db_Helper
      *
      * @return array
      */
-	public function getUserByEmail()
+	public function getByEmail()
 	{
-		return $this->rowSelect('*', 'user', 'email = :email', [':email' => $this->email]);
+		return $this->rowSelectOne('*', 'user', 'email = :email', [':email' => $this->email]);
 	}
 
 	/**
@@ -68,7 +72,7 @@ class Model_User extends Db_Helper
      */
 	public function existsUsername()
 	{
-		$row = $this->rowSelect('id', 'user', 'username = :username', [':username' => $this->username]);
+		$row = $this->rowSelectOne('id', 'user', 'username = :username', [':username' => $this->username]);
 		if (!empty($row)) {
 			return TRUE;
 		} else {
@@ -83,7 +87,7 @@ class Model_User extends Db_Helper
      */
 	public function existsEmail()
 	{
-		$row = $this->rowSelect('id', 'user', 'email = :email', [':email' => $this->email]);
+		$row = $this->rowSelectOne('id', 'user', 'email = :email', [':email' => $this->email]);
 		if (!empty($row)) {
 			return TRUE;
 		} else {

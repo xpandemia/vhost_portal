@@ -13,16 +13,6 @@ class Model_Main extends Model
 	*/
 
 	/**
-     * Makes resume view.
-     *
-     * @return void
-     */
-	public function resume() : void
-	{
-		Basic_Helper::redirect(RESUME_HDR, 202, BEHAVIOR.'/Resume', 'Index');
-	}
-
-	/**
      * Stops session user.
      *
      * @return void
@@ -31,8 +21,10 @@ class Model_Main extends Model
 	{
 		$user = new Model_User();
 		$user->unsetUser();
+		ob_end_clean(); // discard output buffer
 		session_destroy();
 		session_start();
-		Basic_Helper::redirect(LOGIN_HDR, 202, BEHAVIOR.'/Login', 'Index');
+		ob_start(); // start output buffer
+		Basic_Helper::redirect(LOGIN['hdr'], 202, LOGIN['ctr'], 'Index');
 	}
 }

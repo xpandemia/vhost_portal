@@ -24,14 +24,14 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 </head>
 <body class="bg-primary">
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
-	  <a class="navbar-brand" href="/<?php echo BEHAVIOR; ?>/Main/Index"><?php echo APP_NAME." ".APP_VERSION; ?></a>
+	  <a class="navbar-brand" href="<?php echo Basic_Helper::appUrl('Main', 'Index'); ?>"><?php echo APP_NAME." ".APP_VERSION; ?></a>
 	  <ul class="navbar-nav">
 	    <li class="nav-item">
-	      <a class="nav-link" data-toggle="tooltip" title="<?php echo RESUME_HDR; ?>" href="/<?php echo BEHAVIOR; ?>/Main/Resume"><i class="fas fa-id-card fa-2x"></i></a>
+	      <a class="nav-link" data-toggle="tooltip" title="<?php echo RESUME['hdr']; ?>" href="<?php echo Basic_Helper::appUrl('Main', RESUME['ctr']); ?>"><i class="fas fa-id-card fa-2x"></i></a>
 	    </li>
 	    <?php if (isset($_SESSION[APP_CODE]['user_id'])) { ?>
 	    <li class="nav-item">
-	      <a class="nav-link" data-toggle="tooltip" title="Выход" href="/<?php echo BEHAVIOR; ?>/Main/Logout"><i class="fas fa-sign-out-alt fa-2x"></i></a>
+	      <a class="nav-link" data-toggle="tooltip" title="Выход" href="<?php echo Basic_Helper::appUrl('Main', 'Logout'); ?>"><i class="fas fa-sign-out-alt fa-2x"></i></a>
 	    </li>
 	    <?php } ?>
 	  </ul>

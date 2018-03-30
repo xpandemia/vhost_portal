@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use tinyframe\core\Controller as Controller;
 use tinyframe\core\View as View;
 use frontend\models\Model_ResetPwdRequest as Model_ResetPwdRequest;
+use frontend\models\Model_Login as Model_Login;
 
 class Controller_ResetPwdRequest extends Controller
 {
@@ -30,7 +31,7 @@ class Controller_ResetPwdRequest extends Controller
 		if (!isset($this->form)) {
 			$this->form = $this->model->setForm($this->model->rules(), null);
 		}
-		return $this->view->generate('reset-pwd-request.php', 'form.php', RESET_PWD_REQUEST_HDR, $this->form);
+		return $this->view->generate('reset-pwd-request.php', 'form.php', RESET_PWD_REQUEST['hdr'], $this->form);
 	}
 
 	/**
@@ -60,7 +61,7 @@ class Controller_ResetPwdRequest extends Controller
 				$this->form['success_msg'] = 'Вам отправлено письмо с инструкцией об изменении пароля. Пожалуйста, проверьте электронную почту.';
 			}
 		}
-		return $this->view->generate('reset-pwd-request.php', 'form.php', RESET_PWD_REQUEST_HDR, $this->form);
+		return $this->view->generate('reset-pwd-request.php', 'form.php', RESET_PWD_REQUEST['hdr'], $this->form);
 	}
 
 	public function __destruct()

@@ -2,7 +2,7 @@
 
 define('APP_NAME', 'Портал БелГУ');
 define('APP_CODE', 'portalbsu'); // MUST BE UNIQUE
-define('APP_VERSION', '0.1.2');
+define('APP_VERSION', '0.1.3');
 
 # Портал БелГУ
 # Build with curiosity by Fiben on Tinyframe 0.1.5
@@ -16,7 +16,7 @@ header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
 header("Pragma: no-cache"); // HTTP/1.0
 
 session_start();
-ob_start();
+ob_start(); // start output buffer
 
 # Please set your application configuration here
 # If you do not have any configuration, please leave the

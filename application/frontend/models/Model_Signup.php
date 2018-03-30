@@ -122,7 +122,7 @@ class Model_Signup extends Model
 	{
 		$user = new Model_User();
 		$user->email = $email;
-		$row = $user->getUserByEmail();
+		$row = $user->getByEmail();
 		if ($activation == $row['activation']) {
 			$user->status = $user::STATUS_ACTIVE;
 			if ($user->changeStatus()) {

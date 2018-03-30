@@ -5,7 +5,7 @@
 
 $controllerName = 'Login';
 
-# Method that you want to open firt time
+# Method that you want to open first time
 # By default set to 'Index'
 
 $actionName = 'Index';

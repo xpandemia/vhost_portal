@@ -48,7 +48,7 @@ class Model_ResetPwd extends Model
 	{
 		$user = new Model_User();
 		$user->email = $_SESSION[APP_CODE]['email'];
-		$row = $user->getUserByEmail();
+		$row = $user->getByEmail();
 		if (!empty($row)) {
 			if ($_SESSION[APP_CODE]['pwd_token'] === $row['pwd_token']) {
 				if ($form['pwd'] === $form['pwd_confirm']) {

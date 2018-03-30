@@ -19,8 +19,11 @@ class Db_Helper
 	protected function __construct()
 	{
 		try {
-	        self::$pdo = new PDO('mysql:host='.DB_HOST.';charset=utf8;dbname='.DB_NAME, DB_USER, DB_PASSWORD, array(PDO::ATTR_PERSISTENT => true));
-	    } catch(PDOException $pdo_err) {
+	        self::$pdo = new PDO('mysql:host='.DB_HOST.';charset=utf8;dbname='.DB_NAME,
+								DB_USER,
+								DB_PASSWORD,
+								array(PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+	    } catch(\PDOException $pdo_err) {
 	        echo nl2br("Error MySQL: ".$pdo_err->getMessage()."\n");
 	        exit;
 	    }
@@ -67,23 +70,50 @@ class Db_Helper
      *
      * @return array
      */
-	public function rowSelect($fields, $tables, $conds, $params)
+	public function rowSelectOne($fields, $tables, $conds = null, $params = null)
 	{
 		try {
 			self::$pdo->beginTransaction();
 			if (!empty($conds) && (!empty($params))) {
 				$sql = self::$pdo->prepare('SELECT '.$fields.' FROM '.$tables.' WHERE '.$conds);
 				$sql->execute($params);
-				$row = $sql->fetch(PDO::FETCH_ASSOC);
 			} else {
 				$sql = self::$pdo->prepare('SELECT '.$fields.' FROM '.$tables);
 				$sql->execute();
-				$row = $sql->fetchAll();
 			}
-		    self::$pdo->commit();
+			$row = $sql->fetch(PDO::FETCH_ASSOC);
+			self::$pdo->commit();
 		    $sql = null;
 		    return $row;
-		} catch(PDOException $pdo_err) {
+		} catch(\PDOException $pdo_err) {
+			self::$pdo->rollBack();
+			$sql = null;
+			echo nl2br("Error MySQL: ".$pdo_err->getMessage()."\n");
+			return null;
+		}
+	}
+
+	/**
+     * Gets table row.
+     *
+     * @return array
+     */
+	public function rowSelectAll($fields, $tables, $conds = null, $params = null)
+	{
+		try {
+			self::$pdo->beginTransaction();
+			if (!empty($conds) && (!empty($params))) {
+				$sql = self::$pdo->prepare('SELECT '.$fields.' FROM '.$tables.' WHERE '.$conds);
+				$sql->execute($params);
+			} else {
+				$sql = self::$pdo->prepare('SELECT '.$fields.' FROM '.$tables);
+				$sql->execute();
+			}
+			$row = $sql->fetchAll();
+			self::$pdo->commit();
+		    $sql = null;
+		    return $row;
+		} catch(\PDOException $pdo_err) {
 			self::$pdo->rollBack();
 			$sql = null;
 			echo nl2br("Error MySQL: ".$pdo_err->getMessage()."\n");
@@ -104,12 +134,12 @@ class Db_Helper
 		    $sql->execute($params);
 		    self::$pdo->commit();
 			$sql = null;
-		    return TRUE;
-		} catch(PDOException $pdo_err) {
+			return TRUE;
+		} catch(\PDOException $pdo_err) {
 			self::$pdo->rollBack();
 			$sql = null;
 			echo nl2br("Error MySQL: ".$pdo_err->getMessage()."\n");
-			return FALSE;
+		    return FALSE;
 		}
 	}
 
@@ -127,7 +157,7 @@ class Db_Helper
 		    self::$pdo->commit();
 			$sql = null;
 		    return TRUE;
-		} catch(PDOException $pdo_err) {
+		} catch(\PDOException $pdo_err) {
 			self::$pdo->rollBack();
 			$sql = null;
 			echo nl2br("Error MySQL: ".$pdo_err->getMessage()."\n");
@@ -138,23 +168,27 @@ class Db_Helper
 	/**
      * Deletes table row.
      *
-     * @return boolean
+     * @return integer
      */
-	public function rowDelete($tables, $conds, $params)
+	public function rowDelete($tables, $conds = null, $params = null)
 	{
 		try {
 			self::$pdo->beginTransaction();
-			$sql = self::$pdo->prepare('DELETE FROM '.$tables.' WHERE '.$conds);
-		    $sql->execute($params);
+			if (!empty($conds) && (!empty($params))) {
+				$sql = self::$pdo->prepare('DELETE FROM '.$tables.' WHERE '.$conds);
+				$sql->execute($params);
+			} else {
+				$sql = self::$pdo->prepare('DELETE FROM '.$tables);
+				$sql->execute();
+			}
 		    self::$pdo->commit();
-			$sql = null;
-		    return TRUE;
-		} catch(PDOException $pdo_err) {
+		} catch(\PDOException $pdo_err) {
 			self::$pdo->rollBack();
-			$sql = null;
 			echo nl2br("Error MySQL: ".$pdo_err->getMessage()."\n");
-			return FALSE;
 		}
+		$rows = $sql->rowCount();
+		$sql = null;
+		return $rows;
 	}
 
 	/**

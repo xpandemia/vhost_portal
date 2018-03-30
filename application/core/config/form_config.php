@@ -9,13 +9,44 @@ namespace tinyframe\core\config;
 # Set your forms configuration here
 # NOTE: Leave them blank if you not use forms
 
+/* Common */
 // Login form
-define('LOGIN_HDR', 'Авторизация');
+define('LOGIN', array(
+						'id' => 'form_login',
+						'hdr' => 'Авторизация',
+						'ctr' => 'Login',
+						'act' => 'Login'));
+
+/* Frontend */
 // Signup form
-define('SIGNUP_HDR', 'Регистрация');
+define('SIGNUP', array(
+						'id' => 'form_signup',
+						'hdr' => 'Регистрация',
+						'ctr' => 'Signup',
+						'act' => 'Signup'));
 // Reset password request form
-define('RESET_PWD_REQUEST_HDR', 'Запрос изменения пароля');
+define('RESET_PWD_REQUEST', array(
+								'id' => 'form_reset_pwd_request',
+								'hdr' => 'Запрос изменения пароля',
+								'ctr' => 'ResetPwdRequest',
+								'act' => 'SendEmail'));
 // Reset password form
-define('RESET_PWD_HDR', 'Изменение пароля');
-// Personal data form
-define('RESUME_HDR', 'Анкета');
+define('RESET_PWD', array(
+						'id' => 'form_reset_pwd',
+						'hdr' => 'Изменение пароля',
+						'ctr' => 'ResetPwd',
+						'act' => 'ResetPwd'));
+// Resume data form
+define('RESUME', array(
+						'id' => 'form_resume',
+						'hdr' => 'Анкета',
+						'ctr' => 'Resume',
+						'act' => 'Resume'));
+
+/* Backend */
+// Dictionary manager form
+define('DICT_MANAGER', array(
+							'id' => 'form_dict_manager',
+							'hdr' => 'Управление справочниками',
+							'ctr' => 'DictionaryManager',
+							'act' => 'Renew'));

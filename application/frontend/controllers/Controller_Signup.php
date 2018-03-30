@@ -33,7 +33,7 @@ class Controller_Signup extends Controller
 			$this->form = $this->model->setForm($this->model->rules(), null);
 		}
 		Captcha_Helper::create();
-		return $this->view->generate('signup.php', 'form.php', SIGNUP_HDR, $this->form);
+		return $this->view->generate('signup.php', 'form.php', SIGNUP['hdr'], $this->form);
 	}
 
 	/**
@@ -78,7 +78,7 @@ class Controller_Signup extends Controller
 		if (!$this->form['captcha_err']) {
 			$this->form['captcha'] = null;
 		}
-		return $this->view->generate('signup.php', 'form.php', SIGNUP_HDR, $this->form);
+		return $this->view->generate('signup.php', 'form.php', SIGNUP['hdr'], $this->form);
 	}
 
 	/**

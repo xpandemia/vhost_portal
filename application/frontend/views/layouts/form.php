@@ -21,9 +21,15 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
     <script src="<?php echo Basic_Helper::baseUrl('/vendors/bootstrap/js/bootstrap.min.js'); ?>"></script>
 	<!-- Font Awesome -->
 	<script defer src="<?php echo Basic_Helper::baseUrl('/vendors/fontawesome/fontawesome-all.js'); ?>"></script>
+
+	<style>
+		#loadImg{position:absolute; z-index:1000; display:none}
+	</style>
 </head>
 <body class="bg-primary">
 	<?php include ROOT_DIR.'/application/frontend/views/'.$content_view; ?>
+
+	<img id="loadImg" src="/images/big_roller.gif"/>
 
 	<script>
 		$(document).ready(function(){

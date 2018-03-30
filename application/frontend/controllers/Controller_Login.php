@@ -30,7 +30,7 @@ class Controller_Login extends Controller
 		if (!isset($this->form)) {
 			$this->form = $this->model->setForm($this->model->rules(), null);
 		}
-		return $this->view->generate('login.php', 'form.php', LOGIN_HDR, $this->form);
+		return $this->view->generate('login.php', 'form.php', LOGIN['hdr'], $this->form);
 	}
 
 	/**
@@ -41,7 +41,7 @@ class Controller_Login extends Controller
 	public function actionReset()
 	{
 		$this->form = $this->model->resetForm(true, $this->form, $this->model->rules());
-		return $this->view->generate('login.php', 'form.php', LOGIN_HDR, $this->form);
+		return $this->view->generate('login.php', 'form.php', LOGIN['hdr'], $this->form);
 	}
 
 	/**
@@ -60,7 +60,7 @@ class Controller_Login extends Controller
 				return $this->view->generate('main.php', 'main.php', APP_NAME);
 			}
 		}
-		return $this->view->generate('login.php', 'form.php', LOGIN_HDR, $this->form);
+		return $this->view->generate('login.php', 'form.php', LOGIN['hdr'], $this->form);
 	}
 
 	public function __destruct()

@@ -17,7 +17,7 @@ class Routing
 		$routes = explode('/', $_SERVER['REQUEST_URI']);
 		
 		// controller name
-		if (!empty($routes[1])) {
+		if (!empty($routes[1]) && $routes[1] != 'admin') {
 			$controllerName = $routes[1];
 		} else {
 			$controllerName = CONTROLLER;

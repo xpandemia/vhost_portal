@@ -6,11 +6,14 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 
 	// check login
 	if (isset($_SESSION[APP_CODE]['user_id'])) {
-		Basic_Helper::redirect(APP_NAME, 202, BEHAVIOR.'/Main', 'Index');
+		Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Index');
 	}
 ?>
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
-	<?php echo Form_Helper::setFormBegin('Signup/Signup', 'form_signup', SIGNUP_HDR); ?>
+	<?php
+		echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
+		echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
+		echo Form_Helper::setFormBegin(SIGNUP['ctr'], SIGNUP['act'], SIGNUP['id'], SIGNUP['hdr']); ?>
 
 		<!-- username -->
 		<?php echo Form_Helper::setFormInput(['label' => '<i class="fas fa-user fa-2x"></i>',
@@ -72,15 +75,13 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 			<div class="col">
 				<?php
 					echo HTML_Helper::setSubmit('btn btn-success', 'btn_signup', 'Зарегистрироваться');
-					echo HTML_Helper::setHrefButton('Signup/Reset', 'btn btn-danger', 'Очистить');
-					echo HTML_Helper::setHrefButton('Login/Index', 'btn btn-primary', 'Войти');
+					echo HTML_Helper::setHrefButton(SIGNUP['ctr'], 'Reset', 'btn btn-danger', 'Очистить');
+					echo HTML_Helper::setHrefButton(LOGIN['ctr'], 'Index', 'btn btn-primary', 'Войти');
 				?>
 			</div>
 		</div>
 
 	<?php
 		echo Form_Helper::setFormEnd();
-		echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
-		echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
 	?>
 </div>

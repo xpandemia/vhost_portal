@@ -2,6 +2,8 @@
 
 namespace tinyframe\core\helpers;
 
+use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
+
 class HTML_Helper
 {
 	/*
@@ -15,11 +17,7 @@ class HTML_Helper
      */
 	public static function setLabel($class, $control, $label)
 	{
-		if (!empty($control) && !empty($label)) {
-			return '<label class="'.$class.'" for="'.$control.'">'.$label.'</label>';
-		} else {
-			return '<p class="text-danger">HTML_Helper.setLabel - На входе недостаточно данных!</p>';
-		}
+		return '<label class="'.$class.'" for="'.$control.'">'.$label.'</label>';
 	}
 
 	/**
@@ -59,10 +57,10 @@ class HTML_Helper
      *
      * @return string
      */
-	public static function setHrefText($href, $text)
+	public static function setHrefText($controller, $action, $text)
 	{
-		if (!empty($href) && !empty($text)) {
-			return '<p><a href="/'.BEHAVIOR.'/'.$href.'" class="font-weight-bold text-secondary">'.$text.'</a></p> ';
+		if (!empty($controller) && !empty($action) && !empty($text)) {
+			return '<p><a href="'.Basic_Helper::appUrl($controller, $action).'" class="font-weight-bold text-secondary">'.$text.'</a></p> ';
 		} else {
 			return '<p class="text-danger">HTML_Helper.setHrefText - На входе недостаточно данных!</p>';
 		}
@@ -73,10 +71,10 @@ class HTML_Helper
      *
      * @return string
      */
-	public static function setHrefButton($href, $class, $text)
+	public static function setHrefButton($controller, $action, $class, $text)
 	{
-		if (!empty($href) && !empty($class) && !empty($text)) {
-			return '<a href="/'.BEHAVIOR.'/'.$href.'" class="'.$class.'">'.$text.'</a> ';
+		if (!empty($controller) && !empty($action) && !empty($class) && !empty($text)) {
+			return '<a href="'.Basic_Helper::appUrl($controller, $action).'" class="'.$class.'">'.$text.'</a> ';
 		} else {
 			return '<p class="text-danger">HTML_Helper.setHrefButton - На входе недостаточно данных!</p>';
 		}

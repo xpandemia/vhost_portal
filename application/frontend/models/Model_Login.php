@@ -48,7 +48,7 @@ class Model_Login extends Model
 	{
 		$user = new Model_User();
 		$user->username = $form['username'];
-		$row = $user->getUserByName();
+		$row = $user->getByUsername();
 		if (empty($row['id'])) {
 			// user not found
 			$form['error_msg'] = 'Пользователь не найден!';

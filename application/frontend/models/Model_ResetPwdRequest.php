@@ -42,7 +42,7 @@ class Model_ResetPwdRequest extends Model
 		$user = new Model_User();
 		$user->email = $form['email'];
 		$user->pwd_token = $user->GetHash($form['email'].date('Y-m-d H:i:s'));
-		$row = $user->getUserByEmail();
+		$row = $user->getByEmail();
 		if (!empty($row)) {
 			if ($user->changePwdToken()) {
 				$mail = new Mail_Helper;

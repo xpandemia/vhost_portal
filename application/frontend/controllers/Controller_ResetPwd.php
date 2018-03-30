@@ -33,7 +33,7 @@ class Controller_ResetPwd extends Controller
 		if (isset($_SESSION[APP_CODE]['pwd_token']) && isset($_SESSION[APP_CODE]['email'])) {
 			$this->form['success_msg'] = 'Ваш запрос на восстановление пароля подтвержден.';
 		}
-		return $this->view->generate('reset-pwd.php', 'form.php', RESET_PWD_HDR, $this->form);
+		return $this->view->generate('reset-pwd.php', 'form.php', RESET_PWD['hdr'], $this->form);
 	}
 
 	/**
@@ -69,7 +69,7 @@ class Controller_ResetPwd extends Controller
 		} else {
 			$this->form['error_msg'] = 'Отсутствует признак изменения пароля или адрес эл. почты.';
 		}
-		return $this->view->generate('reset-pwd.php', 'form.php', RESET_PWD_HDR, $this->form);
+		return $this->view->generate('reset-pwd.php', 'form.php', RESET_PWD['hdr'], $this->form);
 	}
 
 	/**

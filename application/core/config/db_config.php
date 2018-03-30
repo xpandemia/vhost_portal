@@ -14,8 +14,15 @@ define('DB_USER', 'root'); // MySQL database username
 define('DB_PASSWORD', ''); // MySQL database password
 define('DB_NAME', 'portalbsu'); // MySQL database name
 
-// tables structure
+# Tables structure
+# NOTE: Add your tables here
 define('DB_TABLES', array(
-						'user',
+						'address',
+						'dict_citizenship',
+						'dict_countries',
+						'dictionary_manager',
+						'dictionary_manager_log',
+						'kladr_abbrs',
 						'personal',
-						'dict_countries'));
+						'resume',
+						'user'));

@@ -2,14 +2,17 @@
 
 namespace tinyframe\core\helpers;
 
+use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
-use common\models\Model_DictCountries as Model_DictCountries;
 
 // patterns
+define('PATTERN_NUMB', '/^[0-9]*$/u'); // number only
 define('PATTERN_ALPHA', '/^[a-zA-Z]*$/u'); // letters only ENG
 define('PATTERN_ALPHA_RUS', '/^[ёЁа-яА-Я]*$/u'); // letters only RUS
 define('PATTERN_TEXT', '/^[a-zA-Z-\.\,\s]*$/u'); // letters, "-", ".", ",", " " ENG
 define('PATTERN_TEXT_RUS', '/^[ёЁа-яА-Я-.,\s]*$/u'); // letters, "-", ".", ",", " " RUS
+define('PATTERN_INFO', '/^[a-zA-Z0-9-\.\,\s]*$/u'); // letters, numbers, "-", ".", ",", " " ENG
+define('PATTERN_INFO_RUS', '/^[ёЁа-яА-Я0-9-.,\s]*$/u'); // letters, numbers, "-", ".", ",", " " RUS
 define('PATTERN_ALPHA_NUMB', '/^[a-zA-Z0-9]*$/u'); // letters and numbers
 define('PATTERN_EMAIL_LIGHT', '/^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9_\-.]+$/'); // email light
 define('PATTERN_EMAIL_STRONG', '/^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9_\-]+\.[a-zA-Z0-9_\-]+$/'); // email strong
@@ -168,9 +171,9 @@ class Form_Helper
      *
      * @return string
      */
-	public static function setFormBegin($action, $id, $legend)
+	public static function setFormBegin($controller, $action, $id, $legend)
 	{
-		return '<form action="/'.BEHAVIOR.'/'.$action.'" method="post" id="'.$id.'" novalidate>
+		return '<form action="'.Basic_Helper::appUrl($controller, $action).'" method="post" id="'.$id.'" novalidate>
 					<legend class="font-weight-bold">'.$legend.'</legend>';
 	}
 
@@ -249,7 +252,7 @@ class Form_Helper
 					}
 				}
 				if ($rules['error']) {
-					$result .= '<p class="text-danger">'.$rules['success'].'</p>';
+					$result .= '<p class="text-danger">'.$rules['error'].'</p>';
 				}
 				return $result;
 			} else {
@@ -301,9 +304,8 @@ class Form_Helper
 		'required_style' => {SELECTLIST_STYLE}
 		+ 'model_class' => {MODEL_CLASS},
 		+ 'model_method' => {MODEL_METHOD},
-		'model_filter' => {MODEL_FILTER},
-		'model_filter_value' => {MODEL_FILTER_VALUE},
 		+ 'model_field' => {MODEL_FIELD},
+		'model_field_name' => {MODEL_FIELD_NAME},
 		+ 'value' => {SELECTLIST_VALUE},
 		+ 'success' => {SELECTLIST_SUCCESS_MESSAGE},
 		+ 'error' => {SELECTLIST_ERROR_MESSAGE}
@@ -319,21 +321,15 @@ class Form_Helper
 			$model = new $rules['model_class'];
 			// using model method (hopper is required!)
 			$method = $rules['model_method'];
-			// using model properties
-			if (isset($rules['model_filter'])) {
-				$model->country_name = $rules['model_filter_value'];
-				//$model->$rules['model_filter'] = $rules['model_filter_value'];
-			}
 			// fetching data
 			$table = $model->$method();
 			// making select list
-			$result .= '<option'.(empty($rules['value']) ? ' selected' : '').'></option>';
-			if (count($table) == 1) {
-				$result .= '<option'.(($rules['value'] === $table[$rules['model_field']]) ? ' selected' : '').'>'.$table[$rules['model_field']].'</option>';
-			} else {
-				foreach ($table as $row) {
-					$result .= '<option'.(($rules['value'] === $row[$rules['model_field']]) ? ' selected' : '').'>'.$row[$rules['model_field']].'</option>';
-				}
+			$result .= '<option value=""'.(empty($rules['value']) ? ' selected' : '').'></option>';
+			foreach ($table as $row) {
+				$result .= '<option value="'.$row[$rules['model_field']].'"'.
+							(($rules['value'] === $row[$rules['model_field']]) ? ' selected' : '').'>'.
+							((isset($rules['model_field_name'])) ? $row[$rules['model_field_name']] : $row[$rules['model_field']]).
+							'</option>';
 			}
 			$result .= '</select>'.
 						HTML_Helper::setValidFeedback($rules['error'], $rules['success']).
@@ -371,6 +367,16 @@ class Form_Helper
 		} else {
 			return '<p class="text-danger">Form_Helper.setFormCaptcha - На входе не массив!</p>';
 		}
+	}
+
+	/**
+     * Creates form sub header.
+     *
+     * @return string
+     */
+	public static function setFormHeaderSub($header)
+	{
+		return '<hr><h5>'.$header.'</h5><br>';
 	}
 
 	/**

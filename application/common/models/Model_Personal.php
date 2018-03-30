@@ -21,7 +21,7 @@ class Model_Personal extends Db_Helper
 	*/
 
 	public $id;
-	public $id_user;
+	public $id_resume;
 	public $name_first;
 	public $name_middle;
 	public $name_last;
@@ -40,16 +40,16 @@ class Model_Personal extends Db_Helper
 	}
 
 	/**
-     * Gets personal by username.
+     * Gets personal by resume.
      *
      * @return array
      */
-	public function getPersonalByUser()
+	public function getByResume()
 	{
-		return $this->rowSelect('personal.id, id_user, name_first, name_middle, name_last, sex, birth_dt, birth_place, dict_countries.country_name as citizenship, personal.citizenship as id_citizenship, dt_created, dt_updated, personal.guid',
-								'personal INNER JOIN dict_countries on personal.citizenship = dict_countries.id',
-								'id_user = :id_user',
-								[':id_user' => $this->id_user]);
+		return $this->rowSelectOne('personal.id, id_resume, name_first, name_middle, name_last, sex, birth_dt, birth_place, dict_citizenship.citizenship_name as citizenship, personal.citizenship as id_citizenship, dt_created, dt_updated, personal.guid',
+								'personal INNER JOIN dict_citizenship on personal.citizenship = dict_citizenship.id',
+								'id_resume = :id_resume',
+								[':id_resume' => $this->id_resume]);
 	}
 
 	/**
@@ -59,10 +59,10 @@ class Model_Personal extends Db_Helper
      */
 	public function save()
 	{
-		return $this->rowInsert('id_user, name_first, name_middle, name_last, sex, birth_dt, birth_place, citizenship, dt_created',
+		return $this->rowInsert('id_resume, name_first, name_middle, name_last, sex, birth_dt, birth_place, citizenship, dt_created',
 								'personal',
-								':id_user, :name_first, :name_middle, :name_last, :sex, :birth_dt, :birth_place, :citizenship, :dt_created',
-								[':id_user' => $this->id_user,
+								':id_resume, :name_first, :name_middle, :name_last, :sex, :birth_dt, :birth_place, :citizenship, :dt_created',
+								[':id_resume' => $this->id_resume,
 								':name_first' => $this->name_first,
 								':name_middle' => $this->name_middle,
 								':name_last' => $this->name_last,
