@@ -10,6 +10,9 @@ class Model_DictCitizenship extends Db_Helper
 		Dictionary citizenship processing
 	*/
 
+	const TABLE_NAME = 'dict_citizenship';
+
+	public $id;
 	public $citizenship_code;
 	public $citizenship_name;
 	public $guid;
@@ -28,7 +31,7 @@ class Model_DictCitizenship extends Db_Helper
      */
 	public function getAll()
 	{
-		return $this->rowSelectAll('*', 'dict_citizenship');
+		return $this->rowSelectAll('*', self::TABLE_NAME);
 	}
 
 	/**
@@ -38,7 +41,10 @@ class Model_DictCitizenship extends Db_Helper
      */
 	public function getByCode()
 	{
-		return $this->rowSelectOne('*', 'dict_citizenship', 'citizenship_code = :citizenship_code', [':citizenship_code' => $this->citizenship_code]);
+		return $this->rowSelectOne('*',
+								self::TABLE_NAME,
+								'citizenship_code = :citizenship_code',
+								[':citizenship_code' => $this->citizenship_code]);
 	}
 
 	/**
@@ -48,7 +54,10 @@ class Model_DictCitizenship extends Db_Helper
      */
 	public function getByName()
 	{
-		return $this->rowSelectOne('*', 'dict_citizenship', 'citizenship_name = :citizenship_name', [':citizenship_name' => $this->citizenship_name]);
+		return $this->rowSelectOne('*',
+								self::TABLE_NAME,
+								'citizenship_name = :citizenship_name',
+								[':citizenship_name' => $this->citizenship_name]);
 	}
 
 	/**
@@ -59,7 +68,7 @@ class Model_DictCitizenship extends Db_Helper
 	public function save()
 	{
 		return $this->rowInsert('citizenship_code, citizenship_name, guid',
-								'dict_citizenship',
+								self::TABLE_NAME,
 								':citizenship_code, :citizenship_name, :guid',
 								[':citizenship_code' => $this->citizenship_code, ':citizenship_name' => $this->citizenship_name, ':guid' => $this->guid]);
 	}
@@ -71,9 +80,10 @@ class Model_DictCitizenship extends Db_Helper
      */
 	public function changeCode()
 	{
-		return $this->rowUpdate('dict_citizenship',
+		return $this->rowUpdate(self::TABLE_NAME,
 								'citizenship_code = :citizenship_code',
-								[':citizenship_code' => $this->citizenship_code]);
+								[':citizenship_code' => $this->citizenship_code],
+								['id' => $this->id]);
 	}
 
 	/**
@@ -83,9 +93,10 @@ class Model_DictCitizenship extends Db_Helper
      */
 	public function changeName()
 	{
-		return $this->rowUpdate('dict_citizenship',
+		return $this->rowUpdate(self::TABLE_NAME,
 								'citizenship_name = :citizenship_name',
-								[':citizenship_name' => $this->citizenship_name]);
+								[':citizenship_name' => $this->citizenship_name],
+								['id' => $this->id]);
 	}
 
 	/**
@@ -95,7 +106,7 @@ class Model_DictCitizenship extends Db_Helper
      */
 	public function clearAll()
 	{
-		return $this->rowDelete('dict_citizenship');
+		return $this->rowDelete(self::TABLE_NAME);
 	}
 
 	/**
@@ -114,7 +125,8 @@ class Model_DictCitizenship extends Db_Helper
 				// clear
 				$rows_del = $this->$clear_load();
 				$log->msg = 'Удалено гражданств - '.$rows_del.'.';
-				$log->dt_created = date('Y-m-d H:i:s');
+				$log->value_old = null;
+				$log->value_new = null;
 				$log->save();
 			} else {
 				$rows_del = 0;
@@ -129,14 +141,15 @@ class Model_DictCitizenship extends Db_Helper
 			$this->citizenship_code = (string)$property->Code;
 			$citizenship = $this->getByCode();
 
-            if($property->DeletionMark == "false") {
+            if($property->DeletionMark == 'false') {
 				$this->citizenship_name = (string)$property->Description;
 				$this->guid = (string)$property->Ref_Key;
 					if ($citizenship == null) {
 						// insert
 						if ($this->save()) {
 							$log->msg = 'Создано новое гражданство с GUID ['.$this->guid.'].';
-							$log->dt_created = date('Y-m-d H:i:s');
+							$log->value_old = null;
+							$log->value_new = null;
 							$log->save();
 							$rows_ins++;
 						} else {
@@ -146,13 +159,13 @@ class Model_DictCitizenship extends Db_Helper
 					} else {
 						// update
 						$upd = 0;
+						$this->id = $citizenship['id'];
 						// code
 						if ($citizenship['citizenship_code'] != $this->citizenship_code) {
 							if ($this->changeCode()) {
 								$log->msg = 'Изменён код гражданства с GUID ['.$this->guid.'].';
-								$log->value_old = $kladr['citizenship_code'];
+								$log->value_old = $citizenship['citizenship_code'];
 								$log->value_new = $this->citizenship_code;
-								$log->dt_created = date('Y-m-d H:i:s');
 								$log->save();
 								$upd = 1;
 							} else {
@@ -164,9 +177,8 @@ class Model_DictCitizenship extends Db_Helper
 						if ($citizenship['citizenship_name'] != $this->citizenship_name) {
 							if ($this->changeName()) {
 								$log->msg = 'Изменено наименование гражданства с GUID ['.$this->guid.'].';
-								$log->value_old = $kladr['citizenship_name'];
+								$log->value_old = $citizenship['citizenship_name'];
 								$log->value_new = $this->citizenship_name;
-								$log->dt_created = date('Y-m-d H:i:s');
 								$log->save();
 								$upd = 1;
 							} else {

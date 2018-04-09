@@ -18,11 +18,18 @@ define('DB_NAME', 'portalbsu'); // MySQL database name
 # NOTE: Add your tables here
 define('DB_TABLES', array(
 						'address',
+						'contacts',
 						'dict_citizenship',
 						'dict_countries',
+						'dict_doctypes',
 						'dictionary_manager',
 						'dictionary_manager_log',
+						'dict_scans',
+						'docs',
+						'kladr',
 						'kladr_abbrs',
+						'passport',
 						'personal',
 						'resume',
+						'scans',
 						'user'));

@@ -65,6 +65,90 @@ class Db_Helper
         return $instance;
     }
 
+    /**
+     * Prepares insert query.
+     *
+     * @return array
+     */
+	public function prepareInsert($table_name, $rules)
+	{
+		$result['fields'] = '';
+		$result['conds'] = '';
+		$result['params'] = [];
+		$i = 1;
+		foreach ($rules as $field_name => $rule_name_arr) {
+			foreach ($rule_name_arr as $rule_name => $rule_var) {
+				switch ($rule_name) {
+					case 'insert':
+						if ($rule_var == 1) {
+							if ($rules[$field_name]['required'] == 1) {
+								if (!empty($rules[$field_name]['value']) || $rules[$field_name]['value'] == 0) {
+									if ($i == 1) {
+										$result['fields'] = $field_name;
+										$result['conds'] = ':'.$field_name;
+									} else {
+										$result['fields'] .= ', '.$field_name;
+										$result['conds'] .= ', :'.$field_name;
+									}
+									$result['params'][':'.$field_name] = $rules[$field_name]['value'];
+								} else {
+									throw new \InvalidArgumentException('Поле '.$field_name.' таблицы '.$table_name.' обязательно для заполнения!');
+								}
+							} else {
+								if (!empty($rules[$field_name]['value'])) {
+									if ($i == 1) {
+										$result['fields'] = $field_name;
+										$result['conds'] = ':'.$field_name;
+									} else {
+										$result['fields'] .= ', '.$field_name;
+										$result['conds'] .= ', :'.$field_name;
+									}
+									$result['params'][':'.$field_name] = $rules[$field_name]['value'];
+								}
+							}
+							$i++;
+						}
+						break;
+				}
+			}
+		}
+		return $result;
+	}
+
+	/**
+     * Prepares update query.
+     *
+     * @return array
+     */
+	public function prepareUpdate($table_name, $rules)
+	{
+		$result['fields'] = '';
+		$result['params'] = [];
+		$i = 1;
+		foreach ($rules as $field_name => $rule_name_arr) {
+			foreach ($rule_name_arr as $rule_name => $rule_var) {
+				switch ($rule_name) {
+					case 'update':
+						if ($rule_var == 1) {
+							if ($rules[$field_name]['required'] == 1 && empty($rules[$field_name]['value'])) {
+								throw new \InvalidArgumentException('Поле '.$field_name.' таблицы '.$table_name.' обязательно для заполнения!');
+							} else {
+								if ($i == 1) {
+									$result['fields'] = $field_name.' = :'.$field_name;
+								} else {
+									$result['fields'] .= ', '.$field_name.' = :'.$field_name;
+								}
+								$result['params'][':'.$field_name] = $rules[$field_name]['value'];
+								$i++;
+							}
+						}
+						break;
+				}
+			}
+		}
+		return $result;
+	}
+
 	/**
      * Gets table row.
      *
@@ -131,8 +215,21 @@ class Db_Helper
 		try {
 			self::$pdo->beginTransaction();
 			$sql = self::$pdo->prepare('INSERT INTO '.$tables.' ( '.$fields.' ) VALUES ( '.$conds.' )');
-		    $sql->execute($params);
-		    self::$pdo->commit();
+			foreach ($params as $param => &$value) {
+				switch (gettype($value)) {
+					case 'integer':
+						$sql->bindParam($param, $value, PDO::PARAM_INT);
+						break;
+					case 'string':
+						$sql->bindParam($param, $value, PDO::PARAM_STR);
+						break;
+					case 'resource':
+						$sql->bindParam($param, $value, PDO::PARAM_LOB);
+						break;
+				}
+			}
+			$sql->execute();
+			self::$pdo->commit();
 			$sql = null;
 			return TRUE;
 		} catch(\PDOException $pdo_err) {
@@ -148,12 +245,26 @@ class Db_Helper
      *
      * @return boolean
      */
-	public function rowUpdate($tables, $fields, $params)
+	public function rowUpdate($tables, $fields, $params, $conds = null)
 	{
 		try {
 			self::$pdo->beginTransaction();
-			$sql = self::$pdo->prepare('UPDATE '.$tables.' SET '.$fields);
-		    $sql->execute($params);
+			$whereSql = '';
+			if (!empty($conds) && is_array($conds)) {
+				$whereSql .= ' WHERE ';
+                $i = 0;
+                foreach($conds as $key => $value){
+                    $pre = ($i > 0)?' AND ':'';
+                    if (is_numeric($value)) {
+						$whereSql .= $pre.$key." = ".$value;
+					} else {
+						$whereSql .= $pre.$key." = '".$value."'";
+					}
+                    $i++;
+                }
+			}
+			$sql = self::$pdo->prepare('UPDATE '.$tables.' SET '.$fields.$whereSql);
+			$sql->execute($params);
 		    self::$pdo->commit();
 			$sql = null;
 		    return TRUE;

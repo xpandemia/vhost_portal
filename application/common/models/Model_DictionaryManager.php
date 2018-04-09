@@ -10,6 +10,8 @@ class Model_DictionaryManager extends Db_Helper
 		Dictionary manager processing
 	*/
 
+	const TABLE_NAME = 'dictionary_manager';
+
 	public $id;
 
 	public $db;
@@ -26,17 +28,20 @@ class Model_DictionaryManager extends Db_Helper
      */
 	public function getAll()
 	{
-		return $this->rowSelectAll('*', 'dictionary_manager');
+		return $this->rowSelectAll('*', self::TABLE_NAME);
 	}
 
 	/**
-     * Gets dictionary by code.
+     * Gets dictionary by id.
      *
      * @return array
      */
 	public function getById()
 	{
-		return $this->rowSelectOne('*', 'dictionary_manager', 'id = :id', [':id' => $this->id]);
+		return $this->rowSelectOne('*',
+								self::TABLE_NAME,
+								'id = :id',
+								[':id' => $this->id]);
 	}
 
 	public function __destruct()

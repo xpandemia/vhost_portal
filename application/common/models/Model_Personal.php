@@ -20,6 +20,8 @@ class Model_Personal extends Db_Helper
 		Personal data processing
 	*/
 
+	const TABLE_NAME = 'personal';
+
 	public $id;
 	public $id_resume;
 	public $name_first;
@@ -46,8 +48,8 @@ class Model_Personal extends Db_Helper
      */
 	public function getByResume()
 	{
-		return $this->rowSelectOne('personal.id, id_resume, name_first, name_middle, name_last, sex, birth_dt, birth_place, dict_citizenship.citizenship_name as citizenship, personal.citizenship as id_citizenship, dt_created, dt_updated, personal.guid',
-								'personal INNER JOIN dict_citizenship on personal.citizenship = dict_citizenship.id',
+		return $this->rowSelectOne(self::TABLE_NAME.'.id, id_resume, name_first, name_middle, name_last, sex, birth_dt, birth_place, dict_citizenship.citizenship_name as citizenship, '.self::TABLE_NAME.'.citizenship as id_citizenship, dt_created, dt_updated, '.self::TABLE_NAME.'.guid',
+								self::TABLE_NAME.' INNER JOIN dict_citizenship ON '.self::TABLE_NAME.'.citizenship = dict_citizenship.id',
 								'id_resume = :id_resume',
 								[':id_resume' => $this->id_resume]);
 	}
@@ -60,7 +62,7 @@ class Model_Personal extends Db_Helper
 	public function save()
 	{
 		return $this->rowInsert('id_resume, name_first, name_middle, name_last, sex, birth_dt, birth_place, citizenship, dt_created',
-								'personal',
+								self::TABLE_NAME,
 								':id_resume, :name_first, :name_middle, :name_last, :sex, :birth_dt, :birth_place, :citizenship, :dt_created',
 								[':id_resume' => $this->id_resume,
 								':name_first' => $this->name_first,
@@ -80,7 +82,7 @@ class Model_Personal extends Db_Helper
      */
 	public function changeAll()
 	{
-		return $this->rowUpdate('personal',
+		return $this->rowUpdate(self::TABLE_NAME,
 								'name_first = :name_first, name_middle = :name_middle, name_last = :name_last, sex = :sex, birth_dt = :birth_dt, birth_place = :birth_place, citizenship = :citizenship, dt_updated = :dt_updated',
 								[':name_first' => $this->name_first,
 								':name_middle' => $this->name_middle,
@@ -89,7 +91,8 @@ class Model_Personal extends Db_Helper
 								':birth_dt' => $this->birth_dt,
 								':birth_place' => $this->birth_place,
 								':citizenship' => $this->citizenship,
-								':dt_updated' => date('Y-m-d H:i:s')]);
+								':dt_updated' => date('Y-m-d H:i:s')],
+								['id' => $this->id]);
 	}
 
 	public function __destruct()

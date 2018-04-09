@@ -80,12 +80,12 @@ class Controller_ResetPwd extends Controller
 	public function actionCheckResetPwd()
 	{
 		if (isset($_GET['pwd_token']) && !empty($_GET['pwd_token'])) {
-			$_SESSION[APP_CODE]['pwd_token'] = $_GET['pwd_token'];
+			$_SESSION[APP_CODE]['pwd_token'] = htmlspecialchars($_GET['pwd_token']);
 		} else {
 			exit("<p><strong>Ошибка!</strong> Отсутствует признак изменения пароля.</p>");
 		}
 		if (isset($_GET['email']) && !empty($_GET['email'])) {
-			$_SESSION[APP_CODE]['email'] = $_GET['email'];
+			$_SESSION[APP_CODE]['email'] = htmlspecialchars($_GET['email']);
 		} else {
 			exit("<p><strong>Ошибка!</strong> Отсутствует адрес эл. почты.</p>");
 		}

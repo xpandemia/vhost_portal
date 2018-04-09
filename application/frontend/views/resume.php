@@ -4,12 +4,11 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 use tinyframe\core\helpers\Form_Helper as Form_Helper;
 use common\models\Model_Resume as Model_Resume_Data;
+use common\models\Model_Kladr as Model_Kladr;
 
-	//require_once ROOT_DIR.'/application/common/models/Model_Kladr.php';
-	//getRegion();
 	// check resume
 	if (!isset($data['status'])) {
-		$data['error_msg'] = 'Ошибка открытия анкеты! Обратитетсь к администратору.';
+		$data['error_msg'] = 'Ошибка открытия анкеты! Свяжитесь с администратором.';
 		Basic_Helper::redirect(APP_NAME, 401, 'Main', 'Index', $data);
 	} else {
 		if ($data['status'] === 0) {
@@ -37,7 +36,7 @@ use common\models\Model_Resume as Model_Resume_Data;
 				echo '<div class="alert alert-success">Состояние анкеты: ОДОБРЕНА</div>';
 				break;
 			case Model_Resume_Data::STATUS_REJECTED:
-				echo '<div class="alert alert-danger">Состояние анкеты: ОТКАЗАНА</div>';
+				echo '<div class="alert alert-danger">Состояние анкеты: ОТКЛОНЕНА</div>';
 				break;
 			default:
 				null;
@@ -101,6 +100,15 @@ use common\models\Model_Resume as Model_Resume_Data;
 										'value' => $data['birth_dt'],
 										'success' => $data['birth_dt_scs'],
 										'error' => $data['birth_dt_err']]);
+		// agreement
+		echo Form_Helper::setFormFile(['label' => 'Согласие родителей/опекунов',
+										'control' => 'agreement',
+										'required' => 'yes',
+										'required_style' => 'StarUp',
+										'data' => $data,
+										'home_ctr' => RESUME['ctr'],
+										'home_hdr' => RESUME['hdr'],
+										'ext' => FILES_EXT_SCANS]);
 		// birth_place
 		echo Form_Helper::setFormInput(['label' => BIRTHPLACE_PLC,
 										'control' => 'birth_place',
@@ -125,6 +133,192 @@ use common\models\Model_Resume as Model_Resume_Data;
 												'value' => $data['citizenship'],
 												'success' => $data['citizenship_scs'],
 												'error' => $data['citizenship_err']]);
+		/* contacts */
+		echo Form_Helper::setFormHeaderSub('Контактная информация');
+		// email
+		echo Form_Helper::setFormInput(['label' => CONTACT_EMAIL['name'],
+										'control' => 'email',
+										'type' => 'email',
+										'class' => $data['email_cls'],
+										'required' => 'yes',
+										'required_style' => 'StarUp',
+										'placeholder' => CONTACT_EMAIL['plc'],
+										'value' => $data['email'],
+										'success' => $data['email_scs'],
+										'error' => $data['email_err'],
+										'help' => CONTACT_EMAIL['help']]);
+		// phone
+		echo Form_Helper::setFormInput(['label' => 'Мобильный телефон',
+										'control' => 'phone',
+										'type' => 'text',
+										'class' => $data['phone_cls'],
+										'required' => 'yes',
+										'required_style' => 'StarUp',
+										'value' => $data['phone'],
+										'success' => $data['phone_scs'],
+										'error' => $data['phone_err']]);
+		/* passport */
+		echo Form_Helper::setFormHeaderSub('Паспортные данные');
+		// type
+		echo Form_Helper::setFormSelectListDB(['label' => 'Тип документа',
+												'control' => 'passport_type',
+												'class' => $data['passport_type_cls'],
+												'required' => 'yes',
+												'required_style' => 'StarUp',
+												'model_class' => 'common\\models\\Model_DictDoctypes',
+												'model_method' => 'getPassports',
+												'model_field' => 'code',
+												'model_field_name' => 'description',
+												'value' => $data['passport_type'],
+												'success' => $data['passport_type_scs'],
+												'error' => $data['passport_type_err']]);
+		// series
+		echo Form_Helper::setFormInput(['label' => 'Серия',
+										'control' => 'series',
+										'type' => 'text',
+										'class' => $data['series_cls'],
+										'required' => 'no',
+										'value' => $data['series'],
+										'success' => $data['series_scs'],
+										'error' => $data['series_err']]);
+		// numb
+		echo Form_Helper::setFormInput(['label' => 'Номер',
+										'control' => 'numb',
+										'type' => 'text',
+										'class' => $data['numb_cls'],
+										'required' => 'yes',
+										'required_style' => 'StarUp',
+										'value' => $data['numb'],
+										'success' => $data['numb_scs'],
+										'error' => $data['numb_err']]);
+		// dt_issue
+		echo Form_Helper::setFormInput(['label' => 'Дата выдачи',
+										'control' => 'dt_issue',
+										'type' => 'text',
+										'class' => $data['dt_issue_cls'],
+										'required' => 'yes',
+										'required_style' => 'StarUp',
+										'value' => $data['dt_issue'],
+										'success' => $data['dt_issue_scs'],
+										'error' => $data['dt_issue_err']]);
+		// unit_name
+		echo Form_Helper::setFormInput(['label' => UNITNAME_PLC,
+										'control' => 'unit_name',
+										'type' => 'text',
+										'class' => $data['unit_name_cls'],
+										'required' => 'yes',
+										'required_style' => 'StarUp',
+										'placeholder' => UNITNAME_PLC,
+										'value' => $data['unit_name'],
+										'success' => $data['unit_name_scs'],
+										'error' => $data['unit_name_err'],
+										'help' => UNITNAME_HELP]);
+		// unit_code
+		echo Form_Helper::setFormInput(['label' => 'Код подразделения',
+										'control' => 'unit_code',
+										'type' => 'text',
+										'class' => $data['unit_code_cls'],
+										'required' => 'no',
+										'value' => $data['unit_code'],
+										'success' => $data['unit_code_scs'],
+										'error' => $data['unit_code_err']]);
+		// dt_end
+		echo Form_Helper::setFormInput(['label' => 'Дата окончания действия',
+										'control' => 'dt_end',
+										'type' => 'text',
+										'class' => $data['dt_end_cls'],
+										'required' => 'no',
+										'value' => $data['dt_end'],
+										'success' => $data['dt_end_scs'],
+										'error' => $data['dt_end_err']]);
+
+		/* old passport */
+		echo Form_Helper::setFormCheckbox(['label' => 'В случае несовпадения введённых паспортных данных и паспортных данных на момент сдачи ЕГЭ, рекомендуем указать дополнительные реквизиты старого паспорта',
+												'control' => 'passport_old_yes',
+												'class' => $data['passport_old_yes_cls'],
+												'value' => $data['passport_old_yes'],
+												'success' => $data['passport_old_yes_scs'],
+												'error' => $data['passport_old_yes_err']]); ?>
+		<br>
+		<div class="form-group" id="passport_old">
+			<?php
+				echo HTML_Helper::setLabel('font-weight-bold font-italic', '', 'Старый паспорт');
+				// type
+				echo Form_Helper::setFormSelectListDB(['label' => 'Тип документа',
+														'control' => 'passport_type_old',
+														'class' => $data['passport_type_old_cls'],
+														'required' => 'yes',
+														'required_style' => 'StarUp',
+														'model_class' => 'common\\models\\Model_DictDoctypes',
+														'model_method' => 'getPassports',
+														'model_field' => 'code',
+														'model_field_name' => 'description',
+														'value' => $data['passport_type_old'],
+														'success' => $data['passport_type_old_scs'],
+														'error' => $data['passport_type_old_err']]);
+				// series
+				echo Form_Helper::setFormInput(['label' => 'Серия',
+												'control' => 'series_old',
+												'type' => 'text',
+												'class' => $data['series_old_cls'],
+												'required' => 'no',
+												'value' => $data['series_old'],
+												'success' => $data['series_old_scs'],
+												'error' => $data['series_old_err']]);
+				// numb
+				echo Form_Helper::setFormInput(['label' => 'Номер',
+												'control' => 'numb_old',
+												'type' => 'text',
+												'class' => $data['numb_old_cls'],
+												'required' => 'yes',
+												'required_style' => 'StarUp',
+												'value' => $data['numb_old'],
+												'success' => $data['numb_old_scs'],
+												'error' => $data['numb_old_err']]);
+				// dt_issue
+				echo Form_Helper::setFormInput(['label' => 'Дата выдачи',
+												'control' => 'dt_issue_old',
+												'type' => 'text',
+												'class' => $data['dt_issue_old_cls'],
+												'required' => 'yes',
+												'required_style' => 'StarUp',
+												'value' => $data['dt_issue_old'],
+												'success' => $data['dt_issue_old_scs'],
+												'error' => $data['dt_issue_old_err']]);
+				// unit_name
+				echo Form_Helper::setFormInput(['label' => UNITNAME_PLC,
+												'control' => 'unit_name_old',
+												'type' => 'text',
+												'class' => $data['unit_name_old_cls'],
+												'required' => 'yes',
+												'required_style' => 'StarUp',
+												'placeholder' => UNITNAME_PLC,
+												'value' => $data['unit_name_old'],
+												'success' => $data['unit_name_old_scs'],
+												'error' => $data['unit_name_old_err'],
+												'help' => UNITNAME_HELP]);
+				// unit_code
+				echo Form_Helper::setFormInput(['label' => 'Код подразделения',
+												'control' => 'unit_code_old',
+												'type' => 'text',
+												'class' => $data['unit_code_old_cls'],
+												'required' => 'no',
+												'value' => $data['unit_code_old'],
+												'success' => $data['unit_code_old_scs'],
+												'error' => $data['unit_code_old_err']]);
+				// dt_end
+				echo Form_Helper::setFormInput(['label' => 'Дата окончания действия',
+												'control' => 'dt_end_old',
+												'type' => 'text',
+												'class' => $data['dt_end_old_cls'],
+												'required' => 'no',
+												'value' => $data['dt_end_old'],
+												'success' => $data['dt_end_old_scs'],
+												'error' => $data['dt_end_old_err']]);
+			?>
+		</div>
+
+		<?php
 		/* addresses */
 		echo Form_Helper::setFormHeaderSub('Адреса');
 		/* registration address */
@@ -143,42 +337,100 @@ use common\models\Model_Resume as Model_Resume_Data;
 												'success' => $data['country_reg_scs'],
 												'error' => $data['country_reg_err']]); ?>
 		<div class="form-group" id="kladr_reg">
-			<div class="form-group">
-				<label class="font-weight-bold" for="region_reg">Регион</label>
-				<select class="form-control" id="region_reg" name="region_reg"></select>
-			</div>
-			<div class="form-group">
-				<label class="font-weight-bold" for="area_reg">Область</label>
-				<select class="form-control" id="area_reg" name="area_reg"></select>
-			</div>
-			<div class="form-group">
-				<label class="font-weight-bold" for="city_reg">Город</label>
-				<select class="form-control" id="city_reg" name="city_reg"></select>
-			</div>
-			<div class="form-group">
-				<label class="font-weight-bold" for="location_reg">Населённый пункт</label>
-				<select class="form-control" id="location_reg" name="location_reg"></select>
-			</div>
-			<div class="form-group">
-				<label class="font-weight-bold" for="street_reg">Улица</label>
-				<select class="form-control" id="street_reg" name="street_reg"></select>
-			</div>
-			<div class="form-group">
-				<label class="font-weight-bold" for="house_reg">Дом</label>
-				<input type="text" class="form-control" id="house_reg" name="house_reg"></select>
-			</div>
-			<div class="form-group">
-				<label class="font-weight-bold" for="building_reg">Корпус</label>
-				<input type="text" class="form-control" id="building_reg" name="building_reg"></select>
-			</div>
-			<div class="form-group">
-				<label class="font-weight-bold" for="flat_reg">Квартира</label>
-				<input type="text" class="form-control" id="flat_reg" name="flat_reg"></select>
-			</div>
-			<div class="form-group">
-				<label class="font-weight-bold" for="postcode_reg">Индекс</label>
-				<input type="text" class="form-control" id="postcode_reg" name="postcode_reg"></select>
-			</div>
+			<?php
+				// region (registration)
+				if (isset($data['country_reg']) && $data['country_reg'] == '643') {
+					echo Form_Helper::setFormSelectListKladr(['label' => 'Регион',
+															'control' => 'region_reg',
+															'model_class' => 'common\\models\\Model_Kladr',
+															'model_method' => 'getRegionAll',
+															'value' => $data['region_reg']]);
+				} else {
+					echo Form_Helper::setFormSelectListBlank(['label' => 'Регион', 'control' => 'region_reg']);
+				}
+				// area (registration)
+				if (isset($data['area_reg'])) {
+					echo Form_Helper::setFormSelectListKladr(['label' => 'Область',
+															'control' => 'area_reg',
+															'model_class' => 'common\\models\\Model_Kladr',
+															'model_method' => 'getAreaByRegion',
+															'model_filter' => 'region',
+															'model_filter_val' => $data['region_reg'],
+															'value' => $data['area_reg']]);
+				} else {
+					echo Form_Helper::setFormSelectListBlank(['label' => 'Область', 'control' => 'area_reg']);
+				}
+				// city (registration)
+				if (isset($data['city_reg'])) {
+					echo Form_Helper::setFormSelectListKladr(['label' => 'Город',
+															'control' => 'city_reg',
+															'model_class' => 'common\\models\\Model_Kladr',
+															'model_method' => 'getCityByRegion',
+															'model_filter' => 'region',
+															'model_filter_val' => $data['region_reg'],
+															'value' => $data['city_reg']]);
+				} else {
+					echo Form_Helper::setFormSelectListBlank(['label' => 'Город', 'control' => 'city_reg']);
+				}
+				// location (registration)
+				if (isset($data['location_reg'])) {
+					echo Form_Helper::setFormSelectListKladr(['label' => 'Населённый пункт',
+															'control' => 'location_reg',
+															'model_class' => 'common\\models\\Model_Kladr',
+															'model_method' => 'getLocationByArea',
+															'model_filter' => 'area',
+															'model_filter_val' => $data['area_reg'],
+															'value' => $data['location_reg']]);
+				} else {
+					echo Form_Helper::setFormSelectListBlank(['label' => 'Населённый пункт', 'control' => 'location_reg']);
+				}
+				// street (registration)
+				if (isset($data['city_reg'])) {
+					if (isset($data['street_reg'])) {
+						echo Form_Helper::setFormSelectListKladr(['label' => 'Улица',
+																'control' => 'street_reg',
+																'model_class' => 'common\\models\\Model_Kladr',
+																'model_method' => 'getStreetByCity',
+																'model_filter' => 'city',
+																'model_filter_val' => $data['city_reg'],
+																'value' => $data['street_reg']]);
+					} else {
+						echo Form_Helper::setFormSelectListBlank(['label' => 'Улица', 'control' => 'street_reg']);
+					}
+				} else {
+					if (isset($data['street_reg'])) {
+						echo Form_Helper::setFormSelectListKladr(['label' => 'Улица',
+																'control' => 'street_reg',
+																'model_class' => 'common\\models\\Model_Kladr',
+																'model_method' => 'getStreetByLocation',
+																'model_filter' => 'location',
+																'model_filter_val' => $data['location_reg'],
+																'value' => $data['street_reg']]);
+					} else {
+						echo Form_Helper::setFormSelectListBlank(['label' => 'Улица', 'control' => 'street_reg']);
+					}
+				}
+				// house (registration)
+				echo Form_Helper::setFormInputText(['label' => 'Дом',
+													'control' => 'house_reg',
+													'value' => $data['house_reg']]
+													);
+				// building (registration)
+				echo Form_Helper::setFormInputText(['label' => 'Корпус',
+													'control' => 'building_reg',
+													'value' => $data['building_reg']]
+													);
+				// flat (registration)
+				echo Form_Helper::setFormInputText(['label' => 'Квартира',
+													'control' => 'flat_reg',
+													'value' => $data['flat_reg']]
+													);
+				// postcode (registration)
+				echo Form_Helper::setFormInputText(['label' => 'Индекс',
+													'control' => 'postcode_reg',
+													'value' => $data['postcode_reg']]
+													);
+			?>
 		</div>
 
 		<div class="form-group">
@@ -231,42 +483,103 @@ use common\models\Model_Resume as Model_Resume_Data;
 												'error' => $data['country_res_err']]); ?>
 
 		<div class="form-group" id="kladr_res">
-			<div class="form-group">
-				<label class="font-weight-bold" for="region_res">Регион</label>
-				<select class="form-control" id="region_res" name="region_res"></select>
-			</div>
-			<div class="form-group">
-				<label class="font-weight-bold" for="area_res">Область</label>
-				<select class="form-control" id="area_res" name="area_res"></select>
-			</div>
-			<div class="form-group">
-				<label class="font-weight-bold" for="city_res">Город</label>
-				<select class="form-control" id="city_res" name="city_res"></select>
-			</div>
-			<div class="form-group">
-				<label class="font-weight-bold" for="location_res">Населённый пункт</label>
-				<select class="form-control" id="location_res" name="location_res"></select>
-			</div>
-			<div class="form-group">
-				<label class="font-weight-bold" for="street_res">Улица</label>
-				<select class="form-control" id="street_res" name="street_res"></select>
-			</div>
-			<div class="form-group">
-				<label class="font-weight-bold" for="house_res">Дом</label>
-				<input type="text" class="form-control" id="house_res" name="house_res"></select>
-			</div>
-			<div class="form-group">
-				<label class="font-weight-bold" for="building_res">Корпус</label>
-				<input type="text" class="form-control" id="building_res" name="building_res"></select>
-			</div>
-			<div class="form-group">
-				<label class="font-weight-bold" for="flat_res">Квартира</label>
-				<input type="text" class="form-control" id="flat_res" name="flat_res"></select>
-			</div>
-			<div class="form-group">
-				<label class="font-weight-bold" for="postcode_res">Индекс</label>
-				<input type="text" class="form-control" id="postcode_res" name="postcode_res"></select>
-			</div>
+			<?php
+				// region (residential)
+				if (isset($data['country_res']) && $data['country_res'] == '643') {
+					echo Form_Helper::setFormSelectListKladr(['label' => 'Регион',
+															'control' => 'region_res',
+															'model_class' => 'common\\models\\Model_Kladr',
+															'model_method' => 'getRegionAll',
+															'value' => $data['region_res']]);
+				} else {
+					echo '<div class="form-group">'.
+							'<label class="font-weight-bold" for="region_res">Регион</label>'.
+							'<select class="form-control" id="region_res" name="region_res"></select>'.
+						'</div>';
+				}
+				// area (residential)
+				if (isset($data['area_res'])) {
+					echo Form_Helper::setFormSelectListKladr(['label' => 'Область',
+															'control' => 'area_res',
+															'model_class' => 'common\\models\\Model_Kladr',
+															'model_method' => 'getAreaByRegion',
+															'model_filter' => 'region',
+															'model_filter_val' => $data['region_res'],
+															'value' => $data['area_res']]);
+				} else {
+					echo Form_Helper::setFormSelectListBlank(['label' => 'Область', 'control' => 'area_res']);
+				}
+				// city (residential)
+				if (isset($data['city_res'])) {
+					echo Form_Helper::setFormSelectListKladr(['label' => 'Город',
+															'control' => 'city_res',
+															'model_class' => 'common\\models\\Model_Kladr',
+															'model_method' => 'getCityByRegion',
+															'model_filter' => 'region',
+															'model_filter_val' => $data['region_res'],
+															'value' => $data['city_res']]);
+				} else {
+					echo Form_Helper::setFormSelectListBlank(['label' => 'Город', 'control' => 'city_res']);
+				}
+				// location (residential)
+				if (isset($data['location_res'])) {
+					echo Form_Helper::setFormSelectListKladr(['label' => 'Населённый пункт',
+															'control' => 'location_res',
+															'model_class' => 'common\\models\\Model_Kladr',
+															'model_method' => 'getLocationByArea',
+															'model_filter' => 'area',
+															'model_filter_val' => $data['area_res'],
+															'value' => $data['location_res']]);
+				} else {
+					echo Form_Helper::setFormSelectListBlank(['label' => 'Населённый пункт', 'control' => 'location_res']);
+				}
+				// street (residential)
+				if (isset($data['city_res'])) {
+					if (isset($data['street_res'])) {
+						echo Form_Helper::setFormSelectListKladr(['label' => 'Улица',
+																'control' => 'street_res',
+																'model_class' => 'common\\models\\Model_Kladr',
+																'model_method' => 'getStreetByCity',
+																'model_filter' => 'city',
+																'model_filter_val' => $data['city_res'],
+																'value' => $data['street_res']]);
+					} else {
+						echo Form_Helper::setFormSelectListBlank(['label' => 'Улица', 'control' => 'street_res']);
+					}
+				} else {
+					if (isset($data['street_res'])) {
+						echo Form_Helper::setFormSelectListKladr(['label' => 'Улица',
+																'control' => 'street_res',
+																'model_class' => 'common\\models\\Model_Kladr',
+																'model_method' => 'getStreetByLocation',
+																'model_filter' => 'location',
+																'model_filter_val' => $data['location_res'],
+																'value' => $data['street_res']]);
+					} else {
+						echo Form_Helper::setFormSelectListBlank(['label' => 'Улица', 'control' => 'street_res']);
+					}
+				}
+				// house (residential)
+				echo Form_Helper::setFormInputText(['label' => 'Дом',
+													'control' => 'house_res',
+													'value' => $data['house_res']]
+													);
+				// building (residential)
+				echo Form_Helper::setFormInputText(['label' => 'Корпус',
+													'control' => 'building_res',
+													'value' => $data['building_res']]
+													);
+				// flat (residential)
+				echo Form_Helper::setFormInputText(['label' => 'Квартира',
+													'control' => 'flat_res',
+													'value' => $data['flat_res']]
+													);
+				// postcode (residential)
+				echo Form_Helper::setFormInputText(['label' => 'Индекс',
+													'control' => 'postcode_res',
+													'value' => $data['postcode_res']]
+													);
+			?>
 		</div>
 
 		<div class="form-group">
@@ -294,6 +607,20 @@ use common\models\Model_Resume as Model_Resume_Data;
 										'error' => $data['address_res_err'],
 										'help' => ADRRES['help']]);
 
+		/* scans */
+		echo Form_Helper::setFormHeaderSub('Скан-копии');
+		echo Form_Helper::setFormFileListDB(['required' => 'required',
+											'required_style' => 'StarUp',
+											'model_class' => 'common\\models\\Model_DictScans',
+											'model_method' => 'getByDocument',
+											'model_filter' => 'doc_code',
+											'model_filter_var' => 'resume',
+											'model_field' => 'scan_code',
+											'model_field_name' => 'scan_name',
+											'data' => $data,
+											'home_ctr' => RESUME['ctr'],
+											'home_hdr' => RESUME['hdr'],
+											'ext' => FILES_EXT_SCANS]);
 		// personal
 		if ($data['personal_vis'] == true) {
 			echo Form_Helper::setFormCheckbox(['label' => 'Я даю согласие на обработку своих персональных данных в соответствии с Федеральным законом РФ от 27 июля 2006 г. №152-ФЗ "О персональных данных"',
@@ -303,7 +630,6 @@ use common\models\Model_Resume as Model_Resume_Data;
 												'success' => $data['personal_scs'],
 												'error' => $data['personal_err']]);
 		} ?>
-
 		<!-- controls -->
 		<div class="form-group">
 			<div class="col">
@@ -330,6 +656,18 @@ use common\models\Model_Resume as Model_Resume_Data;
 <script>
 	// form init
 	function formInit(){
+		// agreement
+		if (getAge($('#birth_dt').val()) < 18) {
+			$('#agreement_div').show();
+		} else {
+			$('#agreement_div').hide();
+		}
+		// old passport
+		if ($('#passport_old_yes').prop('checked')) {
+			$('#passport_old').show();
+		} else {
+			$('#passport_old').hide();
+		}
 		// address registration
 		var country_reg = $('#country_reg').val();
 		if (country_reg == '') {
@@ -347,7 +685,6 @@ use common\models\Model_Resume as Model_Resume_Data;
 					$('#kladr_reg').show();
 					$('#homeless_reg').prop('checked', false);
 					$('#address_reg').prop('disabled', true);
-					getKladrAJAX('/frontend/Kladr/RegionAllJSON', null, '#region_reg');
 					break;
 				default:
 					$('#kladr_reg').hide();
@@ -394,6 +731,22 @@ use common\models\Model_Resume as Model_Resume_Data;
 <script>
 	// form events
 	function formEvents() {
+		// agreement
+		$('#birth_dt').change(function() {
+			if (getAge($('#birth_dt').val()) < 18) {
+				$('#agreement_div').show();
+			} else {
+				$('#agreement_div').hide();
+			}
+		});
+		// old passport
+		$('#passport_old_yes').change(function() {
+			if ($('#passport_old_yes').prop('checked')) {
+				$('#passport_old').show();
+			} else {
+				$('#passport_old').hide();
+			}
+		});
 		// contry_reg change
 		$('#country_reg').change(function() {
 			var country_reg = $('#country_reg').val();
@@ -437,6 +790,7 @@ use common\models\Model_Resume as Model_Resume_Data;
 			var region_reg_name = $('#region_reg :selected').text();
 			$('#address_reg').val(region_reg_name);
 
+			getKladrAJAX('/frontend/Kladr/RegionAllJSON', null, '#region_res');
 			getKladrAJAX('/frontend/Kladr/AreaByRegionJSON', region_reg, '#area_reg');
 			getKladrAJAX('/frontend/Kladr/AreaByRegionJSON', region_reg, '#area_res');
 		    getKladrAJAX('/frontend/Kladr/CityByRegionJSON', region_reg, '#city_reg');
@@ -1064,11 +1418,37 @@ use common\models\Model_Resume as Model_Resume_Data;
 			}
 		}
 	}
+
+	function getAge(dateString) {
+		var day = parseInt(dateString.substring(0,2));
+		var month = parseInt(dateString.substring(3,5));
+		var year = parseInt(dateString.substring(6,10));
+		var today = new Date();
+		var birthDate = new Date(year, month - 1, day);
+		var age = today.getFullYear() - birthDate.getFullYear();
+		var m = today.getMonth() - birthDate.getMonth();
+		if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+			age--;
+		}
+		return age;
+    }
 </script>
 
 <script>
 	$(function(){
 	  $("#birth_dt").mask("99.99.9999", {placeholder: "ДД.ММ.ГГГГ" });
+	  $("#phone").mask("+7(999) 999-99-99");
+	  $("#series").mask("9999");
+	  $("#numb").mask("999999");
+	  $("#dt_issue").mask("99.99.9999", {placeholder: "ДД.ММ.ГГГГ" });
+	  $("#unit_code").mask("999-999");
+	  $("#dt_end").mask("99.99.9999", {placeholder: "ДД.ММ.ГГГГ" });
+	  $("#series_old").mask("9999");
+	  $("#numb_old").mask("999999");
+	  $("#dt_issue_old").mask("99.99.9999", {placeholder: "ДД.ММ.ГГГГ" });
+	  $("#unit_code_old").mask("999-999");
+	  $("#dt_end_old").mask("99.99.9999", {placeholder: "ДД.ММ.ГГГГ" });
 	  $("#postcode_reg").mask("999999");
+	  $("#postcode_res").mask("999999");
 	});
 </script>

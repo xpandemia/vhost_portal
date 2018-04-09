@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use tinyframe\core\helpers\Db_Helper as Db_Helper;
+use common\models\Model_Kladr as Model_Kladr_Data;
 
 class Model_Kladr extends Db_Helper
 {
@@ -17,10 +18,12 @@ class Model_Kladr extends Db_Helper
 	const STREET = 5;
 
 	public $db;
+	public $kladr;
 
 	public function __construct()
 	{
 		$this->db = Db_Helper::getInstance();
+		$this->kladr = new Model_Kladr_Data();
 	}
 
 	/**
@@ -55,7 +58,7 @@ class Model_Kladr extends Db_Helper
 	public function getAreaByRegionJSON($region) : string
 	{
 		// get kladr
-		$kladr = $this->getByCode($region);
+		$kladr = $this->kladr->getByCode($region);
 		$code_region = $kladr['code_region'];
 		// get area by region
 		$area = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
@@ -78,7 +81,7 @@ class Model_Kladr extends Db_Helper
 	public function getCityByRegionJSON($region) : string
 	{
 		// get kladr
-		$kladr = $this->getByCode($region);
+		$kladr = $this->kladr->getByCode($region);
 		$code_region = $kladr['code_region'];
 		// get city by region
 		$city = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
@@ -101,7 +104,7 @@ class Model_Kladr extends Db_Helper
 	public function getLocationByAreaJSON($area) : string
 	{
 		// get kladr
-		$kladr = $this->getByCode($area);
+		$kladr = $this->kladr->getByCode($area);
 		$code_region = $kladr['code_region'];
 		$code_area = $kladr['code_area'];
 		// get location by area
@@ -127,7 +130,7 @@ class Model_Kladr extends Db_Helper
 	public function getStreetByCityJSON($city) : string
 	{
 		// get kladr
-		$kladr = $this->getByCode($city);
+		$kladr = $this->kladr->getByCode($city);
 		$code_region = $kladr['code_region'];
 		$code_city = $kladr['code_city'];
 		// get streets by city
@@ -153,7 +156,7 @@ class Model_Kladr extends Db_Helper
 	public function getStreetByLocationJSON($location) : string
 	{
 		// get kladr
-		$kladr = $this->getByCode($location);
+		$kladr = $this->kladr->getByCode($location);
 		$code_region = $kladr['code_region'];
 		$code_area = $kladr['code_area'];
 		$code_location = $kladr['code_location'];
@@ -171,19 +174,5 @@ class Model_Kladr extends Db_Helper
 								'kladr_abbr' => $value['kladr_abbr']];
 		}
 		return json_encode($street_json);
-	}
-
-	/**
-     * Gets code_region by code.
-     *
-     * @return array
-     */
-	public function getByCode($code) : array
-	{
-		$kladr = $this->db->rowSelectOne('*',
-										'kladr',
-										'kladr_code = :kladr_code',
-										[':kladr_code' => $code]);
-		return $kladr;
 	}
 }

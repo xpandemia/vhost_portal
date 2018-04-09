@@ -17,10 +17,9 @@ class Controller_Kladr extends Controller
 	{
 		// model
 		$this->model = new Model_Kladr();
-		/* filter vars */
 		// code
 		if (isset($_POST['code'])) {
-			$this->code = $_POST['code'];
+			$this->code = htmlspecialchars($_POST['code']);
 		}
 		else {
 			$this->code = null;

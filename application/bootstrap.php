@@ -2,19 +2,24 @@
 
 use tinyframe\core\Routing as Routing;
 
+	// exceptions
+	require_once ROOT_DIR.'/application/core/exceptions/upload_exceptions.php'; // UPLOADS exceptions
 	// helpers
 	require_once ROOT_DIR.'/application/core/helpers/basic_helper.php'; // BASE processing
+	require_once ROOT_DIR.'/application/core/helpers/calc_helper.php'; // CALCULATIONS processing
 	require_once ROOT_DIR.'/application/core/helpers/captcha_helper.php'; // CAPTCHA processing
+	require_once ROOT_DIR.'/application/core/helpers/db_helper.php'; // DB processing
+	require_once ROOT_DIR.'/application/core/helpers/files_helper.php'; // FILES processing
 	require_once ROOT_DIR.'/application/core/helpers/form_helper.php'; // FORMS processing
 	require_once ROOT_DIR.'/application/core/helpers/html_helper.php'; // HTML processing
-	require_once ROOT_DIR.'/application/core/helpers/db_helper.php'; // DB processing
 	require_once ROOT_DIR.'/application/core/helpers/mail_helper.php'; // EMAIL processing
 	require_once ROOT_DIR.'/application/core/helpers/xml_helper.php'; // XML processing
 	// configs
+	require_once ROOT_DIR.'/application/core/config/1c_config.php'; // 1C configuration
 	require_once ROOT_DIR.'/application/core/config/db_config.php'; // DB configuration
+	require_once ROOT_DIR.'/application/core/config/files_config.php'; // FILES configuration
 	require_once ROOT_DIR.'/application/core/config/form_config.php'; // FORMS configuration
 	require_once ROOT_DIR.'/application/core/config/mail_config.php'; // EMAIL configuration
-	require_once ROOT_DIR.'/application/core/config/1c_config.php'; // 1C configuration
 	// base classes
 	require_once ROOT_DIR.'/application/core/model.php';
 	require_once ROOT_DIR.'/application/core/view.php';

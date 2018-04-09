@@ -52,6 +52,7 @@ class Model_ResetPwd extends Model
 		if (!empty($row)) {
 			if ($_SESSION[APP_CODE]['pwd_token'] === $row['pwd_token']) {
 				if ($form['pwd'] === $form['pwd_confirm']) {
+					$user->id = $row['id'];
 					$user->pwd_hash = $user->GetHash($form['pwd']);
 					if ($user->changePwd()) {
 						$form['error_msg'] = null;

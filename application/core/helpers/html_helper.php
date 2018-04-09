@@ -81,6 +81,90 @@ class HTML_Helper
 	}
 
 	/**
+     * Creates HREF as icon button.
+     *
+     * @return string
+     */
+	public static function setHrefButtonIcon($controller, $action, $class, $icon, $tooltip = null)
+	{
+		if (!empty($controller) && !empty($action) && !empty($class) && !empty($icon)) {
+			return '<a data-toggle="tooltip" title="'.$tooltip.'" href="'.Basic_Helper::appUrl($controller, $action).'" class="'.$class.'"><i class="'.$icon.'"></i></a> ';
+		} else {
+			return '<p class="text-danger">HTML_Helper.setHrefButtonIcon - На входе недостаточно данных!</p>';
+		}
+	}
+
+	/**
+     * Creates image.
+     *
+     * @return string
+     */
+	public static function setImageLOB($type, $lob, $width = null, $height = null)
+	{
+		if (!empty($type) && !empty($lob)) {
+			return '<br><img class="img-fluid" src="data:'.$type.';base64,'.base64_encode($lob).'" width="'.((empty($width)) ? 460 : $width).'" height="'.((empty($height)) ? 345 : $height).'">';
+		} else {
+			return '<p class="text-danger">HTML_Helper.setImageLOB - На входе недостаточно данных!</p>';
+		}
+	}
+
+	/**
+     * Creates GRID from database.
+     *
+     * @return string
+     */
+     /* RULES (+ required)
+		+ 'model_class' => {MODEL_CLASS},
+		+ 'model_method' => {MODEL_METHOD},
+		+ 'controller' => {CONTROLLER},
+		+ 'action_add' => {ACTION_ADD},
+		+ 'action_edit' => {ACTION_EDIT},
+		+ 'action_delete' => {ACTION_DELETE},
+		+ 'home_hdr' => {HOME_HEADER}
+    */
+	public static function setGridDB($rules)
+	{
+		if (isset($rules) && is_array($rules)) {
+			$result = HTML_Helper::setHrefButtonIcon($rules['controller'], $rules['action_add'], 'font-weight-bold', 'far fa-file fa-2x', 'Создать запись');
+			$result .= '<table class="table table-bordered">';
+			// using model
+			$model = new $rules['model_class'];
+			// using model method (hopper is required!)
+			$method = $rules['model_method'];
+			/* header */
+			$result .= '<tr>';
+			foreach ($model->rules() as $rules_row) {
+				$result .= '<td>'.$rules_row['name'].'</td>';
+			}
+			$result .= '</tr>';
+			/* data */
+			// fetching data
+			$table = $model->$method();
+			foreach ($table as $table_row) {
+				$result .= '<tr>';
+				foreach ($model->rules() as $key => $value) {
+					if ($value['type'] == 'lob') {
+						$result .= '<td><img class="img-fluid" src="data:'.((isset($table_row['file_type'])) ? $table_row['file_type'] : '').';base64,'.base64_encode( $table_row[$key] ).'" width="80" height="100"></td>';
+					} else {
+						$result .= '<td>'.$table_row[$key].'</td>';
+					}
+				}
+				if (isset($table_row['id'])) {
+					$result .= '<td>'.
+								HTML_Helper::setHrefButtonIcon($rules['controller'], $rules['action_edit'].'/?id='.$table_row['id'].'&docs='.$rules['controller'], 'font-weight-bold', 'far fa-edit fa-2x', 'Редактировать запись').
+								HTML_Helper::setHrefButtonIcon($rules['controller'], $rules['action_delete'].'/?id='.$table_row['id'].'&docs='.$rules['controller'].'&hdr='.$rules['home_hdr'], 'text-danger font-weight-bold', 'fas fa-times fa-2x', 'Удалить запись').
+								'</td>';
+				}
+				$result .= '</tr>';
+			}
+			$result .= '</table>';
+			return $result;
+		} else {
+			return '<p class="text-danger">HTML_Helper.setGridDB - На входе не массив!</p>';
+		}
+	}
+
+	/**
      * Creates alert.
      *
      * @return string

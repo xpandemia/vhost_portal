@@ -2,7 +2,10 @@
 
 namespace tinyframe\core;
 
+use tinyframe\core\exceptions\UploadException as UploadException;
 use tinyframe\core\helpers\Form_Helper as Form_Helper;
+use tinyframe\core\helpers\Files_Helper as Files_Helper;
+use common\models\Model_Scans as Model_Scans;
 
 class Model
 {
@@ -22,7 +25,7 @@ class Model
      *
      * @return array
      */
-	public function getForm($rules, $post)
+	public function getForm($rules, $post, $files = null)
 	{
 		if (is_array($rules) && is_array($post)) {
 			foreach ($rules as $field_name => $rule_name_arr) {
@@ -32,6 +35,42 @@ class Model
 							$form[$field_name] = 'checked';
 						} else {
 							$form[$field_name] = null;
+						}
+						break;
+					case 'file':
+						if (isset($post[$field_name.'_id'])) {
+							$scans = new Model_Scans();
+							$scans->id = $post[$field_name.'_id'];
+							$scans_row = $scans->get();
+								$form[$field_name.'_id'] = $scans_row['id'];
+								$form[$field_name] = $scans_row['file_data'];
+								$form[$field_name.'_name'] = $scans_row['file_name'];
+								$form[$field_name.'_type'] = $scans_row['file_type'];
+								$form[$field_name.'_size'] = $scans_row['file_size'];
+						} else {
+							if (is_array($files)) {
+								if (!empty($_FILES[$field_name]['name'])) {
+									if (!is_array($_FILES[$field_name]['error'])) {
+										if ($_FILES[$field_name]['error'] === UPLOAD_ERR_OK) {
+											$uploadfile = FILES_TEMP.$field_name.'_'.session_id().'.'.Files_Helper::getExtension($_FILES[$field_name]['name']);
+											if (move_uploaded_file($_FILES[$field_name]['tmp_name'], $uploadfile)) {
+												$form[$field_name] = $uploadfile;
+												$form[$field_name.'_name'] = $_FILES[$field_name]['name'];
+												$form[$field_name.'_type'] = $_FILES[$field_name]['type'];
+												$form[$field_name.'_size'] = $_FILES[$field_name]['size'];
+											} else {
+												throw new \RuntimeException('Возможная атака с помощью файловой загрузки!');
+											}
+										} else {
+											throw new UploadException($_FILES[$field_name]['error']);
+										}
+									} else {
+										throw new \RuntimeException('Множественная загрузка файлов!');
+									}
+								}
+							} else {
+								throw new \InvalidArgumentException('На входе функции Model.getForm отсутствует массив файлов!');
+							}
 						}
 						break;
 					default:
@@ -55,7 +94,7 @@ class Model
 	/**
      * Validates form data.
      *
-     * @return boolean
+     * @return arrau
      */
 	public function validateForm($form, $rules)
 	{
@@ -78,10 +117,17 @@ class Model
 		if (is_array($rules)) {
 			foreach ($rules as $field_name => $rule_name_arr) {
 				if ($row && isset($row[$field_name])) {
-					if ($rules[$field_name]['type'] === 'date') {
-						$form[$field_name] = date($rules[$field_name]['format'], strtotime($row[$field_name]));
-					} else {
-						$form[$field_name] = $row[$field_name];
+					switch ($rules[$field_name]['type']) {
+						case 'date':
+							$form[$field_name] = date($rules[$field_name]['format'], strtotime($row[$field_name]));
+							break;
+						case 'file':
+							$form[$field_name.'_id'] = $row[$field_name.'_id'];
+							$form[$field_name] = $row[$field_name];
+							$form[$field_name.'_type'] = $row[$field_name.'_type'];
+							break;
+						default:
+							$form[$field_name] = $row[$field_name];
 					}
 				} else {
 					$form[$field_name] = null;
@@ -109,7 +155,15 @@ class Model
 		if (is_array($rules)) {
 			foreach ($rules as $field_name => $rule_name_arr) {
 				if ($vars === true) {
-					$form[$field_name] = null;
+					switch ($rules[$field_name]['type']) {
+						case 'file':
+							$form[$field_name.'_id'] = null;
+							$form[$field_name] = null;
+							$form[$field_name.'_type'] = null;
+							break;
+						default:
+							$form[$field_name] = null;
+					}
 				}
 				$form[$field_name.'_cls'] = $rules[$field_name]['class'];
 				$form[$field_name.'_scs'] = $rules[$field_name]['success'];

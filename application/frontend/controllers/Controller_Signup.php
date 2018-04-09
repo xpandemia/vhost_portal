@@ -59,7 +59,7 @@ class Controller_Signup extends Controller
 	}
 
 	/**
-     * Sign user up.
+     * Signs user up.
      *
      * @return mixed
      */
@@ -89,12 +89,12 @@ class Controller_Signup extends Controller
 	public function actionActivation()
 	{
 		if (isset($_GET['code']) && !empty($_GET['code'])) {
-			$code = $_GET['code'];
+			$code = htmlspecialchars($_GET['code']);
 		} else {
 			exit("<p><strong>Ошибка!</strong> Отсутствует код активации.</p>");
 		}
 		if (isset($_GET['email']) && !empty($_GET['email'])) {
-			$email = $_GET['email'];
+			$email = htmlspecialchars($_GET['email']);
 		} else {
 			exit("<p><strong>Ошибка!</strong> Отсутствует адрес эл. почты.</p>");
 		}

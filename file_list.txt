@@ -33,13 +33,19 @@ PORTALBSU
 |   +---common - общее
 |   |   \---models - общие модели
 |   |           Model_Address.php - модель ADDRESS (адреса)
+|   |           Model_Contacts.php - модель CONTACTS (контактная информация)
 |   |           Model_DictCitizenship.php - модель DICT_CITIZENSHIP (справочник гражданств)
 |   |           Model_DictCountries.php - модель DICT_COUNTRIES (справочник стран мира)
+|   |           Model_DictDoctypes.php - модель DICT_DOCTYPES (справочник типов документов)
 |   |           Model_DictionaryManager.php - модель DICTIONARY_MANAGER (управление справочниками)
 |   |           Model_DictionaryManagerLog.php - модель DICTIONARY_MANAGER_LOG (журнал управления справочниками)
+|   |           Model_DictScans.php - модель DICT_SCANS (справочник скан-копий)
+|   |           Model_Kladr.php - модель KLADR (адресный классификатор КЛАДР)
 |   |           Model_KladrAbbrs.php - модель KLADR_ABBRS (адресные сокращения КЛАДР)
+|   |           Model_Passport.php - модель PASSPORT (паспортные данные)
 |   |           Model_Personal.php - модель PERSONAL (личные данные)
 |   |           Model_Resume.php - модель RESUME (анкеты)
+|   |           Model_Scans.php - модель SCANS (скан-копии)
 |   |           Model_User.php - модель USER (пользователи)
 |   |           
 |   +---core - движок приложения
@@ -51,17 +57,23 @@ PORTALBSU
 |   |   +---config - настройки
 |   |   |       1c_config.php - настройки связи с 1С (ODATA)
 |   |   |       db_config.php - настройки БД
+|   |   |       files_config.php - настройки файлов
 |   |   |       form_config.php - настройки форм
 |   |   |       mail_config.php - настройки эл. почты
 |   |   |       
+|   |   +---exceptions - исключения
+|   |   |       upload_exceptions.php - исключения загрузки файлов
+|   |   |
 |   |   +---helpers - помощники (выполняют универсальные действия)
-|   |   |        basic_helper.php - помощник общего назначения
-|   |   |        captcha_helper.php - помощник для капчи
-|   |   |        db_helper.php - помощник для работы с БД
-|   |   |        form_helper.php - помощник для работы с формами
-|   |   |        html_helper.php - помощник для работы с HTML
-|   |   |        mail_helper.php - помощник для работы с эл. почтой
-|   |   |        xml_helper.php - помощник для работы с XML
+|   |   |       basic_helper.php - помощник общего назначения
+|   |   |       calc_helper.php - помощник для расчетов
+|   |   |       captcha_helper.php - помощник для капчи
+|   |   |       db_helper.php - помощник для работы с БД
+|   |   |       files_helper.php - помощник для работы с файлами
+|   |   |       form_helper.php - помощник для работы с формами
+|   |   |       html_helper.php - помощник для работы с HTML
+|   |   |       mail_helper.php - помощник для работы с эл. почтой
+|   |   |       xml_helper.php - помощник для работы с XML
 |   |   |       
 |   |   \---views - системные представления
 |   |       |   404.php - представление 404 ("не найдено")
@@ -78,6 +90,7 @@ PORTALBSU
 |       |       Controller_ResetPwd.php - контроллер изменения пароля (клиент)
 |       |       Controller_ResetPwdRequest.php - контроллер запроса изменения пароля (клиент)
 |       |       Controller_Resume.php - контроллер анкеты (клиент)
+|       |       Controller_Scans.php - контроллер скан-копий (клиент)
 |       |       Controller_Signup.php - контроллер регистрации (клиент)
 |       |       
 |       +---models - модели (клиент)
@@ -87,6 +100,7 @@ PORTALBSU
 |       |       Model_ResetPwd.php - модель изменения пароля (клиент)
 |       |       Model_ResetPwdRequest.php - модель запроса изменения пароля (клиент)
 |       |       Model_Resume.php - модель анкеты (клиент)
+|       |       Model_Scans.php - модель скан-копий (клиент)
 |       |       Model_Signup.php - модель регистрации (клиент)
 |       |       
 |       +---views - представления/формы (клиент)
@@ -95,6 +109,8 @@ PORTALBSU
 |       |   |   reset-pwd-request.php - форма запроса изменения пароля (клиент)
 |       |   |   reset-pwd.php - форма изменения пароля (клиент)
 |       |   |   resume.php - форма анкеты (клиент)
+|       |   |   scans-delete.php - форма удаления скан-копии (клиент)
+|       |   |   scans-show.php - представление скан-копии (клиент)
 |       |   |   signup.php - форма регистрации (клиент)
 |       |   |   
 |       |   \---layouts - шаблоны представлений (клиент)
@@ -104,7 +120,9 @@ PORTALBSU
 |       \---web - корень клиентской стороны
 |               .htaccess - настройка перенаправлений и управление конфигурацией веб-сервера (клиент)
 |               index.php - точка входа (клиент), запуск движка приложения
-|               
+|
++---files - загружаемые файлы
+|   \---temp - временные файлы
 +---fonts - шрифты
 |       oswald.ttf - шрифт для капчи
 |       

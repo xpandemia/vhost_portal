@@ -10,6 +10,9 @@ class Model_KladrAbbrs extends Db_Helper
 		KLADR abbrs processing
 	*/
 
+	const TABLE_NAME = 'kladr_abbrs';
+
+	public $id;
 	public $abbr_code;
 	public $abbr_name;
 	public $level;
@@ -29,7 +32,10 @@ class Model_KladrAbbrs extends Db_Helper
      */
 	public function getByCode()
 	{
-		return $this->rowSelectOne('*', 'kladr_abbrs', 'abbr_code = :abbr_code', [':abbr_code' => $this->abbr_code]);
+		return $this->rowSelectOne('*',
+								self::TABLE_NAME,
+								'abbr_code = :abbr_code',
+								[':abbr_code' => $this->abbr_code]);
 	}
 
 	/**
@@ -40,9 +46,12 @@ class Model_KladrAbbrs extends Db_Helper
 	public function save()
 	{
 		return $this->rowInsert('abbr_code, abbr_name, level, abbr',
-								'kladr_abbrs',
+								self::TABLE_NAME,
 								':abbr_code, :abbr_name, :level, :abbr',
-								[':abbr_code' => $this->abbr_code, ':abbr_name' => $this->abbr_name, ':level' => $this->level, ':abbr' => $this->abbr]);
+								[':abbr_code' => $this->abbr_code,
+								':abbr_name' => $this->abbr_name,
+								':level' => $this->level,
+								':abbr' => $this->abbr]);
 	}
 
 	/**
@@ -52,9 +61,10 @@ class Model_KladrAbbrs extends Db_Helper
      */
 	public function changeName()
 	{
-		return $this->rowUpdate('kladr_abbrs',
+		return $this->rowUpdate(self::TABLE_NAME,
 								'abbr_name = :abbr_name',
-								[':abbr_name' => $this->abbr_name]);
+								[':abbr_name' => $this->abbr_name],
+								['id' => $this->id]);
 	}
 
 	/**
@@ -64,9 +74,10 @@ class Model_KladrAbbrs extends Db_Helper
      */
 	public function changeLevel()
 	{
-		return $this->rowUpdate('kladr_abbrs',
+		return $this->rowUpdate(self::TABLE_NAME,
 								'level = :level',
-								[':level' => $this->level]);
+								[':level' => $this->level],
+								['id' => $this->id]);
 	}
 
 	/**
@@ -76,9 +87,10 @@ class Model_KladrAbbrs extends Db_Helper
      */
 	public function changeAbbr()
 	{
-		return $this->rowUpdate('kladr_abbrs',
+		return $this->rowUpdate(self::TABLE_NAME,
 								'abbr = :abbr',
-								[':abbr' => $this->abbr]);
+								[':abbr' => $this->abbr],
+								['id' => $this->id]);
 	}
 
 	/**
@@ -88,7 +100,7 @@ class Model_KladrAbbrs extends Db_Helper
      */
 	public function clearAll()
 	{
-		return $this->rowDelete('kladr_abbrs');
+		return $this->rowDelete(self::TABLE_NAME);
 	}
 
 	/**
@@ -107,7 +119,8 @@ class Model_KladrAbbrs extends Db_Helper
 				// clear
 				$rows_del = $this->$clear_load();
 				$log->msg = 'Удалено адресных сокращений - '.$rows_del.'.';
-				$log->dt_created = date('Y-m-d H:i:s');
+				$log->value_old = null;
+				$log->value_new = null;
 				$log->save();
 			} else {
 				$rows_del = 0;
@@ -129,7 +142,8 @@ class Model_KladrAbbrs extends Db_Helper
 					// insert
 					if ($this->save()) {
 						$log->msg = 'Создано новое адресное сокращение с кодом ['.$this->abbr_code.'].';
-						$log->dt_created = date('Y-m-d H:i:s');
+						$log->value_old = null;
+						$log->value_new = null;
 						$log->save();
 						$rows_ins++;
 					} else {
@@ -139,13 +153,13 @@ class Model_KladrAbbrs extends Db_Helper
 				} else {
 					// update
 					$upd = 0;
+					$this->id = $abbr['id'];
 					// name
 					if ($abbr['abbr_name'] != $this->abbr_name) {
 						if ($this->changeName()) {
 							$log->msg = 'Изменено наименование адресного сокращения с кодом ['.$this->abbr_code.'].';
-							$log->value_old = $kladr['abbr_name'];
+							$log->value_old = $abbr['abbr_name'];
 							$log->value_new = $this->abbr_name;
-							$log->dt_created = date('Y-m-d H:i:s');
 							$log->save();
 							$upd = 1;
 						} else {
@@ -157,9 +171,8 @@ class Model_KladrAbbrs extends Db_Helper
 					if ($abbr['level'] != $this->level) {
 						if ($this->changeLevel()) {
 							$log->msg = 'Изменён уровень адресного сокращения с кодом ['.$this->abbr_code.'].';
-							$log->value_old = $kladr['level'];
+							$log->value_old = $abbr['level'];
 							$log->value_new = $this->level;
-							$log->dt_created = date('Y-m-d H:i:s');
 							$log->save();
 							$upd = 1;
 						} else {
@@ -171,9 +184,8 @@ class Model_KladrAbbrs extends Db_Helper
 					if ($abbr['abbr'] != $this->abbr) {
 						if ($this->changeAbbr()) {
 							$log->msg = 'Изменено сокращения адресного сокращения с кодом ['.$this->abbr_code.'].';
-							$log->value_old = $kladr['abbr'];
+							$log->value_old = $abbr['abbr'];
 							$log->value_new = $this->abbr;
-							$log->dt_created = date('Y-m-d H:i:s');
 							$log->save();
 							$upd = 1;
 						} else {

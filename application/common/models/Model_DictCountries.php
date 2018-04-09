@@ -10,6 +10,9 @@ class Model_DictCountries extends Db_Helper
 		Dictionary countries processing
 	*/
 
+	const TABLE_NAME = 'dict_countries';
+
+	public $id;
 	public $country_code;
 	public $country_name;
 	public $country_fullname;
@@ -31,7 +34,7 @@ class Model_DictCountries extends Db_Helper
      */
 	public function getAll()
 	{
-		return $this->rowSelectAll('*', 'dict_countries');
+		return $this->rowSelectAll('*', self::TABLE_NAME);
 	}
 
 	/**
@@ -41,7 +44,10 @@ class Model_DictCountries extends Db_Helper
      */
 	public function getByCode()
 	{
-		return $this->rowSelectOne('*', 'dict_countries', 'country_code = :country_code', [':country_code' => $this->country_code]);
+		return $this->rowSelectOne('*',
+								self::TABLE_NAME,
+								'country_code = :country_code',
+								[':country_code' => $this->country_code]);
 	}
 
 	/**
@@ -51,18 +57,21 @@ class Model_DictCountries extends Db_Helper
      */
 	public function getByName()
 	{
-		return $this->rowSelectOne('*', 'dict_countries', 'country_name = :country_name', [':country_name' => $this->country_name]);
+		return $this->rowSelectOne('*',
+								self::TABLE_NAME,
+								'country_name = :country_name',
+								[':country_name' => $this->country_name]);
 	}
 
 	/**
-     * Saves citizenship data to database.
+     * Saves country data to database.
      *
      * @return boolean
      */
 	public function save()
 	{
 		return $this->rowInsert('country_code, country_name, country_fullname, code_alpha2, code_alpha3, guid',
-								'dict_countries',
+								self::TABLE_NAME,
 								':country_code, :country_name, :country_fullname, :code_alpha2, :code_alpha3, :guid',
 								[':country_code' => $this->country_code,
 								':country_name' => $this->country_name,
@@ -79,9 +88,10 @@ class Model_DictCountries extends Db_Helper
      */
 	public function changeCode()
 	{
-		return $this->rowUpdate('dict_countries',
+		return $this->rowUpdate(self::TABLE_NAME,
 								'country_code = :country_code',
-								[':country_code' => $this->country_code]);
+								[':country_code' => $this->country_code],
+								['id' => $this->id]);
 	}
 
 	/**
@@ -91,9 +101,10 @@ class Model_DictCountries extends Db_Helper
      */
 	public function changeName()
 	{
-		return $this->rowUpdate('dict_countries',
+		return $this->rowUpdate(self::TABLE_NAME,
 								'country_name = :country_name',
-								[':country_name' => $this->country_name]);
+								[':country_name' => $this->country_name],
+								['id' => $this->id]);
 	}
 
 	/**
@@ -103,9 +114,10 @@ class Model_DictCountries extends Db_Helper
      */
 	public function changeFullName()
 	{
-		return $this->rowUpdate('dict_countries',
+		return $this->rowUpdate(self::TABLE_NAME,
 								'country_fullname = :country_fullname',
-								[':country_fullname' => $this->country_fullname]);
+								[':country_fullname' => $this->country_fullname],
+								['id' => $this->id]);
 	}
 
 	/**
@@ -115,9 +127,10 @@ class Model_DictCountries extends Db_Helper
      */
 	public function changeAlpha2()
 	{
-		return $this->rowUpdate('dict_countries',
+		return $this->rowUpdate(self::TABLE_NAME,
 								'code_alpha2 = :code_alpha2',
-								[':code_alpha2' => $this->code_alpha2]);
+								[':code_alpha2' => $this->code_alpha2],
+								['id' => $this->id]);
 	}
 
 	/**
@@ -127,9 +140,10 @@ class Model_DictCountries extends Db_Helper
      */
 	public function changeAlpha3()
 	{
-		return $this->rowUpdate('dict_countries',
+		return $this->rowUpdate(self::TABLE_NAME,
 								'code_alpha3 = :code_alpha3',
-								[':code_alpha3' => $this->code_alpha3]);
+								[':code_alpha3' => $this->code_alpha3],
+								['id' => $this->id]);
 	}
 
 	/**
@@ -139,7 +153,7 @@ class Model_DictCountries extends Db_Helper
      */
 	public function clearAll()
 	{
-		return $this->rowDelete('dict_countries');
+		return $this->rowDelete(self::TABLE_NAME);
 	}
 
 	/**
@@ -158,7 +172,8 @@ class Model_DictCountries extends Db_Helper
 				// clear
 				$rows_del = $this->$clear_load();
 				$log->msg = 'Удалено стран - '.$rows_del.'.';
-				$log->dt_created = date('Y-m-d H:i:s');
+				$log->value_old = null;
+				$log->value_new = null;
 				$log->save();
 			} else {
 				$rows_del = 0;
@@ -173,10 +188,8 @@ class Model_DictCountries extends Db_Helper
 			$this->country_code = (string)$property->Code;
 			$country = $this->getByCode();
 
-            if($property->DeletionMark == "false") {
+            if($property->DeletionMark == 'false') {
 				$this->country_name = (string)$property->Description;
-				//var_dump($this->country_name);
-				//exit();
 				$this->country_fullname = (string)$property->НаименованиеПолное;
 				$this->code_alpha2 = (string)$property->КодАльфа2;
 				$this->code_alpha3 = (string)$property->КодАльфа3;
@@ -185,7 +198,8 @@ class Model_DictCountries extends Db_Helper
 						// insert
 						if ($this->save()) {
 							$log->msg = 'Создана новая страна с GUID ['.$this->guid.'].';
-							$log->dt_created = date('Y-m-d H:i:s');
+							$log->value_old = null;
+							$log->value_new = null;
 							$log->save();
 							$rows_ins++;
 						} else {
@@ -195,13 +209,13 @@ class Model_DictCountries extends Db_Helper
 					} else {
 						// update
 						$upd = 0;
+						$this->id = $country['id'];
 						// code
 						if ($country['country_code'] != $this->country_code) {
 							if ($this->changeCode()) {
 								$log->msg = 'Изменён код страны с GUID ['.$this->guid.'].';
-								$log->value_old = $kladr['country_code'];
+								$log->value_old = $country['country_code'];
 								$log->value_new = $this->country_code;
-								$log->dt_created = date('Y-m-d H:i:s');
 								$log->save();
 								$upd = 1;
 							} else {
@@ -213,9 +227,8 @@ class Model_DictCountries extends Db_Helper
 						if ($country['country_name'] != $this->country_name) {
 							if ($this->changeName()) {
 								$log->msg = 'Изменено наименование страны с GUID ['.$this->guid.'].';
-								$log->value_old = $kladr['country_name'];
+								$log->value_old = $country['country_name'];
 								$log->value_new = $this->country_name;
-								$log->dt_created = date('Y-m-d H:i:s');
 								$log->save();
 								$upd = 1;
 							} else {
@@ -227,9 +240,8 @@ class Model_DictCountries extends Db_Helper
 						if ($country['country_fullname'] != $this->country_fullname) {
 							if ($this->changeFullName()) {
 								$log->msg = 'Изменено полное наименование страны с GUID ['.$this->guid.'].';
-								$log->value_old = $kladr['country_fullname'];
+								$log->value_old = $country['country_fullname'];
 								$log->value_new = $this->country_fullname;
-								$log->dt_created = date('Y-m-d H:i:s');
 								$log->save();
 								$upd = 1;
 							} else {
@@ -241,9 +253,8 @@ class Model_DictCountries extends Db_Helper
 						if ($country['code_alpha2'] != $this->code_alpha2) {
 							if ($this->changeAlpha2()) {
 								$log->msg = 'Изменён код альфа-2 страны с GUID ['.$this->guid.'].';
-								$log->value_old = $kladr['code_alpha2'];
+								$log->value_old = $country['code_alpha2'];
 								$log->value_new = $this->code_alpha2;
-								$log->dt_created = date('Y-m-d H:i:s');
 								$log->save();
 								$upd = 1;
 							} else {
@@ -255,9 +266,8 @@ class Model_DictCountries extends Db_Helper
 						if ($country['code_alpha3'] != $this->code_alpha3) {
 							if ($this->changeAlpha3()) {
 								$log->msg = 'Изменён код альфа-3 страны с GUID ['.$this->guid.'].';
-								$log->value_old = $kladr['code_alpha3'];
+								$log->value_old = $country['code_alpha3'];
 								$log->value_new = $this->code_alpha3;
-								$log->dt_created = date('Y-m-d H:i:s');
 								$log->save();
 								$upd = 1;
 							} else {

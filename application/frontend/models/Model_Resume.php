@@ -3,12 +3,22 @@
 namespace frontend\models;
 
 use tinyframe\core\Model as Model;
+use tinyframe\core\helpers\Calc_Helper as Calc_Helper;
 use tinyframe\core\helpers\Form_Helper as Form_Helper;
+use tinyframe\core\helpers\Files_Helper as Files_Helper;
 use common\models\Model_Resume as Model_Resume_Data;
 use common\models\Model_Personal as Model_Personal;
 use common\models\Model_DictCitizenship as Model_DictCitizenship;
+use common\models\Model_Contacts as Model_Contacts;
+use common\models\Model_Passport as Model_Passport;
+use common\models\Model_DictDoctypes as Model_DictDoctypes;
 use common\models\Model_Address as Model_Address;
 use common\models\Model_DictCountries as Model_DictCountries;
+use common\models\Model_DictScans as Model_DictScans;
+use common\models\Model_Scans as Model_Scans;
+use common\models\Model_Docs as Model_Docs;
+
+use PDO;
 
 class Model_Resume extends Model
 {
@@ -23,7 +33,7 @@ class Model_Resume extends Model
      */
 	public function rules()
 	{
-		return [
+		$rules = [
                 'name_first' => [
                                 'type' => 'text',
                                 'class' => 'form-control',
@@ -61,6 +71,11 @@ class Model_Resume extends Model
                                 'pattern' => ['value' => PATTERN_DATE_STRONG, 'msg' => 'Дата рождения должна быть в фомате ДД.ММ.ГГГГ и только 20-го, 21-го вв!'],
                                 'success' => 'Дата рождения заполнена верно.'
                                ],
+                'agreement' => [
+								'type' => 'file',
+								'class' => 'form-control',
+								'success' => 'Согласие родителей заполнено верно.'
+								],
 				'birth_place' => [
                                 'type' => 'text',
                                 'class' => 'form-control',
@@ -75,6 +90,119 @@ class Model_Resume extends Model
                                 'required' => ['default' => '', 'msg' => 'Гражданство обязательно для заполнения!'],
 								'success' => 'Гражданство заполнено верно.'
                                ],
+                'email' => [
+                            'type' => 'email',
+                            'class' => 'form-control',
+                            'required' => ['default' => '', 'msg' => 'Адрес эл. почты обязателен для заполнения!'],
+                            'pattern' => ['value' => PATTERN_EMAIL_LIGHT, 'msg' => 'Адрес электронной почты должен быть в формате user@domain'],
+                            'width' => ['format' => 'string', 'min' => 0, 'max' => 45, 'msg' => 'Слишком длинный адрес эл. почты!'],
+                            'success' => 'Адрес эл. почты заполнен верно.'
+                           ],
+                'phone' => [
+                            'type' => 'text',
+                            'class' => 'form-control',
+                            'required' => ['default' => '', 'msg' => 'Мобильный телефон обязателен для заполнения!'],
+                            'success' => 'Мобильный телефон заполнен верно.'
+                           ],
+                'passport_type' => [
+									'type' => 'selectlist',
+	                                'class' => 'form-control',
+	                                'required' => ['default' => '', 'msg' => 'Тип документа обязателен для заполнения!'],
+									'success' => 'Тип документа заполнен верно.'
+	                               ],
+	            'series' => [
+                            'type' => 'text',
+                            'class' => 'form-control',
+                            'pattern' => ['value' => PATTERN_NUMB, 'msg' => 'Для серии можно использовать только цифры!'],
+                            'width' => ['format' => 'string', 'min' => 1, 'max' => 4, 'msg' => 'Слишком длинная серия!'],
+                            'success' => 'Серия заполнена верно.'
+                           ],
+                'numb' => [
+                            'type' => 'text',
+                            'class' => 'form-control',
+                            'required' => ['default' => '', 'msg' => 'Номер обязателен для заполнения!'],
+                            'pattern' => ['value' => PATTERN_NUMB, 'msg' => 'Для номера можно использовать только цифры!'],
+                            'width' => ['format' => 'string', 'min' => 1, 'max' => 6, 'msg' => 'Слишком длинный номер!'],
+                            'success' => 'Номер заполнен верно.'
+                           ],
+                'dt_issue' => [
+                                'type' => 'date',
+                                'format' => 'd.m.Y',
+                                'class' => 'form-control',
+                                'required' => ['default' => '', 'msg' => 'Дата выдачи обязательна для заполнения!'],
+                                'pattern' => ['value' => PATTERN_DATE_STRONG, 'msg' => 'Дата выдачи должна быть в фомате ДД.ММ.ГГГГ и только 20-го, 21-го вв!'],
+                                'success' => 'Дата выдачи заполнена верно.'
+                               ],
+                'unit_name' => [
+                                'type' => 'text',
+                                'class' => 'form-control',
+                                'required' => ['default' => '', 'msg' => 'Наименование подразделения обязательно для заполнения!'],
+                                'pattern' => ['value' => PATTERN_TEXT_RUS, 'msg' => 'Для наименования подразделения можно использовать только русские буквы, тире, точки, запятые и пробелы!'],
+                                'width' => ['format' => 'string', 'min' => 1, 'max' => 100, 'msg' => 'Слишком длинное наименование подразделения!'],
+                                'success' => 'Наименование подразделения заполнено верно.'
+                               ],
+                'unit_code' => [
+	                            'type' => 'text',
+	                            'class' => 'form-control',
+	                            'success' => 'Код подразделения заполнена верно.'
+	                           ],
+	            'dt_end' => [
+                            'type' => 'date',
+                            'format' => 'd.m.Y',
+                            'class' => 'form-control',
+                            'pattern' => ['value' => PATTERN_DATE_STRONG, 'msg' => 'Дата окончания действия должна быть в фомате ДД.ММ.ГГГГ и только 20-го, 21-го вв!'],
+                            'success' => 'Дата окончания действия заполнена верно.'
+                           ],
+                'passport_old_yes' => [
+			                            'type' => 'checkbox',
+			                            'class' => 'form-check-input',
+			                            'success' => 'На момент сдачи ЕГЭ паспорт был другим.'
+			                           ],
+                'passport_type_old' => [
+										'type' => 'selectlist',
+		                                'class' => 'form-control',
+		                                'success' => 'Тип документа заполнен верно.'
+		                               ],
+		        'series_old' => [
+	                            'type' => 'text',
+	                            'class' => 'form-control',
+	                            'pattern' => ['value' => PATTERN_NUMB, 'msg' => 'Для серии можно использовать только цифры!'],
+	                            'width' => ['format' => 'string', 'min' => 1, 'max' => 4, 'msg' => 'Слишком длинная серия!'],
+	                            'success' => 'Серия заполнена верно.'
+	                           ],
+                'numb_old' => [
+	                            'type' => 'text',
+	                            'class' => 'form-control',
+	                            'pattern' => ['value' => PATTERN_NUMB, 'msg' => 'Для номера можно использовать только цифры!'],
+	                            'width' => ['format' => 'string', 'min' => 1, 'max' => 6, 'msg' => 'Слишком длинный номер!'],
+	                            'success' => 'Номер заполнен верно.'
+	                           ],
+                'dt_issue_old' => [
+                                'type' => 'date',
+                                'format' => 'd.m.Y',
+                                'class' => 'form-control',
+                                'pattern' => ['value' => PATTERN_DATE_STRONG, 'msg' => 'Дата выдачи должна быть в фомате ДД.ММ.ГГГГ и только 20-го, 21-го вв!'],
+                                'success' => 'Дата выдачи заполнена верно.'
+                               ],
+                'unit_name_old' => [
+	                                'type' => 'text',
+	                                'class' => 'form-control',
+	                                'pattern' => ['value' => PATTERN_TEXT_RUS, 'msg' => 'Для наименования подразделения можно использовать только русские буквы, тире, точки, запятые и пробелы!'],
+	                                'width' => ['format' => 'string', 'min' => 1, 'max' => 100, 'msg' => 'Слишком длинное наименование подразделения!'],
+	                                'success' => 'Наименование подразделения заполнено верно.'
+	                               ],
+                'unit_code_old' => [
+		                            'type' => 'text',
+		                            'class' => 'form-control',
+		                            'success' => 'Код подразделения заполнена верно.'
+		                           ],
+	            'dt_end_old' => [
+	                            'type' => 'date',
+	                            'format' => 'd.m.Y',
+	                            'class' => 'form-control',
+	                            'pattern' => ['value' => PATTERN_DATE_STRONG, 'msg' => 'Дата окончания действия должна быть в фомате ДД.ММ.ГГГГ и только 20-го, 21-го вв!'],
+	                            'success' => 'Дата окончания действия заполнена верно.'
+	                           ],
 				'country_reg' => [
 								'type' => 'selectlist',
                                 'class' => 'form-control',
@@ -102,18 +230,211 @@ class Model_Resume extends Model
                                 'pattern' => ['value' => PATTERN_INFO_RUS, 'msg' => 'Для адреса проживания можно использовать только цифры, русские буквы, тире, точки, запятые и пробелы!'],
                                 'width' => ['format' => 'string', 'min' => 1, 'max' => 255, 'msg' => 'Слишком длинный адрес проживания!'],
                                 'success' => 'Адрес проживания заполнен верно.'
-                               ],
-                'personal' => [
-                                'type' => 'checkbox',
-                                'class' => 'form-check-input',
-                                'required' => ['default' => '', 'msg' => 'Необходимо согласие на обработку персональных данных!'],
-                                'success' => 'Получено согласие на обработку персональных данных.'
                                ]
-            ];
+                ];
+        $scans = new Model_DictScans();
+		$scans->doc_code = 'resume';
+		$scans_arr = $scans->getByDocument();
+		if ($scans_arr) {
+			foreach ($scans_arr as $scans_row) {
+				if ($scans_row['required'] == 1) {
+					$rules[$scans_row['scan_code']] = [
+													'type' => 'file',
+													'class' => 'form-control',
+													'required' => ['default' => '', 'msg' => ucfirst($scans_row['scan_name']).' обязательна для заполнения!'],
+													'success' => ucfirst($scans_row['scan_name']).' заполнена верно.'
+													];
+				} else {
+					$rules[$scans_row['scan_code']] = [
+													'type' => 'file',
+													'class' => 'form-control',
+													'success' => ucfirst($scans_row['scan_name']).' заполнена верно.'
+													];
+				}
+			}
+		}
+        $rules['personal'] = [
+                            'type' => 'checkbox',
+                            'class' => 'form-check-input',
+                            'required' => ['default' => '', 'msg' => 'Необходимо согласие на обработку персональных данных!'],
+                            'success' => 'Получено согласие на обработку персональных данных.'
+                           ];
+		return $rules;
 	}
 
 	/**
-     * Get registration address.
+     * Validates agreement.
+     *
+     * @return array
+     */
+	public function validateAgreement($form)
+	{
+		if (isset($form['birth_dt']) && Calc_Helper::getAge($form['birth_dt'], 'd.m.Y') < 18) {
+			if (empty($form['agreement_name'])) {
+				$form['agreement_err'] = 'Согласие родителей/опекунов обязательно для заполнения!';
+				$form['agreement_scs'] = null;
+				$form['validate'] = false;
+			}
+		}
+		return $form;
+	}
+
+	/**
+     * Validates old passport.
+     *
+     * @return array
+     */
+	public function validatePassportOld($form)
+	{
+		if ($form['passport_old_yes'] == 'checked') {
+			// type
+			if (empty($form['passport_type_old'])) {
+				$form['passport_type_old_err'] = 'Тип документа обязателен для заполнения!';
+				$form['passport_type_old_scs'] = null;
+				$form['passport_type_old_cls'] = $form['passport_type_old_cls'].' is-invalid';
+				$form['validate'] = false;
+			}
+			// numb
+			if (empty($form['numb_old'])) {
+				$form['numb_old_err'] = 'Номер обязателен для заполнения!';
+				$form['numb_old_scs'] = null;
+				$form['numb_old_cls'] = $form['numb_old_cls'].' is-invalid';
+				$form['validate'] = false;
+			}
+			// dt_issue
+			if (empty($form['dt_issue_old'])) {
+				$form['dt_issue_old_err'] = 'Дата выдачи обязателен для заполнения!';
+				$form['dt_issue_old_scs'] = null;
+				$form['dt_issue_old_cls'] = $form['dt_issue_old_cls'].' is-invalid';
+				$form['validate'] = false;
+			}
+			// unit_name
+			if (empty($form['unit_name_old'])) {
+				$form['unit_name_old_err'] = 'Наименование подразделения обязателен для заполнения!';
+				$form['unit_name_old_scs'] = null;
+				$form['unit_name_old_cls'] = $form['unit_name_old_cls'].' is-invalid';
+				$form['validate'] = false;
+			}
+			// passport_old_face
+			if (empty($form['passport_old_face'])) {
+				$form['passport_old_face_err'] = 'Первая страница старого паспорта обязательна для заполнения!';
+				$form['passport_old_face_scs'] = null;
+				$form['validate'] = false;
+			}
+		}
+		return $form;
+	}
+
+	/**
+     * Sets registration address.
+     *
+     * @return array
+     */
+	public function setAddressReg($form)
+	{
+		$address = new Model_Address();
+		$address->id_resume = $form['id'];
+		$address->type = $address::TYPE_REG;
+		$row = $address->getByResumeType();
+		if ($row) {
+			$form['region_reg'] = $row['region'];
+			$form['area_reg'] = $row['area'];
+			$form['city_reg'] = $row['city'];
+			$form['location_reg'] = $row['location'];
+			$form['street_reg'] = $row['street'];
+			$form['house_reg'] = $row['house'];
+			$form['building_reg'] = $row['building'];
+			$form['flat_reg'] = $row['flat'];
+			$form['postcode_reg'] = $row['postcode'];
+		} else {
+			$form['region_reg'] = null;
+			$form['area_reg'] = null;
+			$form['city_reg'] = null;
+			$form['location_reg'] = null;
+			$form['street_reg'] = null;
+			$form['house_reg'] = null;
+			$form['building_reg'] = null;
+			$form['flat_reg'] = null;
+			$form['postcode_reg'] = null;
+		}
+		return $form;
+	}
+
+	/**
+     * Sets residential address.
+     *
+     * @return array
+     */
+	public function setAddressRes($form)
+	{
+		$address = new Model_Address();
+		$address->id_resume = $form['id'];
+		$address->type = $address::TYPE_RES;
+		$row = $address->getByResumeType();
+		if ($row) {
+			$form['region_res'] = $row['region'];
+			$form['area_res'] = $row['area'];
+			$form['city_res'] = $row['city'];
+			$form['location_res'] = $row['location'];
+			$form['street_res'] = $row['street'];
+			$form['house_res'] = $row['house'];
+			$form['building_res'] = $row['building'];
+			$form['flat_res'] = $row['flat'];
+			$form['postcode_res'] = $row['postcode'];
+		} else {
+			$form['region_res'] = null;
+			$form['area_res'] = null;
+			$form['city_res'] = null;
+			$form['location_res'] = null;
+			$form['street_res'] = null;
+			$form['house_res'] = null;
+			$form['building_res'] = null;
+			$form['flat_res'] = null;
+			$form['postcode_res'] = null;
+		}
+		return $form;
+	}
+
+	/**
+     * Resets registration address.
+     *
+     * @return array
+     */
+	public function resetAddressReg($form)
+	{
+		$form['region_reg'] = null;
+		$form['area_reg'] = null;
+		$form['city_reg'] = null;
+		$form['location_reg'] = null;
+		$form['street_reg'] = null;
+		$form['house_reg'] = null;
+		$form['building_reg'] = null;
+		$form['flat_reg'] = null;
+		$form['postcode_reg'] = null;
+		return $form;
+	}
+
+	/**
+     * Resets residential address.
+     *
+     * @return array
+     */
+	public function resetAddressRes($form)
+	{
+		$form['region_res'] = null;
+		$form['area_res'] = null;
+		$form['city_res'] = null;
+		$form['location_res'] = null;
+		$form['street_res'] = null;
+		$form['house_res'] = null;
+		$form['building_res'] = null;
+		$form['flat_res'] = null;
+		$form['postcode_res'] = null;
+		return $form;
+	}
+
+	/**
+     * Gets registration address.
      *
      * @return array
      */
@@ -146,7 +467,7 @@ class Model_Resume extends Model
 	}
 
 	/**
-     * Get residential address.
+     * Gets residential address.
      *
      * @return array
      */
@@ -185,7 +506,13 @@ class Model_Resume extends Model
      */
 	public function check($form)
 	{
-		// personal
+		/* checks */
+		// check old passport dt_issue
+		if ($form['passport_old_yes'] == 'checked' && $form['dt_issue'] <= $form['dt_issue_old']) {
+			$form['error_msg'] = 'Дата выдачи нового паспорта меньше или равна дате выдачи старого паспорта!';
+			return $form;
+		}
+		/* personal */
 		$personal = new Model_Personal();
 		$personal->id_resume = $form['id'];
 		$personal->name_first = $form['name_first'];
@@ -200,6 +527,7 @@ class Model_Resume extends Model
 		$personal->citizenship = $row_citizenship['id'];
 		$row_personal = $personal->getByResume();
 		if ($row_personal) {
+			$personal->id = $row_personal['id'];
 			if ($personal->changeAll()) {
 				$form['error_msg'] = null;
 			} else {
@@ -215,6 +543,164 @@ class Model_Resume extends Model
 				return $form;
 			}
 		}
+		/* agreement */
+		$dict_scans = new Model_DictScans();
+		$dict_scans->doc_code = 'resume';
+		if (isset($form['birth_dt']) && Calc_Helper::getAge($form['birth_dt'], 'd.m.Y') < 18) {
+			$dict_scans->scan_code = 'agreement';
+			$dict_scans_row = $dict_scans->getByCode();
+			if ($dict_scans_row) {
+				if (!empty($form[$dict_scans_row['scan_code'].'_name']) && empty($form[$dict_scans_row['scan_code'].'_id'])) {
+					$scans = new Model_Scans();
+						$docs = new Model_Docs();
+						$docs->doc_code = 'resume';
+						$docs_row = $docs->getByCode();
+					$scans->id_doc = (int) $docs_row['id'];
+					$scans->id_row = (int) $form['id'];
+					$scans->id_scans = (int) $dict_scans_row['id'];
+					$scans->file_data = fopen($form['agreement'], 'rb');
+					$scans->file_name = $form['agreement_name'];
+					$scans->file_type = $form['agreement_type'];
+					$scans->file_size = (int) $form['agreement_size'];
+					$scans->dt_created = date('Y-m-d H:i:s');
+					// check size
+					if (Files_Helper::getSize($scans->file_size, FILES_SIZE['size']) > FILES_SIZE['value']) {
+						unset($form['agreement']);
+						unset($form['agreement_name']);
+						unset($form['agreement_type']);
+						unset($form['agreement_size']);
+						$form['error_msg'] = 'Размер скан-копии "'.$dict_scans_row['scan_name'].'" превышает '.FILES_SIZE['value'].' '.FILES_SIZE['size'].' !';
+						return $form;
+					}
+					// check extension
+					if (!in_array($scans->file_type, FILES_EXT_SCANS)) {
+						unset($form['agreement']);
+						unset($form['agreement_name']);
+						unset($form['agreement_type']);
+						unset($form['agreement_size']);
+						$form['error_msg'] = 'Недопустимый тип скан-копии "'.$dict_scans_row['scan_name'].'" !';
+						return $form;
+					}
+					// save
+					if ($scans->save()) {
+						$form['error_msg'] = null;
+					} else {
+						$form['error_msg'] = 'Ошибка при сохранении согласия родителей/опекунов!';
+						return $form;
+					}
+					fclose($scans->file_data);
+					unlink($form[$dict_scans_row['scan_code']]);
+				}
+			} else {
+				$form['error_msg'] = 'Ошибка при сохранении согласия родителей/опекунов!';
+				return $form;
+			}
+		}
+		/* contacts */
+		$contacts = new Model_Contacts();
+		$contacts->id_resume = $form['id'];
+		// email
+		$contacts->type = (int) $contacts::TYPE_EMAIL;
+		$contacts->contact = $form['email'];
+		$row_contacts = $contacts->getEmailByResume();
+		if ($row_contacts) {
+			$contacts->id = $row_contacts['id'];
+			if ($contacts->changeAll()) {
+				$form['error_msg'] = null;
+			} else {
+				$form['error_msg'] = 'Ошибка при изменении адреса эл. почты!';
+				return $form;
+			}
+		} else {
+			if ($contacts->save()) {
+				$form['error_msg'] = null;
+			} else {
+				$form['error_msg'] = 'Ошибка при создании адреса эл. почты!';
+				return $form;
+			}
+		}
+		// phone
+		$contacts->type = $contacts::TYPE_PHONE;
+		$contacts->contact = $form['phone'];
+		$row_contacts = $contacts->getPhoneByResume();
+		if ($row_contacts) {
+			$contacts->id = $row_contacts['id'];
+			if ($contacts->changeAll()) {
+				$form['error_msg'] = null;
+			} else {
+				$form['error_msg'] = 'Ошибка при изменении мобильного телефона!';
+				return $form;
+			}
+		} else {
+			if ($contacts->save()) {
+				$form['error_msg'] = null;
+			} else {
+				$form['error_msg'] = 'Ошибка при создании мобильного телефона!';
+				return $form;
+			}
+		}
+		/* passports */
+		// new passport
+		$passport = new Model_Passport();
+		$passport->id_resume = $form['id'];
+			$passport_type = new Model_DictDoctypes();
+			$passport_type->code = $form['passport_type'];
+			$row_passport_type = $passport_type->getByCode();
+		$passport->id_doctype = $row_passport_type['id'];
+		$passport->main = 1;
+		$passport->series = (empty($form['series'])) ? null : $form['series'];
+		$passport->numb = $form['numb'];
+		$passport->dt_issue = date('Y-m-d', strtotime($form['dt_issue']));
+		$passport->unit_name = $form['unit_name'];
+		$passport->unit_code = (empty($form['unit_code'])) ? null : $form['unit_code'];
+		$passport->dt_end = (empty($form['dt_end'])) ? null : date('Y-m-d', strtotime($form['dt_end']));
+		$row_passport = $passport->getByResume();
+		if ($row_passport) {
+			if ($passport->changeAll()) {
+				$form['error_msg'] = null;
+			} else {
+				$form['error_msg'] = 'Ошибка при изменении паспортных данных!';
+				return $form;
+			}
+		} else {
+			if ($passport->save()) {
+				$form['error_msg'] = null;
+			} else {
+				$form['error_msg'] = 'Ошибка при создании паспортных данных!';
+				return $form;
+			}
+		}
+		// old passport
+		if ($form['passport_old_yes'] == 'checked') {
+			$passport_type = new Model_DictDoctypes();
+			$passport_type->code = $form['passport_type_old'];
+			$row_passport_type = $passport_type->getByCode();
+			$passport->id_doctype = $row_passport_type['id'];
+				$passport->main = 0;
+				$passport->series = (empty($form['series_old'])) ? null : $form['series_old'];
+				$passport->numb = $form['numb_old'];
+				$passport->dt_issue = date('Y-m-d', strtotime($form['dt_issue_old']));
+				$passport->unit_name = $form['unit_name_old'];
+				$passport->unit_code = (empty($form['unit_code_old'])) ? null : $form['unit_code_old'];
+				$passport->dt_end = (empty($form['dt_end_old'])) ? null : date('Y-m-d', strtotime($form['dt_end_old']));
+				$row_passport = $passport->getByResume();
+				if ($row_passport) {
+					if ($passport->changeAll()) {
+						$form['error_msg'] = null;
+					} else {
+						$form['error_msg'] = 'Ошибка при изменении данных старого паспорта!';
+						return $form;
+					}
+				} else {
+					if ($passport->save()) {
+						$form['error_msg'] = null;
+					} else {
+						$form['error_msg'] = 'Ошибка при создании данных старого паспорта!';
+						return $form;
+					}
+				}
+		}
+		/* addresses */
 		// address registration
 		$address_reg = new Model_Address();
 		$address_reg->id_resume = $form['id'];
@@ -236,11 +722,14 @@ class Model_Resume extends Model
 		$address_reg->adr = $form['address_reg'];
 		$row_address_reg = $address_reg->getByResumeType();
 		if ($row_address_reg) {
-			if ($address_reg->changeAll()) {
-				$form['error_msg'] = null;
-			} else {
-				$form['error_msg'] = 'Ошибка при изменении адреса регистрации!';
-				return $form;
+			if ($row_address_reg['id_country'] != $address_reg->id_country || $row_address_reg['adr'] != $address_reg->adr) {
+				$address_reg->id = $row_address_reg['id'];
+				if ($address_reg->changeAll()) {
+					$form['error_msg'] = null;
+				} else {
+					$form['error_msg'] = 'Ошибка при изменении адреса регистрации!';
+					return $form;
+				}
 			}
 		} else {
 			$address_reg->dt_created = date('Y-m-d H:i:s');
@@ -272,11 +761,14 @@ class Model_Resume extends Model
 		$address_res->adr = $form['address_res'];
 		$row_address_res = $address_res->getByResumeType();
 		if ($row_address_res) {
-			if ($address_res->changeAll()) {
-				$form['error_msg'] = null;
-			} else {
-				$form['error_msg'] = 'Ошибка при изменении адреса проживания!';
-				return $form;
+			if ($row_address_res['id_country'] != $address_res->id_country || $row_address_res['adr'] != $address_res->adr) {
+				$address_res->id = $row_address_res['id'];
+				if ($address_res->changeAll()) {
+					$form['error_msg'] = null;
+				} else {
+					$form['error_msg'] = 'Ошибка при изменении адреса проживания!';
+					return $form;
+				}
 			}
 		} else {
 			$address_res->dt_created = date('Y-m-d H:i:s');
@@ -287,8 +779,56 @@ class Model_Resume extends Model
 				return $form;
 			}
 		}
-		// set status
+		/* scans */
+		$dict_scans_arr = $dict_scans->getByDocument();
+		if ($dict_scans_arr) {
+			foreach ($dict_scans_arr as $dict_scans_row) {
+				if (!empty($form[$dict_scans_row['scan_code'].'_name']) && empty($form[$dict_scans_row['scan_code'].'_id'])) {
+					$scans = new Model_Scans();
+						$docs = new Model_Docs();
+						$docs->doc_code = 'resume';
+						$docs_row = $docs->getByCode();
+					$scans->id_doc = (int) $docs_row['id'];
+					$scans->id_row = (int) $form['id'];
+					$scans->id_scans = (int) $dict_scans_row['id'];
+					$scans->file_data = fopen($form[$dict_scans_row['scan_code']], 'rb');
+					$scans->file_name = $form[$dict_scans_row['scan_code'].'_name'];
+					$scans->file_type = $form[$dict_scans_row['scan_code'].'_type'];
+					$scans->file_size = (int) $form[$dict_scans_row['scan_code'].'_size'];
+					$scans->dt_created = date('Y-m-d H:i:s');
+					// check size
+					if (Files_Helper::getSize($scans->file_size, FILES_SIZE['size']) > FILES_SIZE['value']) {
+						unset($form[$dict_scans_row['scan_code']]);
+						unset($form[$dict_scans_row['scan_code'].'_name']);
+						unset($form[$dict_scans_row['scan_code'].'_type']);
+						unset($form[$dict_scans_row['scan_code'].'_size']);
+						$form['error_msg'] = 'Размер скан-копии "'.$dict_scans_row['scan_name'].'" превышает '.FILES_SIZE['value'].' '.FILES_SIZE['size'].' !';
+						return $form;
+					}
+					// check extension
+					if (!in_array($scans->file_type, FILES_EXT_SCANS)) {
+						unset($form[$dict_scans_row['scan_code']]);
+						unset($form[$dict_scans_row['scan_code'].'_name']);
+						unset($form[$dict_scans_row['scan_code'].'_type']);
+						unset($form[$dict_scans_row['scan_code'].'_size']);
+						$form['error_msg'] = 'Недопустимый тип скан-копии "'.$dict_scans_row['scan_name'].'" !';
+						return $form;
+					}
+					// save
+					if ($scans->save()) {
+						$form['error_msg'] = null;
+					} else {
+						$form['error_msg'] = 'Ошибка при сохранении скан-копии!';
+						return $form;
+					}
+					fclose($scans->file_data);
+					unlink($form[$dict_scans_row['scan_code']]);
+				}
+			}
+		}
+		/* set status */
 		$resume = new Model_Resume_Data();
+		$resume->id = $form['id'];
 		$resume->status = $resume::STATUS_SENDED;
 		$resume->changeStatus();
 			return $form;

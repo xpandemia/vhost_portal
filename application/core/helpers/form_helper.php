@@ -173,7 +173,7 @@ class Form_Helper
      */
 	public static function setFormBegin($controller, $action, $id, $legend)
 	{
-		return '<form action="'.Basic_Helper::appUrl($controller, $action).'" method="post" id="'.$id.'" novalidate>
+		return '<form enctype="multipart/form-data" action="'.Basic_Helper::appUrl($controller, $action).'" method="post" id="'.$id.'" novalidate>
 					<legend class="font-weight-bold">'.$legend.'</legend>';
 	}
 
@@ -197,7 +197,7 @@ class Form_Helper
     */
 	public static function setFormInput($rules) : string
 	{
-		if (is_array($rules)) {
+		if (isset($rules) && is_array($rules)) {
 			$label = self::setFormLabelStyle($rules['required'], (isset($rules['required_style'])) ? $rules['required_style'] : null, $rules['label']);
 			return '<div class="form-group row">'.
 						HTML_Helper::setLabel($label['class'], $rules['control'], $label['value']).
@@ -219,6 +219,28 @@ class Form_Helper
 	}
 
 	/**
+     * Creates form input text.
+     *
+     * @return string
+     */
+    /* RULES (+ required)
+		+ 'label' => {TEXT_NAME},
+		+ 'control' => {TEXT_ID},
+		+ 'value' => {TEXT_VALUE}
+    */
+	public static function setFormInputText($rules) : string
+	{
+		if (isset($rules) && is_array($rules)) {
+			return '<div class="form-group">'.
+						'<label class="font-weight-bold" for="'.$rules['control'].'">'.$rules['label'].'</label>'.
+						'<input type="text" class="form-control" id="'.$rules['control'].'" name="'.$rules['control'].'" value="'.$rules['value'].'">'.
+					'</div>';
+		} else {
+			return '<p class="text-danger">Form_Helper.setFormInputSimple - На входе не массив!</p>';
+		}
+	}
+
+	/**
      * Creates form radio.
      *
      * @return string
@@ -236,7 +258,7 @@ class Form_Helper
     */
 	public static function setFormRadio($rules) : string
 	{
-		if (is_array($rules)) {
+		if (isset($rules) && is_array($rules)) {
 			$label = self::setFormLabelStyle($rules['required'], (isset($rules['required_style'])) ? $rules['required_style'] : null, $rules['label']);
 			$result = '<div class="form-group">'.
 						HTML_Helper::setLabel($label['class'], $rules['control'], $label['value']).
@@ -278,7 +300,7 @@ class Form_Helper
     */
 	public static function setFormCheckbox($rules) : string
 	{
-		if (is_array($rules)) {
+		if (isset($rules) && is_array($rules)) {
 			return '<div class="form-check">
 						<div class="col">
 							<input type="checkbox" class="'.$rules['class'].'" id="'.$rules['control'].'" name="'.$rules['control'].'" '.$rules['value'].'><b>'.$rules['label'].'</b>'.
@@ -288,6 +310,27 @@ class Form_Helper
 					</div>';
 		} else {
 			return '<p class="text-danger">Form_Helper.setFormCheckbox - На входе не массив!</p>';
+		}
+	}
+
+	/**
+     * Creates form select list blank.
+     *
+     * @return string
+     */
+    /* RULES (+ required)
+		+ 'label' => {SELECTLIST_NAME},
+		+ 'control' => {SELECTLIST_ID}
+    */
+	public static function setFormSelectListBlank($rules) : string
+	{
+		if (isset($rules) && is_array($rules)) {
+			return '<div class="form-group">'.
+							'<label class="font-weight-bold" for="'.$rules['control'].'">'.$rules['label'].'</label>'.
+							'<select class="form-control" id="'.$rules['control'].'" name="'.$rules['control'].'"></select>'.
+						'</div>';
+		} else {
+			return '<p class="text-danger">Form_Helper.setFormSelectListBlank - На входе не массив!</p>';
 		}
 	}
 
@@ -312,10 +355,11 @@ class Form_Helper
     */
 	public static function setFormSelectListDB($rules) : string
 	{
-		if (is_array($rules)) {
+		if (isset($rules) && is_array($rules)) {
 			$label = self::setFormLabelStyle($rules['required'], (isset($rules['required_style'])) ? $rules['required_style'] : null, $rules['label']);
-			$result = '<div class="form-group">'.
+			$result = '<div class="form-group row">'.
 						HTML_Helper::setLabel($label['class'], $rules['control'], $label['value']).
+						'<div class="col">'.
 						'<select class="'.$rules['class'].'" id="'.$rules['control'].'" name="'.$rules['control'].'">';
 			// using model
 			$model = new $rules['model_class'];
@@ -334,7 +378,184 @@ class Form_Helper
 			$result .= '</select>'.
 						HTML_Helper::setValidFeedback($rules['error'], $rules['success']).
 						HTML_Helper::setInvalidFeedback($rules['error']).
+						'</div>'.
 						'</div>';
+			return $result;
+		} else {
+			return '<p class="text-danger">Form_Helper.setFormSelectListDB - На входе не массив!</p>';
+		}
+	}
+
+	/**
+     * Creates form select list KLADR.
+     *
+     * @return string
+     */
+    /* RULES (+ required)
+		+ 'label' => {SELECTLIST_NAME},
+		+ 'control' => {SELECTLIST_ID},
+		+ 'model_class' => {MODEL_CLASS},
+		+ 'model_method' => {MODEL_METHOD},
+		model_filter => {MODEL_FILTER},
+		model_filter_val => {MODEL_FILTER_VALUE},
+		+ 'value' => {SELECTLIST_VALUE}
+    */
+	public static function setFormSelectListKladr($rules) : string
+	{
+		if (isset($rules) && is_array($rules)) {
+			$result = '<div class="form-group">'.
+						'<label class="font-weight-bold" for="'.$rules['control'].'">'.$rules['label'].'</label>'.
+							'<select class="form-control" id="'.$rules['control'].'" name="'.$rules['control'].'">';
+			// using model
+			$model = new $rules['model_class'];
+			// using model method (hopper is required!)
+			$method = $rules['model_method'];
+			// using filter
+			if (isset($rules['model_filter'])) {
+				$filter = $rules['model_filter'];
+				$model->$filter = $rules['model_filter_val'];
+			}
+			// fetching data
+			$table = $model->$method();
+			$result .= '<option value=""'.(empty($rules['value']) ? ' selected' : '').'></option>';
+			foreach ($table as $row) {
+				$result .= '<option value="'.$row['kladr_code'].'"'.
+							(($rules['value'] === $row['kladr_code']) ? ' selected' : '').'>'.
+							$row['kladr_name'].' '.$row['kladr_abbr'].
+							'</option>';
+			}
+			$result .= '</select>'.
+						'</div>';
+			return $result;
+		} else {
+			return '<p class="text-danger">Form_Helper.setFormSelectListKladr - На входе не массив!</p>';
+		}
+	}
+
+	/**
+     * Creates form file.
+     *
+     * @return string
+     */
+    /* RULES (+ required)
+		+ 'label' => {FILE_NAME},
+		+ 'control' => {FILE_ID},
+		'required' => {FILE_REQUIRED},
+		'required_style' => {FILE_STYLE},
+		+ 'data' => {FILE_DATA},
+		+ 'home_hdr' => {HOME_HEADER},
+		+ 'home_ctr' => {HOME_CONTROLLER},
+		+ 'ext' => {ALLOWED_EXTENSIONS}
+    */
+    public static function setFormFile($rules) : string
+    {
+		if (isset($rules) && is_array($rules)) {
+			$field = $rules['control'];
+			$result = '<div class="form-group" id="'.$field.'_div">';
+			// set help
+			$result .= '<div class="col">'.
+							'<p class="font-weight-bold font-italic">Допустимый размер файла: '.FILES_SIZE['value'].' '.FILES_SIZE['size'].'</p>'.
+							'<p class="font-weight-bold font-italic">Допустимые расширения файла: '.strtoupper(implode(', ', array_keys($rules['ext']))).'</p>'.
+						'</div>';
+			// label
+			$label = self::setFormLabelStyle($rules['required'], (isset($rules['required_style'])) ? $rules['required_style'] : null, $rules['label']);
+			$result .= '<div class="col">'.
+						HTML_Helper::setLabel($label['class'], $field, $label['value']).'</div>';
+			// file
+			if (isset($rules['data'][$field])) {
+				$result .= '<input type="hidden" id="'.$field.'_id" name="'.$field.'_id" value="'.$rules['data'][$field.'_id'].'"/>'.
+							'<span style="padding-left:10px;"> </span><img class="img-fluid" src="data:'.$rules['data'][$field.'_type'].';base64,'.base64_encode( $rules['data'][$field] ).'" width="80" height="100">'.
+							'<span style="padding-left:10px;"> </span>'.
+							HTML_Helper::setHrefButtonIcon('Scans', 'Show/?id='.$rules['data'][$field.'_id'].'&docs='.$rules['home_ctr'], 'font-weight-bold', 'far fa-file-image fa-2x', 'Просмотреть файл').
+							'<span style="padding-left:10px;"> </span>'.
+							HTML_Helper::setHrefButtonIcon('Scans', 'DeleteConfirm/?id='.$rules['data'][$field.'_id'].'&docs='.$rules['home_ctr'].'&hdr='.$rules['home_hdr'], 'text-danger font-weight-bold', 'fas fa-times fa-2x', 'Удалить файл');
+			} else {
+				$result .= '<span style="padding-left:10px;"> </span><input type="file" id="'.$field.'" name="'.$field.'"/></div>';
+			}
+			// feedback
+			if ($rules['data'][$field.'_err']) {
+				$result .= '<p class="text-danger">'.$rules['data'][$field.'_err'].'</p>';
+			}
+			$result .= '<p></p>';
+			$result .= '</div></div>';
+			return $result;
+		} else {
+			return '<p class="text-danger">Form_Helper.setFormFile - На входе не массив!</p>';
+		}
+	}
+
+	/**
+     * Creates form file list based on SQL-query.
+     *
+     * @return string
+     */
+    /* RULES (+ required)
+		'required' => {FILELIST_REQUIRED},
+		'required_style' => {FILELIST_STYLE},
+		+ 'model_class' => {MODEL_CLASS},
+		+ 'model_method' => {MODEL_METHOD},
+		'model_filter' => {MODEL_FILTER},
+		'model_filter_var' => {MODEL_FILTER_VAR},
+		+ 'model_field' => {MODEL_FIELD},
+		+ 'model_field_name' => {MODEL_FIELD_NAME},
+		+ 'data' => {FILELIST_DATA},
+		+ 'home_hdr' => {HOME_HEADER},
+		+ 'home_ctr' => {HOME_CONTROLLER},
+		+ 'ext' => {ALLOWED_EXTENSIONS}
+    */
+    public static function setFormFileListDB($rules) : string
+    {
+		if (isset($rules) && is_array($rules)) {
+			$result = '<div class="form-group">';
+			// set help
+			$result .= '<div class="col">'.
+							'<p class="font-weight-bold font-italic">Допустимый размер файлов: '.FILES_SIZE['value'].' '.FILES_SIZE['size'].'</p>'.
+							'<p class="font-weight-bold font-italic">Допустимые расширения файлов: '.strtoupper(implode(', ', array_keys($rules['ext']))).'</p>'.
+						'</div>';
+			// using model
+			$model = new $rules['model_class'];
+			// using model method (hopper is required!)
+			$method = $rules['model_method'];
+			// using model filter
+			if (isset($rules['model_filter']) && isset($rules['model_filter_var'])) {
+				$filter = $rules['model_filter'];
+				$model->$filter = $rules['model_filter_var'];
+			}
+			// fetching data
+			$table = $model->$method();
+			// making file list
+			foreach ($table as $row) {
+				$field = $row[$rules['model_field']];
+				$result .= '<div class="col">';
+				// next label
+				if (isset($rules['required'])) {
+					if ($row[$rules['required']] == 1) {
+						$label = self::setFormLabelStyle('yes', (isset($rules['required_style'])) ? $rules['required_style'] : null, $row[$rules['model_field_name']]);
+					} else {
+						$label = self::setFormLabelStyle('no', (isset($rules['required_style'])) ? $rules['required_style'] : null, $row[$rules['model_field_name']]);
+					}
+					$result .= HTML_Helper::setLabel($label['class'], $field, $label['value']);
+				} else {
+					$result .= HTML_Helper::setLabel('font-weight-bold', $field, $row[$rules['model_field_name']]);
+				}
+				// next row
+				if (isset($rules['data'][$field])) {
+					$result .= '<input type="hidden" id="'.$field.'_id" name="'.$field.'_id" value="'.$rules['data'][$field.'_id'].'"/>'.
+								'<span style="padding-left:10px;"> </span><img class="img-fluid" src="data:'.$rules['data'][$field.'_type'].';base64,'.base64_encode( $rules['data'][$field] ).'" width="80" height="100">'.
+								'<span style="padding-left:10px;"> </span>'.
+								HTML_Helper::setHrefButtonIcon('Scans', 'Show/?id='.$rules['data'][$field.'_id'].'&docs='.$rules['home_ctr'], 'font-weight-bold', 'far fa-file-image fa-2x', 'Просмотреть файл').
+								'<span style="padding-left:10px;"> </span>'.
+								HTML_Helper::setHrefButtonIcon('Scans', 'DeleteConfirm/?id='.$rules['data'][$field.'_id'].'&docs='.$rules['home_ctr'].'&hdr='.$rules['home_hdr'], 'text-danger font-weight-bold', 'fas fa-times fa-2x', 'Удалить файл');
+				} else {
+					$result .= '<span style="padding-left:10px;"> </span><input type="file" id="'.$field.'" name="'.$field.'"/></div>';
+				}
+				// feedback
+				if ($rules['data'][$field.'_err']) {
+					$result .= '<p class="text-danger">'.$rules['data'][$field.'_err'].'</p>';
+				}
+				$result .= '<p></p>';
+			}
+			$result .= '</div>';
 			return $result;
 		} else {
 			return '<p class="text-danger">Form_Helper.setFormSelectListDB - На входе не массив!</p>';
@@ -355,7 +576,7 @@ class Form_Helper
     */
 	public static function setFormCaptcha($rules) : string
 	{
-		if (is_array($rules)) {
+		if (isset($rules) && is_array($rules)) {
 			return '<img id="img-captcha" src="/images/temp/captcha/captcha_'.session_id().'.png">
 						<a href="/'.BEHAVIOR.'/'.$rules['action'].'" class="btn btn-primary"><i class="fas fa-sync"></i> Обновить</a>
 						<div class="form-group">

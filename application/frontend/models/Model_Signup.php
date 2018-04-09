@@ -124,9 +124,9 @@ class Model_Signup extends Model
 		$user->email = $email;
 		$row = $user->getByEmail();
 		if ($activation == $row['activation']) {
+			$user->id = $row['id'];
 			$user->status = $user::STATUS_ACTIVE;
 			if ($user->changeStatus()) {
-				$user->id = $row['id'];
 				$user->username = $row['username'];
 				$user->role = $row['role'];
 				$user->setUser();

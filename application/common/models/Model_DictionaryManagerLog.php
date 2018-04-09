@@ -10,6 +10,8 @@ class Model_DictionaryManagerLog extends Db_Helper
 		Dictionary manager log processing
 	*/
 
+	const TABLE_NAME = 'dictionary_manager_log';
+
 	public $id_dict;
 	public $id_user;
 	public $msg;
@@ -25,21 +27,56 @@ class Model_DictionaryManagerLog extends Db_Helper
 	}
 
 	/**
+     * Dictionary manager log rules.
+     *
+     * @return array
+     */
+	public function rules()
+	{
+		return [
+				'id_dict' => [
+							'required' => 1,
+							'update' => 0,
+							'value' => $this->id_dict
+							],
+				'id_user' => [
+							'required' => 1,
+							'update' => 0,
+							'value' => $this->id_user
+							],
+				'msg' => [
+						'required' => 1,
+						'update' => 0,
+						'value' => $this->msg
+						],
+				'value_old' => [
+								'required' => 0,
+								'update' => 0,
+								'value' => $this->value_old
+								],
+				'value_new' => [
+								'required' => 0,
+								'update' => 0,
+								'value' => $this->value_new
+								],
+				'dt_created' => [
+								'required' => 1,
+								'update' => 0,
+								'value' => $this->dt_created
+								]
+				];
+	}
+
+	/**
      * Saves dictionary manager log data to database.
      *
      * @return boolean
      */
 	public function save()
 	{
-		return $this->rowInsert('id_dict, id_user, msg, value_old, value_new, dt_created',
-								'dictionary_manager_log',
-								':id_dict, :id_user, :msg, :value_old, :value_new, :dt_created',
-								[':id_dict' => $this->id_dict,
-								':id_user' => $this->id_user,
-								':msg' => $this->msg,
-								':value_old' => $this->value_old,
-								':value_new' => $this->value_new,
-								':dt_created' => $this->dt_created]);
+		$this->dt_created = date('Y-m-d H:i:s');
+		$prepare = $this->prepareInsert(self::TABLE_NAME, $this->rules());
+		return $this->rowInsert($prepare['fields'], self::TABLE_NAME, $prepare['conds'], $prepare['params']);
 	}
 
 	public function __destruct()
