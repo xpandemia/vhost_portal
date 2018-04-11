@@ -12,7 +12,6 @@ class Model_KladrAbbrs extends Db_Helper
 
 	const TABLE_NAME = 'kladr_abbrs';
 
-	public $id;
 	public $abbr_code;
 	public $abbr_name;
 	public $level;
@@ -23,6 +22,41 @@ class Model_KladrAbbrs extends Db_Helper
 	public function __construct()
 	{
 		$this->db = Db_Helper::getInstance();
+	}
+
+	/**
+     * KLADR abbrs rules.
+     *
+     * @return array
+     */
+	public function rules()
+	{
+		return [
+				'abbr_code' => [
+							'required' => 1,
+							'insert' => 1,
+							'update' => 0,
+							'value' => $this->abbr_code
+							],
+				'abbr_name' => [
+								'required' => 1,
+								'insert' => 1,
+								'update' => 1,
+								'value' => $this->abbr_name
+								],
+				'level' => [
+							'required' => 1,
+							'insert' => 1,
+							'update' => 1,
+							'value' => $this->level
+							],
+				'abbr' => [
+							'required' => 1,
+							'insert' => 1,
+							'update' => 1,
+							'value' => $this->abbr
+							]
+				];
 	}
 
 	/**
@@ -45,13 +79,8 @@ class Model_KladrAbbrs extends Db_Helper
      */
 	public function save()
 	{
-		return $this->rowInsert('abbr_code, abbr_name, level, abbr',
-								self::TABLE_NAME,
-								':abbr_code, :abbr_name, :level, :abbr',
-								[':abbr_code' => $this->abbr_code,
-								':abbr_name' => $this->abbr_name,
-								':level' => $this->level,
-								':abbr' => $this->abbr]);
+		$prepare = $this->prepareInsert(self::TABLE_NAME, $this->rules());
+		return $this->rowInsert($prepare['fields'], self::TABLE_NAME, $prepare['conds'], $prepare['params']);
 	}
 
 	/**
@@ -64,7 +93,7 @@ class Model_KladrAbbrs extends Db_Helper
 		return $this->rowUpdate(self::TABLE_NAME,
 								'abbr_name = :abbr_name',
 								[':abbr_name' => $this->abbr_name],
-								['id' => $this->id]);
+								['abbr_code' => $this->abbr_code]);
 	}
 
 	/**
@@ -77,7 +106,7 @@ class Model_KladrAbbrs extends Db_Helper
 		return $this->rowUpdate(self::TABLE_NAME,
 								'level = :level',
 								[':level' => $this->level],
-								['id' => $this->id]);
+								['abbr_code' => $this->abbr_code]);
 	}
 
 	/**
@@ -90,7 +119,7 @@ class Model_KladrAbbrs extends Db_Helper
 		return $this->rowUpdate(self::TABLE_NAME,
 								'abbr = :abbr',
 								[':abbr' => $this->abbr],
-								['id' => $this->id]);
+								['abbr_code' => $this->abbr_code]);
 	}
 
 	/**

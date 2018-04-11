@@ -127,12 +127,19 @@ use common\models\Model_Kladr as Model_Kladr;
 												'class' => $data['citizenship_cls'],
 												'required' => 'yes',
 												'required_style' => 'StarUp',
-												'model_class' => 'common\\models\\Model_DictCitizenship',
+												'model_class' => 'common\\models\\Model_DictCountries',
 												'model_method' => 'getAll',
-												'model_field' => 'citizenship_name',
+												'model_field' => 'code',
+												'model_field_name' => 'description',
 												'value' => $data['citizenship'],
 												'success' => $data['citizenship_scs'],
-												'error' => $data['citizenship_err']]);
+												'error' => $data['citizenship_err']]); ?>
+		<div class="form-group">
+			<div class="form-group">
+				<input type="checkbox" class="form-check-input" id="citizenship_not" name="citizenship_not"><b>Не имею гражданства</b>
+			</div>
+		</div>
+		<?php
 		/* contacts */
 		echo Form_Helper::setFormHeaderSub('Контактная информация');
 		// email
@@ -240,7 +247,7 @@ use common\models\Model_Kladr as Model_Kladr;
 												'success' => $data['passport_old_yes_scs'],
 												'error' => $data['passport_old_yes_err']]); ?>
 		<br>
-		<div class="form-group" id="passport_old">
+		<div class="form-group" id="passport_old_div">
 			<?php
 				echo HTML_Helper::setLabel('font-weight-bold font-italic', '', 'Старый паспорт');
 				// type
@@ -331,8 +338,8 @@ use common\models\Model_Kladr as Model_Kladr;
 												'required_style' => 'StarUp',
 												'model_class' => 'common\\models\\Model_DictCountries',
 												'model_method' => 'getAll',
-												'model_field' => 'country_code',
-												'model_field_name' => 'country_name',
+												'model_field' => 'code',
+												'model_field_name' => 'description',
 												'value' => $data['country_reg'],
 												'success' => $data['country_reg_scs'],
 												'error' => $data['country_reg_err']]); ?>
@@ -349,7 +356,7 @@ use common\models\Model_Kladr as Model_Kladr;
 					echo Form_Helper::setFormSelectListBlank(['label' => 'Регион', 'control' => 'region_reg']);
 				}
 				// area (registration)
-				if (isset($data['area_reg'])) {
+				if (isset($data['area_reg']) && !empty($data['area_reg'])) {
 					echo Form_Helper::setFormSelectListKladr(['label' => 'Область',
 															'control' => 'area_reg',
 															'model_class' => 'common\\models\\Model_Kladr',
@@ -361,7 +368,7 @@ use common\models\Model_Kladr as Model_Kladr;
 					echo Form_Helper::setFormSelectListBlank(['label' => 'Область', 'control' => 'area_reg']);
 				}
 				// city (registration)
-				if (isset($data['city_reg'])) {
+				if (isset($data['city_reg']) && !empty($data['city_reg'])) {
 					echo Form_Helper::setFormSelectListKladr(['label' => 'Город',
 															'control' => 'city_reg',
 															'model_class' => 'common\\models\\Model_Kladr',
@@ -373,7 +380,7 @@ use common\models\Model_Kladr as Model_Kladr;
 					echo Form_Helper::setFormSelectListBlank(['label' => 'Город', 'control' => 'city_reg']);
 				}
 				// location (registration)
-				if (isset($data['location_reg'])) {
+				if (isset($data['location_reg']) && !empty($data['location_reg'])) {
 					echo Form_Helper::setFormSelectListKladr(['label' => 'Населённый пункт',
 															'control' => 'location_reg',
 															'model_class' => 'common\\models\\Model_Kladr',
@@ -385,8 +392,8 @@ use common\models\Model_Kladr as Model_Kladr;
 					echo Form_Helper::setFormSelectListBlank(['label' => 'Населённый пункт', 'control' => 'location_reg']);
 				}
 				// street (registration)
-				if (isset($data['city_reg'])) {
-					if (isset($data['street_reg'])) {
+				if (isset($data['city_reg']) && !empty($data['city_reg'])) {
+					if (isset($data['street_reg']) && !empty($data['street_reg'])) {
 						echo Form_Helper::setFormSelectListKladr(['label' => 'Улица',
 																'control' => 'street_reg',
 																'model_class' => 'common\\models\\Model_Kladr',
@@ -398,7 +405,7 @@ use common\models\Model_Kladr as Model_Kladr;
 						echo Form_Helper::setFormSelectListBlank(['label' => 'Улица', 'control' => 'street_reg']);
 					}
 				} else {
-					if (isset($data['street_reg'])) {
+					if (isset($data['street_reg']) && !empty($data['street_reg'])) {
 						echo Form_Helper::setFormSelectListKladr(['label' => 'Улица',
 																'control' => 'street_reg',
 																'model_class' => 'common\\models\\Model_Kladr',
@@ -476,8 +483,8 @@ use common\models\Model_Kladr as Model_Kladr;
 												'required_style' => 'StarUp',
 												'model_class' => 'common\\models\\Model_DictCountries',
 												'model_method' => 'getAll',
-												'model_field' => 'country_code',
-												'model_field_name' => 'country_name',
+												'model_field' => 'code',
+												'model_field_name' => 'description',
 												'value' => $data['country_res'],
 												'success' => $data['country_res_scs'],
 												'error' => $data['country_res_err']]); ?>
@@ -498,7 +505,7 @@ use common\models\Model_Kladr as Model_Kladr;
 						'</div>';
 				}
 				// area (residential)
-				if (isset($data['area_res'])) {
+				if (isset($data['area_res']) && !empty($data['area_res'])) {
 					echo Form_Helper::setFormSelectListKladr(['label' => 'Область',
 															'control' => 'area_res',
 															'model_class' => 'common\\models\\Model_Kladr',
@@ -510,7 +517,7 @@ use common\models\Model_Kladr as Model_Kladr;
 					echo Form_Helper::setFormSelectListBlank(['label' => 'Область', 'control' => 'area_res']);
 				}
 				// city (residential)
-				if (isset($data['city_res'])) {
+				if (isset($data['city_res']) && !empty($data['city_res'])) {
 					echo Form_Helper::setFormSelectListKladr(['label' => 'Город',
 															'control' => 'city_res',
 															'model_class' => 'common\\models\\Model_Kladr',
@@ -522,7 +529,7 @@ use common\models\Model_Kladr as Model_Kladr;
 					echo Form_Helper::setFormSelectListBlank(['label' => 'Город', 'control' => 'city_res']);
 				}
 				// location (residential)
-				if (isset($data['location_res'])) {
+				if (isset($data['location_res']) && !empty($data['location_res'])) {
 					echo Form_Helper::setFormSelectListKladr(['label' => 'Населённый пункт',
 															'control' => 'location_res',
 															'model_class' => 'common\\models\\Model_Kladr',
@@ -534,8 +541,8 @@ use common\models\Model_Kladr as Model_Kladr;
 					echo Form_Helper::setFormSelectListBlank(['label' => 'Населённый пункт', 'control' => 'location_res']);
 				}
 				// street (residential)
-				if (isset($data['city_res'])) {
-					if (isset($data['street_res'])) {
+				if (isset($data['city_res']) && !empty($data['city_res'])) {
+					if (isset($data['street_res']) && !empty($data['street_res'])) {
 						echo Form_Helper::setFormSelectListKladr(['label' => 'Улица',
 																'control' => 'street_res',
 																'model_class' => 'common\\models\\Model_Kladr',
@@ -547,7 +554,7 @@ use common\models\Model_Kladr as Model_Kladr;
 						echo Form_Helper::setFormSelectListBlank(['label' => 'Улица', 'control' => 'street_res']);
 					}
 				} else {
-					if (isset($data['street_res'])) {
+					if (isset($data['street_res']) && !empty($data['street_res'])) {
 						echo Form_Helper::setFormSelectListKladr(['label' => 'Улица',
 																'control' => 'street_res',
 																'model_class' => 'common\\models\\Model_Kladr',
@@ -662,11 +669,17 @@ use common\models\Model_Kladr as Model_Kladr;
 		} else {
 			$('#agreement_div').hide();
 		}
+		// citizenship
+		if ($('#citizenship').val() == '000') {
+			$('#citizenship_not').prop('checked', true);
+		} else {
+			$('#citizenship_not').prop('checked', false);
+		}
 		// old passport
 		if ($('#passport_old_yes').prop('checked')) {
-			$('#passport_old').show();
+			$('#passport_old_div').show();
 		} else {
-			$('#passport_old').hide();
+			$('#passport_old_div').hide();
 		}
 		// address registration
 		var country_reg = $('#country_reg').val();
@@ -739,12 +752,30 @@ use common\models\Model_Kladr as Model_Kladr;
 				$('#agreement_div').hide();
 			}
 		});
+		// citizenship
+		$('#citizenship').change(function() {
+			if ($('#citizenship').val() == '000') {
+				$('#citizenship_not').prop('checked', true);
+			} else {
+				$('#citizenship_not').prop('checked', false);
+			}
+		});
+		// no citizenship
+		$('#citizenship_not').change(function() {
+			if ($('#citizenship_not').prop('checked')) {
+				$('#citizenship').val('000');
+			} else {
+				if ($('#citizenship').val() == '000') {
+					$('#citizenship').val('');
+				}
+			}
+		});
 		// old passport
 		$('#passport_old_yes').change(function() {
 			if ($('#passport_old_yes').prop('checked')) {
-				$('#passport_old').show();
+				$('#passport_old_div').show();
 			} else {
-				$('#passport_old').hide();
+				$('#passport_old_div').hide();
 			}
 		});
 		// contry_reg change
@@ -1366,51 +1397,16 @@ use common\models\Model_Kladr as Model_Kladr;
 				$('#kladr_res').show();
 				$('#address_res').prop('disabled', true);
 				$('#address_res').val(address_reg);
-
-				var region_reg = $('#region_reg').val();
-				if (region_reg != '') {
-					$('#region_res').val(region_reg);
-				}
-
-				var area_reg = $('#area_reg').val();
-				if (area_reg != '') {
-					$('#area_res').val(area_reg);
-				}
-
-				var city_reg = $('#city_reg').val();
-				if (city_reg != '') {
-					$('#city_res').val(city_reg);
-				}
-
-				var location_reg = $('#location_reg').val();
-				if (location_reg != '') {
-					$('#location_res').val(location_reg);
-				}
-
-				var street_reg = $('#street_reg').val();
-				if (street_reg != '') {
-					$('#street_res').val(street_reg);
-				}
-
-				var house_reg = $('#house_reg').val();
-				if (house_reg != '') {
-					$('#house_res').val(house_reg);
-				}
-
-				var building_reg = $('#building_reg').val();
-				if (building_reg != '') {
-					$('#building_res').val(building_reg);
-				}
-
-				var flat_reg = $('#flat_reg').val();
-				if (flat_reg != '') {
-					$('#flat_res').val(flat_reg);
-				}
-
-				var postcode_reg = $('#postcode_reg').val();
-				if (postcode_reg != '') {
-					$('#postcode_res').val(postcode_reg);
-				}
+				// renew kladr_res
+				$('#region_res').val($('#region_reg').val());
+				$('#area_res').val($('#area_reg').val());
+				$('#city_res').val($('#city_reg').val());
+				$('#location_res').val($('#location_reg').val());
+				$('#street_res').val($('#street_reg').val());
+				$('#house_res').val($('#house_reg').val());
+				$('#building_res').val($('#building_reg').val());
+				$('#flat_res').val($('#flat_reg').val());
+				$('#postcode_res').val($('#postcode_reg').val());
 			} else {
 				$('#kladr_res').hide();
 				$('#address_res').prop('disabled', false);

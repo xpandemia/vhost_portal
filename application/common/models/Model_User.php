@@ -163,6 +163,7 @@ class Model_User extends Db_Helper
 	{
 		$_SESSION[APP_CODE][self::TABLE_NAME.'_id'] = $this->id;
 		$_SESSION[APP_CODE][self::TABLE_NAME.'_name'] = $this->username;
+		$_SESSION[APP_CODE][self::TABLE_NAME.'_email'] = $this->email;
 		$_SESSION[APP_CODE][self::TABLE_NAME.'_role'] = $this->role;
 		$_SESSION[APP_CODE][self::TABLE_NAME.'_status'] = $this->status;
 	}
@@ -176,6 +177,7 @@ class Model_User extends Db_Helper
 	{
 		unset($_SESSION[APP_CODE][self::TABLE_NAME.'_id']);
 		unset($_SESSION[APP_CODE][self::TABLE_NAME.'_name']);
+		unset($_SESSION[APP_CODE][self::TABLE_NAME.'_email']);
 		unset($_SESSION[APP_CODE][self::TABLE_NAME.'_role']);
 		unset($_SESSION[APP_CODE][self::TABLE_NAME.'_status']);
 	}

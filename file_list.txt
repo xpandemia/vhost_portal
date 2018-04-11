@@ -34,7 +34,6 @@ PORTALBSU
 |   |   \---models - общие модели
 |   |           Model_Address.php - модель ADDRESS (адреса)
 |   |           Model_Contacts.php - модель CONTACTS (контактная информация)
-|   |           Model_DictCitizenship.php - модель DICT_CITIZENSHIP (справочник гражданств)
 |   |           Model_DictCountries.php - модель DICT_COUNTRIES (справочник стран мира)
 |   |           Model_DictDoctypes.php - модель DICT_DOCTYPES (справочник типов документов)
 |   |           Model_DictionaryManager.php - модель DICTIONARY_MANAGER (управление справочниками)
@@ -84,6 +83,7 @@ PORTALBSU
 |   |           
 |   \---frontend - клиентская сторона
 |       +---controllers - контроллеры (клиент)
+|       |       Controller_DocsEduc.php - контроллер документов об образовании (клиент)
 |       |       Controller_Kladr.php - контроллер КЛАДР (клиент)
 |       |       Controller_Login.php - контроллер авторизации (клиент)
 |       |       Controller_Main.php - контроллер главной страницы (клиент)
@@ -94,6 +94,7 @@ PORTALBSU
 |       |       Controller_Signup.php - контроллер регистрации (клиент)
 |       |       
 |       +---models - модели (клиент)
+|       |       Model_DocsEduc.php - модель документов об образовании (клиент)
 |       |       Model_Kladr.php - модель КЛАДР (клиент)
 |       |       Model_Login.php - модель авторизации (клиент)
 |       |       Model_Main.php - модель главной страницы (клиент)
@@ -104,6 +105,7 @@ PORTALBSU
 |       |       Model_Signup.php - модель регистрации (клиент)
 |       |       
 |       +---views - представления/формы (клиент)
+|       |   |   docs-educ.php - представление документов об образовании
 |       |   |   login.php - форма авторизации (клиент)
 |       |   |   main.php - представление главной страницы (клиент)
 |       |   |   reset-pwd-request.php - форма запроса изменения пароля (клиент)

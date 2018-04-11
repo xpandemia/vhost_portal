@@ -40,6 +40,16 @@ class Controller_Main extends Controller
 	}
 
 	/**
+     * Calls to education docs.
+     *
+     * @return void
+     */
+	function actionDocseduc() : void
+	{
+		Basic_Helper::redirect(DOCS_EDUC['hdr'], 202, DOCS_EDUC['ctr'], 'Index');
+	}
+
+	/**
      * Logs user out.
      *
      * @return mixed

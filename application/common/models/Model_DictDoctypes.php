@@ -12,6 +12,7 @@ class Model_DictDoctypes extends Db_Helper
 
 	const TABLE_NAME = 'dict_doctypes';
 
+	public $id;
 	public $isfolder;
 	public $parent_key;
 	public $code;
@@ -33,28 +34,39 @@ class Model_DictDoctypes extends Db_Helper
 	public function rules()
 	{
 		return [
+				'id' => [
+						'required' => 1,
+						'insert' => 0,
+						'update' => 0,
+						'value' => $this->id
+						],
 				'isfolder' => [
 							'required' => 1,
+							'insert' => 1,
 							'update' => 1,
 							'value' => $this->isfolder
 							],
 				'parent_key' => [
 								'required' => 1,
+								'insert' => 1,
 								'update' => 1,
 								'value' => $this->parent_key
 								],
 				'code' => [
 						'required' => 1,
+						'insert' => 1,
 						'update' => 1,
 						'value' => $this->code
 						],
 				'description' => [
 								'required' => 1,
+								'insert' => 1,
 								'update' => 1,
 								'value' => $this->description
 								],
 				'guid' => [
 							'required' => 1,
+							'insert' => 1,
 							'update' => 0,
 							'value' => $this->guid
 							]

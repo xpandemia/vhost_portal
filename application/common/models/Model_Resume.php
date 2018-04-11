@@ -38,7 +38,7 @@ class Model_Resume extends Db_Helper
 	public function getByUser()
 	{
 		$fields = self::TABLE_NAME.'.id, id_user, status, name_first, name_middle, name_last, sex, birth_dt, birth_place,'.
-				' dict_citizenship.citizenship_name as citizenship, personal.citizenship as id_citizenship, personal.guid,'.
+				' dict_countries.code as citizenship, personal.citizenship as id_citizenship, personal.guid,'.
 				" (SELECT scans.id".
 				" FROM scans INNER JOIN docs ON scans.id_doc = docs.id".
 				" INNER JOIN dict_scans ON scans.id_scans = dict_scans.id".
@@ -65,11 +65,11 @@ class Model_Resume extends Db_Helper
 				' (SELECT unit_code FROM passport WHERE id_resume = '.self::TABLE_NAME.'.id AND main = 0) as unit_code_old,'.
 				' (SELECT dt_end FROM passport WHERE id_resume = '.self::TABLE_NAME.'.id AND main = 0) as dt_end_old,'.
 				' (SELECT adr FROM address WHERE id_resume = '.self::TABLE_NAME.'.id AND type = 0) as address_reg,'.
-				' (SELECT country_code
+				' (SELECT code
 				FROM address INNER JOIN dict_countries ON address.id_country = dict_countries.id
 				WHERE id_resume = '.self::TABLE_NAME.'.id AND type = 0) as country_reg,'.
 				' (SELECT adr FROM address WHERE id_resume = '.self::TABLE_NAME.'.id AND type = 1) as address_res,'.
-				' (SELECT country_code
+				' (SELECT code
 				FROM address INNER JOIN dict_countries ON address.id_country = dict_countries.id
 				WHERE id_resume = '.self::TABLE_NAME.'.id AND type = 1) as country_res';
 		$scans = new Model_DictScans();
@@ -93,10 +93,10 @@ class Model_Resume extends Db_Helper
 		}
 		return $this->rowSelectOne($fields,
 								self::TABLE_NAME.' LEFT OUTER JOIN personal ON '.self::TABLE_NAME.'.id = personal.id_resume'.
-								' LEFT OUTER JOIN dict_citizenship ON personal.citizenship = dict_citizenship.id'.
+								' LEFT OUTER JOIN dict_countries ON personal.citizenship = dict_countries.id'.
 								' LEFT OUTER JOIN passport ON resume.id = passport.id_resume'.
 								' LEFT OUTER JOIN dict_doctypes ON passport.id_doctype = dict_doctypes.id',
-								'id_user = :id_user AND passport.main = :passport',
+								'id_user = :id_user AND (passport.main = :passport OR passport.main is null)',
 								[':id_user' => $this->id_user,
 								':passport' => 1]);
 	}

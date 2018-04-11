@@ -29,6 +29,9 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 	    <li class="nav-item">
 	      <a class="nav-link" data-toggle="tooltip" title="<?php echo RESUME['hdr']; ?>" href="<?php echo Basic_Helper::appUrl('Main', RESUME['ctr']); ?>"><i class="fas fa-id-card fa-2x"></i></a>
 	    </li>
+	    <li class="nav-item">
+	      <a class="nav-link" data-toggle="tooltip" title="<?php echo DOCS_EDUC['hdr']; ?>" href="<?php echo Basic_Helper::appUrl('Main', DOCS_EDUC['ctr']); ?>"><i class="fas fa-graduation-cap fa-2x"></i></a>
+	    </li>
 	    <?php if (isset($_SESSION[APP_CODE]['user_id'])) { ?>
 	    <li class="nav-item">
 	      <a class="nav-link" data-toggle="tooltip" title="Выход" href="<?php echo Basic_Helper::appUrl('Main', 'Logout'); ?>"><i class="fas fa-sign-out-alt fa-2x"></i></a>

@@ -12,6 +12,7 @@ class Model_DictionaryManagerLog extends Db_Helper
 
 	const TABLE_NAME = 'dictionary_manager_log';
 
+	public $id;
 	public $id_dict;
 	public $id_user;
 	public $msg;
@@ -34,33 +35,45 @@ class Model_DictionaryManagerLog extends Db_Helper
 	public function rules()
 	{
 		return [
+				'id' => [
+						'required' => 1,
+						'insert' => 0,
+						'update' => 0,
+						'value' => $this->id
+						],
 				'id_dict' => [
 							'required' => 1,
+							'insert' => 1,
 							'update' => 0,
 							'value' => $this->id_dict
 							],
 				'id_user' => [
 							'required' => 1,
+							'insert' => 1,
 							'update' => 0,
 							'value' => $this->id_user
 							],
 				'msg' => [
 						'required' => 1,
+						'insert' => 1,
 						'update' => 0,
 						'value' => $this->msg
 						],
 				'value_old' => [
 								'required' => 0,
+								'insert' => 1,
 								'update' => 0,
 								'value' => $this->value_old
 								],
 				'value_new' => [
 								'required' => 0,
+								'insert' => 1,
 								'update' => 0,
 								'value' => $this->value_new
 								],
 				'dt_created' => [
 								'required' => 1,
+								'insert' => 1,
 								'update' => 0,
 								'value' => $this->dt_created
 								]

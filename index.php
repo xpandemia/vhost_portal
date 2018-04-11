@@ -2,7 +2,7 @@
 
 define('APP_NAME', 'Портал БелГУ');
 define('APP_CODE', 'portalbsu'); // MUST BE UNIQUE
-define('APP_VERSION', '0.1.4');
+define('APP_VERSION', '0.1.5');
 
 # Портал БелГУ
 # Build with curiosity by Fiben on Tinyframe 0.1.5

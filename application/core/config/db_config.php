@@ -19,7 +19,6 @@ define('DB_NAME', 'portalbsu'); // MySQL database name
 define('DB_TABLES', array(
 						'address',
 						'contacts',
-						'dict_citizenship',
 						'dict_countries',
 						'dict_doctypes',
 						'dictionary_manager',

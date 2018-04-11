@@ -6,6 +6,7 @@ use tinyframe\core\Controller as Controller;
 use tinyframe\core\View as View;
 use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 use tinyframe\core\helpers\Calc_Helper as Calc_Helper;
+use common\models\Model_Contacts as Model_Contacts;
 use common\models\Model_Resume as Model_Resume_Data;
 use frontend\models\Model_Resume as Model_Resume;
 
@@ -46,8 +47,14 @@ class Controller_Resume extends Controller
 		} else {
 			$this->resume->dt_created = date('Y-m-d H:i:s');
 			if ($this->resume->save()) {
-				$this->form = $this->model->setForm($this->model->rules(), null);
 				$row = $this->resume->getByUser();
+					$contacts = new Model_Contacts();
+					$contacts->id_resume = $row['id'];
+					$contacts->type = (int) $contacts::TYPE_EMAIL;
+					$contacts->contact = $_SESSION[APP_CODE]['user_email'];
+					$contacts->save();
+				$row = $this->resume->getByUser();
+				$this->form = $this->model->setForm($this->model->rules(), $row);
 				$this->form['id'] = $row['id'];
 				$this->form['status'] = $row['status'];
 			} else {
@@ -109,6 +116,8 @@ class Controller_Resume extends Controller
 				$this->form['success_msg'] = 'Анкета успешно сохранена!';
 				return $this->view->generate('main.php', 'main.php', APP_NAME, $this->form);
 			}
+		} else {
+			$this->form = $this->model->unsetScans($this->form);
 		}
 		return $this->view->generate('resume.php', 'form.php', RESUME['hdr'], $this->form);
 	}

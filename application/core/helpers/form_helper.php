@@ -462,7 +462,7 @@ class Form_Helper
 			$result .= '<div class="col">'.
 						HTML_Helper::setLabel($label['class'], $field, $label['value']).'</div>';
 			// file
-			if (isset($rules['data'][$field])) {
+			if (isset($rules['data'][$field.'_id'])) {
 				$result .= '<input type="hidden" id="'.$field.'_id" name="'.$field.'_id" value="'.$rules['data'][$field.'_id'].'"/>'.
 							'<span style="padding-left:10px;"> </span><img class="img-fluid" src="data:'.$rules['data'][$field.'_type'].';base64,'.base64_encode( $rules['data'][$field] ).'" width="80" height="100">'.
 							'<span style="padding-left:10px;"> </span>'.
@@ -539,7 +539,7 @@ class Form_Helper
 					$result .= HTML_Helper::setLabel('font-weight-bold', $field, $row[$rules['model_field_name']]);
 				}
 				// next row
-				if (isset($rules['data'][$field])) {
+				if (isset($rules['data'][$field.'_id'])) {
 					$result .= '<input type="hidden" id="'.$field.'_id" name="'.$field.'_id" value="'.$rules['data'][$field.'_id'].'"/>'.
 								'<span style="padding-left:10px;"> </span><img class="img-fluid" src="data:'.$rules['data'][$field.'_type'].';base64,'.base64_encode( $rules['data'][$field] ).'" width="80" height="100">'.
 								'<span style="padding-left:10px;"> </span>'.

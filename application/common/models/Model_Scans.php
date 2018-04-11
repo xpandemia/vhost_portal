@@ -30,13 +30,27 @@ class Model_Scans extends Db_Helper
 	}
 
 	/**
-     * Gets user by ID.
+     * Gets scan by ID.
      *
      * @return array
      */
 	public function get()
 	{
 		return $this->rowSelectOne('*', self::TABLE_NAME, 'id = :id', [':id' => $this->id]);
+	}
+
+	/**
+     * Gets scan by document.
+     *
+     * @return array
+     */
+	public function getByDoc()
+	{
+		return $this->rowSelectOne('*',
+								self::TABLE_NAME,
+								'id_doc = :id_doc AND id_scans = :id_scans',
+								[':id_doc' => $this->id_doc,
+								':id_scans' => $this->id_scans]);
 	}
 
 	/**

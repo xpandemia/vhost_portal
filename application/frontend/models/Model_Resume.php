@@ -8,7 +8,6 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 use tinyframe\core\helpers\Files_Helper as Files_Helper;
 use common\models\Model_Resume as Model_Resume_Data;
 use common\models\Model_Personal as Model_Personal;
-use common\models\Model_DictCitizenship as Model_DictCitizenship;
 use common\models\Model_Contacts as Model_Contacts;
 use common\models\Model_Passport as Model_Passport;
 use common\models\Model_DictDoctypes as Model_DictDoctypes;
@@ -156,7 +155,7 @@ class Model_Resume extends Model
                 'passport_old_yes' => [
 			                            'type' => 'checkbox',
 			                            'class' => 'form-check-input',
-			                            'success' => 'На момент сдачи ЕГЭ паспорт был другим.'
+			                            'success' => ''
 			                           ],
                 'passport_type_old' => [
 										'type' => 'selectlist',
@@ -241,14 +240,14 @@ class Model_Resume extends Model
 					$rules[$scans_row['scan_code']] = [
 													'type' => 'file',
 													'class' => 'form-control',
-													'required' => ['default' => '', 'msg' => ucfirst($scans_row['scan_name']).' обязательна для заполнения!'],
+													'required' => ['default' => '', 'msg' => 'Скан-копия "'.ucfirst($scans_row['scan_name']).'" обязательна для заполнения!'],
 													'success' => ucfirst($scans_row['scan_name']).' заполнена верно.'
 													];
 				} else {
 					$rules[$scans_row['scan_code']] = [
 													'type' => 'file',
 													'class' => 'form-control',
-													'success' => ucfirst($scans_row['scan_name']).' заполнена верно.'
+													'success' => 'Скан-копия "'.ucfirst($scans_row['scan_name']).'" заполнена верно.'
 													];
 				}
 			}
@@ -315,10 +314,10 @@ class Model_Resume extends Model
 				$form['unit_name_old_cls'] = $form['unit_name_old_cls'].' is-invalid';
 				$form['validate'] = false;
 			}
-			// passport_old_face
-			if (empty($form['passport_old_face'])) {
-				$form['passport_old_face_err'] = 'Первая страница старого паспорта обязательна для заполнения!';
-				$form['passport_old_face_scs'] = null;
+			// passport_old
+			if (empty($form['passport_old'])) {
+				$form['passport_old_err'] = 'Скан-копия "Ранее выданные паспорта" обязательна для заполнения!';
+				$form['passport_old_scs'] = null;
 				$form['validate'] = false;
 			}
 		}
@@ -500,6 +499,54 @@ class Model_Resume extends Model
 	}
 
 	/**
+     * Unsets resume files.
+     *
+     * @return array
+     */
+	public function unsetScans($form)
+	{
+		$dict_scans = new Model_DictScans();
+		$dict_scans->doc_code = 'resume';
+		$dict_scans_arr = $dict_scans->getByDocument();
+		if ($dict_scans_arr) {
+			$docs = new Model_Docs();
+			$docs->doc_code = 'resume';
+			$docs_row = $docs->getByCode();
+			$scans = new Model_Scans();
+			foreach ($dict_scans_arr as $dict_scans_row) {
+				if ($dict_scans_row['required'] == 1) {
+					$scans->id_doc = $docs_row['id'];
+					$scans->id_scans = $dict_scans_row['id'];
+					if (!$scans->getByDoc()) {
+						$form[$dict_scans_row['scan_code'].'_id'] = null;
+						$form[$dict_scans_row['scan_code']] = null;
+						$form[$dict_scans_row['scan_code'].'_id'] = null;
+						$form[$dict_scans_row['scan_code'].'_name'] = null;
+						$form[$dict_scans_row['scan_code'].'_type'] = null;
+						$form[$dict_scans_row['scan_code'].'_size'] = null;
+						$form[$dict_scans_row['scan_code'].'_scs'] = null;
+						$form[$dict_scans_row['scan_code'].'_err'] = 'Скан-копия "'.ucfirst($dict_scans_row['scan_name']).'" обязательна для заполнения!';
+					}
+				} elseif ($dict_scans_row['scan_code'] == 'passport_old' && $form['passport_old_yes'] == 'checked') {
+					$scans->id_doc = $docs_row['id'];
+					$scans->id_scans = $dict_scans_row['id'];
+					if (!$scans->getByDoc()) {
+						$form[$dict_scans_row['scan_code'].'_id'] = null;
+						$form[$dict_scans_row['scan_code']] = null;
+						$form[$dict_scans_row['scan_code'].'_id'] = null;
+						$form[$dict_scans_row['scan_code'].'_name'] = null;
+						$form[$dict_scans_row['scan_code'].'_type'] = null;
+						$form[$dict_scans_row['scan_code'].'_size'] = null;
+						$form[$dict_scans_row['scan_code'].'_scs'] = null;
+						$form[$dict_scans_row['scan_code'].'_err'] = 'Скан-копия "'.ucfirst($dict_scans_row['scan_name']).'" обязательна для заполнения!';
+					}
+				}
+			}
+		}
+		return $form;
+	}
+
+	/**
      * Checks resume data.
      *
      * @return array
@@ -507,7 +554,16 @@ class Model_Resume extends Model
 	public function check($form)
 	{
 		/* checks */
+		// check passport dt_issue
+		if ($form['dt_issue'] <= $form['birth_dt']) {
+			$form['error_msg'] = 'Дата выдачи паспорта меньше или равна дате рождения!';
+			return $form;
+		}
 		// check old passport dt_issue
+		if ($form['passport_old_yes'] == 'checked' && $form['dt_issue_old'] <= $form['birth_dt']) {
+			$form['error_msg'] = 'Дата выдачи старого паспорта меньше или равна дате рождения!';
+			return $form;
+		}
 		if ($form['passport_old_yes'] == 'checked' && $form['dt_issue'] <= $form['dt_issue_old']) {
 			$form['error_msg'] = 'Дата выдачи нового паспорта меньше или равна дате выдачи старого паспорта!';
 			return $form;
@@ -521,9 +577,9 @@ class Model_Resume extends Model
 		$personal->sex = $form['sex'];
 		$personal->birth_dt = date('Y-m-d', strtotime($form['birth_dt']));
 		$personal->birth_place = $form['birth_place'];
-				$citizenship = new Model_DictCitizenship();
-				$citizenship->citizenship_name = $form['citizenship'];
-				$row_citizenship =  $citizenship->getByName();
+				$citizenship = new Model_DictCountries();
+				$citizenship->code = $form['citizenship'];
+				$row_citizenship =  $citizenship->getByCode();
 		$personal->citizenship = $row_citizenship['id'];
 		$row_personal = $personal->getByResume();
 		if ($row_personal) {
@@ -705,7 +761,7 @@ class Model_Resume extends Model
 		$address_reg = new Model_Address();
 		$address_reg->id_resume = $form['id'];
 			$country_reg = new Model_DictCountries();
-			$country_reg->country_code = $form['country_reg'];
+			$country_reg->code = $form['country_reg'];
 			$row_country_reg = $country_reg->getByCode();
 		$address_reg->id_country = $row_country_reg['id'];
 		$address_reg->type = $address_reg::TYPE_REG;
@@ -744,7 +800,7 @@ class Model_Resume extends Model
 		$address_res = new Model_Address();
 		$address_res->id_resume = $form['id'];
 			$country_res = new Model_DictCountries();
-			$country_res->country_code = $form['country_res'];
+			$country_res->code = $form['country_res'];
 			$row_country_res = $country_res->getByCode();
 		$address_res->id_country = $row_country_res['id'];
 		$address_res->type = $address_res::TYPE_RES;
@@ -826,11 +882,6 @@ class Model_Resume extends Model
 				}
 			}
 		}
-		/* set status */
-		$resume = new Model_Resume_Data();
-		$resume->id = $form['id'];
-		$resume->status = $resume::STATUS_SENDED;
-		$resume->changeStatus();
-			return $form;
+		return $form;
 	}
 }

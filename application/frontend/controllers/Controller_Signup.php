@@ -99,7 +99,7 @@ class Controller_Signup extends Controller
 			exit("<p><strong>Ошибка!</strong> Отсутствует адрес эл. почты.</p>");
 		}
 		if ($this->model->activate($code, $email)) {
-			return Basic_Helper::redirect(APP_NAME, 202, BEHAVIOR.'/Main', 'Index');
+			return Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Index');
 		} else {
 			exit("<p><strong>Ошибка!</strong> Активация не выполнена.</p>");
 		}

@@ -36,12 +36,18 @@ define('RESET_PWD', array(
 						'hdr' => 'Изменение пароля',
 						'ctr' => 'ResetPwd',
 						'act' => 'ResetPwd'));
-// Resume data form
+// Resume form
 define('RESUME', array(
 						'id' => 'form_resume',
 						'hdr' => 'Анкета',
 						'ctr' => 'Resume',
 						'act' => 'Resume'));
+// Education docs form
+define('DOCS_EDUC', array(
+						'id' => 'form_docseduc',
+						'hdr' => 'Документы об образовании',
+						'ctr' => 'DocsEduc',
+						'act' => 'DocsEduc'));
 
 /* Backend */
 // Dictionary manager form
