@@ -26,7 +26,21 @@ class Controller_Main extends Controller
      */
 	function actionIndex()
 	{
-		return $this->view->generate('main.php', 'main.php', APP_NAME);
+		if (isset($_SESSION[APP_CODE]['user_name'])) {
+			if (!isset($_SESSION[APP_CODE]['user_id'])) {
+				if ($this->model->checkUser()) {
+					Basic_Helper::msgReset();
+					return $this->view->generate('main.php', 'main.php', APP_NAME);
+				} else {
+					exit("<p><strong>Ошибка!</strong> Авторизация не выполнена.</p>");
+				}
+			} else {
+				Basic_Helper::msgReset();
+				return $this->view->generate('main.php', 'main.php', APP_NAME);
+			}
+		} else {
+			return Basic_Helper::redirectHome();
+		}
 	}
 
 	/**

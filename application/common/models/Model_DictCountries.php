@@ -119,7 +119,7 @@ class Model_DictCountries extends Db_Helper
 	/**
      * Saves country data to database.
      *
-     * @return boolean
+     * @return integer
      */
 	public function save()
 	{

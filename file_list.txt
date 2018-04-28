@@ -20,7 +20,7 @@ PORTALBSU
 |   |   +---views - представления/формы (админка)
 |   |   |   |   dictionary-manager.php - форма управления справочниками (админка)
 |   |   |   |   login.php - форма авторизации (админка)
-|   |   |   |   main.php - представление главной страницы (админка)
+|   |   |   |   main.php - главная страница (админка)
 |   |   |   |
 |   |   |   \---layouts - шаблоны представлений (админка)
 |   |   |           form.php - шаблон формы (админка)
@@ -33,12 +33,28 @@ PORTALBSU
 |   +---common - общее
 |   |   \---models - общие модели
 |   |           Model_Address.php - модель ADDRESS (адреса)
+|   |           Model_AdmissionCampaign.php - модель ADMISSION_CAMPAIGNS (приемные кампании)
+|   |           Model_Application.php - модель APPLICATION (заявления)
+|   |           Model_ApplicationPlaces.php - модель APPLICATION_PLACES (заявления, направления подготовки)
+|   |           Model_ApplicationPlacesExams.php - модель APPLICATION_PLACES_EXAMS (направления подготовки, вступительные испытания)
+|   |           Model_ApplicationStatus.php - модель APPLICATION_STATUS (журнал движения заявлений)
 |   |           Model_Contacts.php - модель CONTACTS (контактная информация)
 |   |           Model_DictCountries.php - модель DICT_COUNTRIES (справочник стран мира)
 |   |           Model_DictDoctypes.php - модель DICT_DOCTYPES (справочник типов документов)
+|   |           Model_DictEductypes.php - модель DICT_EDUCTYPES (справочник видов образований)
+|   |           Model_DictEge.php - модель DICT_EGE (справочник ЕГЭ)
+|   |           Model_DictEntranceExams.php - модель DICT_ENTRANCE_EXAMS (справочник вступительных испытаний)
+|   |           Model_DictForeignLangs.php - модель DICT_FOREIGN_LANGS (справочник иностранных языков)
 |   |           Model_DictionaryManager.php - модель DICTIONARY_MANAGER (управление справочниками)
 |   |           Model_DictionaryManagerLog.php - модель DICTIONARY_MANAGER_LOG (журнал управления справочниками)
 |   |           Model_DictScans.php - модель DICT_SCANS (справочник скан-копий)
+|   |           Model_DictSpeciality.php - модель DICT_SPECIALITY (справочник направлений подготовки)
+|   |           Model_DictTestingScopes.php - модель DICT_TESTING_SCOPES (справочник видов контроля)
+|   |           Model_DictUniversity.php - модель DICT_UNIVERSITY (справочник мест поступления)
+|   |           Model_Docs.php - модель DOCS (документы)
+|   |           Model_DocsEduc.php - модель DOCS_EDUC (документы об образовании)
+|   |           Model_Ege.php - модель EGE (документы ЕГЭ)
+|   |           Model_EgeDisciplines.php - модель EGE_DISCIPLINES (результаты)
 |   |           Model_Kladr.php - модель KLADR (адресный классификатор КЛАДР)
 |   |           Model_KladrAbbrs.php - модель KLADR_ABBRS (адресные сокращения КЛАДР)
 |   |           Model_Passport.php - модель PASSPORT (паспортные данные)
@@ -54,11 +70,13 @@ PORTALBSU
 |   |   |   view.php - базовое представление (представления отображают результаты работы приложения)
 |   |   |   
 |   |   +---config - настройки
-|   |   |       1c_config.php - настройки связи с 1С (ODATA)
+|   |   |       1c_config.php - настройки связи с 1С
+|   |   |       cas_config.php - настройки CAS
 |   |   |       db_config.php - настройки БД
 |   |   |       files_config.php - настройки файлов
 |   |   |       form_config.php - настройки форм
 |   |   |       mail_config.php - настройки эл. почты
+|   |   |       pdf_config.php - настройки PDF
 |   |   |       
 |   |   +---exceptions - исключения
 |   |   |       upload_exceptions.php - исключения загрузки файлов
@@ -72,6 +90,8 @@ PORTALBSU
 |   |   |       form_helper.php - помощник для работы с формами
 |   |   |       html_helper.php - помощник для работы с HTML
 |   |   |       mail_helper.php - помощник для работы с эл. почтой
+|   |   |       pdf_helper.php - помощник для работы с PDF
+|   |   |       soap_helper.php - помощник для работы с веб-сервисами
 |   |   |       xml_helper.php - помощник для работы с XML
 |   |   |       
 |   |   \---views - системные представления
@@ -83,7 +103,12 @@ PORTALBSU
 |   |           
 |   \---frontend - клиентская сторона
 |       +---controllers - контроллеры (клиент)
+|       |       Controller_AdmissionCampaign.php - контроллер приемных кампаний (клиент)
+|       |       Controller_Application.php - контроллер заявлений (клиент)
+|       |       Controller_ApplicationSpec.php - контроллер спецификации заявления (клиент)
 |       |       Controller_DocsEduc.php - контроллер документов об образовании (клиент)
+|       |       Controller_Ege.php - контроллер документов ЕГЭ (клиент)
+|       |       Controller_EgeDisciplines.php - контроллер результатов ЕГЭ (клиент)
 |       |       Controller_Kladr.php - контроллер КЛАДР (клиент)
 |       |       Controller_Login.php - контроллер авторизации (клиент)
 |       |       Controller_Main.php - контроллер главной страницы (клиент)
@@ -94,7 +119,12 @@ PORTALBSU
 |       |       Controller_Signup.php - контроллер регистрации (клиент)
 |       |       
 |       +---models - модели (клиент)
+|       |       Model_AdmissionCampaign.php - модель приемных кампаний (клиент)
+|       |       Model_Application.php - модель заявлений (клиент)
+|       |       Model_ApplicationSpec.php - модель спецификации заявления (клиент)
 |       |       Model_DocsEduc.php - модель документов об образовании (клиент)
+|       |       Model_Ege.php - модель документов ЕГЭ (клиент)
+|       |       Model_EgeDisciplines.php - модель результатов ЕГЭ (клиент)
 |       |       Model_Kladr.php - модель КЛАДР (клиент)
 |       |       Model_Login.php - модель авторизации (клиент)
 |       |       Model_Main.php - модель главной страницы (клиент)
@@ -105,14 +135,24 @@ PORTALBSU
 |       |       Model_Signup.php - модель регистрации (клиент)
 |       |       
 |       +---views - представления/формы (клиент)
-|       |   |   docs-educ.php - представление документов об образовании
+|       |   |   application-add.php - форма заявления (клиент)
+|       |   |   application-edit.php - спецификация заявления (клиент)
+|       |   |   application-places-add.php - выбор направлений подготовки (клиент)
+|       |   |   application.php - заявления (клиент)
+|       |   |   delete-confirm.php - форма подтверждения удаления (клиент)
+|       |   |   docs-educ-add.php - форма документа об образовании (клиент)
+|       |   |   docs-educ.php - документы об образовании (клиент)
+|       |   |   ege-add.php - форма документа ЕГЭ (клиент)
+|       |   |   ege-disciplines-add.php - форма результатов ЕГЭ (клиент)
+|       |   |   ege-disciplines.php - результаты ЕГЭ (клиент)
+|       |   |   ege.php - документы ЕГЭ (клиент)
 |       |   |   login.php - форма авторизации (клиент)
-|       |   |   main.php - представление главной страницы (клиент)
+|       |   |   main.php - главная страница (клиент)
 |       |   |   reset-pwd-request.php - форма запроса изменения пароля (клиент)
 |       |   |   reset-pwd.php - форма изменения пароля (клиент)
 |       |   |   resume.php - форма анкеты (клиент)
 |       |   |   scans-delete.php - форма удаления скан-копии (клиент)
-|       |   |   scans-show.php - представление скан-копии (клиент)
+|       |   |   scans-show.php - просмотр скан-копии (клиент)
 |       |   |   signup.php - форма регистрации (клиент)
 |       |   |   
 |       |   \---layouts - шаблоны представлений (клиент)
@@ -123,7 +163,11 @@ PORTALBSU
 |               .htaccess - настройка перенаправлений и управление конфигурацией веб-сервера (клиент)
 |               index.php - точка входа (клиент), запуск движка приложения
 |
-+---files - загружаемые файлы
++---files - разные файлы
+|   +---pdf - шаблоны PDF
+|   |       application_2018.pdf - шаблон заявления 2018
+|   |       zayavblank2017_8.pdf - старый шаблон заявления
+|   |
 |   \---temp - временные файлы
 +---fonts - шрифты
 |       oswald.ttf - шрифт для капчи
@@ -133,6 +177,7 @@ PORTALBSU
 |   |   500.jpg - изображение 500 ("внутренняя ошибка сервера")
 |   |   big_roller.gif - анимация загрузки AJAX-запросов
 |   |   captcha.png - фон для капчи
+|   |   new-bsulogo.jpg - логотип БелГУ
 |   |   
 |   \---temp - хранилище временных изображений
 |       \---captcha - хранилище временных капч
@@ -145,6 +190,71 @@ PORTALBSU
     |   \---js
     |           bootstrap.min.js
     |           bootstrap.min.js.map
+    |
+    +---cas - PhpCAS - CAS-авторизация
+    |   |   CAS.php
+    |   |
+    |   \---source
+    |       |   CAS.php
+    |       |
+    |       \---CAS
+    |           |   AuthenticationException.php
+    |           |   Autoload.php
+    |           |   Client.php
+    |           |   CookieJar.php
+    |           |   Exception.php
+    |           |   GracefullTerminationException.php
+    |           |   InvalidArgumentException.php
+    |           |   OutOfSequenceBeforeAuthenticationCallException.php
+    |           |   OutOfSequenceBeforeClientException.php
+    |           |   OutOfSequenceBeforeProxyException.php
+    |           |   OutOfSequenceException.php
+    |           |   ProxiedService.php
+    |           |   ProxyChain.php
+    |           |   ProxyTicketException.php
+    |           |   TypeMismatchException.php
+    |           |
+    |           +---Languages
+    |           |       Catalan.php
+    |           |       ChineseSimplified.php
+    |           |       English.php
+    |           |       French.php
+    |           |       German.php
+    |           |       Greek.php
+    |           |       Japanese.php
+    |           |       LanguageInterface.php
+    |           |       Spanish.php
+    |           |
+    |           +---PGTStorage
+    |           |       AbstractStorage.php
+    |           |       Db.php
+    |           |       File.php
+    |           |
+    |           +---ProxiedService
+    |           |   |   Abstract.php
+    |           |   |   Exception.php
+    |           |   |   Http.php
+    |           |   |   Imap.php
+    |           |   |   Testable.php
+    |           |   |
+    |           |   \---Http
+    |           |           Abstract.php
+    |           |           Get.php
+    |           |           Post.php
+    |           |
+    |           +---ProxyChain
+    |           |       AllowedList.php
+    |           |       Any.php
+    |           |       Interface.php
+    |           |       Trusted.php
+    |           |
+    |           \---Request
+    |                   AbstractRequest.php
+    |                   CurlMultiRequest.php
+    |                   CurlRequest.php
+    |                   Exception.php
+    |                   MultiRequestInterface.php
+    |                   RequestInterface.php
     |           
     +---fontawesome - Font Awesome (версия 5.0.4) - набор масштабируемых векторных иконок
     |       fontawesome-all.js
@@ -155,6 +265,9 @@ PORTALBSU
     +---maskedinput - JQuery Masked Input (версия 1.4.1) - "маски" ввода
     |       jquery.maskedinput.min.js
     |       
+    +---pdftk-php - PDF toolkit PHP - работа с PDF
+    |       pdftk-php.php
+    |
     +---PHPMailer - PHPMailer (версия 6.0.3) - работа с эл. почтой
     |   \---src
     |           Exception.php

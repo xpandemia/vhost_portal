@@ -21,6 +21,7 @@ class Model_Contacts extends Db_Helper
 	const TYPE_PHONE = 1;
 
 	public $id;
+	public $id_user;
 	public $id_resume;
 	public $type;
 	public $contact;
@@ -49,6 +50,12 @@ class Model_Contacts extends Db_Helper
 						'update' => 0,
 						'value' => $this->id
 						],
+				'id_user' => [
+							'required' => 1,
+							'insert' => 1,
+							'update' => 0,
+							'value' => $this->id_user
+							],
 				'id_resume' => [
 								'required' => 1,
 								'insert' => 1,
@@ -117,7 +124,7 @@ class Model_Contacts extends Db_Helper
 	/**
      * Saves contacts data to database.
      *
-     * @return boolean
+     * @return integer
      */
 	public function save()
 	{

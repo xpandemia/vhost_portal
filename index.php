@@ -1,11 +1,11 @@
 <?php
 
-define('APP_NAME', 'Портал БелГУ');
+define('APP_NAME', 'Портал абитуриента');
 define('APP_CODE', 'portalbsu'); // MUST BE UNIQUE
-define('APP_VERSION', '0.1.5');
+define('APP_VERSION', '0.1.6');
 
-# Портал БелГУ
-# Build with curiosity by Fiben on Tinyframe 0.1.5
+# Портал абитуриента
+# Build with curiosity by Fiben on Tinyframe 0.1.9
 
 // These headers tell the browser to not load anything from cache at all
 // and force the browser to make a server request even on a Back click
@@ -41,6 +41,40 @@ ob_start(); // start output buffer
 $environment = 'development';
 
 # ---------------------------------------------------------------
+# LOGON
+# ---------------------------------------------------------------
+
+#  You can use different logon types depending on your
+#  current environment.
+#
+#  This can be set to:
+#
+#      login
+#      cas
+#
+#
+# By default set to 'login'
+
+$logon = 'cas';
+
+# ---------------------------------------------------------------
+# SIGNUP
+# ---------------------------------------------------------------
+
+#  You can use different signup types depending on your
+#  current environment.
+#
+#  This can be set to:
+#
+#      login
+#      email
+#
+#
+# By default set to 'email'
+
+$signup = 'email';
+
+# ---------------------------------------------------------------
 # PATH
 # ---------------------------------------------------------------
 
@@ -51,6 +85,31 @@ define('BASEPATH', 'http://'.$_SERVER['SERVER_NAME']);
 # ---------------------------------------------------------------
 
 define('ROOT_DIR', $_SERVER['DOCUMENT_ROOT']);
+
+if ($logon == 'cas') {
+	// Load the settings from the central config file
+	require_once ROOT_DIR.'/application/core/config/cas_config.php'; // CAS configuration
+	// Load the CAS lib
+	require_once ROOT_DIR.'/vendors/cas/CAS.php';
+	// Enable debugging
+	phpCAS::setDebug();
+	// Enable verbose error messages. Disable in production!
+	phpCAS::setVerbose(true);
+	// Initialize phpCAS
+	phpCAS::client(CAS_VERSION_2_0, CAS_HOST, CAS_PORT, CAS_CONTEXT, false);
+	// For production use set the CA certificate that is the issuer of the cert
+	// on the CAS server and uncomment the line below
+	// phpCAS::setCasServerCACert($cas_server_ca_cert_path);
+	// For quick testing you can disable SSL validation of the CAS server.
+	// THIS SETTING IS NOT RECOMMENDED FOR PRODUCTION.
+	// VALIDATING THE CAS SERVER IS CRUCIAL TO THE SECURITY OF THE CAS PROTOCOL!
+	phpCAS::setNoCasServerValidation();
+	// force CAS authentication
+	phpCAS::forceAuthentication();
+
+	// set session user
+	$_SESSION[APP_CODE]['user_name'] = phpCAS::getUser();
+}
 
 # ---------------------------------------------------------------
 # GATEKEEPER

@@ -45,18 +45,22 @@ class Controller_Resume extends Controller
 			$this->form = $this->model->setAddressReg($this->form);
 			$this->form = $this->model->setAddressRes($this->form);
 		} else {
-			$this->resume->dt_created = date('Y-m-d H:i:s');
 			if ($this->resume->save()) {
 				$row = $this->resume->getByUser();
 					$contacts = new Model_Contacts();
+					$contacts->id_user = $row['id_user'];
 					$contacts->id_resume = $row['id'];
 					$contacts->type = (int) $contacts::TYPE_EMAIL;
 					$contacts->contact = $_SESSION[APP_CODE]['user_email'];
-					$contacts->save();
-				$row = $this->resume->getByUser();
-				$this->form = $this->model->setForm($this->model->rules(), $row);
-				$this->form['id'] = $row['id'];
-				$this->form['status'] = $row['status'];
+						if ($contacts->save()) {
+						$row = $this->resume->getByUser();
+						$this->form = $this->model->setForm($this->model->rules(), $row);
+						$this->form['id'] = $row['id'];
+						$this->form['status'] = $row['status'];
+					} else {
+						$this->form['error_msg'] = 'Ошибка при создании анкеты!';
+						Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Index', $this->form);
+					}
 			} else {
 				$this->form['error_msg'] = 'Ошибка при создании анкеты!';
 				Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Index', $this->form);

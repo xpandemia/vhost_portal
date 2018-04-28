@@ -10,14 +10,10 @@ class Routing
 
 	static function execute() 
 	{
-		// default controller and action
-		$controllerName = 'Login';
-		$actionName = 'Index';
-		
 		$routes = explode('/', $_SERVER['REQUEST_URI']);
 		
 		// controller name
-		if (!empty($routes[1]) && $routes[1] != 'admin') {
+		if (!empty($routes[1]) && $routes[1] != 'admin' && $routes[1] != 'index' && mb_substr($routes[1], 6, 6) != 'ticket') {
 			$controllerName = $routes[1];
 		} else {
 			$controllerName = CONTROLLER;
@@ -64,7 +60,7 @@ class Routing
 		}
 	}
 	
-	function ErrorPage404()
+	static function ErrorPage404()
 	{
         $host = 'http://'.$_SERVER['HTTP_HOST'].'/';
         header('HTTP/1.1 404 Not Found');

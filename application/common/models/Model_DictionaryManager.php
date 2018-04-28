@@ -12,6 +12,9 @@ class Model_DictionaryManager extends Db_Helper
 
 	const TABLE_NAME = 'dictionary_manager';
 
+	const TYPE_ODATA = 0;
+	const TYPE_WSDL = 1;
+
 	public $id;
 
 	public $db;

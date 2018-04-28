@@ -6,7 +6,7 @@ use tinyframe\core\Model as Model;
 use tinyframe\core\helpers\Calc_Helper as Calc_Helper;
 use tinyframe\core\helpers\Form_Helper as Form_Helper;
 use tinyframe\core\helpers\Files_Helper as Files_Helper;
-use common\models\Model_Resume as Model_Resume_Data;
+use common\models\Model_Resume as Resume;
 use common\models\Model_Personal as Model_Personal;
 use common\models\Model_Contacts as Model_Contacts;
 use common\models\Model_Passport as Model_Passport;
@@ -14,8 +14,10 @@ use common\models\Model_DictDoctypes as Model_DictDoctypes;
 use common\models\Model_Address as Model_Address;
 use common\models\Model_DictCountries as Model_DictCountries;
 use common\models\Model_DictScans as Model_DictScans;
-use common\models\Model_Scans as Model_Scans;
+use common\models\Model_Scans as Scans;
 use common\models\Model_Docs as Model_Docs;
+
+include ROOT_DIR.'/application/frontend/models/Model_Scans.php';
 
 use PDO;
 
@@ -231,34 +233,29 @@ class Model_Resume extends Model
                                 'success' => 'Адрес проживания заполнен верно.'
                                ]
                 ];
-        $scans = new Model_DictScans();
-		$scans->doc_code = 'resume';
-		$scans_arr = $scans->getByDocument();
-		if ($scans_arr) {
-			foreach ($scans_arr as $scans_row) {
-				if ($scans_row['required'] == 1) {
-					$rules[$scans_row['scan_code']] = [
-													'type' => 'file',
-													'class' => 'form-control',
-													'required' => ['default' => '', 'msg' => 'Скан-копия "'.ucfirst($scans_row['scan_name']).'" обязательна для заполнения!'],
-													'success' => ucfirst($scans_row['scan_name']).' заполнена верно.'
-													];
-				} else {
-					$rules[$scans_row['scan_code']] = [
-													'type' => 'file',
-													'class' => 'form-control',
-													'success' => 'Скан-копия "'.ucfirst($scans_row['scan_name']).'" заполнена верно.'
-													];
-				}
-			}
+        $scans = Model_Scans::createRules('resume');
+		return array_merge($rules, $scans);
+	}
+
+	/**
+     * Shows status.
+     *
+     * @return string
+     */
+	public static function showStatus($status)
+	{
+		switch ($status) {
+			case Resume::STATUS_CREATED:
+				return '<div class="alert alert-info">Состояние анкеты: СОЗДАНА</div>';
+			case Resume::STATUS_SENDED:
+				return '<div class="alert alert-primary">Состояние анкеты: ОТПРАВЛЕНА</div>';
+			case Resume::STATUS_APPROVED:
+				return '<div class="alert alert-success">Состояние анкеты: ОДОБРЕНА</div>';
+			case Resume::STATUS_REJECTED:
+				return '<div class="alert alert-danger">Состояние анкеты: ОТКЛОНЕНА</div>';
+			default:
+				return '<div class="alert alert-warning">Состояние анкеты: НЕИЗВЕСТНО</div>';
 		}
-        $rules['personal'] = [
-                            'type' => 'checkbox',
-                            'class' => 'form-check-input',
-                            'required' => ['default' => '', 'msg' => 'Необходимо согласие на обработку персональных данных!'],
-                            'success' => 'Получено согласие на обработку персональных данных.'
-                           ];
-		return $rules;
 	}
 
 	/**
@@ -270,7 +267,7 @@ class Model_Resume extends Model
 	{
 		if (isset($form['birth_dt']) && Calc_Helper::getAge($form['birth_dt'], 'd.m.Y') < 18) {
 			if (empty($form['agreement_name'])) {
-				$form['agreement_err'] = 'Согласие родителей/опекунов обязательно для заполнения!';
+				$form['agreement_err'] = 'Скан-копия согласия родителей/опекунов обязательна для заполнения!';
 				$form['agreement_scs'] = null;
 				$form['validate'] = false;
 			}
@@ -505,6 +502,13 @@ class Model_Resume extends Model
      */
 	public function unsetScans($form)
 	{
+		if (isset($form['birth_dt']) && Calc_Helper::getAge($form['birth_dt'], 'd.m.Y') < 18) {
+			if (empty($form['agreement_name'])) {
+				$form['agreement_err'] = 'Скан-копия согласия родителей/опекунов обязательна для заполнения!';
+				$form['agreement_scs'] = null;
+				$form['validate'] = false;
+			}
+		}
 		$dict_scans = new Model_DictScans();
 		$dict_scans->doc_code = 'resume';
 		$dict_scans_arr = $dict_scans->getByDocument();
@@ -512,7 +516,7 @@ class Model_Resume extends Model
 			$docs = new Model_Docs();
 			$docs->doc_code = 'resume';
 			$docs_row = $docs->getByCode();
-			$scans = new Model_Scans();
+			$scans = new Scans();
 			foreach ($dict_scans_arr as $dict_scans_row) {
 				if ($dict_scans_row['required'] == 1) {
 					$scans->id_doc = $docs_row['id'];
@@ -570,6 +574,7 @@ class Model_Resume extends Model
 		}
 		/* personal */
 		$personal = new Model_Personal();
+		$personal->id_user = $_SESSION[APP_CODE]['user_id'];
 		$personal->id_resume = $form['id'];
 		$personal->name_first = $form['name_first'];
 		$personal->name_middle = $form['name_middle'];
@@ -591,8 +596,7 @@ class Model_Resume extends Model
 				return $form;
 			}
 		} else {
-			$personal->dt_created = date('Y-m-d H:i:s');
-			if ($personal->save()) {
+			if ($personal->save() > 0) {
 				$form['error_msg'] = null;
 			} else {
 				$form['error_msg'] = 'Ошибка при создании личных данных!';
@@ -600,60 +604,12 @@ class Model_Resume extends Model
 			}
 		}
 		/* agreement */
-		$dict_scans = new Model_DictScans();
-		$dict_scans->doc_code = 'resume';
 		if (isset($form['birth_dt']) && Calc_Helper::getAge($form['birth_dt'], 'd.m.Y') < 18) {
-			$dict_scans->scan_code = 'agreement';
-			$dict_scans_row = $dict_scans->getByCode();
-			if ($dict_scans_row) {
-				if (!empty($form[$dict_scans_row['scan_code'].'_name']) && empty($form[$dict_scans_row['scan_code'].'_id'])) {
-					$scans = new Model_Scans();
-						$docs = new Model_Docs();
-						$docs->doc_code = 'resume';
-						$docs_row = $docs->getByCode();
-					$scans->id_doc = (int) $docs_row['id'];
-					$scans->id_row = (int) $form['id'];
-					$scans->id_scans = (int) $dict_scans_row['id'];
-					$scans->file_data = fopen($form['agreement'], 'rb');
-					$scans->file_name = $form['agreement_name'];
-					$scans->file_type = $form['agreement_type'];
-					$scans->file_size = (int) $form['agreement_size'];
-					$scans->dt_created = date('Y-m-d H:i:s');
-					// check size
-					if (Files_Helper::getSize($scans->file_size, FILES_SIZE['size']) > FILES_SIZE['value']) {
-						unset($form['agreement']);
-						unset($form['agreement_name']);
-						unset($form['agreement_type']);
-						unset($form['agreement_size']);
-						$form['error_msg'] = 'Размер скан-копии "'.$dict_scans_row['scan_name'].'" превышает '.FILES_SIZE['value'].' '.FILES_SIZE['size'].' !';
-						return $form;
-					}
-					// check extension
-					if (!in_array($scans->file_type, FILES_EXT_SCANS)) {
-						unset($form['agreement']);
-						unset($form['agreement_name']);
-						unset($form['agreement_type']);
-						unset($form['agreement_size']);
-						$form['error_msg'] = 'Недопустимый тип скан-копии "'.$dict_scans_row['scan_name'].'" !';
-						return $form;
-					}
-					// save
-					if ($scans->save()) {
-						$form['error_msg'] = null;
-					} else {
-						$form['error_msg'] = 'Ошибка при сохранении согласия родителей/опекунов!';
-						return $form;
-					}
-					fclose($scans->file_data);
-					unlink($form[$dict_scans_row['scan_code']]);
-				}
-			} else {
-				$form['error_msg'] = 'Ошибка при сохранении согласия родителей/опекунов!';
-				return $form;
-			}
+			$form = Model_Scans::push('resume', 'agreement', $form);
 		}
 		/* contacts */
 		$contacts = new Model_Contacts();
+		$contacts->id_user = $_SESSION[APP_CODE]['user_id'];
 		$contacts->id_resume = $form['id'];
 		// email
 		$contacts->type = (int) $contacts::TYPE_EMAIL;
@@ -668,7 +624,7 @@ class Model_Resume extends Model
 				return $form;
 			}
 		} else {
-			if ($contacts->save()) {
+			if ($contacts->save() > 0) {
 				$form['error_msg'] = null;
 			} else {
 				$form['error_msg'] = 'Ошибка при создании адреса эл. почты!';
@@ -688,7 +644,7 @@ class Model_Resume extends Model
 				return $form;
 			}
 		} else {
-			if ($contacts->save()) {
+			if ($contacts->save() > 0) {
 				$form['error_msg'] = null;
 			} else {
 				$form['error_msg'] = 'Ошибка при создании мобильного телефона!';
@@ -698,6 +654,7 @@ class Model_Resume extends Model
 		/* passports */
 		// new passport
 		$passport = new Model_Passport();
+		$passport->id_user = $_SESSION[APP_CODE]['user_id'];
 		$passport->id_resume = $form['id'];
 			$passport_type = new Model_DictDoctypes();
 			$passport_type->code = $form['passport_type'];
@@ -719,7 +676,7 @@ class Model_Resume extends Model
 				return $form;
 			}
 		} else {
-			if ($passport->save()) {
+			if ($passport->save() > 0) {
 				$form['error_msg'] = null;
 			} else {
 				$form['error_msg'] = 'Ошибка при создании паспортных данных!';
@@ -748,7 +705,7 @@ class Model_Resume extends Model
 						return $form;
 					}
 				} else {
-					if ($passport->save()) {
+					if ($passport->save() > 0) {
 						$form['error_msg'] = null;
 					} else {
 						$form['error_msg'] = 'Ошибка при создании данных старого паспорта!';
@@ -759,6 +716,7 @@ class Model_Resume extends Model
 		/* addresses */
 		// address registration
 		$address_reg = new Model_Address();
+		$address_reg->id_user = $_SESSION[APP_CODE]['user_id'];
 		$address_reg->id_resume = $form['id'];
 			$country_reg = new Model_DictCountries();
 			$country_reg->code = $form['country_reg'];
@@ -788,8 +746,7 @@ class Model_Resume extends Model
 				}
 			}
 		} else {
-			$address_reg->dt_created = date('Y-m-d H:i:s');
-			if ($address_reg->save()) {
+			if ($address_reg->save() > 0) {
 				$form['error_msg'] = null;
 			} else {
 				$form['error_msg'] = 'Ошибка при создании адреса регистрации!';
@@ -798,6 +755,7 @@ class Model_Resume extends Model
 		}
 		// address residential
 		$address_res = new Model_Address();
+		$address_res->id_user = $_SESSION[APP_CODE]['user_id'];
 		$address_res->id_resume = $form['id'];
 			$country_res = new Model_DictCountries();
 			$country_res->code = $form['country_res'];
@@ -827,8 +785,7 @@ class Model_Resume extends Model
 				}
 			}
 		} else {
-			$address_res->dt_created = date('Y-m-d H:i:s');
-			if ($address_res->save()) {
+			if ($address_res->save() > 0) {
 				$form['error_msg'] = null;
 			} else {
 				$form['error_msg'] = 'Ошибка при создании адреса проживания!';
@@ -836,49 +793,14 @@ class Model_Resume extends Model
 			}
 		}
 		/* scans */
+		$dict_scans = new Model_DictScans();
+		$dict_scans->doc_code = 'resume';
 		$dict_scans_arr = $dict_scans->getByDocument();
 		if ($dict_scans_arr) {
 			foreach ($dict_scans_arr as $dict_scans_row) {
-				if (!empty($form[$dict_scans_row['scan_code'].'_name']) && empty($form[$dict_scans_row['scan_code'].'_id'])) {
-					$scans = new Model_Scans();
-						$docs = new Model_Docs();
-						$docs->doc_code = 'resume';
-						$docs_row = $docs->getByCode();
-					$scans->id_doc = (int) $docs_row['id'];
-					$scans->id_row = (int) $form['id'];
-					$scans->id_scans = (int) $dict_scans_row['id'];
-					$scans->file_data = fopen($form[$dict_scans_row['scan_code']], 'rb');
-					$scans->file_name = $form[$dict_scans_row['scan_code'].'_name'];
-					$scans->file_type = $form[$dict_scans_row['scan_code'].'_type'];
-					$scans->file_size = (int) $form[$dict_scans_row['scan_code'].'_size'];
-					$scans->dt_created = date('Y-m-d H:i:s');
-					// check size
-					if (Files_Helper::getSize($scans->file_size, FILES_SIZE['size']) > FILES_SIZE['value']) {
-						unset($form[$dict_scans_row['scan_code']]);
-						unset($form[$dict_scans_row['scan_code'].'_name']);
-						unset($form[$dict_scans_row['scan_code'].'_type']);
-						unset($form[$dict_scans_row['scan_code'].'_size']);
-						$form['error_msg'] = 'Размер скан-копии "'.$dict_scans_row['scan_name'].'" превышает '.FILES_SIZE['value'].' '.FILES_SIZE['size'].' !';
-						return $form;
-					}
-					// check extension
-					if (!in_array($scans->file_type, FILES_EXT_SCANS)) {
-						unset($form[$dict_scans_row['scan_code']]);
-						unset($form[$dict_scans_row['scan_code'].'_name']);
-						unset($form[$dict_scans_row['scan_code'].'_type']);
-						unset($form[$dict_scans_row['scan_code'].'_size']);
-						$form['error_msg'] = 'Недопустимый тип скан-копии "'.$dict_scans_row['scan_name'].'" !';
-						return $form;
-					}
-					// save
-					if ($scans->save()) {
-						$form['error_msg'] = null;
-					} else {
-						$form['error_msg'] = 'Ошибка при сохранении скан-копии!';
-						return $form;
-					}
-					fclose($scans->file_data);
-					unlink($form[$dict_scans_row['scan_code']]);
+				$form = Model_Scans::push($dict_scans->doc_code, $dict_scans_row['scan_code'], $form);
+				if (!empty($form['error_msg'])) {
+					return $form;
 				}
 			}
 		}

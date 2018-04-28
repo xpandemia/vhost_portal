@@ -3,7 +3,7 @@
 use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 use tinyframe\core\helpers\Form_Helper as Form_Helper;
-use common\models\Model_Resume as Model_Resume_Data;
+use frontend\models\Model_Resume as Model_Resume;
 use common\models\Model_Kladr as Model_Kladr;
 
 	// check resume
@@ -23,25 +23,12 @@ use common\models\Model_Kladr as Model_Kladr;
 		echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
 		echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
 		echo Form_Helper::setFormBegin(RESUME['ctr'], RESUME['act'], RESUME['id'], RESUME['hdr']);
-
 		/* status */
-		switch ($data['status']) {
-			case Model_Resume_Data::STATUS_CREATED:
-				echo '<div class="alert alert-info">Состояние анкеты: СОЗДАНА</div>';
-				break;
-			case Model_Resume_Data::STATUS_SENDED:
-				echo '<div class="alert alert-warning">Состояние анкеты: ОТПРАВЛЕНА</div>';
-				break;
-			case Model_Resume_Data::STATUS_APPROVED:
-				echo '<div class="alert alert-success">Состояние анкеты: ОДОБРЕНА</div>';
-				break;
-			case Model_Resume_Data::STATUS_REJECTED:
-				echo '<div class="alert alert-danger">Состояние анкеты: ОТКЛОНЕНА</div>';
-				break;
-			default:
-				null;
-		}
-
+		echo Model_Resume::showStatus($data['status']);
+		/* controls */
+		echo HTML_Helper::setSubmit('btn btn-success', 'btn_save', 'Сохранить');
+		echo HTML_Helper::setHrefButton(RESUME['ctr'], 'Reset', 'btn btn-danger', 'Очистить');
+		echo HTML_Helper::setHrefButton('Main', 'Index', 'btn btn-primary', 'На главную');
 		/* personal data */
 		echo Form_Helper::setFormHeaderSub('Личные данные');
 		// name_first
@@ -101,6 +88,7 @@ use common\models\Model_Kladr as Model_Kladr;
 										'success' => $data['birth_dt_scs'],
 										'error' => $data['birth_dt_err']]);
 		// agreement
+		// https://www.bsu.edu.ru/abitur/rules/doc/
 		echo Form_Helper::setFormFile(['label' => 'Согласие родителей/опекунов',
 										'control' => 'agreement',
 										'required' => 'yes',
@@ -108,6 +96,7 @@ use common\models\Model_Kladr as Model_Kladr;
 										'data' => $data,
 										'home_ctr' => RESUME['ctr'],
 										'home_hdr' => RESUME['hdr'],
+										'home_act' => 'Index',
 										'ext' => FILES_EXT_SCANS]);
 		// birth_place
 		echo Form_Helper::setFormInput(['label' => BIRTHPLACE_PLC,
@@ -357,7 +346,7 @@ use common\models\Model_Kladr as Model_Kladr;
 				}
 				// area (registration)
 				if (isset($data['area_reg']) && !empty($data['area_reg'])) {
-					echo Form_Helper::setFormSelectListKladr(['label' => 'Область',
+					echo Form_Helper::setFormSelectListKladr(['label' => 'Район',
 															'control' => 'area_reg',
 															'model_class' => 'common\\models\\Model_Kladr',
 															'model_method' => 'getAreaByRegion',
@@ -365,7 +354,7 @@ use common\models\Model_Kladr as Model_Kladr;
 															'model_filter_val' => $data['region_reg'],
 															'value' => $data['area_reg']]);
 				} else {
-					echo Form_Helper::setFormSelectListBlank(['label' => 'Область', 'control' => 'area_reg']);
+					echo Form_Helper::setFormSelectListBlank(['label' => 'Район', 'control' => 'area_reg']);
 				}
 				// city (registration)
 				if (isset($data['city_reg']) && !empty($data['city_reg'])) {
@@ -506,7 +495,7 @@ use common\models\Model_Kladr as Model_Kladr;
 				}
 				// area (residential)
 				if (isset($data['area_res']) && !empty($data['area_res'])) {
-					echo Form_Helper::setFormSelectListKladr(['label' => 'Область',
+					echo Form_Helper::setFormSelectListKladr(['label' => 'Район',
 															'control' => 'area_res',
 															'model_class' => 'common\\models\\Model_Kladr',
 															'model_method' => 'getAreaByRegion',
@@ -514,7 +503,7 @@ use common\models\Model_Kladr as Model_Kladr;
 															'model_filter_val' => $data['region_res'],
 															'value' => $data['area_res']]);
 				} else {
-					echo Form_Helper::setFormSelectListBlank(['label' => 'Область', 'control' => 'area_res']);
+					echo Form_Helper::setFormSelectListBlank(['label' => 'Район', 'control' => 'area_res']);
 				}
 				// city (residential)
 				if (isset($data['city_res']) && !empty($data['city_res'])) {
@@ -627,6 +616,7 @@ use common\models\Model_Kladr as Model_Kladr;
 											'data' => $data,
 											'home_ctr' => RESUME['ctr'],
 											'home_hdr' => RESUME['hdr'],
+											'home_act' => 'Index',
 											'ext' => FILES_EXT_SCANS]);
 		// personal
 		if ($data['personal_vis'] == true) {
@@ -672,8 +662,10 @@ use common\models\Model_Kladr as Model_Kladr;
 		// citizenship
 		if ($('#citizenship').val() == '000') {
 			$('#citizenship_not').prop('checked', true);
+			$('#citizenship').prop('disabled', true);
 		} else {
 			$('#citizenship_not').prop('checked', false);
+			$('#citizenship').prop('disabled', false);
 		}
 		// old passport
 		if ($('#passport_old_yes').prop('checked')) {
@@ -764,7 +756,9 @@ use common\models\Model_Kladr as Model_Kladr;
 		$('#citizenship_not').change(function() {
 			if ($('#citizenship_not').prop('checked')) {
 				$('#citizenship').val('000');
+				$('#citizenship').prop('disabled', true);
 			} else {
+				$('#citizenship').prop('disabled', false);
 				if ($('#citizenship').val() == '000') {
 					$('#citizenship').val('');
 				}
@@ -1342,6 +1336,7 @@ use common\models\Model_Kladr as Model_Kladr;
 
 		// submit click
 		$('#btn_save').click(function() {
+			$('#citizenship').prop('disabled', false);
 			$('#address_reg').prop('disabled', false);
 			$('#address_res').prop('disabled', false);
 		});

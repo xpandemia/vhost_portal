@@ -19,7 +19,7 @@ define('LOGIN', array(
 
 /* Frontend */
 // Signup form
-define('SIGNUP', array(
+define('fSIGNUP', array(
 						'id' => 'form_signup',
 						'hdr' => 'Регистрация',
 						'ctr' => 'Signup',
@@ -45,9 +45,27 @@ define('RESUME', array(
 // Education docs form
 define('DOCS_EDUC', array(
 						'id' => 'form_docseduc',
-						'hdr' => 'Документы об образовании',
+						'hdr' => 'Документ об образовании',
 						'ctr' => 'DocsEduc',
-						'act' => 'DocsEduc'));
+						'act' => 'Save'));
+// Ege form
+define('EGE', array(
+					'id' => 'form_ege',
+					'hdr' => 'ЕГЭ',
+					'ctr' => 'Ege',
+					'act' => 'Save'));
+// Ege form
+define('EGE_DSP', array(
+						'id' => 'form_egedsp',
+						'hdr' => 'Дисциплина ЕГЭ',
+						'ctr' => 'EgeDisciplines',
+						'act' => 'Save'));
+// Application form
+define('APP', array(
+					'id' => 'form_app',
+					'hdr' => 'Заявление',
+					'ctr' => 'Application',
+					'act' => 'Save'));
 
 /* Backend */
 // Dictionary manager form

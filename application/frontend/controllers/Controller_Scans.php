@@ -33,8 +33,8 @@ class Controller_Scans extends Controller
 		} else {
 			exit("<p><strong>Ошибка!</strong> Отсутствует идент-р скан-копии!</p>");
 		}
-		if (isset($_GET['docs']) && !empty($_GET['docs'])) {
-			$this->form['docs'] = htmlspecialchars($_GET['docs']);
+		if (isset($_GET['ctr']) && !empty($_GET['ctr'])) {
+			$this->form['ctr'] = htmlspecialchars($_GET['ctr']);
 		} else {
 			exit("<p><strong>Ошибка!</strong> Отсутствует тип скан-копии!</p>");
 		}
@@ -53,15 +53,23 @@ class Controller_Scans extends Controller
 		} else {
 			exit("<p><strong>Ошибка!</strong> Отсутствует идент-р скан-копии!</p>");
 		}
-		if (isset($_GET['docs']) && !empty($_GET['docs'])) {
-			$this->form['docs'] = htmlspecialchars($_GET['docs']);
-		} else {
-			exit("<p><strong>Ошибка!</strong> Отсутствует тип скан-копии!</p>");
+		if (isset($_GET['pid']) && !empty($_GET['pid'])) {
+			$this->form['pid'] = htmlspecialchars($_GET['pid']);
 		}
 		if (isset($_GET['hdr']) && !empty($_GET['hdr'])) {
 			$this->form['hdr'] = htmlspecialchars($_GET['hdr']);
 		} else {
 			exit("<p><strong>Ошибка!</strong> Отсутствует заголовок скан-копии!</p>");
+		}
+		if (isset($_GET['ctr']) && !empty($_GET['ctr'])) {
+			$this->form['ctr'] = htmlspecialchars($_GET['ctr']);
+		} else {
+			exit("<p><strong>Ошибка!</strong> Отсутствует тип скан-копии!</p>");
+		}
+		if (isset($_GET['act']) && !empty($_GET['act'])) {
+			$this->form['act'] = htmlspecialchars($_GET['act']);
+		} else {
+			exit("<p><strong>Ошибка!</strong> Отсутствует действие скан-копии!</p>");
 		}
 		$this->form['error_msg'] = null;
 		return $this->view->generate('scans-delete.php', 'form.php', 'Удаление скан-копии', $this->form);
@@ -75,10 +83,16 @@ class Controller_Scans extends Controller
 	public function actionDelete()
 	{
 		$this->form['id'] = htmlspecialchars($_POST['id']);
-		$this->form['docs'] = htmlspecialchars($_POST['docs']);
+		$this->form['pid'] = htmlspecialchars($_POST['pid']);
 		$this->form['hdr'] = htmlspecialchars($_POST['hdr']);
+		$this->form['ctr'] = htmlspecialchars($_POST['ctr']);
+		$this->form['act'] = htmlspecialchars($_POST['act']);
 		if ($this->model->delete($this->form)) {
-			Basic_Helper::redirect($this->form['hdr'], 200, $this->form['docs'], 'Index');
+			if (empty($this->form['pid'])) {
+				Basic_Helper::redirect($this->form['hdr'], 200, $this->form['ctr'], $this->form['act']);
+			} else {
+				Basic_Helper::redirect($this->form['hdr'], 200, $this->form['ctr'], $this->form['act'].'/?id='.$this->form['pid']);
+			}
 		} else {
 			$this->form['error_msg'] = 'Ошибка удаления скан-копии! Свяжитесь с администратором.';
 			return $this->view->generate('scans-delete.php', 'form.php', 'Удаление скан-копии', $this->form);

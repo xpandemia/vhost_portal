@@ -23,6 +23,7 @@ class Model_Personal extends Db_Helper
 	const TABLE_NAME = 'personal';
 
 	public $id;
+	public $id_user;
 	public $id_resume;
 	public $name_first;
 	public $name_middle;
@@ -33,12 +34,102 @@ class Model_Personal extends Db_Helper
 	public $citizenship;
 	public $dt_created;
 	public $dt_updated;
+	public $guid;
 
 	public $db;
 
 	public function __construct()
 	{
 		$this->db = Db_Helper::getInstance();
+	}
+
+	/**
+     * Personal rules.
+     *
+     * @return array
+     */
+	public function rules()
+	{
+		return [
+				'id' => [
+						'required' => 1,
+						'insert' => 0,
+						'update' => 0,
+						'value' => $this->id
+						],
+				'id_user' => [
+							'required' => 1,
+							'insert' => 1,
+							'update' => 0,
+							'value' => $this->id_user
+							],
+				'id_resume' => [
+								'required' => 1,
+								'insert' => 1,
+								'update' => 0,
+								'value' => $this->id_resume
+								],
+				'name_first' => [
+								'required' => 1,
+								'insert' => 1,
+								'update' => 1,
+								'value' => $this->name_first
+								],
+				'name_middle' => [
+								'required' => 0,
+								'insert' => 1,
+								'update' => 1,
+								'value' => $this->name_middle
+								],
+				'name_last' => [
+								'required' => 1,
+								'insert' => 1,
+								'update' => 1,
+								'value' => $this->name_last
+								],
+				'sex' => [
+						'required' => 1,
+						'insert' => 1,
+						'update' => 1,
+						'value' => $this->sex
+						],
+				'birth_dt' => [
+							'required' => 1,
+							'insert' => 1,
+							'update' => 1,
+							'value' => $this->birth_dt
+							],
+				'birth_place' => [
+								'required' => 1,
+								'insert' => 1,
+								'update' => 1,
+								'value' => $this->birth_place
+								],
+				'citizenship' => [
+								'required' => 1,
+								'insert' => 1,
+								'update' => 1,
+								'value' => $this->citizenship
+								],
+				'dt_created' => [
+								'required' => 1,
+								'insert' => 1,
+								'update' => 0,
+								'value' => $this->dt_created
+								],
+				'dt_updated' => [
+								'required' => 0,
+								'insert' => 0,
+								'update' => 1,
+								'value' => $this->dt_updated
+								],
+				'guid' => [
+							'required' => 0,
+							'insert' => 1,
+							'update' => 1,
+							'value' => $this->guid
+							]
+				];
 	}
 
 	/**
@@ -55,24 +146,29 @@ class Model_Personal extends Db_Helper
 	}
 
 	/**
+     * Gets FIO by user.
+     *
+     * @return array
+     */
+	public function getFioByUser()
+	{
+		return $this->rowSelectOne('name_first, name_middle, name_last',
+								self::TABLE_NAME.' INNER JOIN resume ON '.self::TABLE_NAME.'.id_resume = resume.id',
+								'resume.id_user = :id_user',
+								[':id_user' => $_SESSION[APP_CODE]['user_id']]);
+	}
+
+	/**
      * Saves personal data to database.
      *
-     * @return boolean
+     * @return integer
      */
 	public function save()
 	{
-		return $this->rowInsert('id_resume, name_first, name_middle, name_last, sex, birth_dt, birth_place, citizenship, dt_created',
-								self::TABLE_NAME,
-								':id_resume, :name_first, :name_middle, :name_last, :sex, :birth_dt, :birth_place, :citizenship, :dt_created',
-								[':id_resume' => $this->id_resume,
-								':name_first' => $this->name_first,
-								':name_middle' => $this->name_middle,
-								':name_last' => $this->name_last,
-								':sex' => $this->sex,
-								':birth_dt' => $this->birth_dt,
-								':birth_place' => $this->birth_place,
-								':citizenship' => $this->citizenship,
-								':dt_created' => $this->dt_created]);
+		$this->dt_created = date('Y-m-d H:i:s');
+		$this->dt_updated = null;
+		$prepare = $this->prepareInsert(self::TABLE_NAME, $this->rules());
+		return $this->rowInsert($prepare['fields'], self::TABLE_NAME, $prepare['conds'], $prepare['params']);
 	}
 
 	/**
@@ -82,17 +178,9 @@ class Model_Personal extends Db_Helper
      */
 	public function changeAll()
 	{
-		return $this->rowUpdate(self::TABLE_NAME,
-								'name_first = :name_first, name_middle = :name_middle, name_last = :name_last, sex = :sex, birth_dt = :birth_dt, birth_place = :birth_place, citizenship = :citizenship, dt_updated = :dt_updated',
-								[':name_first' => $this->name_first,
-								':name_middle' => $this->name_middle,
-								':name_last' => $this->name_last,
-								':sex' => $this->sex,
-								':birth_dt' => $this->birth_dt,
-								':birth_place' => $this->birth_place,
-								':citizenship' => $this->citizenship,
-								':dt_updated' => date('Y-m-d H:i:s')],
-								['id' => $this->id]);
+		$this->dt_updated = date('Y-m-d H:i:s');
+		$prepare = $this->prepareUpdate(self::TABLE_NAME, $this->rules());
+		return $this->rowUpdate(self::TABLE_NAME, $prepare['fields'], $prepare['params'], ['id' => $this->id]);
 	}
 
 	public function __destruct()

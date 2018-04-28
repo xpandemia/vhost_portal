@@ -5,8 +5,8 @@ use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 use tinyframe\core\helpers\Form_Helper as Form_Helper;
 
 	// check login
-	if (!isset($_SESSION[APP_CODE]['user_id'])) {
-		Basic_Helper::redirect(LOGIN['hdr'], 401, 'Login', 'Index');
+	if (!isset($_SESSION[APP_CODE]['user_name'])) {
+		Basic_Helper::redirectHome();
 	}
 ?>
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">

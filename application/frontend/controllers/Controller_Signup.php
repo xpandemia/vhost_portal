@@ -33,7 +33,7 @@ class Controller_Signup extends Controller
 			$this->form = $this->model->setForm($this->model->rules(), null);
 		}
 		Captcha_Helper::create();
-		return $this->view->generate('signup.php', 'form.php', SIGNUP['hdr'], $this->form);
+		return $this->view->generate('signup.php', 'form.php', fSIGNUP['hdr'], $this->form);
 	}
 
 	/**
@@ -71,14 +71,13 @@ class Controller_Signup extends Controller
 			$this->form = $this->model->signup($this->form);
 			if (!$this->form['error_msg']) {
 				$this->form = $this->model->resetForm(true, $this->form, $this->model->rules());
-				$this->form['success_msg'] = 'Регистрация выполнена успешно. Пожалуйста, проверьте электронную почту.';
 			}
 		}
 		Captcha_Helper::create();
 		if (!$this->form['captcha_err']) {
 			$this->form['captcha'] = null;
 		}
-		return $this->view->generate('signup.php', 'form.php', SIGNUP['hdr'], $this->form);
+		return $this->view->generate('signup.php', 'form.php', fSIGNUP['hdr'], $this->form);
 	}
 
 	/**

@@ -48,6 +48,77 @@ class Model_User extends Db_Helper
 	}
 
 	/**
+     * User rules.
+     *
+     * @return array
+     */
+	public function rules()
+	{
+		return [
+				'id' => [
+						'required' => 1,
+						'insert' => 0,
+						'update' => 0,
+						'value' => $this->id
+						],
+				'username' => [
+								'required' => 1,
+								'insert' => 1,
+								'update' => 0,
+								'value' => $this->username
+								],
+				'email' => [
+							'required' => 1,
+							'insert' => 1,
+							'update' => 0,
+							'value' => $this->email
+							],
+				'pwd_hash' => [
+								'required' => 0,
+								'insert' => 1,
+								'update' => 1,
+								'value' => $this->pwd_hash
+								],
+				'activation' => [
+								'required' => 0,
+								'insert' => 1,
+								'update' => 1,
+								'value' => $this->activation
+								],
+				'pwd_token' => [
+								'required' => 0,
+								'insert' => 1,
+								'update' => 1,
+								'value' => $this->pwd_token
+								],
+				'role' => [
+							'required' => 1,
+							'insert' => 1,
+							'update' => 1,
+							'value' => $this->role
+							],
+				'status' => [
+							'required' => 1,
+							'insert' => 1,
+							'update' => 1,
+							'value' => $this->status
+							],
+				'dt_created' => [
+								'required' => 1,
+								'insert' => 1,
+								'update' => 0,
+								'value' => $this->dt_created
+								],
+				'dt_updated' => [
+								'required' => 0,
+								'insert' => 0,
+								'update' => 1,
+								'value' => $this->dt_updated
+								]
+				];
+	}
+
+	/**
      * Gets user by name.
      *
      * @return array
@@ -76,9 +147,9 @@ class Model_User extends Db_Helper
 	{
 		$row = $this->rowSelectOne('id', self::TABLE_NAME, 'username = :username', [':username' => $this->username]);
 		if (!empty($row)) {
-			return TRUE;
+			return true;
 		} else {
-			return FALSE;
+			return false;
 		}
 	}
 
@@ -91,28 +162,23 @@ class Model_User extends Db_Helper
 	{
 		$row = $this->rowSelectOne('id', self::TABLE_NAME, 'email = :email', [':email' => $this->email]);
 		if (!empty($row)) {
-			return TRUE;
+			return true;
 		} else {
-			return FALSE;
+			return false;
 		}
 	}
 
 	/**
      * Saves user data to database.
      *
-     * @return boolean
+     * @return integer
      */
 	public function save()
 	{
-		return $this->rowInsert('username, email, pwd_hash, activation, status, dt_created',
-								self::TABLE_NAME,
-								':username, :email, :pwd_hash, :activation, :status, :dt_created',
-								[':username' => $this->username,
-								':email' => $this->email,
-								':pwd_hash' => $this->pwd_hash,
-								':activation' => $this->activation,
-								':status' => $this->status,
-								':dt_created' => $this->dt_created]);
+		$this->dt_created = date('Y-m-d H:i:s');
+		$this->dt_updated = null;
+		$prepare = $this->prepareInsert(self::TABLE_NAME, $this->rules());
+		return $this->rowInsert($prepare['fields'], self::TABLE_NAME, $prepare['conds'], $prepare['params']);
 	}
 
 	/**
@@ -122,9 +188,10 @@ class Model_User extends Db_Helper
      */
 	public function changeStatus()
 	{
+		$this->dt_updated = date('Y-m-d H:i:s');
 		return $this->rowUpdate(self::TABLE_NAME,
 								'status = :status, dt_updated = :dt_updated',
-								[':status' => $this->status, ':dt_updated' => date('Y-m-d H:i:s')],
+								[':status' => $this->status, ':dt_updated' => $this->dt_updated],
 								['id' => $this->id]);
 	}
 
@@ -135,9 +202,10 @@ class Model_User extends Db_Helper
      */
 	public function changePwdToken()
 	{
+		$this->dt_updated = date('Y-m-d H:i:s');
 		return $this->rowUpdate(self::TABLE_NAME,
 								'pwd_token = :pwd_token, dt_updated = :dt_updated',
-								[':pwd_token' => $this->pwd_token, ':dt_updated' => date('Y-m-d H:i:s')],
+								[':pwd_token' => $this->pwd_token, ':dt_updated' => $this->dt_updated],
 								['id' => $this->id]);
 	}
 
@@ -148,9 +216,10 @@ class Model_User extends Db_Helper
      */
 	public function changePwd()
 	{
+		$this->dt_updated = date('Y-m-d H:i:s');
 		return $this->rowUpdate(self::TABLE_NAME,
 								'pwd_hash = :pwd_hash, dt_updated = :dt_updated',
-								[':pwd_hash' => $this->pwd_hash, ':dt_updated' => date('Y-m-d H:i:s')],
+								[':pwd_hash' => $this->pwd_hash, ':dt_updated' => $this->dt_updated],
 								['id' => $this->id]);
 	}
 
@@ -161,11 +230,27 @@ class Model_User extends Db_Helper
      */
 	public function setUser()
 	{
-		$_SESSION[APP_CODE][self::TABLE_NAME.'_id'] = $this->id;
-		$_SESSION[APP_CODE][self::TABLE_NAME.'_name'] = $this->username;
-		$_SESSION[APP_CODE][self::TABLE_NAME.'_email'] = $this->email;
-		$_SESSION[APP_CODE][self::TABLE_NAME.'_role'] = $this->role;
-		$_SESSION[APP_CODE][self::TABLE_NAME.'_status'] = $this->status;
+		switch (LOGON) {
+			case 'login':
+				$_SESSION[APP_CODE][self::TABLE_NAME.'_id'] = $this->id;
+				$_SESSION[APP_CODE][self::TABLE_NAME.'_name'] = $this->username;
+				$_SESSION[APP_CODE][self::TABLE_NAME.'_email'] = $this->email;
+				$_SESSION[APP_CODE][self::TABLE_NAME.'_role'] = $this->role;
+				$_SESSION[APP_CODE][self::TABLE_NAME.'_status'] = $this->status;
+				break;
+			case 'cas':
+				$_SESSION[APP_CODE][self::TABLE_NAME.'_id'] = $this->id;
+				$_SESSION[APP_CODE][self::TABLE_NAME.'_email'] = $this->email;
+				$_SESSION[APP_CODE][self::TABLE_NAME.'_role'] = $this->role;
+				$_SESSION[APP_CODE][self::TABLE_NAME.'_status'] = $this->status;
+				break;
+			default:
+				$_SESSION[APP_CODE][self::TABLE_NAME.'_id'] = $this->id;
+				$_SESSION[APP_CODE][self::TABLE_NAME.'_name'] = $this->username;
+				$_SESSION[APP_CODE][self::TABLE_NAME.'_email'] = $this->email;
+				$_SESSION[APP_CODE][self::TABLE_NAME.'_role'] = $this->role;
+				$_SESSION[APP_CODE][self::TABLE_NAME.'_status'] = $this->status;
+		}
 	}
 
 	/**

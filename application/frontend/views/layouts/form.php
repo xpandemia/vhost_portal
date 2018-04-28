@@ -25,6 +25,18 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 	<style>
 		#loadImg{position:absolute; z-index:1000; display:none}
 	</style>
+
+	<style>
+		div.sticky {
+		    position: -webkit-sticky;
+		    position: sticky;
+		    top: 0;
+		    color: GhostWhite;
+		    background-color: DodgerBlue;
+		    padding: 25px;
+		    font-size: 20px;
+		}
+	</style>
 </head>
 <body class="bg-primary">
 	<?php include ROOT_DIR.'/application/frontend/views/'.$content_view; ?>

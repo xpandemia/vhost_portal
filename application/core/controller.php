@@ -21,13 +21,34 @@ class Controller
 	}
 
 	/**
-     * Displays a page.
+     * Displays document delete confirmation page.
      *
      * @return mixed
      */
-	function actionIndex()
+	function actionDelDocConfirm($form, $get)
 	{
-		// todo
+		if (isset($get['id']) && !empty($get['id'])) {
+			$form['id'] = htmlspecialchars($get['id']);
+		} else {
+			exit("<p><strong>Ошибка!</strong> Отсутствует идент-р документа!</p>");
+		}
+		if (isset($get['pid']) && !empty($get['pid'])) {
+			$form['pid'] = htmlspecialchars($get['pid']);
+		} else {
+			$form['pid'] = null;
+		}
+		if (isset($get['hdr']) && !empty($get['hdr'])) {
+			$form['hdr'] = htmlspecialchars($get['hdr']);
+		} else {
+			exit("<p><strong>Ошибка!</strong> Отсутствует заголовок документа!</p>");
+		}
+		if (isset($get['ctr']) && !empty($get['ctr'])) {
+			$form['ctr'] = htmlspecialchars($get['ctr']);
+		} else {
+			exit("<p><strong>Ошибка!</strong> Отсутствует контроллер документа!</p>");
+		}
+		$form['error_msg'] = null;
+		return $this->view->generate('delete-confirm.php', 'form.php', 'Удаление документа '.$form['ctr'], $form);
 	}
 
 	public function __destruct()

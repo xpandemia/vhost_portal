@@ -75,37 +75,48 @@ class Model_Signup extends Model
 	public function signup($form)
 	{
 		if ($form['pwd'] == $form['pwd_confirm']) {
-			// user register
 			$user = new Model_User();
 			$user->username = $form['username'];
 			$user->email = $form['email'];
 			$user->pwd_hash = $user->GetHash($form['pwd']);
-			$user->activation = $user->GetHash($form['email'].date('Y-m-d H:i:s'));
-			$user->status = 0;
-			$user->dt_created = date('Y-m-d H:i:s');
-			if ($user->save()) {
-				// send activation email
-				$mail = new Mail_Helper;
-				$subject = 'Регистрация в '.APP_NAME;
-				$message = '
-							<html>
-							    <head>
-							        <title>Регистрация в '.APP_NAME.'</title>
-							    </head>
-							    <body>
-									<h1>'.$form['username'].', здравствуйте!</h1>
-							        <p>Вы зарегистрировались на сайте '.APP_NAME.'. Для активации вашей учетной записи необходимо пройти по ссылке <a href="'.BASEPATH.'/'.BEHAVIOR.'/Signup/Activation/?code='.$user->activation.'&email='.$user->email.'">подтверждения регистрации</a></p>
-							        <p>В случае, если это письмо пришло Вам ошибочно, просто игнорируйте его.</p>
-							        <p>С уважением, '.APP_NAME.'.</p>
-							    </body>
-							</html>';
-				if ($mail->sendEmail($form['email'], $form['username'], $subject, $message)) {
-					$form['error_msg'] = null;
-				} else {
-					$form['error_msg'] = 'Ошибка при отправке эл. сообщения!';
-				}
-			} else {
-				$form['error_msg'] = 'Ошибка при сохранении пользователя!';
+			switch (SIGNUP) {
+				case 'login':
+					if ($user->save() > 0) {
+						$form['success_msg'] = 'Регистрация выполнена успешно.';
+						$form['error_msg'] = null;
+					} else {
+						$form['error_msg'] = 'Ошибка при сохранении пользователя!';
+					}
+				case 'email':
+					$user->activation = $user->GetHash($form['email'].date('Y-m-d H:i:s'));
+					$user->status = $user::STATUS_NOTACTIVE;
+					if ($user->save() > 0) {
+						// send activation email
+						$mail = new Mail_Helper();
+						$subject = 'Регистрация в '.APP_NAME;
+						$message = '
+									<html>
+									    <head>
+									        <title>Регистрация в '.APP_NAME.'</title>
+									    </head>
+									    <body>
+											<h1>'.$form['username'].', здравствуйте!</h1>
+									        <p>Вы зарегистрировались на сайте '.APP_NAME.'. Для активации вашей учетной записи необходимо пройти по ссылке <a href="'.BASEPATH.'/'.BEHAVIOR.'/Signup/Activation/?code='.$user->activation.'&email='.$user->email.'">подтверждения регистрации</a></p>
+									        <p>В случае, если это письмо пришло Вам ошибочно, просто игнорируйте его.</p>
+									        <p>С уважением, '.APP_NAME.'.</p>
+									    </body>
+									</html>';
+						if ($mail->sendEmail($form['email'], $form['username'], $subject, $message)) {
+							$form['success_msg'] = 'Регистрация выполнена успешно. Пожалуйста, проверьте электронную почту.';
+							$form['error_msg'] = null;
+						} else {
+							$form['error_msg'] = 'Ошибка при отправке эл. сообщения!';
+						}
+					} else {
+						$form['error_msg'] = 'Ошибка при сохранении пользователя!';
+					}
+				default:
+					$form['error_msg'] = 'Неизвестный тип регистрации!';
 			}
 		} else {
 			$form['error_msg'] = 'Пароли не совпадают!';

@@ -13,6 +13,8 @@ use tinyframe\core\Routing as Routing;
 	require_once ROOT_DIR.'/application/core/helpers/form_helper.php'; // FORMS processing
 	require_once ROOT_DIR.'/application/core/helpers/html_helper.php'; // HTML processing
 	require_once ROOT_DIR.'/application/core/helpers/mail_helper.php'; // EMAIL processing
+	require_once ROOT_DIR.'/application/core/helpers/pdf_helper.php'; // PDF processing
+	require_once ROOT_DIR.'/application/core/helpers/soap_helper.php'; // SOAP processing
 	require_once ROOT_DIR.'/application/core/helpers/xml_helper.php'; // XML processing
 	// configs
 	require_once ROOT_DIR.'/application/core/config/1c_config.php'; // 1C configuration
@@ -20,6 +22,7 @@ use tinyframe\core\Routing as Routing;
 	require_once ROOT_DIR.'/application/core/config/files_config.php'; // FILES configuration
 	require_once ROOT_DIR.'/application/core/config/form_config.php'; // FORMS configuration
 	require_once ROOT_DIR.'/application/core/config/mail_config.php'; // EMAIL configuration
+	require_once ROOT_DIR.'/application/core/config/pdf_config.php'; // PDF configuration
 	// base classes
 	require_once ROOT_DIR.'/application/core/model.php';
 	require_once ROOT_DIR.'/application/core/view.php';
@@ -37,10 +40,13 @@ use tinyframe\core\Routing as Routing;
 		    }
 		}
 	}
-	// vendors
+	/* vendors */
+	// PHPMailer
 	require_once ROOT_DIR.'/vendors/PHPMailer/src/Exception.php';
 	require_once ROOT_DIR.'/vendors/PHPMailer/src/PHPMailer.php';
 	require_once ROOT_DIR.'/vendors/PHPMailer/src/SMTP.php';
+	// pdftk-php
+	require_once ROOT_DIR.'/vendors/pdftk-php/pdftk-php.php';
 
 
 # ---------------------------------------------------------------
@@ -79,13 +85,29 @@ if (defined('ENVIRONMENT')) {
 	}
 }
 
+# ---------------------------------------------------------------
+# LOGON
+# ---------------------------------------------------------------
+if ($logon === '') {
+	$logon = 'login';
+}
+define('LOGON', $logon);
+
+# ---------------------------------------------------------------
+# SIGNUP
+# ---------------------------------------------------------------
+if ($signup === '') {
+	$signup = 'email';
+}
+define('SIGNUP', $signup);
+
 # Defined first page that opened first time (welcome page)
 if ($controllerName == '' ) {
-	$controllerName = 'Main';
+	$controllerName = 'Login';
 }
 define('CONTROLLER', $controllerName);
 
-# Defined first method that opened when opened page. eg: www.site.com/welcome/index
+# Defined first method that opened when opened page
 if ($actionName == '') {
 	$actionName = 'Index';
 }
@@ -94,6 +116,12 @@ define('ACTION', $actionName);
 # Set SESSION vars
 if (!isset($_SESSION[APP_CODE]['captcha'])) {
 	$_SESSION[APP_CODE]['captcha'] = null;
+}
+if (!isset($_SESSION[APP_CODE]['error_msg'])) {
+	$_SESSION[APP_CODE]['error_msg'] = null;
+}
+if (!isset($_SESSION[APP_CODE]['success_msg'])) {
+	$_SESSION[APP_CODE]['success_msg'] = null;
 }
 
 # Clear TEMP

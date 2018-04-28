@@ -72,6 +72,7 @@ class Model_Login extends Model
 						// invalid password
 						$form['error_msg'] = 'Неверный пароль!';
 					} else {
+						// check status
 						switch ($row['status']) {
 							case $user::STATUS_NOTACTIVE:
 								$form['error_msg'] = 'Учетная запись не активирована!';

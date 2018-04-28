@@ -5,7 +5,7 @@ use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 use tinyframe\core\helpers\Form_Helper as Form_Helper;
 
 	// check login
-	if (isset($_SESSION[APP_CODE]['user_id'])) {
+	if (isset($_SESSION[APP_CODE]['user_name'])) {
 		Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Index');
 	}
 ?>

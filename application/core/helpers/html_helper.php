@@ -116,10 +116,13 @@ class HTML_Helper
      /* RULES (+ required)
 		+ 'model_class' => {MODEL_CLASS},
 		+ 'model_method' => {MODEL_METHOD},
+		'model_filter' => {MODEL_FILTER},
+		'model_filter_var' => {MODEL_FILTER_VAR},
+		+ 'grid' => {GRID},
 		+ 'controller' => {CONTROLLER},
 		+ 'action_add' => {ACTION_ADD},
-		+ 'action_edit' => {ACTION_EDIT},
-		+ 'action_delete' => {ACTION_DELETE},
+		'action_edit' => {ACTION_EDIT},
+		'action_delete' => {ACTION_DELETE},
 		+ 'home_hdr' => {HOME_HEADER}
     */
 	public static function setGridDB($rules)
@@ -129,33 +132,52 @@ class HTML_Helper
 			$result .= '<table class="table table-bordered">';
 			// using model
 			$model = new $rules['model_class'];
-			// using model method (hopper is required!)
+			// using model method
 			$method = $rules['model_method'];
 			/* header */
-			$result .= '<tr>';
-			foreach ($model->rules() as $rules_row) {
-				$result .= '<td>'.$rules_row['name'].'</td>';
+			$result .= '<tr class="font-italic">';
+			$grid = $rules['grid'];
+			foreach ($model->$grid() as $key => $value) {
+				$result .= '<td>'.$value['name'].'</td>';
 			}
 			$result .= '</tr>';
 			/* data */
+			// using model filter
+			if (isset($rules['model_filter']) && isset($rules['model_filter_var'])) {
+				$filter = $rules['model_filter'];
+				$model->$filter = $rules['model_filter_var'];
+			}
 			// fetching data
 			$table = $model->$method();
-			foreach ($table as $table_row) {
-				$result .= '<tr>';
-				foreach ($model->rules() as $key => $value) {
-					if ($value['type'] == 'lob') {
-						$result .= '<td><img class="img-fluid" src="data:'.((isset($table_row['file_type'])) ? $table_row['file_type'] : '').';base64,'.base64_encode( $table_row[$key] ).'" width="80" height="100"></td>';
-					} else {
-						$result .= '<td>'.$table_row[$key].'</td>';
+			if ($table) {
+				foreach ($table as $table_row) {
+					$result .= '<tr>';
+					foreach ($model->$grid() as $key => $value) {
+						if ($value['type'] == 'lob') {
+							if (!empty($table_row[$key])) {
+								$result .= '<td><img class="img-fluid" src="data:'.((isset($table_row['file_type'])) ? $table_row['file_type'] : '').';base64,'.base64_encode( $table_row[$key] ).'" width="80" height="100"></td>';
+							} else {
+								$result .= '<td>Файл не загружен</td>';
+							}
+						} else {
+							$result .= '<td>'.$table_row[$key].'</td>';
+						}
 					}
+					// actions
+					if (isset($table_row['id']) && (isset($rules['action_edit']) || isset($rules['action_delete']))) {
+						$result .= '<td>';
+						// action edit
+						if (isset($rules['action_edit'])) {
+							$result .= HTML_Helper::setHrefButtonIcon($rules['controller'], $rules['action_edit'].'/?id='.$table_row['id'].((isset($table_row['pid'])) ? '&pid='.$table_row['pid'] : ''), 'font-weight-bold', 'far fa-edit fa-2x', 'Редактировать запись');
+						}
+						// action delete
+						if (isset($rules['action_delete'])) {
+							$result .= HTML_Helper::setHrefButtonIcon($rules['controller'], $rules['action_delete'].'/?id='.$table_row['id'].((isset($table_row['pid'])) ? '&pid='.$table_row['pid'] : '').'&hdr='.$rules['home_hdr'].'&ctr='.$rules['controller'], 'text-danger font-weight-bold', 'fas fa-times fa-2x', 'Удалить запись');
+						}
+						$result .= '</td>';
+					}
+					$result .= '</tr>';
 				}
-				if (isset($table_row['id'])) {
-					$result .= '<td>'.
-								HTML_Helper::setHrefButtonIcon($rules['controller'], $rules['action_edit'].'/?id='.$table_row['id'].'&docs='.$rules['controller'], 'font-weight-bold', 'far fa-edit fa-2x', 'Редактировать запись').
-								HTML_Helper::setHrefButtonIcon($rules['controller'], $rules['action_delete'].'/?id='.$table_row['id'].'&docs='.$rules['controller'].'&hdr='.$rules['home_hdr'], 'text-danger font-weight-bold', 'fas fa-times fa-2x', 'Удалить запись').
-								'</td>';
-				}
-				$result .= '</tr>';
 			}
 			$result .= '</table>';
 			return $result;

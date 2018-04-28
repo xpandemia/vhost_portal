@@ -83,7 +83,7 @@ class Model_DictionaryManagerLog extends Db_Helper
 	/**
      * Saves dictionary manager log data to database.
      *
-     * @return boolean
+     * @return integer
      */
 	public function save()
 	{

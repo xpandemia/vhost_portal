@@ -75,7 +75,7 @@ class Model_KladrAbbrs extends Db_Helper
 	/**
      * Saves KLADR abbr data to database.
      *
-     * @return boolean
+     * @return integer
      */
 	public function save()
 	{

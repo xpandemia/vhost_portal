@@ -17,6 +17,7 @@ class Model_Passport extends Db_Helper
 	const TABLE_NAME = 'passport';
 
 	public $id;
+	public $id_user;
 	public $id_resume;
 	public $id_doctype;
 	public $main;
@@ -50,6 +51,12 @@ class Model_Passport extends Db_Helper
 						'update' => 0,
 						'value' => $this->id
 						],
+				'id_user' => [
+							'required' => 1,
+							'insert' => 1,
+							'update' => 0,
+							'value' => $this->id_user
+							],
 				'id_resume' => [
 								'required' => 1,
 								'insert' => 1,
@@ -135,7 +142,7 @@ class Model_Passport extends Db_Helper
 	/**
      * Saves passport data to database.
      *
-     * @return boolean
+     * @return integer
      */
 	public function save()
 	{

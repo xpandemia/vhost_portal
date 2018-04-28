@@ -108,9 +108,23 @@ class Model_DictDoctypes extends Db_Helper
 	}
 
 	/**
+     * Gets education documents.
+     *
+     * @return array
+     */
+	public function getDiplomas()
+	{
+		return $this->rowSelectAll('d1.*',
+									'dict_doctypes d1 INNER JOIN dict_doctypes d2 ON d1.parent_key = d2.guid',
+									'd2.isfolder = :isfolder AND d2.description = :description',
+									[':isfolder' => 1,
+									':description' => 'Документы об образовании']);
+	}
+
+	/**
      * Saves document type data to database.
      *
-     * @return boolean
+     * @return integer
      */
 	public function save()
 	{
@@ -177,7 +191,7 @@ class Model_DictDoctypes extends Db_Helper
 	}
 
 	/**
-     * Loads countries.
+     * Loads document types.
      *
      * @return array
      */

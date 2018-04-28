@@ -46,7 +46,7 @@ class Model_ResetPwdRequest extends Model
 		if (!empty($row)) {
 			$user->id = $row['id'];
 			if ($user->changePwdToken()) {
-				$mail = new Mail_Helper;
+				$mail = new Mail_Helper();
 				$subject = 'Восстановление пароля в '.APP_NAME;
 				$message = '
 							<html>

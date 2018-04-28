@@ -2,18 +2,16 @@
 
 namespace tinyframe\core\helpers;
 
-use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
-use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
-
 // patterns
 define('PATTERN_NUMB', '/^[0-9]*$/u'); // number only
 define('PATTERN_ALPHA', '/^[a-zA-Z]*$/u'); // letters only ENG
 define('PATTERN_ALPHA_RUS', '/^[ёЁа-яА-Я]*$/u'); // letters only RUS
 define('PATTERN_TEXT', '/^[a-zA-Z-\.\,\s]*$/u'); // letters, "-", ".", ",", " " ENG
 define('PATTERN_TEXT_RUS', '/^[ёЁа-яА-Я-.,\s]*$/u'); // letters, "-", ".", ",", " " RUS
-define('PATTERN_INFO', '/^[a-zA-Z0-9-\.\,\s]*$/u'); // letters, numbers, "-", ".", ",", " " ENG
-define('PATTERN_INFO_RUS', '/^[ёЁа-яА-Я0-9-.,\s]*$/u'); // letters, numbers, "-", ".", ",", " " RUS
-define('PATTERN_ALPHA_NUMB', '/^[a-zA-Z0-9]*$/u'); // letters and numbers
+define('PATTERN_INFO', '/^[a-zA-Z0-9-\.\,\#\s]*$/u'); // letters, numbers, "-", ".", ",", "#", " " ENG
+define('PATTERN_INFO_RUS', '/^[ёЁа-яА-Я0-9-.,№\s]*$/u'); // letters, numbers, "-", ".", ",", "№", " " RUS
+define('PATTERN_ALPHA_NUMB', '/^[a-zA-Z0-9]*$/u'); // letters and numbers ENG
+define('PATTERN_ALPHA_NUMB_RUS', '/^[ёЁа-яА-Я0-9]*$/u'); // letters and numbers RUS
 define('PATTERN_EMAIL_LIGHT', '/^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9_\-.]+$/'); // email light
 define('PATTERN_EMAIL_STRONG', '/^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9_\-]+\.[a-zA-Z0-9_\-]+$/'); // email strong
 define('PATTERN_DATE_LIGHT', '/^(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}$/'); // date DD.MM.YYYY light
@@ -40,6 +38,8 @@ class Form_Helper
 	    'width' => ['format' => 'string/numb', 'min' => {min value}, 'max' => {max value}, 'msg' => 'Width error message.'],
 	    'unique' => ['class' => 'models\\common\\Model_Class', 'method' => 'Class_Method', 'msg' => 'Unique error message.'],
 	    'compared' => ['value' => '{VALUE}', 'type' => '==', 'msg' => 'Compared error message.'],
+	    'size' = ['value' => {FILE_SIZE}, 'msg' => 'File size error message.'],
+	    'ext' => ['value' => {FILE_EXTENSION}, 'msg' => 'File extension error message.'],
 	    +'success' => 'Success message.'
     */
 	public function validate($form, $rules)
@@ -52,7 +52,7 @@ class Form_Helper
 					// RULE processing
 					switch ($rule_name) {
 						// required check
-						case "required":
+						case 'required':
 							if ($rules[$field_name]['type'] === 'checkbox' || $rules[$field_name]['type'] === 'radio') {
 								if (!$form[$field_name]) {
 									$validate = false;
@@ -71,7 +71,7 @@ class Form_Helper
 							}
 							break;
 						// pattern check
-						case "pattern":
+						case 'pattern':
 							if (!empty($rule_var_arr['value']) && !empty($form[$field_name]) && empty($form[$field_name.'_err'])) {
 								if (!preg_match($rule_var_arr['value'], $form[$field_name])) {
 									$validate = false;
@@ -80,17 +80,17 @@ class Form_Helper
 							}
 							break;
 						// width check
-						case "width":
+						case 'width':
 							if (!empty($form[$field_name]) && empty($form[$field_name.'_err'])) {
 								// format
 								switch ($rule_var_arr['format']) {
-									case "string":
+									case 'string':
 										if (strlen($form[$field_name]) < $rule_var_arr['min'] || strlen($form[$field_name]) > $rule_var_arr['max']) {
 											$validate = false;
 											$form[$field_name.'_err'] = $rule_var_arr['msg'];
 										}
 										break;
-									case "numb":
+									case 'numb':
 										if ($form[$field_name] < $rule_var_arr['min'] || $form[$field_name] > $rule_var_arr['max']) {
 											$validate = false;
 											$form[$field_name.'_err'] = $rule_var_arr['msg'];
@@ -100,13 +100,13 @@ class Form_Helper
 							}
 							break;
 						// unique check
-						case "unique":
+						case 'unique':
 							if (!empty($form[$field_name]) && empty($form[$field_name.'_err'])) {
 								// using model
 								$model = new $rule_var_arr['class'];
 								// using model properties
 								$model->$field_name = $form[$field_name];
-								// using model method (hopper is required!)
+								// using model method
 								$method = $rule_var_arr['method'];
 								if ($model->$method()) {
 									$validate = false;
@@ -115,39 +115,63 @@ class Form_Helper
 							}
 							break;
 						// comparison check
-						case "compared":
+						case 'compared':
 							if (!empty($rule_var_arr['value']) && !empty($form[$field_name]) && empty($form[$field_name.'_err'])) {
 								switch ($rule_var_arr['type']) {
-									case "==":
+									case '==':
 										if ($form[$field_name] != $rule_var_arr['value']) {
 											$validate = false;
 											$form[$field_name.'_err'] = $rule_var_arr['msg'];
 										}
 										break;
-									case ">":
+									case '>':
 										if ($form[$field_name] < $rule_var_arr['value']) {
 											$validate = false;
 											$form[$field_name.'_err'] = $rule_var_arr['msg'];
 										}
 										break;
-									case "<":
+									case '<':
 										if ($form[$field_name] > $rule_var_arr['value']) {
 											$validate = false;
 											$form[$field_name.'_err'] = $rule_var_arr['msg'];
 										}
 										break;
-									case ">=":
+									case '>=':
 										if ($form[$field_name] <= $rule_var_arr['value']) {
 											$validate = false;
 											$form[$field_name.'_err'] = $rule_var_arr['msg'];
 										}
 										break;
-									case "<=":
+									case '<=':
 										if ($form[$field_name] >= $rule_var_arr['value']) {
 											$validate = false;
 											$form[$field_name.'_err'] = $rule_var_arr['msg'];
 										}
 										break;
+								}
+							}
+							break;
+						// file size check
+						case 'size':
+							if ($rules[$field_name]['type'] == 'file' && isset($form[$field_name.'_size'])) {
+								if (Files_Helper::getSize($form[$field_name.'_size'], FILES_SIZE['size']) > FILES_SIZE['value']) {
+									unset($form[$field_name]);
+									unset($form[$field_name.'_name']);
+									unset($form[$field_name.'_type']);
+									unset($form[$field_name.'_size']);
+									$form[$field_name.'_err'] = $rule_var_arr['msg'];
+								}
+							}
+							break;
+						// file extension check
+						case 'ext':
+							if ($rules[$field_name]['type'] == 'file' && isset($form[$field_name.'_type'])) {
+								if (!in_array($form[$field_name.'_type'], FILES_EXT_SCANS)) {
+									unset($form[$field_name]);
+									unset($form[$field_name.'_name']);
+									unset($form[$field_name.'_type']);
+									unset($form[$field_name.'_size']);
+									$form[$field_name.'_err'] = $rule_var_arr['msg'];
 								}
 							}
 							break;
@@ -349,6 +373,8 @@ class Form_Helper
 		+ 'model_method' => {MODEL_METHOD},
 		+ 'model_field' => {MODEL_FIELD},
 		'model_field_name' => {MODEL_FIELD_NAME},
+		'model_filter' => {MODEL_FILTER},
+		'model_filter_val' => {MODEL_FILTER_VALUE},
 		+ 'value' => {SELECTLIST_VALUE},
 		+ 'success' => {SELECTLIST_SUCCESS_MESSAGE},
 		+ 'error' => {SELECTLIST_ERROR_MESSAGE}
@@ -361,19 +387,29 @@ class Form_Helper
 						HTML_Helper::setLabel($label['class'], $rules['control'], $label['value']).
 						'<div class="col">'.
 						'<select class="'.$rules['class'].'" id="'.$rules['control'].'" name="'.$rules['control'].'">';
-			// using model
-			$model = new $rules['model_class'];
-			// using model method (hopper is required!)
-			$method = $rules['model_method'];
-			// fetching data
-			$table = $model->$method();
-			// making select list
-			$result .= '<option value=""'.(empty($rules['value']) ? ' selected' : '').'></option>';
-			foreach ($table as $row) {
-				$result .= '<option value="'.$row[$rules['model_field']].'"'.
-							(($rules['value'] === $row[$rules['model_field']]) ? ' selected' : '').'>'.
-							((isset($rules['model_field_name'])) ? $row[$rules['model_field_name']] : $row[$rules['model_field']]).
-							'</option>';
+			if (isset($rules['model_class']) && !empty($rules['model_class']) && isset($rules['model_method']) && !empty($rules['model_method'])) {
+				// using model
+				$model = new $rules['model_class'];
+				// using model method
+				$method = $rules['model_method'];
+				// using filter
+				if (isset($rules['model_filter'])) {
+					$filter = $rules['model_filter'];
+					$model->$filter = $rules['model_filter_val'];
+				}
+				// fetching data
+				$table = $model->$method();
+				// making select list
+				$result .= '<option value=""'.(empty($rules['value']) ? ' selected' : '').'></option>';
+				foreach ($table as $row) {
+					$result .= '<option value="'.$row[$rules['model_field']].'"'.
+								(($rules['value'] === $row[$rules['model_field']]) ? ' selected' : '').'>'.
+								((isset($rules['model_field_name'])) ? $row[$rules['model_field_name']] : $row[$rules['model_field']]).
+								'</option>';
+				}
+			} else {
+				// making blank select list
+				$result .= '<option value=""'.(empty($rules['value']) ? ' selected' : '').'></option>';
 			}
 			$result .= '</select>'.
 						HTML_Helper::setValidFeedback($rules['error'], $rules['success']).
@@ -396,8 +432,8 @@ class Form_Helper
 		+ 'control' => {SELECTLIST_ID},
 		+ 'model_class' => {MODEL_CLASS},
 		+ 'model_method' => {MODEL_METHOD},
-		model_filter => {MODEL_FILTER},
-		model_filter_val => {MODEL_FILTER_VALUE},
+		'model_filter' => {MODEL_FILTER},
+		'model_filter_val' => {MODEL_FILTER_VALUE},
 		+ 'value' => {SELECTLIST_VALUE}
     */
 	public static function setFormSelectListKladr($rules) : string
@@ -408,7 +444,7 @@ class Form_Helper
 							'<select class="form-control" id="'.$rules['control'].'" name="'.$rules['control'].'">';
 			// using model
 			$model = new $rules['model_class'];
-			// using model method (hopper is required!)
+			// using model method
 			$method = $rules['model_method'];
 			// using filter
 			if (isset($rules['model_filter'])) {
@@ -443,8 +479,10 @@ class Form_Helper
 		'required' => {FILE_REQUIRED},
 		'required_style' => {FILE_STYLE},
 		+ 'data' => {FILE_DATA},
+		'home_id' => {HOME_ID},
 		+ 'home_hdr' => {HOME_HEADER},
 		+ 'home_ctr' => {HOME_CONTROLLER},
+		+ 'home_act' => {HOME_ACTION},
 		+ 'ext' => {ALLOWED_EXTENSIONS}
     */
     public static function setFormFile($rules) : string
@@ -452,32 +490,32 @@ class Form_Helper
 		if (isset($rules) && is_array($rules)) {
 			$field = $rules['control'];
 			$result = '<div class="form-group" id="'.$field.'_div">';
+			// label
+			$label = self::setFormLabelStyle($rules['required'], (isset($rules['required_style'])) ? $rules['required_style'] : null, $rules['label']);
+			$result .= '<div class="col">'.
+						HTML_Helper::setLabel($label['class'], $field, $label['value']).'</div>';
 			// set help
 			$result .= '<div class="col">'.
 							'<p class="font-weight-bold font-italic">Допустимый размер файла: '.FILES_SIZE['value'].' '.FILES_SIZE['size'].'</p>'.
 							'<p class="font-weight-bold font-italic">Допустимые расширения файла: '.strtoupper(implode(', ', array_keys($rules['ext']))).'</p>'.
 						'</div>';
-			// label
-			$label = self::setFormLabelStyle($rules['required'], (isset($rules['required_style'])) ? $rules['required_style'] : null, $rules['label']);
-			$result .= '<div class="col">'.
-						HTML_Helper::setLabel($label['class'], $field, $label['value']).'</div>';
 			// file
 			if (isset($rules['data'][$field.'_id'])) {
 				$result .= '<input type="hidden" id="'.$field.'_id" name="'.$field.'_id" value="'.$rules['data'][$field.'_id'].'"/>'.
 							'<span style="padding-left:10px;"> </span><img class="img-fluid" src="data:'.$rules['data'][$field.'_type'].';base64,'.base64_encode( $rules['data'][$field] ).'" width="80" height="100">'.
 							'<span style="padding-left:10px;"> </span>'.
-							HTML_Helper::setHrefButtonIcon('Scans', 'Show/?id='.$rules['data'][$field.'_id'].'&docs='.$rules['home_ctr'], 'font-weight-bold', 'far fa-file-image fa-2x', 'Просмотреть файл').
+							HTML_Helper::setHrefButtonIcon('Scans', 'Show/?id='.$rules['data'][$field.'_id'].'&ctr='.$rules['home_ctr'], 'font-weight-bold', 'far fa-file-image fa-2x', 'Просмотреть файл').
 							'<span style="padding-left:10px;"> </span>'.
-							HTML_Helper::setHrefButtonIcon('Scans', 'DeleteConfirm/?id='.$rules['data'][$field.'_id'].'&docs='.$rules['home_ctr'].'&hdr='.$rules['home_hdr'], 'text-danger font-weight-bold', 'fas fa-times fa-2x', 'Удалить файл');
+							HTML_Helper::setHrefButtonIcon('Scans', 'DeleteConfirm/?id='.$rules['data'][$field.'_id'].((isset($rules['home_id']) && !empty($rules['home_id'])) ? '&pid='.$rules['home_id'] : '').'&hdr='.$rules['home_hdr'].'&ctr='.$rules['home_ctr'].'&act='.$rules['home_act'], 'text-danger font-weight-bold', 'fas fa-times fa-2x', 'Удалить файл');
 			} else {
-				$result .= '<span style="padding-left:10px;"> </span><input type="file" id="'.$field.'" name="'.$field.'"/></div>';
+				$result .= '<span style="padding-left:10px;"> </span><input type="file" id="'.$field.'" name="'.$field.'"/>';
 			}
 			// feedback
 			if ($rules['data'][$field.'_err']) {
 				$result .= '<p class="text-danger">'.$rules['data'][$field.'_err'].'</p>';
 			}
 			$result .= '<p></p>';
-			$result .= '</div></div>';
+			$result .= '</div>';
 			return $result;
 		} else {
 			return '<p class="text-danger">Form_Helper.setFormFile - На входе не массив!</p>';
@@ -499,8 +537,10 @@ class Form_Helper
 		+ 'model_field' => {MODEL_FIELD},
 		+ 'model_field_name' => {MODEL_FIELD_NAME},
 		+ 'data' => {FILELIST_DATA},
+		'home_id' => {HOME_ID},
 		+ 'home_hdr' => {HOME_HEADER},
 		+ 'home_ctr' => {HOME_CONTROLLER},
+		+ 'home_act' => {HOME_ACTION},
 		+ 'ext' => {ALLOWED_EXTENSIONS}
     */
     public static function setFormFileListDB($rules) : string
@@ -514,7 +554,7 @@ class Form_Helper
 						'</div>';
 			// using model
 			$model = new $rules['model_class'];
-			// using model method (hopper is required!)
+			// using model method
 			$method = $rules['model_method'];
 			// using model filter
 			if (isset($rules['model_filter']) && isset($rules['model_filter_var'])) {
@@ -543,9 +583,9 @@ class Form_Helper
 					$result .= '<input type="hidden" id="'.$field.'_id" name="'.$field.'_id" value="'.$rules['data'][$field.'_id'].'"/>'.
 								'<span style="padding-left:10px;"> </span><img class="img-fluid" src="data:'.$rules['data'][$field.'_type'].';base64,'.base64_encode( $rules['data'][$field] ).'" width="80" height="100">'.
 								'<span style="padding-left:10px;"> </span>'.
-								HTML_Helper::setHrefButtonIcon('Scans', 'Show/?id='.$rules['data'][$field.'_id'].'&docs='.$rules['home_ctr'], 'font-weight-bold', 'far fa-file-image fa-2x', 'Просмотреть файл').
+								HTML_Helper::setHrefButtonIcon('Scans', 'Show/?id='.$rules['data'][$field.'_id'].'&ctr='.$rules['home_ctr'], 'font-weight-bold', 'far fa-file-image fa-2x', 'Просмотреть файл').
 								'<span style="padding-left:10px;"> </span>'.
-								HTML_Helper::setHrefButtonIcon('Scans', 'DeleteConfirm/?id='.$rules['data'][$field.'_id'].'&docs='.$rules['home_ctr'].'&hdr='.$rules['home_hdr'], 'text-danger font-weight-bold', 'fas fa-times fa-2x', 'Удалить файл');
+								HTML_Helper::setHrefButtonIcon('Scans', 'DeleteConfirm/?id='.$rules['data'][$field.'_id'].((isset($rules['home_id']) && !empty($rules['home_id'])) ? '&pid='.$rules['home_id'] : '').'&hdr='.$rules['home_hdr'].'&ctr='.$rules['home_ctr'].'&act='.$rules['home_act'], 'text-danger font-weight-bold', 'fas fa-times fa-2x', 'Удалить файл');
 				} else {
 					$result .= '<span style="padding-left:10px;"> </span><input type="file" id="'.$field.'" name="'.$field.'"/></div>';
 				}

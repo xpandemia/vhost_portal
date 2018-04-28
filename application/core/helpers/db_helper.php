@@ -208,7 +208,7 @@ class Db_Helper
 	/**
      * Inserts table row.
      *
-     * @return boolean
+     * @return integer
      */
 	public function rowInsert($fields, $tables, $conds, $params)
 	{
@@ -229,14 +229,15 @@ class Db_Helper
 				}
 			}
 			$sql->execute();
+			$id = self::$pdo->lastInsertId();
 			self::$pdo->commit();
 			$sql = null;
-			return TRUE;
+			return $id;
 		} catch(\PDOException $pdo_err) {
 			self::$pdo->rollBack();
 			$sql = null;
 			echo nl2br("Error MySQL: ".$pdo_err->getMessage()."\n");
-		    return FALSE;
+		    return 0;
 		}
 	}
 
@@ -267,12 +268,12 @@ class Db_Helper
 			$sql->execute($params);
 		    self::$pdo->commit();
 			$sql = null;
-		    return TRUE;
+		    return true;
 		} catch(\PDOException $pdo_err) {
 			self::$pdo->rollBack();
 			$sql = null;
 			echo nl2br("Error MySQL: ".$pdo_err->getMessage()."\n");
-			return FALSE;
+			return false;
 		}
 	}
 

@@ -61,6 +61,7 @@ class Model_Login extends Model
 			$user->email = $row['email'];
 			$user->role = $row['role'];
 			$user->status = $row['status'];
+			// check status
 			switch ($row['status']) {
 				case $user::STATUS_NOTACTIVE:
 					$form['error_msg'] = 'Учетная запись не активирована!';

@@ -25,6 +25,7 @@ class Model_Address extends Db_Helper
 	const TYPE_RES = 1;
 
 	public $id;
+	public $id_user;
 	public $id_resume;
 	public $id_country;
 	public $type;
@@ -48,6 +49,125 @@ class Model_Address extends Db_Helper
 	}
 
 	/**
+     * Address rules.
+     *
+     * @return array
+     */
+	public function rules()
+	{
+		return [
+				'id' => [
+						'required' => 1,
+						'insert' => 0,
+						'update' => 0,
+						'value' => $this->id
+						],
+				'id_user' => [
+							'required' => 1,
+							'insert' => 1,
+							'update' => 0,
+							'value' => $this->id_user
+							],
+				'id_resume' => [
+								'required' => 1,
+								'insert' => 1,
+								'update' => 0,
+								'value' => $this->id_resume
+								],
+				'id_country' => [
+								'required' => 1,
+								'insert' => 1,
+								'update' => 1,
+								'value' => $this->id_country
+								],
+				'type' => [
+							'required' => 1,
+							'insert' => 1,
+							'update' => 0,
+							'value' => $this->type
+							],
+				'kladr' => [
+							'required' => 1,
+							'insert' => 1,
+							'update' => 0,
+							'value' => $this->kladr
+							],
+				'region' => [
+							'required' => 0,
+							'insert' => 1,
+							'update' => 1,
+							'value' => $this->region
+							],
+				'area' => [
+							'required' => 0,
+							'insert' => 1,
+							'update' => 1,
+							'value' => $this->area
+							],
+				'city' => [
+							'required' => 0,
+							'insert' => 1,
+							'update' => 1,
+							'value' => $this->city
+							],
+				'location' => [
+								'required' => 0,
+								'insert' => 1,
+								'update' => 1,
+								'value' => $this->location
+								],
+				'street' => [
+							'required' => 0,
+							'insert' => 1,
+							'update' => 1,
+							'value' => $this->street
+							],
+				'house' => [
+							'required' => 0,
+							'insert' => 1,
+							'update' => 1,
+							'value' => $this->house
+							],
+				'building' => [
+								'required' => 0,
+								'insert' => 1,
+								'update' => 1,
+								'value' => $this->building
+								],
+				'flat' => [
+							'required' => 0,
+							'insert' => 1,
+							'update' => 1,
+							'value' => $this->flat
+							],
+				'postcode' => [
+								'required' => 0,
+								'insert' => 1,
+								'update' => 1,
+								'value' => $this->postcode
+								],
+				'adr' => [
+						'required' => 1,
+						'insert' => 1,
+						'update' => 1,
+						'value' => $this->adr
+						],
+				'dt_created' => [
+								'required' => 1,
+								'insert' => 1,
+								'update' => 0,
+								'value' => $this->dt_created
+								],
+				'dt_updated' => [
+								'required' => 0,
+								'insert' => 0,
+								'update' => 1,
+								'value' => $this->dt_updated
+								]
+				];
+	}
+
+	/**
      * Gets address by resume/type.
      *
      * @return array
@@ -63,28 +183,14 @@ class Model_Address extends Db_Helper
 	/**
      * Saves address data to database.
      *
-     * @return boolean
+     * @return integer
      */
 	public function save()
 	{
-		return $this->rowInsert('id_resume, id_country, type, kladr, region, area, city, location, street, house, building, flat, postcode, adr, dt_created',
-								self::TABLE_NAME,
-								':id_resume, :id_country, :type, :kladr, :region, :area, :city, :location, :street, :house, :building, :flat, :postcode, :adr, :dt_created',
-								[':id_resume' => $this->id_resume,
-								':id_country' => $this->id_country,
-								':type' => $this->type,
-								':kladr' => $this->kladr,
-								':region' => $this->region,
-								':area' => $this->area,
-								':city' => $this->city,
-								':location' => $this->location,
-								':street' => $this->street,
-								':house' => $this->house,
-								':building' => $this->building,
-								':flat' => $this->flat,
-								':postcode' => $this->postcode,
-								':adr' => $this->adr,
-								':dt_created' => $this->dt_created]);
+		$this->dt_created = date('Y-m-d H:i:s');
+		$this->dt_updated = null;
+		$prepare = $this->prepareInsert(self::TABLE_NAME, $this->rules());
+		return $this->rowInsert($prepare['fields'], self::TABLE_NAME, $prepare['conds'], $prepare['params']);
 	}
 
 	/**
@@ -94,23 +200,9 @@ class Model_Address extends Db_Helper
      */
 	public function changeAll()
 	{
-		return $this->rowUpdate(self::TABLE_NAME,
-								'id_resume = :id_resume, id_country = :id_country, type = :type, region = :region, area = :area, city = :city, location = :location, street = :street, house = :house, building = :building, flat = :flat, postcode = :postcode, adr = :adr, dt_updated = :dt_updated',
-								[':id_resume' => $this->id_resume,
-								':id_country' => $this->id_country,
-								':type' => $this->type,
-								':region' => $this->region,
-								':area' => $this->area,
-								':city' => $this->city,
-								':location' => $this->location,
-								':street' => $this->street,
-								':house' => $this->house,
-								':building' => $this->building,
-								':flat' => $this->flat,
-								':postcode' => $this->postcode,
-								':adr' => $this->adr,
-								':dt_updated' => date('Y-m-d H:i:s')],
-								['id' => $this->id]);
+		$this->dt_updated = date('Y-m-d H:i:s');
+		$prepare = $this->prepareUpdate(self::TABLE_NAME, $this->rules());
+		return $this->rowUpdate(self::TABLE_NAME, $prepare['fields'], $prepare['params'], ['id' => $this->id]);
 	}
 
 	public function __destruct()
