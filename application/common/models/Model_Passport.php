@@ -94,7 +94,7 @@ class Model_Passport extends Db_Helper
 								'value' => $this->dt_issue
 								],
 				'unit_name' => [
-								'required' => 1,
+								'required' => 0,
 								'insert' => 1,
 								'update' => 1,
 								'value' => $this->unit_name

@@ -139,8 +139,8 @@ class Model_Personal extends Db_Helper
      */
 	public function getByResume()
 	{
-		return $this->rowSelectOne(self::TABLE_NAME.'.id, id_resume, name_first, name_middle, name_last, sex, birth_dt, birth_place, dict_citizenship.citizenship_name as citizenship, '.self::TABLE_NAME.'.citizenship as id_citizenship, dt_created, dt_updated, '.self::TABLE_NAME.'.guid',
-								self::TABLE_NAME.' INNER JOIN dict_citizenship ON '.self::TABLE_NAME.'.citizenship = dict_citizenship.id',
+		return $this->rowSelectOne(self::TABLE_NAME.'.id, id_resume, name_first, name_middle, name_last, sex, birth_dt, birth_place, dict_countries.description as citizenship, '.self::TABLE_NAME.'.citizenship as id_citizenship, dt_created, dt_updated, '.self::TABLE_NAME.'.guid',
+								self::TABLE_NAME.' INNER JOIN dict_countries ON '.self::TABLE_NAME.'.citizenship = dict_countries.id',
 								'id_resume = :id_resume',
 								[':id_resume' => $this->id_resume]);
 	}

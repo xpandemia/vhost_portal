@@ -54,7 +54,7 @@ class Model_Main extends Model
 				session_start();
 				ob_start(); // start output buffer
 				Basic_Helper::redirect(LOGIN['hdr'], 202, LOGIN['ctr'], 'Index');
-			case 'case':
+			case 'cas':
 				\phpCAS::logout();
 			default:
 				session_start();

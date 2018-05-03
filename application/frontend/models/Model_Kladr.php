@@ -60,7 +60,7 @@ class Model_Kladr extends Db_Helper
 		// get kladr
 		$kladr = $this->kladr->getByCode($region);
 		$code_region = $kladr['code_region'];
-		// get area by region
+		// get areas by region
 		$area = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
 										'kladr',
 										'level = :level AND code_region = :code_region',
@@ -83,7 +83,7 @@ class Model_Kladr extends Db_Helper
 		// get kladr
 		$kladr = $this->kladr->getByCode($region);
 		$code_region = $kladr['code_region'];
-		// get city by region
+		// get cities by region
 		$city = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
 										'kladr',
 										'level = :level AND code_region = :code_region',
@@ -97,6 +97,34 @@ class Model_Kladr extends Db_Helper
 	}
 
 	/**
+     * Gets locations by city JSON.
+     *
+     * @return JSON
+     */
+	public function getLocationByCityJSON($city) : string
+	{
+		// get kladr
+		$kladr = $this->kladr->getByCode($city);
+		$code_region = $kladr['code_region'];
+		$code_area = $kladr['code_area'];
+		$code_city = $kladr['code_city'];
+		// get locations by area
+		$location = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
+											'kladr',
+											'level = :level AND code_region = :code_region AND code_area = :code_area AND code_city = :code_city',
+											[':level' => self::LOCATION,
+											':code_region' => $code_region,
+											':code_area' => $code_area,
+											':code_city' => $code_city]);
+		foreach ($location as $value) {
+			$location_json[] = ['kladr_code' => $value['kladr_code'],
+								'kladr_name' => $value['kladr_name'],
+								'kladr_abbr' => $value['kladr_abbr']];
+		}
+		return json_encode($location_json);
+	}
+
+	/**
      * Gets locations by area JSON.
      *
      * @return JSON
@@ -107,7 +135,7 @@ class Model_Kladr extends Db_Helper
 		$kladr = $this->kladr->getByCode($area);
 		$code_region = $kladr['code_region'];
 		$code_area = $kladr['code_area'];
-		// get location by area
+		// get locations by area
 		$location = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
 											'kladr',
 											'level = :level AND code_region = :code_region AND code_area = :code_area',

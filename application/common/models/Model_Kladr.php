@@ -114,6 +114,29 @@ class Model_Kladr extends Db_Helper
 	}
 
 	/**
+     * Gets locations by city.
+     *
+     * @return array
+     */
+	public function getLocationByCity() : array
+	{
+		// get kladr
+		$kladr = $this->getByCode($this->city);
+		$code_region = $kladr['code_region'];
+		$code_area = $kladr['code_area'];
+		$code_city = $kladr['code_city'];
+		// get location by area
+		$location = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
+											'kladr',
+											'level = :level AND code_region = :code_region AND code_area = :code_area AND code_city = :code_city',
+											[':level' => self::LOCATION,
+											':code_region' => $code_region,
+											':code_area' => $code_area,
+											':code_city' => $code_city]);
+		return $location;
+	}
+
+	/**
      * Gets streets by city.
      *
      * @return array

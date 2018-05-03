@@ -2,6 +2,8 @@
 
 $phpcas_path = '../../source/';
 
+define('CAS_DOMAIN', 'bsu.edu.ru');
+
 ///////////////////////////////////////
 // Basic Config of the phpCAS client //
 ///////////////////////////////////////

@@ -42,8 +42,6 @@ class Controller_Resume extends Controller
 			if (!empty($this->form['passport_type_old'])) {
 				$this->form['passport_old_yes'] = 'checked';
 			}
-			$this->form = $this->model->setAddressReg($this->form);
-			$this->form = $this->model->setAddressRes($this->form);
 		} else {
 			if ($this->resume->save()) {
 				$row = $this->resume->getByUser();
@@ -66,6 +64,8 @@ class Controller_Resume extends Controller
 				Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Index', $this->form);
 			}
 		}
+		$this->form = $this->model->setAddressReg($this->form);
+		$this->form = $this->model->setAddressRes($this->form);
 		return $this->view->generate('resume.php', 'form.php', RESUME['hdr'], $this->form);
 	}
 
@@ -111,16 +111,16 @@ class Controller_Resume extends Controller
 			($this->form['status'] === $this->resume::STATUS_CREATED) ? $this->form['personal_vis'] = true : $this->form['personal_vis'] = false;
 		$this->form = $this->model->validateForm($this->form, $this->model->rules());
 		$this->form = $this->model->validateAgreement($this->form);
+		$this->form = $this->model->validatePassport($this->form);
 		$this->form = $this->model->validatePassportOld($this->form);
 		if ($this->form['validate']) {
 			$this->form = $this->model->check($this->form);
 			if (!$this->form['error_msg']) {
-				$this->form = null;
-				$this->form['error_msg'] = null;
 				$this->form['success_msg'] = 'Анкета успешно сохранена!';
-				return $this->view->generate('main.php', 'main.php', APP_NAME, $this->form);
 			}
 		} else {
+			$this->form = $this->model->setAddressReg($this->form);
+			$this->form = $this->model->setAddressRes($this->form);
 			$this->form = $this->model->unsetScans($this->form);
 		}
 		return $this->view->generate('resume.php', 'form.php', RESUME['hdr'], $this->form);

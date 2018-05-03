@@ -54,7 +54,7 @@ class Form_Helper
 						// required check
 						case 'required':
 							if ($rules[$field_name]['type'] === 'checkbox' || $rules[$field_name]['type'] === 'radio') {
-								if (!$form[$field_name]) {
+								if (!$form[$field_name] && $form[$field_name] != '0') {
 									$validate = false;
 									$form[$field_name.'_err'] = $rule_var_arr['msg'];
 								}

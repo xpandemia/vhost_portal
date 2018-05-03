@@ -79,8 +79,10 @@ class Model_Signup extends Model
 			$user->username = $form['username'];
 			$user->email = $form['email'];
 			$user->pwd_hash = $user->GetHash($form['pwd']);
+			$user->role = $user::ROLE_GUEST;
 			switch (SIGNUP) {
 				case 'login':
+					$user->status = $user::STATUS_ACTIVE;
 					if ($user->save() > 0) {
 						$form['success_msg'] = 'Регистрация выполнена успешно.';
 						$form['error_msg'] = null;

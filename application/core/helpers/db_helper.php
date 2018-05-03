@@ -82,7 +82,7 @@ class Db_Helper
 					case 'insert':
 						if ($rule_var == 1) {
 							if ($rules[$field_name]['required'] == 1) {
-								if (!empty($rules[$field_name]['value']) || $rules[$field_name]['value'] == 0) {
+								if (!empty($rules[$field_name]['value']) || $rules[$field_name]['value'] == '0') {
 									if ($i == 1) {
 										$result['fields'] = $field_name;
 										$result['conds'] = ':'.$field_name;
@@ -130,7 +130,7 @@ class Db_Helper
 				switch ($rule_name) {
 					case 'update':
 						if ($rule_var == 1) {
-							if ($rules[$field_name]['required'] == 1 && empty($rules[$field_name]['value'])) {
+							if ($rules[$field_name]['required'] == 1 && empty($rules[$field_name]['value']) && $rules[$field_name]['value'] != '0') {
 								throw new \InvalidArgumentException('Поле '.$field_name.' таблицы '.$table_name.' обязательно для заполнения!');
 							} else {
 								if ($i == 1) {

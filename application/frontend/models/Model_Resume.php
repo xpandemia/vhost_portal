@@ -102,7 +102,6 @@ class Model_Resume extends Model
                 'phone' => [
                             'type' => 'text',
                             'class' => 'form-control',
-                            'required' => ['default' => '', 'msg' => 'Мобильный телефон обязателен для заполнения!'],
                             'success' => 'Мобильный телефон заполнен верно.'
                            ],
                 'passport_type' => [
@@ -114,8 +113,7 @@ class Model_Resume extends Model
 	            'series' => [
                             'type' => 'text',
                             'class' => 'form-control',
-                            'pattern' => ['value' => PATTERN_NUMB, 'msg' => 'Для серии можно использовать только цифры!'],
-                            'width' => ['format' => 'string', 'min' => 1, 'max' => 4, 'msg' => 'Слишком длинная серия!'],
+                            'width' => ['format' => 'string', 'min' => 1, 'max' => 10, 'msg' => 'Слишком длинная серия!'],
                             'success' => 'Серия заполнена верно.'
                            ],
                 'numb' => [
@@ -123,7 +121,7 @@ class Model_Resume extends Model
                             'class' => 'form-control',
                             'required' => ['default' => '', 'msg' => 'Номер обязателен для заполнения!'],
                             'pattern' => ['value' => PATTERN_NUMB, 'msg' => 'Для номера можно использовать только цифры!'],
-                            'width' => ['format' => 'string', 'min' => 1, 'max' => 6, 'msg' => 'Слишком длинный номер!'],
+                            'width' => ['format' => 'string', 'min' => 1, 'max' => 15, 'msg' => 'Слишком длинный номер!'],
                             'success' => 'Номер заполнен верно.'
                            ],
                 'dt_issue' => [
@@ -167,15 +165,14 @@ class Model_Resume extends Model
 		        'series_old' => [
 	                            'type' => 'text',
 	                            'class' => 'form-control',
-	                            'pattern' => ['value' => PATTERN_NUMB, 'msg' => 'Для серии можно использовать только цифры!'],
-	                            'width' => ['format' => 'string', 'min' => 1, 'max' => 4, 'msg' => 'Слишком длинная серия!'],
+	                            'width' => ['format' => 'string', 'min' => 1, 'max' => 10, 'msg' => 'Слишком длинная серия!'],
 	                            'success' => 'Серия заполнена верно.'
 	                           ],
                 'numb_old' => [
 	                            'type' => 'text',
 	                            'class' => 'form-control',
 	                            'pattern' => ['value' => PATTERN_NUMB, 'msg' => 'Для номера можно использовать только цифры!'],
-	                            'width' => ['format' => 'string', 'min' => 1, 'max' => 6, 'msg' => 'Слишком длинный номер!'],
+	                            'width' => ['format' => 'string', 'min' => 1, 'max' => 15, 'msg' => 'Слишком длинный номер!'],
 	                            'success' => 'Номер заполнен верно.'
 	                           ],
                 'dt_issue_old' => [
@@ -276,6 +273,40 @@ class Model_Resume extends Model
 	}
 
 	/**
+     * Validates passport.
+     *
+     * @return array
+     */
+	public function validatePassport($form)
+	{
+		if ($form['passport_type'] == '000000047') {
+			// series
+			if (empty($form['series'])) {
+				$form['series_err'] = 'Серия обязательна для заполнения!';
+				$form['series_scs'] = null;
+				$form['series_cls'] = $form['series_cls'].' is-invalid';
+				$form['validate'] = false;
+			}
+			// unit_code
+			if (empty($form['unit_code'])) {
+				$form['unit_code_err'] = 'Код подразделения обязателен для заполнения!';
+				$form['unit_code_scs'] = null;
+				$form['unit_code_cls'] = $form['series_cls'].' is-invalid';
+				$form['validate'] = false;
+			}
+		} else {
+			// dt_end
+			if (empty($form['dt_end'])) {
+				$form['dt_end_err'] = 'Дата окончания действия обязательна для заполнения!';
+				$form['dt_end_scs'] = null;
+				$form['dt_end_cls'] = $form['series_cls'].' is-invalid';
+				$form['validate'] = false;
+			}
+		}
+		return $form;
+	}
+
+	/**
      * Validates old passport.
      *
      * @return array
@@ -289,33 +320,56 @@ class Model_Resume extends Model
 				$form['passport_type_old_scs'] = null;
 				$form['passport_type_old_cls'] = $form['passport_type_old_cls'].' is-invalid';
 				$form['validate'] = false;
-			}
-			// numb
-			if (empty($form['numb_old'])) {
-				$form['numb_old_err'] = 'Номер обязателен для заполнения!';
-				$form['numb_old_scs'] = null;
-				$form['numb_old_cls'] = $form['numb_old_cls'].' is-invalid';
-				$form['validate'] = false;
-			}
-			// dt_issue
-			if (empty($form['dt_issue_old'])) {
-				$form['dt_issue_old_err'] = 'Дата выдачи обязателен для заполнения!';
-				$form['dt_issue_old_scs'] = null;
-				$form['dt_issue_old_cls'] = $form['dt_issue_old_cls'].' is-invalid';
-				$form['validate'] = false;
-			}
-			// unit_name
-			if (empty($form['unit_name_old'])) {
-				$form['unit_name_old_err'] = 'Наименование подразделения обязателен для заполнения!';
-				$form['unit_name_old_scs'] = null;
-				$form['unit_name_old_cls'] = $form['unit_name_old_cls'].' is-invalid';
-				$form['validate'] = false;
-			}
-			// passport_old
-			if (empty($form['passport_old'])) {
-				$form['passport_old_err'] = 'Скан-копия "Ранее выданные паспорта" обязательна для заполнения!';
-				$form['passport_old_scs'] = null;
-				$form['validate'] = false;
+			} elseif ($form['passport_type_old'] == '000000047') {
+				// series
+				if (empty($form['series_old'])) {
+					$form['series_old_err'] = 'Серия обязательна для заполнения!';
+					$form['series_old_scs'] = null;
+					$form['series_old_cls'] = $form['series_old_cls'].' is-invalid';
+					$form['validate'] = false;
+				}
+				// numb
+				if (empty($form['numb_old'])) {
+					$form['numb_old_err'] = 'Номер обязателен для заполнения!';
+					$form['numb_old_scs'] = null;
+					$form['numb_old_cls'] = $form['numb_old_cls'].' is-invalid';
+					$form['validate'] = false;
+				}
+				// dt_issue
+				if (empty($form['dt_issue_old'])) {
+					$form['dt_issue_old_err'] = 'Дата выдачи обязательна для заполнения!';
+					$form['dt_issue_old_scs'] = null;
+					$form['dt_issue_old_cls'] = $form['dt_issue_old_cls'].' is-invalid';
+					$form['validate'] = false;
+				}
+				// unit_code
+				if (empty($form['unit_code_old'])) {
+					$form['unit_code_old_err'] = 'Код подразделения обязателен для заполнения!';
+					$form['unit_code_old_scs'] = null;
+					$form['unit_code_old_cls'] = $form['unit_code_old_cls'].' is-invalid';
+					$form['validate'] = false;
+				}
+				// passport_old
+				if (empty($form['passport_old'])) {
+					$form['passport_old_err'] = 'Скан-копия "Ранее выданные паспорта" обязательна для заполнения!';
+					$form['passport_old_scs'] = null;
+					$form['validate'] = false;
+				}
+			} else {
+				// numb
+				if (empty($form['numb_old'])) {
+					$form['numb_old_err'] = 'Номер обязателен для заполнения!';
+					$form['numb_old_scs'] = null;
+					$form['numb_old_cls'] = $form['numb_old_cls'].' is-invalid';
+					$form['validate'] = false;
+				}
+				// dt_issue
+				if (empty($form['dt_issue_old'])) {
+					$form['dt_issue_old_err'] = 'Дата выдачи обязательна для заполнения!';
+					$form['dt_issue_old_scs'] = null;
+					$form['dt_issue_old_cls'] = $form['dt_issue_old_cls'].' is-invalid';
+					$form['validate'] = false;
+				}
 			}
 		}
 		return $form;
@@ -449,15 +503,15 @@ class Model_Resume extends Model
 			$form['postcode_reg'] = null;
 		} else {
 			$form['kladr_reg'] = (isset($_POST['kladr_reg_not'])) ? 0 : 1;
-			$form['region_reg'] = (isset($_POST['region_reg'])) ? $_POST['region_reg'] : null;
-			$form['area_reg'] = (isset($_POST['area_reg'])) ? $_POST['area_reg'] : null;
-			$form['city_reg'] = (isset($_POST['city_reg'])) ? $_POST['city_reg'] : null;
-			$form['location_reg'] = (isset($_POST['location_reg'])) ? $_POST['location_reg'] : null;
-			$form['street_reg'] = (isset($_POST['street_reg'])) ? $_POST['street_reg'] : null;
-			$form['house_reg'] = (isset($_POST['house_reg'])) ? $_POST['house_reg'] : null;
-			$form['building_reg'] = (isset($_POST['building_reg'])) ? $_POST['building_reg'] : null;
-			$form['flat_reg'] = (isset($_POST['flat_reg'])) ? $_POST['flat_reg'] : null;
-			$form['postcode_reg'] = (isset($_POST['postcode_reg'])) ? $_POST['postcode_reg'] : null;
+			$form['region_reg'] = (isset($_POST['region_reg'])) ? htmlspecialchars($_POST['region_reg']) : null;
+			$form['area_reg'] = (isset($_POST['area_reg'])) ? htmlspecialchars($_POST['area_reg']) : null;
+			$form['city_reg'] = (isset($_POST['city_reg'])) ? htmlspecialchars($_POST['city_reg']) : null;
+			$form['location_reg'] = (isset($_POST['location_reg'])) ? htmlspecialchars($_POST['location_reg']) : null;
+			$form['street_reg'] = (isset($_POST['street_reg'])) ? htmlspecialchars($_POST['street_reg']) : null;
+			$form['house_reg'] = (isset($_POST['house_reg'])) ? htmlspecialchars($_POST['house_reg']) : null;
+			$form['building_reg'] = (isset($_POST['building_reg'])) ? htmlspecialchars($_POST['building_reg']) : null;
+			$form['flat_reg'] = (isset($_POST['flat_reg'])) ? htmlspecialchars($_POST['flat_reg']) : null;
+			$form['postcode_reg'] = (isset($_POST['postcode_reg'])) ? htmlspecialchars($_POST['postcode_reg']) : null;
 		}
 		return $form;
 	}
@@ -482,15 +536,15 @@ class Model_Resume extends Model
 			$form['postcode_res'] = null;
 		} else {
 			$form['kladr_res'] = (isset($_POST['kladr_res_not'])) ? 0 : 1;
-			$form['region_res'] = (isset($_POST['region_res'])) ? $_POST['region_res'] : null;
-			$form['area_res'] = (isset($_POST['area_res'])) ? $_POST['area_res'] : null;
-			$form['city_res'] = (isset($_POST['city_res'])) ? $_POST['city_res'] : null;
-			$form['location_res'] = (isset($_POST['location_res'])) ? $_POST['location_res'] : null;
-			$form['street_res'] = (isset($_POST['street_res'])) ? $_POST['street_res'] : null;
-			$form['house_res'] = (isset($_POST['house_res'])) ? $_POST['house_res'] : null;
-			$form['building_res'] = (isset($_POST['building_res'])) ? $_POST['building_res'] : null;
-			$form['flat_res'] = (isset($_POST['flat_res'])) ? $_POST['flat_res'] : null;
-			$form['postcode_res'] = (isset($_POST['postcode_res'])) ? $_POST['postcode_res'] : null;
+			$form['region_res'] = (isset($_POST['region_res'])) ? htmlspecialchars($_POST['region_res']) : null;
+			$form['area_res'] = (isset($_POST['area_res'])) ? htmlspecialchars($_POST['area_res']) : null;
+			$form['city_res'] = (isset($_POST['city_res'])) ? htmlspecialchars($_POST['city_res']) : null;
+			$form['location_res'] = (isset($_POST['location_res'])) ? htmlspecialchars($_POST['location_res']) : null;
+			$form['street_res'] = (isset($_POST['street_res'])) ? htmlspecialchars($_POST['street_res']) : null;
+			$form['house_res'] = (isset($_POST['house_res'])) ? htmlspecialchars($_POST['house_res']) : null;
+			$form['building_res'] = (isset($_POST['building_res'])) ? htmlspecialchars($_POST['building_res']) : null;
+			$form['flat_res'] = (isset($_POST['flat_res'])) ? htmlspecialchars($_POST['flat_res']) : null;
+			$form['postcode_res'] = (isset($_POST['postcode_res'])) ? htmlspecialchars($_POST['postcode_res']) : null;
 		}
 		return $form;
 	}
@@ -558,18 +612,35 @@ class Model_Resume extends Model
 	public function check($form)
 	{
 		/* checks */
+		// check birth_dt
+		if ($form['birth_dt'] >= date('d.m.Y')) {
+			$form['error_msg'] = 'Дата рождения больше текущей даты или равна ей!';
+			$form['birth_dt_err'] = 'Дата рождения больше текущей даты или равна ей!';
+			$form['birth_dt_scs'] = null;
+			$form['birth_dt_cls'] = $form['birth_dt_cls'].' is-invalid';
+			return $form;
+		}
 		// check passport dt_issue
 		if ($form['dt_issue'] <= $form['birth_dt']) {
-			$form['error_msg'] = 'Дата выдачи паспорта меньше или равна дате рождения!';
+			$form['error_msg'] = 'Дата выдачи документа, удостоверяющего личность, меньше или равна дате рождения!';
+			$form['dt_issue_err'] = 'Дата выдачи документа, удостоверяющего личность, меньше или равна дате рождения!';
+			$form['dt_issue_scs'] = null;
+			$form['dt_issue_cls'] = $form['dt_issue_cls'].' is-invalid';
 			return $form;
 		}
 		// check old passport dt_issue
 		if ($form['passport_old_yes'] == 'checked' && $form['dt_issue_old'] <= $form['birth_dt']) {
-			$form['error_msg'] = 'Дата выдачи старого паспорта меньше или равна дате рождения!';
+			$form['error_msg'] = 'Дата выдачи старого документа, удостоверяющего личность, меньше или равна дате рождения!';
+			$form['dt_issue_old_err'] = 'Дата выдачи старого документа, удостоверяющего личность, меньше или равна дате рождения!';
+			$form['dt_issue_old_scs'] = null;
+			$form['dt_issue_old_cls'] = $form['dt_issue_old_cls'].' is-invalid';
 			return $form;
 		}
 		if ($form['passport_old_yes'] == 'checked' && $form['dt_issue'] <= $form['dt_issue_old']) {
-			$form['error_msg'] = 'Дата выдачи нового паспорта меньше или равна дате выдачи старого паспорта!';
+			$form['error_msg'] = 'Дата выдачи документа, удостоверяющего личность, меньше или равна дате выдачи старого документа, удостоверяющего личность!';
+			$form['dt_issue_err'] = 'Дата выдачи документа, удостоверяющего личность, меньше или равна дате выдачи старого документа, удостоверяющего личность!';
+			$form['dt_issue_scs'] = null;
+			$form['dt_issue_cls'] = $form['dt_issue_cls'].' is-invalid';
 			return $form;
 		}
 		/* personal */
@@ -589,16 +660,12 @@ class Model_Resume extends Model
 		$row_personal = $personal->getByResume();
 		if ($row_personal) {
 			$personal->id = $row_personal['id'];
-			if ($personal->changeAll()) {
-				$form['error_msg'] = null;
-			} else {
+			if (!$personal->changeAll()) {
 				$form['error_msg'] = 'Ошибка при изменении личных данных!';
 				return $form;
 			}
 		} else {
-			if ($personal->save() > 0) {
-				$form['error_msg'] = null;
-			} else {
+			if ($personal->save() == 0) {
 				$form['error_msg'] = 'Ошибка при создании личных данных!';
 				return $form;
 			}
@@ -617,16 +684,12 @@ class Model_Resume extends Model
 		$row_contacts = $contacts->getEmailByResume();
 		if ($row_contacts) {
 			$contacts->id = $row_contacts['id'];
-			if ($contacts->changeAll()) {
-				$form['error_msg'] = null;
-			} else {
+			if (!$contacts->changeAll()) {
 				$form['error_msg'] = 'Ошибка при изменении адреса эл. почты!';
 				return $form;
 			}
 		} else {
-			if ($contacts->save() > 0) {
-				$form['error_msg'] = null;
-			} else {
+			if ($contacts->save() == 0) {
 				$form['error_msg'] = 'Ошибка при создании адреса эл. почты!';
 				return $form;
 			}
@@ -637,17 +700,13 @@ class Model_Resume extends Model
 		$row_contacts = $contacts->getPhoneByResume();
 		if ($row_contacts) {
 			$contacts->id = $row_contacts['id'];
-			if ($contacts->changeAll()) {
-				$form['error_msg'] = null;
-			} else {
-				$form['error_msg'] = 'Ошибка при изменении мобильного телефона!';
+			if (!$contacts->changeAll()) {
+				$form['error_msg'] = 'Ошибка при изменении номера мобильного телефона!';
 				return $form;
 			}
 		} else {
-			if ($contacts->save() > 0) {
-				$form['error_msg'] = null;
-			} else {
-				$form['error_msg'] = 'Ошибка при создании мобильного телефона!';
+			if ($contacts->save() == 0) {
+				$form['error_msg'] = 'Ошибка при создании номера мобильного телефона!';
 				return $form;
 			}
 		}
@@ -669,17 +728,13 @@ class Model_Resume extends Model
 		$passport->dt_end = (empty($form['dt_end'])) ? null : date('Y-m-d', strtotime($form['dt_end']));
 		$row_passport = $passport->getByResume();
 		if ($row_passport) {
-			if ($passport->changeAll()) {
-				$form['error_msg'] = null;
-			} else {
-				$form['error_msg'] = 'Ошибка при изменении паспортных данных!';
+			if (!$passport->changeAll()) {
+				$form['error_msg'] = 'Ошибка при изменении данных документа, удостоверяющего личность!';
 				return $form;
 			}
 		} else {
-			if ($passport->save() > 0) {
-				$form['error_msg'] = null;
-			} else {
-				$form['error_msg'] = 'Ошибка при создании паспортных данных!';
+			if ($passport->save() == 0) {
+				$form['error_msg'] = 'Ошибка при создании данных документа, удостоверяющего личность!';
 				return $form;
 			}
 		}
@@ -693,22 +748,18 @@ class Model_Resume extends Model
 				$passport->series = (empty($form['series_old'])) ? null : $form['series_old'];
 				$passport->numb = $form['numb_old'];
 				$passport->dt_issue = date('Y-m-d', strtotime($form['dt_issue_old']));
-				$passport->unit_name = $form['unit_name_old'];
+				$passport->unit_name = (empty($form['unit_name_old'])) ? null : $form['unit_name_old'];
 				$passport->unit_code = (empty($form['unit_code_old'])) ? null : $form['unit_code_old'];
 				$passport->dt_end = (empty($form['dt_end_old'])) ? null : date('Y-m-d', strtotime($form['dt_end_old']));
 				$row_passport = $passport->getByResume();
 				if ($row_passport) {
-					if ($passport->changeAll()) {
-						$form['error_msg'] = null;
-					} else {
-						$form['error_msg'] = 'Ошибка при изменении данных старого паспорта!';
+					if (!$passport->changeAll()) {
+						$form['error_msg'] = 'Ошибка при изменении данных старого документа, удостоверяющего личность!';
 						return $form;
 					}
 				} else {
-					if ($passport->save() > 0) {
-						$form['error_msg'] = null;
-					} else {
-						$form['error_msg'] = 'Ошибка при создании данных старого паспорта!';
+					if ($passport->save() == 0) {
+						$form['error_msg'] = 'Ошибка при создании данных старого документа, удостоверяющего личность!';
 						return $form;
 					}
 				}
@@ -738,17 +789,13 @@ class Model_Resume extends Model
 		if ($row_address_reg) {
 			if ($row_address_reg['id_country'] != $address_reg->id_country || $row_address_reg['adr'] != $address_reg->adr) {
 				$address_reg->id = $row_address_reg['id'];
-				if ($address_reg->changeAll()) {
-					$form['error_msg'] = null;
-				} else {
+				if (!$address_reg->changeAll()) {
 					$form['error_msg'] = 'Ошибка при изменении адреса регистрации!';
 					return $form;
 				}
 			}
 		} else {
-			if ($address_reg->save() > 0) {
-				$form['error_msg'] = null;
-			} else {
+			if ($address_reg->save() == 0) {
 				$form['error_msg'] = 'Ошибка при создании адреса регистрации!';
 				return $form;
 			}
@@ -777,17 +824,13 @@ class Model_Resume extends Model
 		if ($row_address_res) {
 			if ($row_address_res['id_country'] != $address_res->id_country || $row_address_res['adr'] != $address_res->adr) {
 				$address_res->id = $row_address_res['id'];
-				if ($address_res->changeAll()) {
-					$form['error_msg'] = null;
-				} else {
+				if (!$address_res->changeAll()) {
 					$form['error_msg'] = 'Ошибка при изменении адреса проживания!';
 					return $form;
 				}
 			}
 		} else {
-			if ($address_res->save() > 0) {
-				$form['error_msg'] = null;
-			} else {
+			if ($address_res->save() == 0) {
 				$form['error_msg'] = 'Ошибка при создании адреса проживания!';
 				return $form;
 			}

@@ -67,6 +67,16 @@ class Controller_Kladr extends Controller
 	}
 
 	/**
+     * Prints locations by city JSON.
+     *
+     * @return void
+     */
+	public function actionLocationByCityJSON()
+	{
+		echo $this->model->getLocationByCityJSON($this->code);
+	}
+
+	/**
      * Prints locations by area JSON.
      *
      * @return void

@@ -23,7 +23,7 @@ class Model_Ege extends Model
                 'description' => [
 	                            'type' => 'text',
 	                            'class' => 'form-control',
-	                            'pattern' => ['value' => PATTERN_ALPHA_NUMB_RUS, 'msg' => 'Для описания можно использовать только русские буквы и цифры!'],
+	                            'pattern' => ['value' => PATTERN_INFO_RUS, 'msg' => 'Для описания можно использовать только русские буквы и цифры!'],
 	                            'width' => ['format' => 'string', 'min' => 0, 'max' => 100, 'msg' => 'Слишком длинное описание!'],
 	                            'success' => 'Описание заполнено верно.'
 	                           ],

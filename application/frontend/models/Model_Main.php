@@ -30,7 +30,9 @@ class Model_Main extends Model
 			$user->setUser();
 			return true;
 		} else {
-			$user->email = $_SESSION[APP_CODE]['user_name'].'@bsu.edu.ru';
+			$user->email = $_SESSION[APP_CODE]['user_name'].'@'.CAS_DOMAIN;
+			$user->role = $user::ROLE_GUEST;
+			$user->status = $user::STATUS_ACTIVE;
 			if ($user->save()) {
 				$user_row = $user->getByUsername();
 				if ($user_row) {
@@ -40,6 +42,8 @@ class Model_Main extends Model
 					$user->status = $user_row['status'];
 					$user->setUser();
 					return true;
+				} else {
+					return false;
 				}
 			} else {
 				return false;
@@ -63,7 +67,7 @@ class Model_Main extends Model
 				session_start();
 				ob_start(); // start output buffer
 				Basic_Helper::redirect(LOGIN['hdr'], 202, LOGIN['ctr'], 'Index');
-			case 'case':
+			case 'cas':
 				\phpCAS::logout();
 			default:
 				session_start();
