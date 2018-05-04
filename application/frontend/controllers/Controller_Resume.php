@@ -66,6 +66,7 @@ class Controller_Resume extends Controller
 		}
 		$this->form = $this->model->setAddressReg($this->form);
 		$this->form = $this->model->setAddressRes($this->form);
+		$this->form = $this->model->setForeignLangs($this->form);
 		return $this->view->generate('resume.php', 'form.php', RESUME['hdr'], $this->form);
 	}
 
@@ -79,6 +80,7 @@ class Controller_Resume extends Controller
 		$this->form = $this->model->resetForm(true, $this->form, $this->model->rules());
 		$this->form = $this->model->resetAddressReg($this->form);
 		$this->form = $this->model->resetAddressRes($this->form);
+		$this->form = $this->model->resetForeignLangs($this->form);
 			$row = $this->resume->getByUser();
 			if ($row) {
 				$this->form['id'] = $row['id'];
@@ -100,6 +102,7 @@ class Controller_Resume extends Controller
 		$this->form = $this->model->getForm($this->model->rules(), $_POST, $_FILES);
 		$this->form = $this->model->getAddressReg($this->form);
 		$this->form = $this->model->getAddressRes($this->form);
+		$this->form = $this->model->getForeignLangs($this->form);
 			$row = $this->resume->getByUser();
 			if ($row) {
 				$this->form['id'] = $row['id'];
@@ -123,6 +126,7 @@ class Controller_Resume extends Controller
 			$this->form = $this->model->setAddressRes($this->form);
 			$this->form = $this->model->unsetScans($this->form);
 		}
+		$this->form = $this->model->setForeignLangs($this->form);
 		return $this->view->generate('resume.php', 'form.php', RESUME['hdr'], $this->form);
 	}
 

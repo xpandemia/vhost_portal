@@ -18,6 +18,7 @@ class Model_DictEductypes extends Db_Helper
 	public $code;
 	public $description;
 	public $guid;
+	public $active;
 
 	public $db;
 
@@ -69,6 +70,12 @@ class Model_DictEductypes extends Db_Helper
 							'insert' => 1,
 							'update' => 0,
 							'value' => $this->guid
+							],
+				'active' => [
+							'required' => 1,
+							'insert' => 1,
+							'update' => 1,
+							'value' => $this->active
 							]
 				];
 	}
@@ -102,9 +109,8 @@ class Model_DictEductypes extends Db_Helper
 	{
 		return $this->rowSelectAll('*',
 									self::TABLE_NAME,
-									'isfolder = :isfolder AND parent_key = :parent_key',
-									[':isfolder' => 0,
-									':parent_key' => '00000000-0000-0000-0000-000000000000']);
+									'active = :active',
+									[':active' => 1]);
 	}
 
 	/**
@@ -114,6 +120,7 @@ class Model_DictEductypes extends Db_Helper
      */
 	public function save()
 	{
+		$this->active = 1;
 		$prepare = $this->prepareInsert(self::TABLE_NAME, $this->rules());
 		return $this->rowInsert($prepare['fields'], self::TABLE_NAME, $prepare['conds'], $prepare['params']);
 	}

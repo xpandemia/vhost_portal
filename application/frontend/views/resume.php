@@ -5,6 +5,8 @@ use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 use tinyframe\core\helpers\Form_Helper as Form_Helper;
 use frontend\models\Model_Resume as Model_Resume;
 use common\models\Model_Kladr as Model_Kladr;
+use common\models\Model_ForeignLangs as ForeignLangs;
+use common\models\Model_DictForeignLangs as DictForeignLangs;
 
 	// check resume
 	if (!isset($data['status'])) {
@@ -616,7 +618,40 @@ use common\models\Model_Kladr as Model_Kladr;
 										'success' => $data['address_res_scs'],
 										'error' => $data['address_res_err'],
 										'help' => ADRRES['help']]);
-
+		/* foreign languages */
+		echo Form_Helper::setFormHeaderSub('Знание иностранных языков');
+		echo HTML_Helper::setButton('btn btn-success', 'btn_lang_add', 'Добавить иностранный язык');
+		echo '<p></p>';
+		$i = 1;
+		foreach (array_filter($data, function ($var)
+							        {
+							            return(substr($var, 0, 4) == 'lang');
+							        }, ARRAY_FILTER_USE_KEY) as $key => $value)
+        {
+			$lang = new DictForeignLangs();
+			$lang_arr = $lang->getAll();
+			if ($lang_arr) {
+				echo '<div class="form-group row" id="div_lang'.$i.'">';
+				echo '<div class="col col-sm-3">';
+				echo '<label class="font-weight-bold" for="lang'.$i.'">Иностранный язык №'.$i.'</label>';
+				echo '</div>';
+				echo '<div class="col col-sm-9">';
+				echo '<select class="form-control" id="lang'.$i.'" name="lang'.$i.'">';
+				foreach ($lang_arr as $lang_row) {
+					echo '<option value="'.$lang_row['code'].'"'.
+						(($data['lang'.$i] === $lang_row['code']) ? ' selected' : '').'>'.
+						$lang_row['description'].
+						'</option>';
+				}
+				echo '</select>';
+				echo '</div>';
+				echo '</div>';
+			} else {
+				echo 'Ошибка справочника инстранных языков!';
+			}
+			$i++;
+		}
+		echo HTML_Helper::setButton('btn btn-danger', 'btn_lang_remove', 'Удалить иностранный язык');
 		/* scans */
 		echo Form_Helper::setFormHeaderSub('Скан-копии');
 		echo Form_Helper::setFormFileListDB(['required' => 'required',
@@ -1397,6 +1432,28 @@ use common\models\Model_Kladr as Model_Kladr;
 			}
 		});
 
+		// lang add click
+		$('#btn_lang_add').click(function() {
+			var langs = $("select[id^='lang']").length;
+			if (langs == 0) {
+				$('#btn_lang_add').after('<div class="form-group row" id="div_lang1"><div class="col col-sm-3"><label class="font-weight-bold" for="lang1">Иностранный язык №1</label></div><div class="col col-sm-9"><select class="form-control" id="lang1" name="lang1"></select></div></div>');
+				getLangAJAX('/frontend/DictForeignLangs/ForeignLangsJSON', '#lang1');
+			} else {
+				var lang_numb = langs + 1;
+				var lang = 'lang'+lang_numb;
+				$('#div_lang'+langs).after('<div class="form-group row" id="div_lang'+lang_numb+'"><div class="col col-sm-3"><label class="font-weight-bold" for="'+lang+'">Иностранный язык №'+lang_numb+'</label></div><div class="col col-sm-9"><select class="form-control" id="'+lang+'" name="'+lang+'"></select></div></div>');
+				getLangAJAX('/frontend/DictForeignLangs/ForeignLangsJSON', '#'+lang);
+			}
+		});
+
+		// lang remove click
+		$('#btn_lang_remove').click(function() {
+			var langs = $("select[id^='lang']").length;
+			if (langs > 0) {
+				$('#div_lang'+langs).remove();
+			}
+		});
+
 		// submit click
 		$('#btn_save').click(function() {
 			$('#citizenship').prop('disabled', false);
@@ -1460,6 +1517,29 @@ use common\models\Model_Kladr as Model_Kladr;
             $(select).append('<option></option>');
 	        $.each(result, function(key, value){
 	            $(select).append('<option value="' + value.kladr_code + '">' + value.kladr_name + ' ' + value.kladr_abbr + '</option>');
+	        });
+	      },
+	      error: function(xhr, status, error) {
+		      console.log('Request Failed: ' + status + ' ' + error + ' ' + xhr.status + ' ' + xhr.statusText);
+		  }
+	    });
+	    stopLoadingAnimation();
+	    $(select).val('');
+	}
+
+	function getLangAJAX(url, select)
+	{
+		startLoadingAnimation();
+		$.ajax({
+	      url: url,
+	      type: 'POST',
+	      data: {format: 'json'},
+		  dataType: 'json',
+		  success: function(result) {
+	        $(select).empty();
+            $(select).append('<option></option>');
+	        $.each(result, function(key, value){
+	            $(select).append('<option value="' + value.code + '">' + value.description + '</option>');
 	        });
 	      },
 	      error: function(xhr, status, error) {

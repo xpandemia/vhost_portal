@@ -34,6 +34,12 @@ class Model_Application extends Model
                                 'class' => 'form-control',
                                 'required' => ['default' => '', 'msg' => 'Приёмная кампания обязательна для заполнения!'],
 								'success' => 'Приёмная кампания заполнена верно.'
+                               ],
+                'docs_educ' => [
+								'type' => 'selectlist',
+                                'class' => 'form-control',
+                                'required' => ['default' => '', 'msg' => 'Документ об образовании обязателен для заполнения!'],
+								'success' => 'Документ об образовании заполнен верно.'
                                ]
 	            ];
 	}
@@ -96,6 +102,7 @@ class Model_Application extends Model
 			$campaign->code = $form['campaign'];
 			$row_campaign = $campaign->getByCode();
 		$app->id_campaign = $row_campaign['id'];
+		$app->id_docseduc = $form['docs_educ'];
 		$app->type = $app::TYPE_NEW;
 		$app->id = $app->save();
 		if ($app->id > 0) {

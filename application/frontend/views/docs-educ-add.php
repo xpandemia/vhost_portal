@@ -29,9 +29,11 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 												'required' => 'yes',
 												'required_style' => 'StarUp',
 												'model_class' => 'common\\models\\Model_DictDoctypes',
-												'model_method' => 'getDiplomas',
+												'model_method' => ((!empty($data['educ_type'])) ? 'getDiplomasByEducCode' : null),
 												'model_field' => 'code',
 												'model_field_name' => 'description',
+												'model_filter' => 'code_educ',
+												'model_filter_val' => $data['educ_type'],
 												'value' => $data['doc_type'],
 												'success' => $data['doc_type_scs'],
 												'error' => $data['doc_type_err']]);
@@ -115,6 +117,67 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 		echo Form_Helper::setFormEnd();
 	?>
 </div>
+
+<script>
+	$(document).ready(function(){
+		formEvents();
+	});
+</script>
+
+<script>
+	// form events
+	function formEvents() {
+		// educ_type change
+		$('#educ_type').change(function() {
+			var educ_type = $('#educ_type').val();
+			if (educ_type == '') {
+				$('#doc_type').empty();
+			} else {
+				getDiplomaAJAX('/frontend/DictDoctypes/DiplomasByEducCodeJSON', educ_type, '#doc_type');
+			}
+		});
+	}
+
+	function getDiplomaAJAX(url, code, select)
+	{
+		startLoadingAnimation();
+		$.ajax({
+	      url: url,
+	      type: 'POST',
+	      data: {format: 'json'},
+		  dataType: 'json',
+		  data: {code: code},
+	      success: function(result) {
+	        $(select).empty();
+            $(select).append('<option></option>');
+	        $.each(result, function(key, value){
+	            $(select).append('<option value="' + value.code + '">' + value.description + '</option>');
+	        });
+	      },
+	      error: function(xhr, status, error) {
+		      console.log('Request Failed: ' + status + ' ' + error + ' ' + xhr.status + ' ' + xhr.statusText);
+		  }
+	    });
+	    stopLoadingAnimation();
+	    $(select).val('');
+	}
+
+	function startLoadingAnimation()
+	{
+	  var imgObj = $("#loadImg");
+	  imgObj.show();
+
+	  var centerY = $(window).scrollTop() + ($(window).height() + imgObj.height())/2;
+	  var centerX = $(window).scrollLeft() + ($(window).width() + imgObj.width())/2;
+
+	  imgObj.offset({ top:centerY, left:centerX });
+	}
+
+	function stopLoadingAnimation()
+	{
+	  $("#loadImg").hide();
+	}
+</script>
 
 <script>
 	$(function(){

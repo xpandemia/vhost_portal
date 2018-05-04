@@ -26,7 +26,6 @@ class Model_AdmissionCampaign extends Model
 	public function getByUniversityJSON($university) : string
 	{
 		$this->adm->university = $university;
-		$this->adm->university;
 		$adm = $this->adm->getByUniversity();
 			foreach ($adm as $value) {
 				$adm_json[] = ['code' => $value['code'],

@@ -72,7 +72,7 @@ use frontend\models\Model_Application as Model_Application;
 			?>
 			</table>
 			<?php
-				// save PDF
+				// save application as PDF
 				echo HTML_Helper::setHrefButtonIcon('ApplicationSpec', 'SavePdf', 'font-weight-bold', 'fas fa-print fa-3x', 'Распечатать заявление');
 				/* scans */
 				echo Form_Helper::setFormHeaderSub('Скан-копии');

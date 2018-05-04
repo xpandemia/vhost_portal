@@ -27,6 +27,7 @@ class Model_Application extends Db_Helper
 	public $id_user;
 	public $id_university;
 	public $id_campaign;
+	public $id_docseduc;
 	public $id_app;
 	public $type;
 	public $status;
@@ -72,6 +73,12 @@ class Model_Application extends Db_Helper
 								'insert' => 1,
 								'update' => 0,
 								'value' => $this->id_campaign
+								],
+				'id_docseduc' => [
+								'required' => 1,
+								'insert' => 1,
+								'update' => 1,
+								'value' => $this->id_docseduc
 								],
 				'id_app' => [
 							'required' => 0,
@@ -142,6 +149,10 @@ class Model_Application extends Db_Helper
 				'campaign' => [
 								'name' => 'Приёмная кампания',
 								'type' => 'string'
+								],
+				'docs_educ' => [
+								'name' => 'Документ об образовании',
+								'type' => 'string'
 								]
 				];
 	}
@@ -167,9 +178,18 @@ class Model_Application extends Db_Helper
      */
 	public function getByUserGrid()
 	{
-		return $this->rowSelectAll('application.id, dict_university.code as university, admission_campaign.description as campaign, reason.numb as reason, getAppTypeName(application.type) as type, getAppStatusName(application.status) as status, application.numb',
+		return $this->rowSelectAll("application.id,".
+									" dict_university.code as university,".
+									" admission_campaign.description as campaign,".
+									" concat(dict_doctypes.description, ' № ', docs_educ.series, '-', docs_educ.numb, ' от ', date_format(dt_issue, '%d.%m.%Y')) as docs_educ,".
+									" reason.numb as reason,".
+									" getAppTypeName(application.type) as type,".
+									" getAppStatusName(application.status) as status,".
+									" application.numb",
 									'application INNER JOIN dict_university ON application.id_university = dict_university.id'.
 									' INNER JOIN admission_campaign ON application.id_campaign = admission_campaign.id'.
+									' INNER JOIN docs_educ ON application.id_docseduc = docs_educ.id'.
+									' INNER JOIN dict_doctypes ON docs_educ.id_doctype = dict_doctypes.id'.
 									' LEFT OUTER JOIN application reason ON application.id_app = reason.id',
 									'application.id_user = :id_user',
 									[':id_user' => $this->id_user]);

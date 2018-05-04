@@ -255,9 +255,11 @@ class Form_Helper
 	public static function setFormInputText($rules) : string
 	{
 		if (isset($rules) && is_array($rules)) {
-			return '<div class="form-group">'.
+			return '<div class="form-group row">'.
 						'<label class="font-weight-bold" for="'.$rules['control'].'">'.$rules['label'].'</label>'.
-						'<input type="text" class="form-control" id="'.$rules['control'].'" name="'.$rules['control'].'" value="'.$rules['value'].'">'.
+						'<div class="col">'.
+							'<input type="text" class="form-control" id="'.$rules['control'].'" name="'.$rules['control'].'" value="'.$rules['value'].'">'.
+						'</div>'.
 					'</div>';
 		} else {
 			return '<p class="text-danger">Form_Helper.setFormInputSimple - На входе не массив!</p>';
@@ -349,9 +351,11 @@ class Form_Helper
 	public static function setFormSelectListBlank($rules) : string
 	{
 		if (isset($rules) && is_array($rules)) {
-			return '<div class="form-group">'.
+			return '<div class="form-group row">'.
 							'<label class="font-weight-bold" for="'.$rules['control'].'">'.$rules['label'].'</label>'.
-							'<select class="form-control" id="'.$rules['control'].'" name="'.$rules['control'].'"></select>'.
+							'<div class="col">'.
+								'<select class="form-control" id="'.$rules['control'].'" name="'.$rules['control'].'"></select>'.
+							'</div>'.
 						'</div>';
 		} else {
 			return '<p class="text-danger">Form_Helper.setFormSelectListBlank - На входе не массив!</p>';
@@ -439,8 +443,9 @@ class Form_Helper
 	public static function setFormSelectListKladr($rules) : string
 	{
 		if (isset($rules) && is_array($rules)) {
-			$result = '<div class="form-group">'.
+			$result = '<div class="form-group row">'.
 						'<label class="font-weight-bold" for="'.$rules['control'].'">'.$rules['label'].'</label>'.
+							'<div class="col">'.
 							'<select class="form-control" id="'.$rules['control'].'" name="'.$rules['control'].'">';
 			// using model
 			$model = new $rules['model_class'];
@@ -461,6 +466,7 @@ class Form_Helper
 							'</option>';
 			}
 			$result .= '</select>'.
+						'</div>'.
 						'</div>';
 			return $result;
 		} else {

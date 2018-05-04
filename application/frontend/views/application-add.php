@@ -37,6 +37,21 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 												'value' => $data['campaign'],
 												'success' => $data['campaign_scs'],
 												'error' => $data['campaign_err']]);
+		// docs_educ
+		echo Form_Helper::setFormSelectListDB(['label' => 'Документ об образовании',
+												'control' => 'docs_educ',
+												'class' => $data['docs_educ_cls'],
+												'required' => 'yes',
+												'required_style' => 'StarUp',
+												'model_class' => 'common\\models\\Model_DocsEduc',
+												'model_method' => 'getByUserSl',
+												'model_field' => 'id',
+												'model_field_name' => 'description',
+												'model_filter' => 'id_user',
+												'model_filter_val' => $_SESSION[APP_CODE]['user_id'],
+												'value' => $data['docs_educ'],
+												'success' => $data['docs_educ_scs'],
+												'error' => $data['docs_educ_err']]);
 	?>
 	<!-- controls -->
 	<div class="form-group">

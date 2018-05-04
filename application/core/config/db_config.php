@@ -41,6 +41,7 @@ define('DB_TABLES', array(
 						'docs_educ',
 						'ege',
 						'ege_disciplines',
+						'foreign_langs',
 						'kladr',
 						'kladr_abbrs',
 						'passport',

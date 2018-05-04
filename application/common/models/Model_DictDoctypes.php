@@ -19,6 +19,8 @@ class Model_DictDoctypes extends Db_Helper
 	public $description;
 	public $guid;
 
+	public $code_educ;
+
 	public $db;
 
 	public function __construct()
@@ -119,6 +121,20 @@ class Model_DictDoctypes extends Db_Helper
 									'd2.isfolder = :isfolder AND d2.description = :description',
 									[':isfolder' => 1,
 									':description' => 'Документы об образовании']);
+	}
+
+	/**
+     * Gets education documents by education type code.
+     *
+     * @return array
+     */
+	public function getDiplomasByEducCode()
+	{
+		return $this->rowSelectAll('dict_doctypes.*',
+									'dict_doctypes INNER JOIN eductypes_doctypes ON dict_doctypes.id = eductypes_doctypes.id_doctype'.
+									' INNER JOIN dict_eductypes ON eductypes_doctypes.id_eductype = dict_eductypes.id',
+									'dict_eductypes.code = :code',
+									[':code' => $this->code_educ]);
 	}
 
 	/**

@@ -16,6 +16,8 @@ use common\models\Model_DictCountries as Model_DictCountries;
 use common\models\Model_DictScans as Model_DictScans;
 use common\models\Model_Scans as Scans;
 use common\models\Model_Docs as Model_Docs;
+use common\models\Model_DictForeignLangs as DictForeignLangs;
+use common\models\Model_ForeignLangs as ForeignLangs;
 
 include ROOT_DIR.'/application/frontend/models/Model_Scans.php';
 
@@ -550,6 +552,58 @@ class Model_Resume extends Model
 	}
 
 	/**
+     * Sets foreign languages.
+     *
+     * @return array
+     */
+	public function setForeignLangs($form)
+	{
+		$langs = new ForeignLangs();
+		$langs->id_resume = $form['id'];
+		$langs_arr = $langs->getByResumeList();
+		if ($langs_arr) {
+			foreach ($langs_arr as $langs_row) {
+				$form['lang'.$langs_row['numb']] = $langs_row['code'];
+			}
+		}
+		return $form;
+	}
+
+	/**
+     * Resets foreign languages.
+     *
+     * @return array
+     */
+	public function resetForeignLangs($form)
+	{
+		foreach (array_filter($form, function ($var)
+							        {
+							            return(substr($var, 0, 4) == 'lang');
+							        }, ARRAY_FILTER_USE_KEY) as $key => $value)
+        {
+			unset($form[$key]);
+		}
+		return $form;
+	}
+
+	/**
+     * Gets foreign languages.
+     *
+     * @return array
+     */
+	public function getForeignLangs($form)
+	{
+		foreach (array_filter($_POST, function ($var)
+							        {
+							            return(substr($var, 0, 4) == 'lang');
+							        }, ARRAY_FILTER_USE_KEY) as $key => $value)
+        {
+			$form[$key] = $value;
+		}
+		return $form;
+	}
+
+	/**
      * Unsets resume files.
      *
      * @return array
@@ -834,6 +888,59 @@ class Model_Resume extends Model
 				$form['error_msg'] = 'Ошибка при создании адреса проживания!';
 				return $form;
 			}
+		}
+		/* foreign languages */
+		$langs = new ForeignLangs();
+		$lang = new DictForeignLangs();
+		$langs->id_user = $_SESSION[APP_CODE]['user_id'];
+		$langs->id_resume = $form['id'];
+		$langs_arr = $langs->getByResume();
+		$i = 1;
+		if ($langs_arr) {
+			foreach ($langs_arr as $langs_row) {
+				$langs->id = $langs_row['id'];
+				if (array_key_exists('lang'.$langs_row['numb'], $form)) {
+					// update
+					$lang->code = $form['lang'.$langs_row['numb']];
+					$lang_row = $lang->getByCode();
+					if ($lang_row) {
+						$langs->id_lang = $lang_row['id'];
+						if (!$langs->changeAll()) {
+							$form['error_msg'] = 'Ошибка при изменении иностранного языка!';
+							return $form;
+						}
+					} else {
+						$form['error_msg'] = 'Ошибка при поиске иностранного языка!';
+						return $form;
+					}
+				} else {
+					// delete
+					$langs->clear();
+				}
+				unset($form['lang'.$langs_row['numb']]);
+				$i++;
+			}
+		}
+		// insert
+		foreach (array_filter($form, function ($var)
+							        {
+							            return(substr($var, 0, 4) == 'lang');
+							        }, ARRAY_FILTER_USE_KEY) as $key => $value)
+        {
+			$lang->code = $value;
+			$lang_row = $lang->getByCode();
+			if ($lang_row) {
+				$langs->numb = $i;
+				$langs->id_lang = $lang_row['id'];
+				if ($langs->save() == 0) {
+					$form['error_msg'] = 'Ошибка при создании иностранного языка!';
+					return $form;
+				}
+			} else {
+				$form['error_msg'] = 'Ошибка при поиске иностранного языка!';
+				return $form;
+			}
+			$i++;
 		}
 		/* scans */
 		$dict_scans = new Model_DictScans();
