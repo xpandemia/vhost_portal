@@ -19,6 +19,51 @@ class Model_DictDoctypes extends Model
 	}
 
 	/**
+     * Gets passports JSON.
+     *
+     * @return JSON
+     */
+	public function getPassportsJSON() : string
+	{
+		$doc = $this->doc->getPassports();
+			foreach ($doc as $value) {
+				$doc_json[] = ['code' => $value['code'],
+								'description' => $value['description']];
+			}
+			return json_encode($doc_json);
+	}
+
+	/**
+     * Gets russian passports JSON.
+     *
+     * @return JSON
+     */
+	public function getPassportsRussianJSON() : string
+	{
+		$doc = $this->doc->getPassportsRussia();
+			foreach ($doc as $value) {
+				$doc_json[] = ['code' => $value['code'],
+								'description' => $value['description']];
+			}
+			return json_encode($doc_json);
+	}
+
+	/**
+     * Gets foreign passports JSON.
+     *
+     * @return JSON
+     */
+	public function getPassportsForeignJSON() : string
+	{
+		$doc = $this->doc->getPassportsForeign();
+			foreach ($doc as $value) {
+				$doc_json[] = ['code' => $value['code'],
+								'description' => $value['description']];
+			}
+			return json_encode($doc_json);
+	}
+
+	/**
      * Gets education documents by education type code JSON.
      *
      * @return JSON

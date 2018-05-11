@@ -141,15 +141,39 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 										'success' => $data['email_scs'],
 										'error' => $data['email_err'],
 										'help' => CONTACT_EMAIL['help']]);
-		// phone
-		echo Form_Helper::setFormInput(['label' => 'Мобильный телефон',
-										'control' => 'phone',
+		// phones
+		echo HTML_Helper::setAlert('Пожалуйста, укажите хотя бы один номер.', 'alert-warning');
+		// phone mobile
+		echo Form_Helper::setFormInput(['label' => 'Номер мобильного телефона',
+										'control' => 'phone_mobile',
 										'type' => 'text',
-										'class' => $data['phone_cls'],
+										'class' => $data['phone_mobile_cls'],
 										'required' => 'no',
-										'value' => $data['phone'],
-										'success' => $data['phone_scs'],
-										'error' => $data['phone_err']]);
+										'value' => $data['phone_mobile'],
+										'success' => $data['phone_mobile_scs'],
+										'error' => $data['phone_mobile_err']]);
+		// phone home
+		echo Form_Helper::setFormInput(['label' => CONTACT_PHONE_HOME['name'],
+										'control' => 'phone_home',
+										'type' => 'text',
+										'class' => $data['phone_home_cls'],
+										'required' => 'no',
+										'placeholder' => CONTACT_PHONE_HOME['plc'],
+										'value' => $data['phone_home'],
+										'success' => $data['phone_home_scs'],
+										'error' => $data['phone_home_err'],
+										'help' => CONTACT_PHONE_HOME['help']]);
+		// phone add
+		echo Form_Helper::setFormInput(['label' => CONTACT_PHONE_ADD['name'],
+										'control' => 'phone_add',
+										'type' => 'text',
+										'class' => $data['phone_add_cls'],
+										'required' => 'no',
+										'placeholder' => CONTACT_PHONE_ADD['plc'],
+										'value' => $data['phone_add'],
+										'success' => $data['phone_add_scs'],
+										'error' => $data['phone_add_err'],
+										'help' => CONTACT_PHONE_ADD['help']]);
 		/* passport */
 		echo Form_Helper::setFormHeaderSub('Документ, удостоверяющий личность');
 		echo HTML_Helper::setAlert('Пожалуйста, при наличии паспорта, указывайте паспортные данные.', 'alert-warning');
@@ -709,13 +733,7 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 			$('#agreement_div').hide();
 		}
 		// citizenship
-		if ($('#citizenship').val() == '000') {
-			$('#citizenship_not').prop('checked', true);
-			$('#citizenship').prop('disabled', true);
-		} else {
-			$('#citizenship_not').prop('checked', false);
-			$('#citizenship').prop('disabled', false);
-		}
+		setCitizenship($('#citizenship').val());
 		// passport
 		setPassport();
 		// old passport yes
@@ -805,11 +823,7 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 		});
 		// citizenship
 		$('#citizenship').change(function() {
-			if ($('#citizenship').val() == '000') {
-				$('#citizenship_not').prop('checked', true);
-			} else {
-				$('#citizenship_not').prop('checked', false);
-			}
+			setCitizenship($('#citizenship').val());
 		});
 		// no citizenship
 		$('#citizenship_not').change(function() {
@@ -822,6 +836,7 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 					$('#citizenship').val('');
 				}
 			}
+			setCitizenship($('#citizenship').val());
 		});
 		// passport
 		$('#passport_type').change(function() {
@@ -1462,6 +1477,29 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 		});
 	}
 
+	function setCitizenship(citizenship, renew)
+	{
+		var passport_type = $('#passport_type').val();
+		switch (citizenship) {
+			case '':
+				$('#citizenship_not').prop('checked', false);
+				getPassportAJAX('/frontend/DictDoctypes/PassportsJSON', '#passport_type', passport_type);
+				break;
+			case '000':
+				$('#citizenship_not').prop('checked', true);
+				getPassportAJAX('/frontend/DictDoctypes/PassportsJSON', '#passport_type', passport_type);
+				break;
+			case '643':
+				$('#citizenship_not').prop('checked', false);
+				getPassportAJAX('/frontend/DictDoctypes/PassportsRussianJSON', '#passport_type', passport_type);
+				break;
+			default:
+				$('#citizenship_not').prop('checked', false);
+				getPassportAJAX('/frontend/DictDoctypes/PassportsForeignJSON', '#passport_type', passport_type);
+				break;
+		}
+	}
+
 	function setPassport()
 	{
 		if ($('#passport_type').val() == '000000047') {
@@ -1501,6 +1539,32 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 		$("label[for='dt_issue_old']").html('Дата выдачи*');
 		$("label[for='unit_name_old']").html('Наименование подразделения');
 		$("label[for='dt_end_old']").html('Дата окончания действия');
+	}
+
+	function getPassportAJAX(url, select, val)
+	{
+		startLoadingAnimation();
+		$.ajax({
+	      url: url,
+	      type: 'POST',
+	      data: {format: 'json'},
+		  dataType: 'json',
+		  success: function(result) {
+	        $(select).empty();
+            $(select).append('<option></option>');
+	        $.each(result, function(key, value){
+	            if (val == value.code) {
+					$(select).append('<option value="' + value.code + '" selected>' + value.description + '</option>');
+				} else {
+					$(select).append('<option value="' + value.code + '">' + value.description + '</option>');
+				}
+	        });
+	      },
+	      error: function(xhr, status, error) {
+		      console.log('Request Failed: ' + status + ' ' + error + ' ' + xhr.status + ' ' + xhr.statusText);
+		  }
+	    });
+	    stopLoadingAnimation();
 	}
 
 	function getKladrAJAX(url, code, select)
@@ -1612,7 +1676,7 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 <script>
 	$(function(){
 	  $("#birth_dt").mask("99.99.9999", {placeholder: "ДД.ММ.ГГГГ" });
-	  $("#phone").mask("+7(999) 999-99-99");
+	  $("#phone_mobile").mask("+7(999) 999-99-99");
 	  $("#dt_issue").mask("99.99.9999", {placeholder: "ДД.ММ.ГГГГ" });
 	  $("#dt_end").mask("99.99.9999", {placeholder: "ДД.ММ.ГГГГ" });
 	  $("#dt_issue_old").mask("99.99.9999", {placeholder: "ДД.ММ.ГГГГ" });

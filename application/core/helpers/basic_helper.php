@@ -86,8 +86,8 @@ class Basic_Helper
      */
 	public static function msgSuccess($msg)
 	{
-		$_SESSION[APP_CODE]['success_msg'] = null;
-		$_SESSION[APP_CODE]['error_msg'] = $msg;
+		$_SESSION[APP_CODE]['success_msg'] = $msg;
+		$_SESSION[APP_CODE]['error_msg'] = null;
 	}
 
 	/**
@@ -97,7 +97,7 @@ class Basic_Helper
      */
 	public static function msgError($msg)
 	{
-		$_SESSION[APP_CODE]['success_msg'] = $msg;
-		$_SESSION[APP_CODE]['error_msg'] = null;
+		$_SESSION[APP_CODE]['success_msg'] = null;
+		$_SESSION[APP_CODE]['error_msg'] = $msg;
 	}
 }

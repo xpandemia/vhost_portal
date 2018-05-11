@@ -7,6 +7,8 @@ use tinyframe\core\View as View;
 use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 use frontend\models\Model_ApplicationSpec as Model_ApplicationSpec;
 
+include ROOT_DIR.'/application/frontend/models/Model_Application.php';
+
 class Controller_ApplicationSpec extends Controller
 {
 	/*
@@ -60,17 +62,21 @@ class Controller_ApplicationSpec extends Controller
      */
 	public function actionSave()
 	{
-		$id = $_POST['id'];
+		$id = htmlspecialchars($_POST['id']);
+		$status = htmlspecialchars($_POST['status']);
 		$this->form = $this->model->getForm($this->model->rules(), $_POST, $_FILES);
 		$this->form = $this->model->getExams($this->form);
 		$this->form = $this->model->validateForm($this->form, $this->model->rules());
 		$this->form['id'] = $id;
+		$this->form['status'] = $status;
 		if ($this->form['validate']) {
 			$this->form = $this->model->check($this->form);
 			if (!$this->form['error_msg']) {
 				$id = $this->form['id'];
+				$status = $this->form['status'];
 				$this->form = $this->model->setForm($this->model->rules(), $this->model->get($id));
 				$this->form['id'] = $id;
+				$this->form['status'] = $status;
 				$this->form['success_msg'] = 'Заявление успешно сохранено!';
 				return $this->view->generate('application-edit.php', 'main.php', 'Заявление', $this->form);
 			}

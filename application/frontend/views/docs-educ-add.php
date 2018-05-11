@@ -181,7 +181,7 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 
 <script>
 	$(function(){
-	  $("#end_year").mask("9999");
 	  $("#dt_issue").mask("99.99.9999", {placeholder: "ДД.ММ.ГГГГ" });
+	  $("#end_year").mask("9999");
 	});
 </script>

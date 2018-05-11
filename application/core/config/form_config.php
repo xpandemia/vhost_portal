@@ -60,6 +60,12 @@ define('EGE_DSP', array(
 						'hdr' => 'Дисциплина ЕГЭ',
 						'ctr' => 'EgeDisciplines',
 						'act' => 'Save'));
+// Individual achievments form
+define('IND_ACHIEVS', array(
+							'id' => 'form_indachievs',
+							'hdr' => 'Индивидуальное достижение',
+							'ctr' => 'IndAchievs',
+							'act' => 'Save'));
 // Application form
 define('APP', array(
 					'id' => 'form_app',

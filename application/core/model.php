@@ -126,6 +126,13 @@ class Model
 							$form[$field_name] = $row[$field_name];
 							$form[$field_name.'_type'] = $row[$field_name.'_type'];
 							break;
+						case 'checkbox':
+							if ($row[$field_name] == 1) {
+								$form[$field_name] = 'checked';
+							} else {
+								$form[$field_name] = null;
+							}
+							break;
 						default:
 							$form[$field_name] = $row[$field_name];
 					}
@@ -175,5 +182,51 @@ class Model
 		} else {
 			throw new \InvalidArgumentException('На входе функции Model.resetForm должен быть массив правил!');
 		}
+	}
+
+	/**
+     * Sets form field error.
+     *
+     * @return array
+     */
+	public function setFormErrorField($form, $field, $msg, $global = 0)
+	{
+		$form['success_msg'] = null;
+		if ($global == 1) {
+			$form['error_msg'] = $msg;
+		} else {
+			$form['error_msg'] = null;
+		}
+		$form[$field.'_err'] = $msg;
+		$form[$field.'_scs'] = null;
+		$form[$field.'_cls'] = $form[$field.'_cls'].' is-invalid';
+		$form['validate'] = false;
+		return $form;
+	}
+
+	/**
+     * Sets form file error.
+     *
+     * @return array
+     */
+	public function setFormErrorFile($form, $file, $msg)
+	{
+		$form[$file.'_err'] = $msg;
+		$form[$file.'_scs'] = null;
+		$form['validate'] = false;
+		return $form;
+	}
+
+	/**
+     * Sets form error.
+     *
+     * @return array
+     */
+	public function setFormError($form, $msg)
+	{
+		$form['success_msg'] = null;
+		$form['error_msg'] = $msg;
+		$form['validate'] = false;
+		return $form;
 	}
 }

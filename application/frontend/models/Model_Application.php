@@ -8,6 +8,9 @@ use common\models\Model_Application as Application;
 use common\models\Model_ApplicationStatus as ApplicationStatus;
 use common\models\Model_DictUniversity as Model_DictUniversity;
 use common\models\Model_AdmissionCampaign as Model_AdmissionCampaign;
+use common\models\Model_DictDocships as Model_DictDocships;
+use common\models\Model_IndAchievs as Model_IndAchievs;
+use common\models\Model_ApplicationAchievs as Model_ApplicationAchievs;
 
 class Model_Application extends Model
 {
@@ -40,7 +43,28 @@ class Model_Application extends Model
                                 'class' => 'form-control',
                                 'required' => ['default' => '', 'msg' => 'Документ об образовании обязателен для заполнения!'],
 								'success' => 'Документ об образовании заполнен верно.'
-                               ]
+                               ],
+                'docs_ship' => [
+								'type' => 'selectlist',
+                                'class' => 'form-control',
+                                'required' => ['default' => '', 'msg' => 'Тип возврата документов обязателен для заполнения!'],
+								'success' => 'Тип возврата документов заполнен верно.'
+                               ],
+                'campus' => [
+							'type' => 'checkbox',
+                            'class' => 'form-check-input',
+                            'success' => 'Получена потребность в общежитии.'
+                           ],
+                'conds' => [
+							'type' => 'checkbox',
+	                        'class' => 'form-check-input',
+	                        'success' => 'Получена просьба о создании специальных условий.'
+	                       ],
+	            'remote' => [
+							'type' => 'checkbox',
+	                        'class' => 'form-check-input',
+	                        'success' => 'Получена просьба о сдаче вступительных испытаний с использованием дистанционных технологий.'
+	                       ]
 	            ];
 	}
 
@@ -103,7 +127,14 @@ class Model_Application extends Model
 			$row_campaign = $campaign->getByCode();
 		$app->id_campaign = $row_campaign['id'];
 		$app->id_docseduc = $form['docs_educ'];
+			$docship = new Model_DictDocships();
+			$docship->code = $form['docs_ship'];
+			$row_docship = $docship->getByCode();
+		$app->id_docship = $row_docship['id'];
 		$app->type = $app::TYPE_NEW;
+		$app->campus = (($form['campus'] == 'checked') ? 1 : 0);
+		$app->conds = (($form['conds'] == 'checked') ? 1 : 0);
+		$app->remote = (($form['remote'] == 'checked') ? 1 : 0);
 		$app->id = $app->save();
 		if ($app->id > 0) {
 			$app->numb = $app->generateNumb();
@@ -113,8 +144,20 @@ class Model_Application extends Model
 				$applog->numb = $app->numb;
 				$applog->status = $app::STATUS_CREATED;
 				$applog->save();
-			$_SESSION[APP_CODE]['error_msg'] = null;
-			$_SESSION[APP_CODE]['success_msg'] = 'Создано новое заявление.';
+			// set individual achievments
+			$ia = new Model_IndAchievs();
+			$ia->id_user = $_SESSION[APP_CODE]['user_id'];
+			$ia->campaign_code = $form['campaign'];
+			$ia_arr = $ia->getByUserCampaign();
+			if ($ia_arr) {
+				$appia = new Model_ApplicationAchievs();
+				$appia->pid = $app->id;
+				$appia->id_user = $_SESSION[APP_CODE]['user_id'];
+				foreach ($ia_arr as $ia_row) {
+					$appia->id_achiev = $ia_row['id'];
+					$appia->save();
+				}
+			}
 		} else {
 			$form['error_msg'] = 'Ошибка при создании заявления!';
 		}

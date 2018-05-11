@@ -113,6 +113,7 @@ class Controller_Resume extends Controller
 			}
 			($this->form['status'] === $this->resume::STATUS_CREATED) ? $this->form['personal_vis'] = true : $this->form['personal_vis'] = false;
 		$this->form = $this->model->validateForm($this->form, $this->model->rules());
+		$this->form = $this->model->validateFormAdvanced($this->form);
 		$this->form = $this->model->validateAgreement($this->form);
 		$this->form = $this->model->validatePassport($this->form);
 		$this->form = $this->model->validatePassportOld($this->form);

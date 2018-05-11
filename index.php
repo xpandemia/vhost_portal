@@ -2,7 +2,7 @@
 
 define('APP_NAME', 'Портал абитуриента');
 define('APP_CODE', 'portalbsu'); // MUST BE UNIQUE
-define('APP_VERSION', '0.1.8');
+define('APP_VERSION', '0.1.9');
 
 # Портал абитуриента
 # Build with curiosity by Fiben on Tinyframe 0.2.0

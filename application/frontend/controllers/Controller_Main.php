@@ -79,6 +79,16 @@ class Controller_Main extends Controller
 	}
 
 	/**
+     * Calls to individual achievments.
+     *
+     * @return mixed
+     */
+	function actionIndAchievs()
+	{
+		return Basic_Helper::redirect(IND_ACHIEVS['hdr'], 202, IND_ACHIEVS['ctr'], 'Index');
+	}
+
+	/**
      * Calls to application.
      *
      * @return mixed

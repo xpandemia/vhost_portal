@@ -17,6 +17,10 @@ use tinyframe\core\helpers\Files_Helper as Files_Helper;
 	<p class="font-weight-bold">Размер файла: <?php echo Files_Helper::getSize($data['file_size'], 'MB').' Мб'; ?></p>
 	<?php
 		echo HTML_Helper::setImageLOB($data['file_type'], $data['file_data']);
-		echo HTML_Helper::setHrefText($data['ctr'], 'Index', 'Вернуться');
+		if (isset($data['pid']) && !empty($data['pid'])) {
+			echo HTML_Helper::setHrefText($data['ctr'], $data['act'].'/?id='.$data['pid'], 'Вернуться');
+		} else {
+			echo HTML_Helper::setHrefText($data['ctr'], $data['act'], 'Вернуться');
+		}
 	?>
 </div>

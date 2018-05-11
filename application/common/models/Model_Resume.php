@@ -4,6 +4,7 @@ namespace common\models;
 
 use tinyframe\core\helpers\Db_Helper as Db_Helper;
 use common\models\Model_Personal as Model_Personal;
+use common\models\Model_Contacts as Model_Contacts;
 use common\models\Model_DictScans as Model_DictScans;
 
 class Model_Resume extends Db_Helper
@@ -123,16 +124,30 @@ class Model_Resume extends Db_Helper
 			$email = $this->rowSelectOne('contact as email',
 										'contacts',
 										'id_resume = :id_resume AND type = :type',
-										[':id_resume' => $resume['id'], ':type' => 0]);
+										[':id_resume' => $resume['id'], ':type' => Model_Contacts::TYPE_EMAIL]);
 			if (!is_array($email)) {
 				$email = ['email' => null];
 			}
-			$phone = $this->rowSelectOne('contact as phone',
-										'contacts',
-										'id_resume = :id_resume AND type = :type',
-										[':id_resume' => $resume['id'], ':type' => 1]);
-			if (!is_array($phone)) {
-				$phone = ['phone' => null];
+			$phone_mobile = $this->rowSelectOne('contact as phone_mobile',
+												'contacts',
+												'id_resume = :id_resume AND type = :type',
+												[':id_resume' => $resume['id'], ':type' => Model_Contacts::TYPE_PHONE_MOBILE]);
+			if (!is_array($phone_mobile)) {
+				$phone_mobile = ['phone_mobile' => null];
+			}
+			$phone_home = $this->rowSelectOne('contact as phone_home',
+												'contacts',
+												'id_resume = :id_resume AND type = :type',
+												[':id_resume' => $resume['id'], ':type' => Model_Contacts::TYPE_PHONE_HOME]);
+			if (!is_array($phone_home)) {
+				$phone_home = ['phone_home' => null];
+			}
+			$phone_add = $this->rowSelectOne('contact as phone_add',
+												'contacts',
+												'id_resume = :id_resume AND type = :type',
+												[':id_resume' => $resume['id'], ':type' => Model_Contacts::TYPE_PHONE_ADD]);
+			if (!is_array($phone_add)) {
+				$phone_add = ['phone_add' => null];
 			}
 			$passport = $this->rowSelectOne('dict_doctypes.code as passport_type, series, numb, dt_issue, unit_name, unit_code, dt_end',
 											'passport INNER JOIN dict_doctypes ON passport.id_doctype = dict_doctypes.id',
@@ -162,7 +177,7 @@ class Model_Resume extends Db_Helper
 			if (!is_array($address_res)) {
 				$address_res = ['country_res' => null, 'address_res' => null];
 			}
-			$result = array_merge($resume, $personal, $agreement, $email, $phone, $passport, $passport_old, $address_reg, $address_res);
+			$result = array_merge($resume, $personal, $agreement, $email, $phone_mobile, $phone_home, $phone_add, $passport, $passport_old, $address_reg, $address_res);
 			$scans = new Model_DictScans();
 			$scans->doc_code = 'resume';
 			$scans_arr = $scans->getByDocument();

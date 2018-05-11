@@ -110,6 +110,36 @@ class Model_DictDoctypes extends Db_Helper
 	}
 
 	/**
+     * Gets russian passports.
+     *
+     * @return array
+     */
+	public function getPassportsRussia()
+	{
+		return $this->rowSelectAll('*',
+									'dict_doctypes',
+									'code in (:code1)',
+									[':code1' => '000000047']);
+	}
+
+	/**
+     * Gets foreign passports.
+     *
+     * @return array
+     */
+	public function getPassportsForeign()
+	{
+		return $this->rowSelectAll('*',
+									'dict_doctypes',
+									'code in (:code1, :code2, :code3, :code4, :code5)',
+									[':code1' => '000000049',
+									':code2' => '000000075',
+									':code3' => '000000087',
+									':code4' => '000000223',
+									':code5' => '000000226']);
+	}
+
+	/**
      * Gets education documents.
      *
      * @return array

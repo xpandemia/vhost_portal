@@ -33,10 +33,18 @@ class Controller_Scans extends Controller
 		} else {
 			exit("<p><strong>Ошибка!</strong> Отсутствует идент-р скан-копии!</p>");
 		}
+		if (isset($_GET['pid']) && !empty($_GET['pid'])) {
+			$this->form['pid'] = htmlspecialchars($_GET['pid']);
+		}
 		if (isset($_GET['ctr']) && !empty($_GET['ctr'])) {
 			$this->form['ctr'] = htmlspecialchars($_GET['ctr']);
 		} else {
 			exit("<p><strong>Ошибка!</strong> Отсутствует тип скан-копии!</p>");
+		}
+		if (isset($_GET['act']) && !empty($_GET['act'])) {
+			$this->form['act'] = htmlspecialchars($_GET['act']);
+		} else {
+			exit("<p><strong>Ошибка!</strong> Отсутствует действие скан-копии!</p>");
 		}
 		return $this->view->generate('scans-show.php', 'form.php', 'Просмотр скан-копии', $this->model->get($this->form));
 	}

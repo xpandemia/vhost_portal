@@ -26,6 +26,36 @@ class Controller_DictDoctypes extends Controller
 	}
 
 	/**
+     * Prints passports JSON.
+     *
+     * @return void
+     */
+	public function actionPassportsJSON()
+	{
+		echo $this->model->getPassportsJSON();
+	}
+
+	/**
+     * Prints russian passports JSON.
+     *
+     * @return void
+     */
+	public function actionPassportsRussianJSON()
+	{
+		echo $this->model->getPassportsRussianJSON();
+	}
+
+	/**
+     * Prints foreign passports JSON.
+     *
+     * @return void
+     */
+	public function actionPassportsForeignJSON()
+	{
+		echo $this->model->getPassportsForeignJSON();
+	}
+
+	/**
      * Prints education documents by education type code JSON.
      *
      * @return void

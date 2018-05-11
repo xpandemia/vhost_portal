@@ -32,7 +32,7 @@ class Controller_DocsEduc extends Controller
 	}
 
 	/**
-     * Resets education documents page.
+     * Resets education documents add page.
      *
      * @return mixed
      */

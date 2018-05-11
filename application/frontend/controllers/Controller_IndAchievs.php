@@ -5,48 +5,45 @@ namespace frontend\controllers;
 use tinyframe\core\Controller as Controller;
 use tinyframe\core\View as View;
 use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
-use frontend\models\Model_Application as Model_Application;
-use frontend\models\Model_ApplicationSpec as Model_ApplicationSpec;
+use frontend\models\Model_IndAchievs as Model_IndAchievs;
 
-include ROOT_DIR.'/application/frontend/models/Model_ApplicationSpec.php';
-
-class Controller_Application extends Controller
+class Controller_IndAchievs extends Controller
 {
 	/*
-		Application actions
+		Individual achievments actions
 	*/
 
 	public $form;
 
 	public function __construct()
 	{
-		$this->model = new Model_Application();
+		$this->model = new Model_IndAchievs();
 		$this->view = new View();
 	}
 
 	/**
-     * Displays application page.
+     * Displays individual achievments page.
      *
      * @return mixed
      */
 	public function actionIndex()
 	{
-		return $this->view->generate('application.php', 'main.php', 'Заявления');
+		return $this->view->generate('ind-achievs.php', 'main.php', 'Индивидуальные достижения');
 	}
 
 	/**
-     * Resets application page.
+     * Resets individual achievments add page.
      *
      * @return mixed
      */
 	public function actionReset()
 	{
 		$this->form = $this->model->resetForm(true, $this->form, $this->model->rules());
-		return $this->view->generate('application-add.php', 'form.php', APP['hdr'], $this->form);
+		return $this->view->generate('ind-achievs-add.php', 'form.php', IND_ACHIEVS['hdr'], $this->form);
 	}
 
 	/**
-     * Displays application add page.
+     * Displays individual achievments add page.
      *
      * @return mixed
      */
@@ -55,11 +52,11 @@ class Controller_Application extends Controller
 		if (!isset($this->form)) {
 			$this->form = $this->model->setForm($this->model->rules(), null);
 		}
-		return $this->view->generate('application-add.php', 'form.php', APP['hdr'], $this->form);
+		return $this->view->generate('ind-achievs-add.php', 'form.php', IND_ACHIEVS['hdr'], $this->form);
 	}
 
 	/**
-     * Shows application specialities.
+     * Shows individual achievment.
      *
      * @return mixed
      */
@@ -67,19 +64,16 @@ class Controller_Application extends Controller
 	{
 		if (isset($_GET['id']) && !empty($_GET['id'])) {
 			$id = htmlspecialchars($_GET['id']);
-			$spec = new Model_ApplicationSpec();
-			$spec_row = $spec->get($id);
-			$this->form = $this->model->setForm($spec->rules(), $spec_row);
-			$this->form['id'] = $id;
-			$this->form['status'] = $spec_row['status'];
-			return $this->view->generate('application-edit.php', 'main.php', 'Заявление', $this->form);
 		} else {
-			exit("<p><strong>Ошибка!</strong> Отсутствует идент-р заявления!</p>");
+			exit("<p><strong>Ошибка!</strong> Отсутствует идент-р индивидуального достижения!</p>");
 		}
+		$this->form = $this->model->setForm($this->model->rules(), $this->model->get($id));
+		$this->form['id'] = $id;
+		return $this->view->generate('ind-achievs-add.php', 'form.php', 'Изменение индивидуального достижения', $this->form);
 	}
 
 	/**
-     * Calls to application delete confirm.
+     * Calls to individual achievment delete confirm.
      *
      * @return mixed
      */
@@ -89,7 +83,7 @@ class Controller_Application extends Controller
 	}
 
 	/**
-     * Deletes application.
+     * Deletes education document.
      *
      * @return mixed
      */
@@ -107,21 +101,22 @@ class Controller_Application extends Controller
 	}
 
 	/**
-     * Saves application.
+     * Saves individual achievment.
      *
      * @return mixed
      */
 	public function actionSave()
 	{
-		$this->form = $this->model->getForm($this->model->rules(), $_POST);
+		$this->form = $this->model->getForm($this->model->rules(), $_POST, $_FILES);
 		$this->form = $this->model->validateForm($this->form, $this->model->rules());
 		if ($this->form['validate']) {
 			$this->form = $this->model->check($this->form);
 			if (!$this->form['error_msg']) {
-				return Basic_Helper::redirect('Заявления', 200, APP['ctr'], 'Index', 'Создано новое заявление.');
+				return $this->view->generate('ind-achievs.php', 'main.php', 'Индивидуальные достижения', $this->form);
 			}
 		}
-		return $this->view->generate('application-add.php', 'form.php', APP['hdr'], $this->form);
+		$this->form = $this->model->unsetScans($this->form);
+		return $this->view->generate('ind-achievs-add.php', 'form.php', IND_ACHIEVS['hdr'], $this->form);
 	}
 
 	public function __destruct()

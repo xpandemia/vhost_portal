@@ -72,6 +72,7 @@ class Model_Resume extends Model
                                 'class' => 'form-control',
                                 'required' => ['default' => '', 'msg' => 'Дата рождения обязательна для заполнения!'],
                                 'pattern' => ['value' => PATTERN_DATE_STRONG, 'msg' => 'Дата рождения должна быть в фомате ДД.ММ.ГГГГ и только 20-го, 21-го вв!'],
+                                'compared' => ['value' => date('d.m.Y'), 'type' => '<', 'msg' => 'Дата рождения больше текущей даты или равна ей!'],
                                 'success' => 'Дата рождения заполнена верно.'
                                ],
                 'agreement' => [
@@ -101,11 +102,23 @@ class Model_Resume extends Model
                             'width' => ['format' => 'string', 'min' => 0, 'max' => 45, 'msg' => 'Слишком длинный адрес эл. почты!'],
                             'success' => 'Адрес эл. почты заполнен верно.'
                            ],
-                'phone' => [
-                            'type' => 'text',
-                            'class' => 'form-control',
-                            'success' => 'Мобильный телефон заполнен верно.'
-                           ],
+                'phone_mobile' => [
+		                            'type' => 'text',
+		                            'class' => 'form-control',
+		                            'success' => 'Номер мобильного телефона заполнен верно.'
+		                           ],
+		        'phone_home' => [
+	                            'type' => 'text',
+	                            'class' => 'form-control',
+	                            'pattern' => ['value' => PATTERN_PHONE_HOME, 'msg' => 'Номер домашнего телефона должен содержать только цифры и тире!'],
+	                            'success' => 'Номер домашнего телефона заполнен верно.'
+	                           ],
+		        'phone_add' => [
+	                            'type' => 'text',
+	                            'class' => 'form-control',
+	                            'pattern' => ['value' => PATTERN_PHONE_ADD, 'msg' => 'Номер домашнего телефона должен содержать только цифры и тире!'],
+	                            'success' => 'Номер дополнительного телефона заполнен верно.'
+	                           ],
                 'passport_type' => [
 									'type' => 'selectlist',
 	                                'class' => 'form-control',
@@ -132,6 +145,7 @@ class Model_Resume extends Model
                                 'class' => 'form-control',
                                 'required' => ['default' => '', 'msg' => 'Дата выдачи обязательна для заполнения!'],
                                 'pattern' => ['value' => PATTERN_DATE_STRONG, 'msg' => 'Дата выдачи должна быть в фомате ДД.ММ.ГГГГ и только 20-го, 21-го вв!'],
+                                'compared' => ['value' => date('d.m.Y'), 'type' => '<', 'msg' => 'Дата выдачи больше текущей даты или равна ей!'],
                                 'success' => 'Дата выдачи заполнена верно.'
                                ],
                 'unit_name' => [
@@ -152,6 +166,7 @@ class Model_Resume extends Model
                             'format' => 'd.m.Y',
                             'class' => 'form-control',
                             'pattern' => ['value' => PATTERN_DATE_STRONG, 'msg' => 'Дата окончания действия должна быть в фомате ДД.ММ.ГГГГ и только 20-го, 21-го вв!'],
+                            'compared' => ['value' => date('d.m.Y'), 'type' => '<', 'msg' => 'Дата окончания действия больше текущей даты или равна ей!'],
                             'success' => 'Дата окончания действия заполнена верно.'
                            ],
                 'passport_old_yes' => [
@@ -182,6 +197,7 @@ class Model_Resume extends Model
                                 'format' => 'd.m.Y',
                                 'class' => 'form-control',
                                 'pattern' => ['value' => PATTERN_DATE_STRONG, 'msg' => 'Дата выдачи должна быть в фомате ДД.ММ.ГГГГ и только 20-го, 21-го вв!'],
+                                'compared' => ['value' => date('d.m.Y'), 'type' => '<', 'msg' => 'Дата выдачи больше текущей даты или равна ей!'],
                                 'success' => 'Дата выдачи заполнена верно.'
                                ],
                 'unit_name_old' => [
@@ -201,6 +217,7 @@ class Model_Resume extends Model
 	                            'format' => 'd.m.Y',
 	                            'class' => 'form-control',
 	                            'pattern' => ['value' => PATTERN_DATE_STRONG, 'msg' => 'Дата окончания действия должна быть в фомате ДД.ММ.ГГГГ и только 20-го, 21-го вв!'],
+	                            'compared' => ['value' => date('d.m.Y'), 'type' => '<', 'msg' => 'Дата окончания действия больше текущей даты или равна ей!'],
 	                            'success' => 'Дата окончания действия заполнена верно.'
 	                           ],
 				'country_reg' => [
@@ -233,7 +250,14 @@ class Model_Resume extends Model
                                ]
                 ];
         $scans = Model_Scans::createRules('resume');
-		return array_merge($rules, $scans);
+        $rules = array_merge($rules, $scans);
+        $rules['personal'] = [
+                            'type' => 'checkbox',
+                            'class' => 'form-check-input',
+                            'required' => ['default' => '', 'msg' => 'Необходимо согласие на обработку персональных данных!'],
+                            'success' => 'Получено согласие на обработку персональных данных.'
+                           ];
+		return $rules;
 	}
 
 	/**
@@ -258,18 +282,39 @@ class Model_Resume extends Model
 	}
 
 	/**
+     * Validates resume advanced.
+     *
+     * @return array
+     */
+	public function validateFormAdvanced($form)
+	{
+		// birth_dt
+		if (Calc_Helper::getAge($form['birth_dt'], 'd.m.Y') <= 12) {
+			$form = $this->setFormErrorField($form, 'birth_dt', 'Ваш возраст меньше или равен 12 лет!');
+			return $form;
+		}
+		// dt_issue
+		if ($form['dt_issue'] <= $form['birth_dt']) {
+			$form = $this->setFormErrorField($form, 'dt_issue', 'Дата выдачи документа, удостоверяющего личность, меньше или равна дате рождения!');
+			return $form;
+		}
+		// phones
+		if (empty($form['phone_mobile']) && empty($form['phone_home']) && empty($form['phone_add'])) {
+			$form = $this->setFormError($form, 'Необходимо заполнить хотя бы один номер телефона в контактной информации!');
+			return $form;
+		}
+		return $form;
+	}
+
+	/**
      * Validates agreement.
      *
      * @return array
      */
 	public function validateAgreement($form)
 	{
-		if (isset($form['birth_dt']) && Calc_Helper::getAge($form['birth_dt'], 'd.m.Y') < 18) {
-			if (empty($form['agreement_name'])) {
-				$form['agreement_err'] = 'Скан-копия согласия родителей/опекунов обязательна для заполнения!';
-				$form['agreement_scs'] = null;
-				$form['validate'] = false;
-			}
+		if (!empty($form['birth_dt']) && Calc_Helper::getAge($form['birth_dt'], 'd.m.Y') < 18 && empty($form['agreement_name'])) {
+				$form = $this->setFormErrorFile($form, 'agreement', 'Скан-копия "Согласие родителей/опекунов" обязательна для заполнения!');
 		}
 		return $form;
 	}
@@ -284,25 +329,16 @@ class Model_Resume extends Model
 		if ($form['passport_type'] == '000000047') {
 			// series
 			if (empty($form['series'])) {
-				$form['series_err'] = 'Серия обязательна для заполнения!';
-				$form['series_scs'] = null;
-				$form['series_cls'] = $form['series_cls'].' is-invalid';
-				$form['validate'] = false;
+				$form = $this->setFormErrorField($form, 'series', 'Серия обязательна для заполнения!');
 			}
 			// unit_code
 			if (empty($form['unit_code'])) {
-				$form['unit_code_err'] = 'Код подразделения обязателен для заполнения!';
-				$form['unit_code_scs'] = null;
-				$form['unit_code_cls'] = $form['series_cls'].' is-invalid';
-				$form['validate'] = false;
+				$form = $this->setFormErrorField($form, 'unit_code', 'Код подразделения обязателен для заполнения!');
 			}
 		} else {
 			// dt_end
 			if (empty($form['dt_end'])) {
-				$form['dt_end_err'] = 'Дата окончания действия обязательна для заполнения!';
-				$form['dt_end_scs'] = null;
-				$form['dt_end_cls'] = $form['series_cls'].' is-invalid';
-				$form['validate'] = false;
+				$form = $this->setFormErrorField($form, 'dt_end', 'Дата окончания действия обязательна для заполнения!');
 			}
 		}
 		return $form;
@@ -318,59 +354,33 @@ class Model_Resume extends Model
 		if ($form['passport_old_yes'] == 'checked') {
 			// type
 			if (empty($form['passport_type_old'])) {
-				$form['passport_type_old_err'] = 'Тип документа обязателен для заполнения!';
-				$form['passport_type_old_scs'] = null;
-				$form['passport_type_old_cls'] = $form['passport_type_old_cls'].' is-invalid';
-				$form['validate'] = false;
-			} elseif ($form['passport_type_old'] == '000000047') {
-				// series
-				if (empty($form['series_old'])) {
-					$form['series_old_err'] = 'Серия обязательна для заполнения!';
-					$form['series_old_scs'] = null;
-					$form['series_old_cls'] = $form['series_old_cls'].' is-invalid';
-					$form['validate'] = false;
-				}
-				// numb
-				if (empty($form['numb_old'])) {
-					$form['numb_old_err'] = 'Номер обязателен для заполнения!';
-					$form['numb_old_scs'] = null;
-					$form['numb_old_cls'] = $form['numb_old_cls'].' is-invalid';
-					$form['validate'] = false;
-				}
-				// dt_issue
-				if (empty($form['dt_issue_old'])) {
-					$form['dt_issue_old_err'] = 'Дата выдачи обязательна для заполнения!';
-					$form['dt_issue_old_scs'] = null;
-					$form['dt_issue_old_cls'] = $form['dt_issue_old_cls'].' is-invalid';
-					$form['validate'] = false;
-				}
-				// unit_code
-				if (empty($form['unit_code_old'])) {
-					$form['unit_code_old_err'] = 'Код подразделения обязателен для заполнения!';
-					$form['unit_code_old_scs'] = null;
-					$form['unit_code_old_cls'] = $form['unit_code_old_cls'].' is-invalid';
-					$form['validate'] = false;
-				}
-				// passport_old
-				if (empty($form['passport_old'])) {
-					$form['passport_old_err'] = 'Скан-копия "Ранее выданные паспорта" обязательна для заполнения!';
-					$form['passport_old_scs'] = null;
-					$form['validate'] = false;
-				}
+				$form = $this->setFormErrorField($form, 'passport_type_old', 'Тип документа обязателен для заполнения!');
 			} else {
+				if ($form['passport_type_old'] == '000000047') {
+					// series
+					if (empty($form['series_old'])) {
+						$form = $this->setFormErrorField($form, 'series_old', 'Серия обязательна для заполнения!');
+					}
+					// unit_code
+					if (empty($form['unit_code_old'])) {
+						$form = $this->setFormErrorField($form, 'unit_code_old', 'Код подразделения обязателен для заполнения!');
+					}
+					// passport_old
+					if (empty($form['passport_old'])) {
+						$form = $this->setFormErrorFile($form, 'passport_old', 'Скан-копия "Ранее выданные паспорта" обязательна для заполнения!');
+					}
+				}
 				// numb
 				if (empty($form['numb_old'])) {
-					$form['numb_old_err'] = 'Номер обязателен для заполнения!';
-					$form['numb_old_scs'] = null;
-					$form['numb_old_cls'] = $form['numb_old_cls'].' is-invalid';
-					$form['validate'] = false;
+					$form = $this->setFormErrorField($form, 'numb_old', 'Номер обязателен для заполнения!');
 				}
 				// dt_issue
 				if (empty($form['dt_issue_old'])) {
-					$form['dt_issue_old_err'] = 'Дата выдачи обязательна для заполнения!';
-					$form['dt_issue_old_scs'] = null;
-					$form['dt_issue_old_cls'] = $form['dt_issue_old_cls'].' is-invalid';
-					$form['validate'] = false;
+					$form = $this->setFormErrorField($form, 'dt_issue_old', 'Дата выдачи обязательна для заполнения!');
+				} elseif ($form['dt_issue_old'] <= $form['birth_dt']) {
+					$form = $this->setFormErrorField($form, 'dt_issue_old', 'Дата выдачи старого документа, удостоверяющего личность, меньше или равна дате рождения!', 1);	
+				} elseif ($form['dt_issue'] <= $form['dt_issue_old']) {
+					$form = $this->setFormErrorField($form, 'dt_issue_old', 'Дата выдачи документа, удостоверяющего личность, меньше или равна дате выдачи старого документа, удостоверяющего личность!', 1);
 				}
 			}
 		}
@@ -665,38 +675,6 @@ class Model_Resume extends Model
      */
 	public function check($form)
 	{
-		/* checks */
-		// check birth_dt
-		if ($form['birth_dt'] >= date('d.m.Y')) {
-			$form['error_msg'] = 'Дата рождения больше текущей даты или равна ей!';
-			$form['birth_dt_err'] = 'Дата рождения больше текущей даты или равна ей!';
-			$form['birth_dt_scs'] = null;
-			$form['birth_dt_cls'] = $form['birth_dt_cls'].' is-invalid';
-			return $form;
-		}
-		// check passport dt_issue
-		if ($form['dt_issue'] <= $form['birth_dt']) {
-			$form['error_msg'] = 'Дата выдачи документа, удостоверяющего личность, меньше или равна дате рождения!';
-			$form['dt_issue_err'] = 'Дата выдачи документа, удостоверяющего личность, меньше или равна дате рождения!';
-			$form['dt_issue_scs'] = null;
-			$form['dt_issue_cls'] = $form['dt_issue_cls'].' is-invalid';
-			return $form;
-		}
-		// check old passport dt_issue
-		if ($form['passport_old_yes'] == 'checked' && $form['dt_issue_old'] <= $form['birth_dt']) {
-			$form['error_msg'] = 'Дата выдачи старого документа, удостоверяющего личность, меньше или равна дате рождения!';
-			$form['dt_issue_old_err'] = 'Дата выдачи старого документа, удостоверяющего личность, меньше или равна дате рождения!';
-			$form['dt_issue_old_scs'] = null;
-			$form['dt_issue_old_cls'] = $form['dt_issue_old_cls'].' is-invalid';
-			return $form;
-		}
-		if ($form['passport_old_yes'] == 'checked' && $form['dt_issue'] <= $form['dt_issue_old']) {
-			$form['error_msg'] = 'Дата выдачи документа, удостоверяющего личность, меньше или равна дате выдачи старого документа, удостоверяющего личность!';
-			$form['dt_issue_err'] = 'Дата выдачи документа, удостоверяющего личность, меньше или равна дате выдачи старого документа, удостоверяющего личность!';
-			$form['dt_issue_scs'] = null;
-			$form['dt_issue_cls'] = $form['dt_issue_cls'].' is-invalid';
-			return $form;
-		}
 		/* personal */
 		$personal = new Model_Personal();
 		$personal->id_user = $_SESSION[APP_CODE]['user_id'];
@@ -725,7 +703,7 @@ class Model_Resume extends Model
 			}
 		}
 		/* agreement */
-		if (isset($form['birth_dt']) && Calc_Helper::getAge($form['birth_dt'], 'd.m.Y') < 18) {
+		if (!empty($form['birth_dt']) && Calc_Helper::getAge($form['birth_dt'], 'd.m.Y') < 18) {
 			$form = Model_Scans::push('resume', 'agreement', $form);
 		}
 		/* contacts */
@@ -748,20 +726,76 @@ class Model_Resume extends Model
 				return $form;
 			}
 		}
-		// phone
-		$contacts->type = $contacts::TYPE_PHONE;
-		$contacts->contact = $form['phone'];
-		$row_contacts = $contacts->getPhoneByResume();
-		if ($row_contacts) {
-			$contacts->id = $row_contacts['id'];
-			if (!$contacts->changeAll()) {
-				$form['error_msg'] = 'Ошибка при изменении номера мобильного телефона!';
-				return $form;
+		// phone mobile
+		$contacts->type = $contacts::TYPE_PHONE_MOBILE;
+		if (!empty($form['phone_mobile'])) {
+			$contacts->contact = $form['phone_mobile'];
+			$row_contacts = $contacts->getPhoneMobileByResume();
+			if ($row_contacts) {
+				$contacts->id = $row_contacts['id'];
+				if (!$contacts->changeAll()) {
+					$form['error_msg'] = 'Ошибка при изменении номера мобильного телефона!';
+					return $form;
+				}
+			} else {
+				if ($contacts->save() == 0) {
+					$form['error_msg'] = 'Ошибка при создании номера мобильного телефона!';
+					return $form;
+				}
 			}
 		} else {
-			if ($contacts->save() == 0) {
-				$form['error_msg'] = 'Ошибка при создании номера мобильного телефона!';
-				return $form;
+			$row_contacts = $contacts->getPhoneMobileByResume();
+			if ($row_contacts) {
+				$contacts->id = $row_contacts['id'];
+				$contacts->clear();
+			}
+		}
+		// phone home
+		$contacts->type = $contacts::TYPE_PHONE_HOME;
+		if (!empty($form['phone_home'])) {
+			$contacts->contact = $form['phone_home'];
+			$row_contacts = $contacts->getPhoneHomeByResume();
+			if ($row_contacts) {
+				$contacts->id = $row_contacts['id'];
+				if (!$contacts->changeAll()) {
+					$form['error_msg'] = 'Ошибка при изменении номера домашнего телефона!';
+					return $form;
+				}
+			} else {
+				if ($contacts->save() == 0) {
+					$form['error_msg'] = 'Ошибка при создании номера домашнего телефона!';
+					return $form;
+				}
+			}
+		} else {
+			$row_contacts = $contacts->getPhoneHomeByResume();
+			if ($row_contacts) {
+				$contacts->id = $row_contacts['id'];
+				$contacts->clear();
+			}
+		}
+		// phone add
+		$contacts->type = $contacts::TYPE_PHONE_ADD;
+		if (!empty($form['phone_add'])) {
+			$contacts->contact = $form['phone_add'];
+			$row_contacts = $contacts->getPhoneAddByResume();
+			if ($row_contacts) {
+				$contacts->id = $row_contacts['id'];
+				if (!$contacts->changeAll()) {
+					$form['error_msg'] = 'Ошибка при изменении номера дополнительного телефона!';
+					return $form;
+				}
+			} else {
+				if ($contacts->save() == 0) {
+					$form['error_msg'] = 'Ошибка при создании номера дополнительного телефона!';
+					return $form;
+				}
+			}
+		} else {
+			$row_contacts = $contacts->getPhoneAddByResume();
+			if ($row_contacts) {
+				$contacts->id = $row_contacts['id'];
+				$contacts->clear();
 			}
 		}
 		/* passports */

@@ -4,25 +4,25 @@ namespace common\models;
 
 use tinyframe\core\helpers\Db_Helper as Db_Helper;
 
-class Model_DocsEduc extends Db_Helper
+class Model_IndAchievs extends Db_Helper
 {
 	/*
-		Education documents processing
+		Individual achievments processing
 	*/
 
-	const TABLE_NAME = 'docs_educ';
+	const TABLE_NAME = 'ind_achievs';
 
 	public $id;
 	public $id_user;
-	public $id_eductype;
-	public $id_doctype;
+	public $id_achiev;
 	public $series;
 	public $numb;
-	public $school;
+	public $company;
 	public $dt_issue;
-	public $end_year;
 	public $dt_created;
 	public $dt_updated;
+
+	public $campaign_code;
 
 	public $db;
 
@@ -32,7 +32,7 @@ class Model_DocsEduc extends Db_Helper
 	}
 
 	/**
-     * Education documents rules.
+     * Individual achievments rules.
      *
      * @return array
      */
@@ -51,17 +51,11 @@ class Model_DocsEduc extends Db_Helper
 							'update' => 0,
 							'value' => $this->id_user
 							],
-				'id_eductype' => [
+				'id_achiev' => [
 								'required' => 1,
 								'insert' => 1,
 								'update' => 0,
-								'value' => $this->id_eductype
-								],
-				'id_doctype' => [
-								'required' => 1,
-								'insert' => 1,
-								'update' => 0,
-								'value' => $this->id_doctype
+								'value' => $this->id_achiev
 								],
 				'series' => [
 							'required' => 0,
@@ -75,23 +69,17 @@ class Model_DocsEduc extends Db_Helper
 							'update' => 1,
 							'value' => $this->numb
 							],
-				'school' => [
+				'company' => [
 							'required' => 1,
 							'insert' => 1,
 							'update' => 1,
-							'value' => $this->school
+							'value' => $this->company
 							],
 				'dt_issue' => [
 								'required' => 1,
 								'insert' => 1,
 								'update' => 1,
 								'value' => $this->dt_issue
-								],
-				'end_year' => [
-								'required' => 1,
-								'insert' => 1,
-								'update' => 1,
-								'value' => $this->end_year
 								],
 				'dt_created' => [
 								'required' => 1,
@@ -109,7 +97,7 @@ class Model_DocsEduc extends Db_Helper
 	}
 
 	/**
-     * Education documents grid.
+     * Individual achievments grid.
      *
      * @return array
      */
@@ -119,12 +107,8 @@ class Model_DocsEduc extends Db_Helper
 						'name' => '№',
 						'type' => 'int'
 						],
-				'educ_type' => [
-								'name' => 'Вид образования',
-								'type' => 'string'
-								],
-				'doc_type' => [
-								'name' => 'Тип документа',
+				'achiev_type' => [
+								'name' => 'Индивидуальное достижение',
 								'type' => 'string'
 								],
 				'series' => [
@@ -139,43 +123,32 @@ class Model_DocsEduc extends Db_Helper
 								'name' => 'Дата выдачи',
 								'type' => 'date'
 							],
-				'school' => [
-							'name' => 'Учебное заведение',
+				'company' => [
+							'name' => 'Организация',
 							'type' => 'string'
-							],
-				'end_year' => [
-								'name' => 'Год окончания',
-								'type' => 'int'
-								]
+							]
 				];
 	}
 
 	/**
-     * Gets education document by ID.
+     * Gets individual achievment by ID.
      *
      * @return array
      */
 	public function get()
 	{
-		$doc_educ = $this->rowSelectOne('*', self::TABLE_NAME, 'id = :id', [':id' => $this->id]);
-		if ($doc_educ) {
-			$educ_type = $this->rowSelectOne('code as educ_type',
-											'dict_eductypes',
-											'id = :id',
-											[':id' => $doc_educ['id_eductype']]);
-			if (!is_array($educ_type)) {
-				$educ_type = ['educ_type' => null];
+		$ia = $this->rowSelectOne('*', self::TABLE_NAME, 'id = :id', [':id' => $this->id]);
+		if ($ia) {
+			$achiev_type = $this->rowSelectOne('code as achiev_type',
+												'dict_ind_achievs',
+												'id = :id',
+												[':id' => $ia['id_achiev']]);
+			if (!is_array($achiev_type)) {
+				$achiev_type = ['achiev_type' => null];
 			}
-			$doc_type = $this->rowSelectOne('code as doc_type',
-											'dict_doctypes',
-											'id = :id',
-											[':id' => $doc_educ['id_doctype']]);
-			if (!is_array($doc_type)) {
-				$doc_type = ['doc_type' => null];
-			}
-			$result = array_merge($doc_educ, $educ_type, $doc_type);
+			$result = array_merge($ia, $achiev_type);
 			$scan = new Model_Scans();
-			$scan_arr = $scan->getByDocrowFull('docs_educ', $doc_educ['id']);
+			$scan_arr = $scan->getByDocrowFull('ind_achievs', $ia['id']);
 			$result = array_merge($result, $scan_arr);
 			return $result;
 		} else {
@@ -184,7 +157,7 @@ class Model_DocsEduc extends Db_Helper
 	}
 
 	/**
-     * Gets education documents by user.
+     * Gets individual achievments by user.
      *
      * @return array
      */
@@ -197,34 +170,35 @@ class Model_DocsEduc extends Db_Helper
 	}
 
 	/**
-     * Gets education documents by user for Select List.
+     * Gets individual achievments by user/admission campaign.
      *
      * @return array
      */
-	public function getByUserSl()
+	public function getByUserCampaign()
 	{
-		return $this->rowSelectAll("docs_educ.id, concat(dict_doctypes.description, ' № ', docs_educ.series, '-', docs_educ.numb, ' от ', date_format(dt_issue, '%d.%m.%Y')) as description",
-									'docs_educ INNER JOIN dict_doctypes ON docs_educ.id_doctype = dict_doctypes.id',
-									'docs_educ.id_user = :id_user',
-									[':id_user' => $this->id_user]);
+		return $this->rowSelectAll('ind_achievs.*',
+									'ind_achievs INNER JOIN dict_ind_achievs ON ind_achievs.id_achiev = dict_ind_achievs.id'.
+									' INNER JOIN dict_ind_achievs_ac ON dict_ind_achievs.code = dict_ind_achievs_ac.achiev_code',
+									'ind_achievs.id_user = :id_user AND dict_ind_achievs_ac.campaign_code = :campaign_code',
+									[':id_user' => $this->id_user,
+									':campaign_code' => $this->campaign_code]);
 	}
 
 	/**
-     * Gets education documents by user for GRID.
+     * Gets individual achievments by user for GRID.
      *
      * @return array
      */
 	public function getByUserGrid()
 	{
-		return $this->rowSelectAll("docs_educ.id, dict_eductypes.description as educ_type, dict_doctypes.description as doc_type, series, numb, date_format(dt_issue, '%d.%m.%Y') as dt_issue, school, end_year",
-									'docs_educ INNER JOIN dict_eductypes ON docs_educ.id_eductype = dict_eductypes.id'.
-									' INNER JOIN dict_doctypes ON docs_educ.id_doctype = dict_doctypes.id',
+		return $this->rowSelectAll("ind_achievs.id, dict_ind_achievs.description as achiev_type, series, ind_achievs.numb, date_format(dt_issue, '%d.%m.%Y') as dt_issue, company",
+									'ind_achievs INNER JOIN dict_ind_achievs ON ind_achievs.id_achiev = dict_ind_achievs.id',
 									'id_user = :id_user',
 									[':id_user' => $this->id_user]);
 	}
 
 	/**
-     * Gets education document by doctype/series/numb.
+     * Gets individual achievment by achiev_type/series/numb.
      *
      * @return array
      */
@@ -233,21 +207,21 @@ class Model_DocsEduc extends Db_Helper
 		if (empty($this->series)) {
 			return $this->rowSelectOne('*',
 									self::TABLE_NAME,
-									'id_doctype = :id_doctype AND series is null AND numb = :numb',
-									[':id_doctype' => $this->id_doctype,
+									'id_achiev = :id_achiev AND series is null AND numb = :numb',
+									[':id_achiev' => $this->id_achiev,
 									':numb' => $this->numb]);
 		} else {
 			return $this->rowSelectOne('*',
 									self::TABLE_NAME,
-									'id_doctype = :id_doctype AND series = :series AND numb = :numb',
-									[':id_doctype' => $this->id_doctype,
+									'id_achiev = :id_achiev AND series = :series AND numb = :numb',
+									[':id_achiev' => $this->id_achiev,
 									':series' => $this->series,
 									':numb' => $this->numb]);
 		}
 	}
 
 	/**
-     * Saves education document data to database.
+     * Saves individual achievment data to database.
      *
      * @return integer
      */
@@ -260,7 +234,7 @@ class Model_DocsEduc extends Db_Helper
 	}
 
 	/**
-     * Changes all education document data.
+     * Changes all individual achievment data.
      *
      * @return boolean
      */
@@ -272,7 +246,7 @@ class Model_DocsEduc extends Db_Helper
 	}
 
 	/**
-     * Removes education document.
+     * Removes individual achievment.
      *
      * @return integer
      */
@@ -280,7 +254,7 @@ class Model_DocsEduc extends Db_Helper
 	{
 		$scans = new Model_Scans();
 		$scans->id_row = $this->id;
-		$scans->clearbyDoc('docs_educ');
+		$scans->clearbyDoc('ind_achievs');
 		return $this->rowDelete(self::TABLE_NAME, 'id = :id', [':id' => $this->id]);
 	}
 

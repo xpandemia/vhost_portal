@@ -18,7 +18,6 @@ class Model_AdmissionCampaign extends Db_Helper
 	public $max_spec;
 	public $max_spec_type;
 	public $receipt_allowed;
-	public $archive;
 
 	public $university;
 
@@ -72,13 +71,7 @@ class Model_AdmissionCampaign extends Db_Helper
 									'insert' => 1,
 									'update' => 1,
 									'value' => $this->receipt_allowed
-									],
-				'archive' => [
-							'required' => 0,
-							'insert' => 1,
-							'update' => 1,
-							'value' => $this->archive
-							]
+									]
 				];
 	}
 
@@ -249,14 +242,14 @@ class Model_AdmissionCampaign extends Db_Helper
 					$log->save();
 					$rows_ins++;
 				} else {
-					$result['error_msg'] = 'Ошибка при приёмной кампании с кодом " '.$this->code.'"!';
+					$result['error_msg'] = 'Ошибка при создании приёмной кампании с кодом " '.$this->code.'"!';
 					return $result;
 				}
 			} else {
 				// update
 				$upd = 0;
 				if ($this->changeAll()) {
-					$log->msg = 'Изменена приёмная кампания с кодом "'.$this->code.'"".';
+					$log->msg = 'Изменена приёмная кампания с кодом "'.$this->code.'".';
 					$log->value_old = null;
 					$log->value_new = null;
 					$log->save();

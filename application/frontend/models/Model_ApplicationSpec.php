@@ -16,6 +16,7 @@ use common\models\Model_ApplicationPlacesExams as ApplicationPlacesExams;
 use common\models\Model_DictDiscipline as Model_DictDiscipline;
 use common\models\Model_EgeDisciplines as Model_EgeDisciplines;
 use common\models\Model_DictTestingScopes as Model_DictTestingScopes;
+use common\models\Model_DictDocships as Model_DictDocships;
 
 include ROOT_DIR.'/application/frontend/models/Model_Scans.php';
 
@@ -32,7 +33,31 @@ class Model_ApplicationSpec extends Model
      */
 	public function rules()
 	{
-		return Model_Scans::createRules('application');
+		$rules = [
+				'docs_ship' => [
+								'type' => 'selectlist',
+                                'class' => 'form-control',
+                                'required' => ['default' => '', 'msg' => 'Тип возврата документов обязателен для заполнения!'],
+								'success' => 'Тип возврата документов заполнен верно.'
+                               ],
+				'campus' => [
+							'type' => 'checkbox',
+	                        'class' => 'form-check-input',
+	                        'success' => 'Получена потребность в общежитии.'
+	                       ],
+	            'conds' => [
+							'type' => 'checkbox',
+	                        'class' => 'form-check-input',
+	                        'success' => 'Получена просьба о создании специальных условий.'
+	                       ],
+	            'remote' => [
+							'type' => 'checkbox',
+	                        'class' => 'form-check-input',
+	                        'success' => 'Получена просьба о сдаче вступительных испытаний с использованием дистанционных технологий.'
+	                       ]
+				];
+		$scans = Model_Scans::createRules('application');
+		return array_merge($rules, $scans);
 	}
 
 	/**
@@ -204,7 +229,7 @@ class Model_ApplicationSpec extends Model
 				$form['error_msg'] = 'Превышено кол-во направлений подготовки: выбрано '.count($spec_unique_arr).' при разрешённых '.$adm_row['max_spec'].'!';
 			}
 		} else {
-			$form['error_msg'] = 'Ошибка при получении макстмального числа направлений подготовки приёмной кампании с ID '.$form['pid'].'!';
+			$form['error_msg'] = 'Ошибка при получении максимального числа направлений подготовки приёмной кампании с ID '.$form['pid'].'!';
 		}
 		return $form;
 	}
@@ -242,6 +267,21 @@ class Model_ApplicationSpec extends Model
 				}
 			}
 		}
+		/* application */
+		$app = new Application();
+		$app->id = $form['id'];
+		$app_row = $app->get();
+		$app->id_docseduc = $app_row['id_docseduc'];
+			$docship = new Model_DictDocships();
+			$docship->code = $form['docs_ship'];
+			$row_docship = $docship->getByCode();
+		$app->id_docship = $row_docship['id'];
+		$app->status = $app_row['status'];
+		// additional info
+		$app->campus = (($form['campus'] == 'checked') ? 1 : 0);
+		$app->conds = (($form['conds'] == 'checked') ? 1 : 0);
+		$app->remote = (($form['remote'] == 'checked') ? 1 : 0);
+		$app->changeAll();
 		/* scans */
 		$dict_scans = new Model_DictScans();
 		$dict_scans->doc_code = 'application';

@@ -28,11 +28,14 @@ class Model_Application extends Db_Helper
 	public $id_university;
 	public $id_campaign;
 	public $id_docseduc;
+	public $id_docship;
 	public $id_app;
 	public $type;
 	public $status;
 	public $numb;
 	public $numb1c;
+	public $campus;
+	public $remote;
 	public $dt_created;
 
 	public $db;
@@ -80,6 +83,12 @@ class Model_Application extends Db_Helper
 								'update' => 1,
 								'value' => $this->id_docseduc
 								],
+				'id_docship' => [
+								'required' => 1,
+								'insert' => 1,
+								'update' => 1,
+								'value' => $this->id_docship
+								],
 				'id_app' => [
 							'required' => 0,
 							'insert' => 1,
@@ -109,6 +118,24 @@ class Model_Application extends Db_Helper
 							'insert' => 1,
 							'update' => 1,
 							'value' => $this->numb1c
+							],
+				'campus' => [
+							'required' => 1,
+							'insert' => 1,
+							'update' => 1,
+							'value' => $this->campus
+							],
+				'conds' => [
+							'required' => 1,
+							'insert' => 1,
+							'update' => 1,
+							'value' => $this->conds
+							],
+				'remote' => [
+							'required' => 1,
+							'insert' => 1,
+							'update' => 1,
+							'value' => $this->remote
 							],
 				'dt_created' => [
 								'required' => 1,
@@ -196,6 +223,16 @@ class Model_Application extends Db_Helper
 	}
 
 	/**
+     * Gets application by ID.
+     *
+     * @return array
+     */
+	public function get()
+	{
+		return $this->rowSelectOne('*', self::TABLE_NAME, 'id = :id', [':id' => $this->id]);
+	}
+
+	/**
      * Gets application spec.
      *
      * @return array
@@ -205,9 +242,18 @@ class Model_Application extends Db_Helper
 		$result = [];
 		$app = $this->rowSelectOne('*', self::TABLE_NAME, 'id = :id', [':id' => $this->id]);
 		if ($app) {
+			// docs shipment
+			$docs_ship = $this->rowSelectOne('code as docs_ship',
+											'dict_docships',
+											'id = :id',
+											[':id' => $app['id_docship']]);
+			if (!is_array($docs_ship)) {
+				$docs_ship = ['docs_ship' => null];
+			}
+			// scans
 			$scan = new Model_Scans();
 			$scan_arr = $scan->getByDocrowFull('application', $this->id);
-			$result = array_merge($app, $scan_arr);
+			$result = array_merge($app, $docs_ship, $scan_arr);
 		}
 		return $result;
 	}

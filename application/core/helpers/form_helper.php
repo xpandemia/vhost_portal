@@ -3,7 +3,7 @@
 namespace tinyframe\core\helpers;
 
 // patterns
-define('PATTERN_NUMB', '/^[0-9]*$/u'); // number only
+define('PATTERN_NUMB', '/^[0-9]*$/u'); // numbers only
 define('PATTERN_ALPHA', '/^[a-zA-Z]*$/u'); // letters only ENG
 define('PATTERN_ALPHA_RUS', '/^[ёЁа-яА-Я]*$/u'); // letters only RUS
 define('PATTERN_TEXT', '/^[a-zA-Z-\.\,\s]*$/u'); // letters, "-", ".", ",", " " ENG
@@ -12,8 +12,11 @@ define('PATTERN_INFO', '/^[a-zA-Z0-9-\.\,\#\s]*$/u'); // letters, numbers, "-", 
 define('PATTERN_INFO_RUS', '/^[ёЁа-яА-Я0-9-.,№\s]*$/u'); // letters, numbers, "-", ".", ",", "№", " " RUS
 define('PATTERN_ALPHA_NUMB', '/^[a-zA-Z0-9]*$/u'); // letters and numbers ENG
 define('PATTERN_ALPHA_NUMB_RUS', '/^[ёЁа-яА-Я0-9]*$/u'); // letters and numbers RUS
+define('PATTERN_ALPHA_NUMB_ALL', '/^[a-zA-ZёЁа-яА-Я0-9]*$/u'); // letters and numbers
 define('PATTERN_EMAIL_LIGHT', '/^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9_\-.]+$/'); // email light
 define('PATTERN_EMAIL_STRONG', '/^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9_\-]+\.[a-zA-Z0-9_\-]+$/'); // email strong
+define('PATTERN_PHONE_HOME', '/^[0-9-]*$/u'); // numbers, "-"
+define('PATTERN_PHONE_ADD', '/^[ёЁа-яА-Я0-9-]*$/u'); // letters RUS, numbers, "-"
 define('PATTERN_DATE_LIGHT', '/^(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}$/'); // date DD.MM.YYYY light
 define('PATTERN_DATE_STRONG', '/^(?:(?:0[1-9]|1[0-9]|2[0-9]).(?:0[1-9]|1[0-2])|(?:(?:30).(?!02)(?:0[1-9]|1[0-2]))|(?:31.(?:0[13578]|1[02]))).(?:19|20)[0-9]{2}$/'); // date DD.MM.YYYY strong
 
@@ -30,14 +33,14 @@ class Form_Helper
      */
 
 	/* RULES (+ required)
-		+ 'type' => {TYPE},
+		+ 'type' => {text, date, file, selectlist, checkbox, radio},
 		+ 'class' => {CLASS},
 		'format' => {FORMAT},
 		'required' => ['default' => 'value', 'msg' => 'Required error message.'],
 	    'pattern' => ['value' => {PATTERN_}, 'msg' => 'Pattern error message.'],
 	    'width' => ['format' => 'string/numb', 'min' => {min value}, 'max' => {max value}, 'msg' => 'Width error message.'],
 	    'unique' => ['class' => 'models\\common\\Model_Class', 'method' => 'Class_Method', 'msg' => 'Unique error message.'],
-	    'compared' => ['value' => '{VALUE}', 'type' => '==', 'msg' => 'Compared error message.'],
+	    'compared' => ['value' => '{VALUE}', 'type' => {'==', '>', '<', '>=', '<='}, 'msg' => 'Compared error message.'],
 	    'size' = ['value' => {FILE_SIZE}, 'msg' => 'File size error message.'],
 	    'ext' => ['value' => {FILE_EXTENSION}, 'msg' => 'File extension error message.'],
 	    +'success' => 'Success message.'
@@ -53,21 +56,29 @@ class Form_Helper
 					switch ($rule_name) {
 						// required check
 						case 'required':
-							if ($rules[$field_name]['type'] === 'checkbox' || $rules[$field_name]['type'] === 'radio') {
-								if (!$form[$field_name] && $form[$field_name] != '0') {
-									$validate = false;
-									$form[$field_name.'_err'] = $rule_var_arr['msg'];
-								}
-							} else {
-								if (empty($form[$field_name])) {
-									if (!empty($rule_var_arr['default'])) {
-										$form[$field_name] = $rule_var_arr['default'];
-										$form[$field_name.'_err'] = '';
-									} else {
+							switch ($rules[$field_name]['type']) {
+								case 'checkbox':
+									if ($form[$field_name] != 'checked') {
 										$validate = false;
 										$form[$field_name.'_err'] = $rule_var_arr['msg'];
 									}
-								}
+									break;
+								case 'radio':
+									if (!$form[$field_name] && $form[$field_name] != '0') {
+										$validate = false;
+										$form[$field_name.'_err'] = $rule_var_arr['msg'];
+									}
+									break;
+								default:
+									if (empty($form[$field_name])) {
+										if (!empty($rule_var_arr['default'])) {
+											$form[$field_name] = $rule_var_arr['default'];
+											$form[$field_name.'_err'] = '';
+										} else {
+											$validate = false;
+											$form[$field_name.'_err'] = $rule_var_arr['msg'];
+										}
+									}
 							}
 							break;
 						// pattern check
@@ -125,25 +136,25 @@ class Form_Helper
 										}
 										break;
 									case '>':
-										if ($form[$field_name] < $rule_var_arr['value']) {
-											$validate = false;
-											$form[$field_name.'_err'] = $rule_var_arr['msg'];
-										}
-										break;
-									case '<':
-										if ($form[$field_name] > $rule_var_arr['value']) {
-											$validate = false;
-											$form[$field_name.'_err'] = $rule_var_arr['msg'];
-										}
-										break;
-									case '>=':
 										if ($form[$field_name] <= $rule_var_arr['value']) {
 											$validate = false;
 											$form[$field_name.'_err'] = $rule_var_arr['msg'];
 										}
 										break;
-									case '<=':
+									case '<':
 										if ($form[$field_name] >= $rule_var_arr['value']) {
+											$validate = false;
+											$form[$field_name.'_err'] = $rule_var_arr['msg'];
+										}
+										break;
+									case '>=':
+										if ($form[$field_name] < $rule_var_arr['value']) {
+											$validate = false;
+											$form[$field_name.'_err'] = $rule_var_arr['msg'];
+										}
+										break;
+									case '<=':
+										if ($form[$field_name] > $rule_var_arr['value']) {
 											$validate = false;
 											$form[$field_name.'_err'] = $rule_var_arr['msg'];
 										}
@@ -589,7 +600,7 @@ class Form_Helper
 					$result .= '<input type="hidden" id="'.$field.'_id" name="'.$field.'_id" value="'.$rules['data'][$field.'_id'].'"/>'.
 								'<span style="padding-left:10px;"> </span><img class="img-fluid" src="data:'.$rules['data'][$field.'_type'].';base64,'.base64_encode( $rules['data'][$field] ).'" width="80" height="100">'.
 								'<span style="padding-left:10px;"> </span>'.
-								HTML_Helper::setHrefButtonIcon('Scans', 'Show/?id='.$rules['data'][$field.'_id'].'&ctr='.$rules['home_ctr'], 'font-weight-bold', 'far fa-file-image fa-2x', 'Просмотреть файл').
+								HTML_Helper::setHrefButtonIcon('Scans', 'Show/?id='.$rules['data'][$field.'_id'].((isset($rules['home_id']) && !empty($rules['home_id'])) ? '&pid='.$rules['home_id'] : '').'&ctr='.$rules['home_ctr'].'&act='.$rules['home_act'], 'font-weight-bold', 'far fa-file-image fa-2x', 'Посмотреть файл').
 								'<span style="padding-left:10px;"> </span>'.
 								HTML_Helper::setHrefButtonIcon('Scans', 'DeleteConfirm/?id='.$rules['data'][$field.'_id'].((isset($rules['home_id']) && !empty($rules['home_id'])) ? '&pid='.$rules['home_id'] : '').'&hdr='.$rules['home_hdr'].'&ctr='.$rules['home_ctr'].'&act='.$rules['home_act'], 'text-danger font-weight-bold', 'fas fa-times fa-2x', 'Удалить файл');
 				} else {

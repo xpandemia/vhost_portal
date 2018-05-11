@@ -40,7 +40,7 @@ class Model_DocsEduc extends Model
                 'series' => [
                             'type' => 'text',
                             'class' => 'form-control',
-                            'pattern' => ['value' => PATTERN_ALPHA_NUMB, 'msg' => 'Для серии можно использовать только цифры и буквы!'],
+                            'pattern' => ['value' => PATTERN_ALPHA_NUMB_ALL, 'msg' => 'Для серии можно использовать только цифры и буквы!'],
                             'width' => ['format' => 'string', 'min' => 1, 'max' => 10, 'msg' => 'Слишком длинная серия!'],
                             'success' => 'Серия заполнена верно.'
                            ],
@@ -66,6 +66,7 @@ class Model_DocsEduc extends Model
                                 'class' => 'form-control',
                                 'required' => ['default' => '', 'msg' => 'Дата выдачи обязательна для заполнения!'],
                                 'pattern' => ['value' => PATTERN_DATE_STRONG, 'msg' => 'Дата выдачи должна быть в фомате ДД.ММ.ГГГГ и только 20-го, 21-го вв!'],
+                                'compared' => ['value' => date('d.m.Y'), 'type' => '<', 'msg' => 'Дата выдачи больше текущей даты или равна ей!'],
                                 'success' => 'Дата выдачи заполнена верно.'
                                ],
                 'end_year' => [
@@ -74,6 +75,7 @@ class Model_DocsEduc extends Model
 	                            'required' => ['default' => '', 'msg' => 'Год окончания обязателен для заполнения!'],
 	                            'pattern' => ['value' => PATTERN_NUMB, 'msg' => 'Для года окончания можно использовать только цифры!'],
 	                            'width' => ['format' => 'string', 'min' => 1, 'max' => 4, 'msg' => 'Слишком длинный год окончания!'],
+	                            'compared' => ['value' => date('Y'), 'type' => '<=', 'msg' => 'Год окончания больше текущего года!'],
 	                            'success' => 'Год окончания заполнен верно.'
 	                           ]
 	            ];

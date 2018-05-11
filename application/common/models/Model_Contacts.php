@@ -8,6 +8,14 @@ define('CONTACT_EMAIL', array(
 							'name' => 'Адрес эл. почты',
 							'plc' => 'user@domain',
 							'help' => 'Адрес электронной почты должен быть в формате <b>user@domain</b>, содержать <b>только латинские буквы</b> и не более <b>45</b> символов длиной.'));
+define('CONTACT_PHONE_HOME', array(
+									'name' => 'Номер домашнего телефона',
+									'plc' => '1-11-11',
+									'help' => 'Номер домашнего телефона должен содержать <b>только цифры и тире</b> и быть не более <b>45</b> символов длиной.'));
+define('CONTACT_PHONE_ADD', array(
+									'name' => 'Номер дополнительного телефона',
+									'plc' => '1-11-11Папа',
+									'help' => 'Номер дополнительного телефона должен содержать <b>только русские буквы, цифры и тире</b> и быть не более <b>45</b> символов длиной.'));
 
 class Model_Contacts extends Db_Helper
 {
@@ -18,7 +26,9 @@ class Model_Contacts extends Db_Helper
 	const TABLE_NAME = 'contacts';
 
 	const TYPE_EMAIL = 0;
-	const TYPE_PHONE = 1;
+	const TYPE_PHONE_MOBILE = 1;
+	const TYPE_PHONE_HOME = 2;
+	const TYPE_PHONE_ADD = 3;
 
 	public $id;
 	public $id_user;
@@ -109,16 +119,42 @@ class Model_Contacts extends Db_Helper
 	}
 
 	/**
-     * Gets phone by resume.
+     * Gets phone mobile by resume.
      *
      * @return array
      */
-	public function getPhoneByResume()
+	public function getPhoneMobileByResume()
 	{
 		return $this->rowSelectOne('*',
 								self::TABLE_NAME,
 								'id_resume = :id_resume AND type = :type',
-								[':id_resume' => $this->id_resume, ':type' => self::TYPE_PHONE]);
+								[':id_resume' => $this->id_resume, ':type' => self::TYPE_PHONE_MOBILE]);
+	}
+
+	/**
+     * Gets phone home by resume.
+     *
+     * @return array
+     */
+	public function getPhoneHomeByResume()
+	{
+		return $this->rowSelectOne('*',
+								self::TABLE_NAME,
+								'id_resume = :id_resume AND type = :type',
+								[':id_resume' => $this->id_resume, ':type' => self::TYPE_PHONE_HOME]);
+	}
+
+	/**
+     * Gets phone add by resume.
+     *
+     * @return array
+     */
+	public function getPhoneAddByResume()
+	{
+		return $this->rowSelectOne('*',
+								self::TABLE_NAME,
+								'id_resume = :id_resume AND type = :type',
+								[':id_resume' => $this->id_resume, ':type' => self::TYPE_PHONE_ADD]);
 	}
 
 	/**
@@ -144,6 +180,16 @@ class Model_Contacts extends Db_Helper
 		$this->dt_updated = date('Y-m-d H:i:s');
 		$prepare = $this->prepareUpdate(self::TABLE_NAME, $this->rules());
 		return $this->rowUpdate(self::TABLE_NAME, $prepare['fields'], $prepare['params'], ['id' => $this->id]);
+	}
+
+	/**
+     * Removes contact.
+     *
+     * @return integer
+     */
+	public function clear()
+	{
+		return $this->rowDelete(self::TABLE_NAME, 'id = :id', [':id' => $this->id]);
 	}
 
 	public function __destruct()

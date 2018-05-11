@@ -37,7 +37,7 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 												'value' => $data['campaign'],
 												'success' => $data['campaign_scs'],
 												'error' => $data['campaign_err']]);
-		// docs_educ
+		// education docs
 		echo Form_Helper::setFormSelectListDB(['label' => 'Документ об образовании',
 												'control' => 'docs_educ',
 												'class' => $data['docs_educ_cls'],
@@ -52,8 +52,45 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 												'value' => $data['docs_educ'],
 												'success' => $data['docs_educ_scs'],
 												'error' => $data['docs_educ_err']]);
+		// docs shipment
+		echo Form_Helper::setFormSelectListDB(['label' => 'Тип возврата документов',
+												'control' => 'docs_ship',
+												'class' => $data['docs_ship_cls'],
+												'required' => 'yes',
+												'required_style' => 'StarUp',
+												'model_class' => 'common\\models\\Model_DictDocships',
+												'model_method' => 'getAll',
+												'model_field' => 'code',
+												'model_field_name' => 'description',
+												'value' => $data['docs_ship'],
+												'success' => $data['docs_ship_scs'],
+												'error' => $data['docs_ship_err']]);
+		/* additional info */
+		echo Form_Helper::setFormHeaderSub('Дополнительная информация');
+		// campus
+		echo Form_Helper::setFormCheckbox(['label' => 'Нуждаюсь в общежитии',
+											'control' => 'campus',
+											'class' => $data['campus_cls'],
+											'value' => $data['campus'],
+											'success' => $data['campus_scs'],
+											'error' => $data['campus_err']]);
+		// conds
+		echo Form_Helper::setFormCheckbox(['label' => 'Прошу создать специальные условия (например: присутствие ассистента, наличие звукоусиливающей аппаратуры)',
+											'control' => 'conds',
+											'class' => $data['conds_cls'],
+											'value' => $data['conds'],
+											'success' => $data['conds_scs'],
+											'error' => $data['conds_err']]);
+		// remote
+		echo Form_Helper::setFormCheckbox(['label' => 'Прошу разрешить сдачу вступительных испытаний с использованием дистанционных технологий (только для поступающих на платную основу заочной формы обучения)',
+											'control' => 'remote',
+											'class' => $data['remote_cls'],
+											'value' => $data['remote'],
+											'success' => $data['remote_scs'],
+											'error' => $data['remote_err']]);
 	?>
 	<!-- controls -->
+	<br>
 	<div class="form-group">
 		<div class="col">
 			<?php

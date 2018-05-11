@@ -39,6 +39,9 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 		      <a class="nav-link text-dark" data-toggle="tooltip" title="<?php echo EGE['hdr']; ?>" href="<?php echo Basic_Helper::appUrl('Main', EGE['ctr']); ?>"><i class="fas fa-table fa-2x"></i></a>
 		    </li>
 		    <li class="nav-item">
+		      <a class="nav-link text-dark" data-toggle="tooltip" title="Индивидуальные достижения" href="<?php echo Basic_Helper::appUrl('Main', IND_ACHIEVS['ctr']); ?>"><i class="fas fa-trophy fa-2x"></i></a>
+		    </li>
+		    <li class="nav-item">
 		      <a class="nav-link text-dark" data-toggle="tooltip" title="Заявления" href="<?php echo Basic_Helper::appUrl('Main', APP['ctr']); ?>"><i class="fas fa-file-alt fa-2x"></i></a>
 		    </li>
 		    <?php if (isset($_SESSION[APP_CODE]['user_name'])) { ?>
