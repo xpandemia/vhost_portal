@@ -43,7 +43,8 @@ class Model_DictScans extends Db_Helper
 								self::TABLE_NAME.' INNER JOIN docs ON '.self::TABLE_NAME.'.id_doc = docs.id',
 								'doc_code = :doc_code AND main = :main',
 								[':doc_code' => $this->doc_code,
-								':main' => 1]);
+								':main' => 1],
+								'numb');
 	}
 
 	/**

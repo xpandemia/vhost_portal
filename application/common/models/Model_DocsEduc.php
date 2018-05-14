@@ -203,7 +203,7 @@ class Model_DocsEduc extends Db_Helper
      */
 	public function getByUserSl()
 	{
-		return $this->rowSelectAll("docs_educ.id, concat(dict_doctypes.description, ' № ', docs_educ.series, '-', docs_educ.numb, ' от ', date_format(dt_issue, '%d.%m.%Y')) as description",
+		return $this->rowSelectAll("docs_educ.id, concat(dict_doctypes.description, ' № ', ifnull(concat(docs_educ.series, '-'), ''), docs_educ.numb, ' от ', date_format(dt_issue, '%d.%m.%Y')) as description",
 									'docs_educ INNER JOIN dict_doctypes ON docs_educ.id_doctype = dict_doctypes.id',
 									'docs_educ.id_user = :id_user',
 									[':id_user' => $this->id_user]);

@@ -10,12 +10,12 @@ define('CONTACT_EMAIL', array(
 							'help' => 'Адрес электронной почты должен быть в формате <b>user@domain</b>, содержать <b>только латинские буквы</b> и не более <b>45</b> символов длиной.'));
 define('CONTACT_PHONE_HOME', array(
 									'name' => 'Номер домашнего телефона',
-									'plc' => '1-11-11',
-									'help' => 'Номер домашнего телефона должен содержать <b>только цифры и тире</b> и быть не более <b>45</b> символов длиной.'));
+									'plc' => '(код города)1-23-45',
+									'help' => 'Номер домашнего телефона должен содержать <b>только цифры, тире и скобки</b> и быть не более <b>45</b> символов длиной.'));
 define('CONTACT_PHONE_ADD', array(
 									'name' => 'Номер дополнительного телефона',
-									'plc' => '1-11-11Папа',
-									'help' => 'Номер дополнительного телефона должен содержать <b>только русские буквы, цифры и тире</b> и быть не более <b>45</b> символов длиной.'));
+									'plc' => '89031234567 Папа, 89101234567 Мама',
+									'help' => 'Номер дополнительного телефона должен содержать <b>только русские буквы, цифры, запятые и пробелы</b> и быть не более <b>45</b> символов длиной.'));
 
 class Model_Contacts extends Db_Helper
 {
@@ -29,6 +29,9 @@ class Model_Contacts extends Db_Helper
 	const TYPE_PHONE_MOBILE = 1;
 	const TYPE_PHONE_HOME = 2;
 	const TYPE_PHONE_ADD = 3;
+
+	const TRANS_PHONE_MOBILE = ['+7' => '8', '(' => '', ')' => '', ' ' => '', '-' => ''];
+	const TRANS_PHONE_HOME = ['(' => '', ')' => '', '-' => ''];
 
 	public $id;
 	public $id_user;
@@ -164,6 +167,14 @@ class Model_Contacts extends Db_Helper
      */
 	public function save()
 	{
+		switch ($this->type) {
+			case self::TYPE_PHONE_MOBILE:
+				$this->contact = strtr($this->contact, self::TRANS_PHONE_MOBILE);
+				break;
+			case self::TYPE_PHONE_HOME:
+				$this->contact = strtr($this->contact, self::TRANS_PHONE_HOME);
+				break;
+		}
 		$this->dt_created = date('Y-m-d H:i:s');
 		$this->dt_updated = null;
 		$prepare = $this->prepareInsert(self::TABLE_NAME, $this->rules());
@@ -177,6 +188,14 @@ class Model_Contacts extends Db_Helper
      */
 	public function changeAll()
 	{
+		switch ($this->type) {
+			case self::TYPE_PHONE_MOBILE:
+				$this->contact = strtr($this->contact, self::TRANS_PHONE_MOBILE);
+				break;
+			case self::TYPE_PHONE_HOME:
+				$this->contact = strtr($this->contact, self::TRANS_PHONE_HOME);
+				break;
+		}
 		$this->dt_updated = date('Y-m-d H:i:s');
 		$prepare = $this->prepareUpdate(self::TABLE_NAME, $this->rules());
 		return $this->rowUpdate(self::TABLE_NAME, $prepare['fields'], $prepare['params'], ['id' => $this->id]);

@@ -15,8 +15,8 @@ define('PATTERN_ALPHA_NUMB_RUS', '/^[ёЁа-яА-Я0-9]*$/u'); // letters and nu
 define('PATTERN_ALPHA_NUMB_ALL', '/^[a-zA-ZёЁа-яА-Я0-9]*$/u'); // letters and numbers
 define('PATTERN_EMAIL_LIGHT', '/^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9_\-.]+$/'); // email light
 define('PATTERN_EMAIL_STRONG', '/^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9_\-]+\.[a-zA-Z0-9_\-]+$/'); // email strong
-define('PATTERN_PHONE_HOME', '/^[0-9-]*$/u'); // numbers, "-"
-define('PATTERN_PHONE_ADD', '/^[ёЁа-яА-Я0-9-]*$/u'); // letters RUS, numbers, "-"
+define('PATTERN_PHONE_HOME', '/^[0-9-()]*$/u'); // numbers, "(", ")"
+define('PATTERN_PHONE_ADD', '/^[ёЁа-яА-Я0-9,\s]*$/u'); // letters RUS, numbers, ",", " "
 define('PATTERN_DATE_LIGHT', '/^(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}$/'); // date DD.MM.YYYY light
 define('PATTERN_DATE_STRONG', '/^(?:(?:0[1-9]|1[0-9]|2[0-9]).(?:0[1-9]|1[0-2])|(?:(?:30).(?!02)(?:0[1-9]|1[0-2]))|(?:31.(?:0[13578]|1[02]))).(?:19|20)[0-9]{2}$/'); // date DD.MM.YYYY strong
 
@@ -128,33 +128,40 @@ class Form_Helper
 						// comparison check
 						case 'compared':
 							if (!empty($rule_var_arr['value']) && !empty($form[$field_name]) && empty($form[$field_name.'_err'])) {
+								if ($rules[$field_name]['type'] == 'date') {
+									$field_value = date('Y-m-d', strtotime($form[$field_name]));
+									$test_value = date('Y-m-d', strtotime($rule_var_arr['value']));
+								} else {
+									$field_value = $form[$field_name];
+									$test_value = $rule_var_arr['value'];
+								}
 								switch ($rule_var_arr['type']) {
 									case '==':
-										if ($form[$field_name] != $rule_var_arr['value']) {
+										if ($field_value != $test_value) {
 											$validate = false;
 											$form[$field_name.'_err'] = $rule_var_arr['msg'];
 										}
 										break;
 									case '>':
-										if ($form[$field_name] <= $rule_var_arr['value']) {
+										if ($field_value <= $test_value) {
 											$validate = false;
 											$form[$field_name.'_err'] = $rule_var_arr['msg'];
 										}
 										break;
 									case '<':
-										if ($form[$field_name] >= $rule_var_arr['value']) {
+										if ($field_value >= $test_value) {
 											$validate = false;
 											$form[$field_name.'_err'] = $rule_var_arr['msg'];
 										}
 										break;
 									case '>=':
-										if ($form[$field_name] < $rule_var_arr['value']) {
+										if ($field_value < $test_value) {
 											$validate = false;
 											$form[$field_name.'_err'] = $rule_var_arr['msg'];
 										}
 										break;
 									case '<=':
-										if ($form[$field_name] > $rule_var_arr['value']) {
+										if ($field_value > $test_value) {
 											$validate = false;
 											$form[$field_name.'_err'] = $rule_var_arr['msg'];
 										}

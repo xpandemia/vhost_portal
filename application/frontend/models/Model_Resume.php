@@ -78,7 +78,7 @@ class Model_Resume extends Model
                 'agreement' => [
 								'type' => 'file',
 								'class' => 'form-control',
-								'success' => 'Согласие родителей заполнено верно.'
+								'success' => 'Скан-копия "Согласие родителей/опекунов" заполнено верно.'
 								],
 				'birth_place' => [
                                 'type' => 'text',
@@ -152,7 +152,7 @@ class Model_Resume extends Model
                                 'type' => 'text',
                                 'class' => 'form-control',
                                 'required' => ['default' => '', 'msg' => 'Наименование подразделения обязательно для заполнения!'],
-                                'pattern' => ['value' => PATTERN_TEXT_RUS, 'msg' => 'Для наименования подразделения можно использовать только русские буквы, тире, точки, запятые и пробелы!'],
+                                'pattern' => ['value' => PATTERN_INFO_RUS, 'msg' => 'Для наименования подразделения можно использовать только русские буквы, тире, точки, запятые и пробелы!'],
                                 'width' => ['format' => 'string', 'min' => 1, 'max' => 100, 'msg' => 'Слишком длинное наименование подразделения!'],
                                 'success' => 'Наименование подразделения заполнено верно.'
                                ],
@@ -166,7 +166,7 @@ class Model_Resume extends Model
                             'format' => 'd.m.Y',
                             'class' => 'form-control',
                             'pattern' => ['value' => PATTERN_DATE_STRONG, 'msg' => 'Дата окончания действия должна быть в фомате ДД.ММ.ГГГГ и только 20-го, 21-го вв!'],
-                            'compared' => ['value' => date('d.m.Y'), 'type' => '<', 'msg' => 'Дата окончания действия больше текущей даты или равна ей!'],
+                            'compared' => ['value' => date('d.m.Y'), 'type' => '>', 'msg' => 'Дата окончания действия меньше текущей даты или равна ей!'],
                             'success' => 'Дата окончания действия заполнена верно.'
                            ],
                 'passport_old_yes' => [
@@ -203,7 +203,7 @@ class Model_Resume extends Model
                 'unit_name_old' => [
 	                                'type' => 'text',
 	                                'class' => 'form-control',
-	                                'pattern' => ['value' => PATTERN_TEXT_RUS, 'msg' => 'Для наименования подразделения можно использовать только русские буквы, тире, точки, запятые и пробелы!'],
+	                                'pattern' => ['value' => PATTERN_INFO_RUS, 'msg' => 'Для наименования подразделения можно использовать только русские буквы, тире, точки, запятые и пробелы!'],
 	                                'width' => ['format' => 'string', 'min' => 1, 'max' => 100, 'msg' => 'Слишком длинное наименование подразделения!'],
 	                                'success' => 'Наименование подразделения заполнено верно.'
 	                               ],
@@ -217,9 +217,14 @@ class Model_Resume extends Model
 	                            'format' => 'd.m.Y',
 	                            'class' => 'form-control',
 	                            'pattern' => ['value' => PATTERN_DATE_STRONG, 'msg' => 'Дата окончания действия должна быть в фомате ДД.ММ.ГГГГ и только 20-го, 21-го вв!'],
-	                            'compared' => ['value' => date('d.m.Y'), 'type' => '<', 'msg' => 'Дата окончания действия больше текущей даты или равна ей!'],
+	                            'compared' => ['value' => date('d.m.Y'), 'type' => '>', 'msg' => 'Дата окончания действия меньше текущей даты или равна ей!'],
 	                            'success' => 'Дата окончания действия заполнена верно.'
 	                           ],
+	            'passport_old' => [
+									'type' => 'file',
+									'class' => 'form-control',
+									'success' => 'Скан-копия "Сведения о ранее выданных паспортах" заполнена верно.'
+									],
 				'country_reg' => [
 								'type' => 'selectlist',
                                 'class' => 'form-control',
@@ -294,7 +299,7 @@ class Model_Resume extends Model
 			return $form;
 		}
 		// dt_issue
-		if ($form['dt_issue'] <= $form['birth_dt']) {
+		if (date('Y-m-d', strtotime($form['dt_issue'])) <= date('Y-m-d', strtotime($form['birth_dt']))) {
 			$form = $this->setFormErrorField($form, 'dt_issue', 'Дата выдачи документа, удостоверяющего личность, меньше или равна дате рождения!');
 			return $form;
 		}
@@ -314,7 +319,7 @@ class Model_Resume extends Model
 	public function validateAgreement($form)
 	{
 		if (!empty($form['birth_dt']) && Calc_Helper::getAge($form['birth_dt'], 'd.m.Y') < 18 && empty($form['agreement_name'])) {
-				$form = $this->setFormErrorFile($form, 'agreement', 'Скан-копия "Согласие родителей/опекунов" обязательна для заполнения!');
+			$form = $this->setFormErrorFile($form, 'agreement', 'Скан-копия "Согласие родителей/опекунов" обязательна для заполнения!');
 		}
 		return $form;
 	}
@@ -326,19 +331,21 @@ class Model_Resume extends Model
      */
 	public function validatePassport($form)
 	{
-		if ($form['passport_type'] == '000000047') {
-			// series
-			if (empty($form['series'])) {
-				$form = $this->setFormErrorField($form, 'series', 'Серия обязательна для заполнения!');
-			}
-			// unit_code
-			if (empty($form['unit_code'])) {
-				$form = $this->setFormErrorField($form, 'unit_code', 'Код подразделения обязателен для заполнения!');
-			}
-		} else {
-			// dt_end
-			if (empty($form['dt_end'])) {
-				$form = $this->setFormErrorField($form, 'dt_end', 'Дата окончания действия обязательна для заполнения!');
+		if (!empty($form['passport_type'])) {
+			if ($form['passport_type'] == '000000047') {
+				// series
+				if (empty($form['series'])) {
+					$form = $this->setFormErrorField($form, 'series', 'Серия обязательна для заполнения!');
+				}
+				// unit_code
+				if (empty($form['unit_code'])) {
+					$form = $this->setFormErrorField($form, 'unit_code', 'Код подразделения обязателен для заполнения!');
+				}
+			} else {
+				// dt_end
+				if (empty($form['dt_end'])) {
+					$form = $this->setFormErrorField($form, 'dt_end', 'Дата окончания действия обязательна для заполнения!');
+				}
 			}
 		}
 		return $form;
@@ -367,7 +374,7 @@ class Model_Resume extends Model
 					}
 					// passport_old
 					if (empty($form['passport_old'])) {
-						$form = $this->setFormErrorFile($form, 'passport_old', 'Скан-копия "Ранее выданные паспорта" обязательна для заполнения!');
+						$form = $this->setFormErrorFile($form, 'passport_old', 'Скан-копия "Сведения о ранее выданных паспортах" обязательна для заполнения!');
 					}
 				}
 				// numb
@@ -377,9 +384,9 @@ class Model_Resume extends Model
 				// dt_issue
 				if (empty($form['dt_issue_old'])) {
 					$form = $this->setFormErrorField($form, 'dt_issue_old', 'Дата выдачи обязательна для заполнения!');
-				} elseif ($form['dt_issue_old'] <= $form['birth_dt']) {
+				} elseif (date('Y-m-d', strtotime($form['dt_issue_old'])) <= date('Y-m-d', strtotime($form['birth_dt']))) {
 					$form = $this->setFormErrorField($form, 'dt_issue_old', 'Дата выдачи старого документа, удостоверяющего личность, меньше или равна дате рождения!', 1);	
-				} elseif ($form['dt_issue'] <= $form['dt_issue_old']) {
+				} elseif (date('Y-m-d', strtotime($form['dt_issue'])) <= date('Y-m-d', strtotime($form['dt_issue_old']))) {
 					$form = $this->setFormErrorField($form, 'dt_issue_old', 'Дата выдачи документа, удостоверяющего личность, меньше или равна дате выдачи старого документа, удостоверяющего личность!', 1);
 				}
 			}
@@ -620,13 +627,23 @@ class Model_Resume extends Model
      */
 	public function unsetScans($form)
 	{
+		// agreement
 		if (isset($form['birth_dt']) && Calc_Helper::getAge($form['birth_dt'], 'd.m.Y') < 18) {
 			if (empty($form['agreement_name'])) {
-				$form['agreement_err'] = 'Скан-копия согласия родителей/опекунов обязательна для заполнения!';
+				$form['agreement_err'] = 'Скан-копия "Согласие родителей/опекунов" обязательна для заполнения!';
 				$form['agreement_scs'] = null;
 				$form['validate'] = false;
 			}
 		}
+		// passport_old
+		if ($form['passport_old_yes'] == 'checked' && $form['passport_type_old'] == '000000047') {
+			if (empty($form['agreement_name'])) {
+				$form['passport_old_err'] = 'Скан-копия "Сведения о ранее выданных паспортах" обязательна для заполнения!';
+				$form['passport_old_scs'] = null;
+				$form['validate'] = false;
+			}
+		}
+		// main
 		$dict_scans = new Model_DictScans();
 		$dict_scans->doc_code = 'resume';
 		$dict_scans_arr = $dict_scans->getByDocument();
@@ -637,19 +654,6 @@ class Model_Resume extends Model
 			$scans = new Scans();
 			foreach ($dict_scans_arr as $dict_scans_row) {
 				if ($dict_scans_row['required'] == 1) {
-					$scans->id_doc = $docs_row['id'];
-					$scans->id_scans = $dict_scans_row['id'];
-					if (!$scans->getByDoc()) {
-						$form[$dict_scans_row['scan_code'].'_id'] = null;
-						$form[$dict_scans_row['scan_code']] = null;
-						$form[$dict_scans_row['scan_code'].'_id'] = null;
-						$form[$dict_scans_row['scan_code'].'_name'] = null;
-						$form[$dict_scans_row['scan_code'].'_type'] = null;
-						$form[$dict_scans_row['scan_code'].'_size'] = null;
-						$form[$dict_scans_row['scan_code'].'_scs'] = null;
-						$form[$dict_scans_row['scan_code'].'_err'] = 'Скан-копия "'.ucfirst($dict_scans_row['scan_name']).'" обязательна для заполнения!';
-					}
-				} elseif ($dict_scans_row['scan_code'] == 'passport_old' && $form['passport_old_yes'] == 'checked') {
 					$scans->id_doc = $docs_row['id'];
 					$scans->id_scans = $dict_scans_row['id'];
 					if (!$scans->getByDoc()) {

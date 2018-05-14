@@ -61,6 +61,33 @@ class Model_ApplicationSpec extends Model
 	}
 
 	/**
+     * Validates resume advanced.
+     *
+     * @return array
+     */
+	public function validateFormAdvanced($form, $id)
+	{
+		$place = new ApplicationPlaces();
+		$place->pid = $id;
+		// photo3x4
+		if ($place->getByAppForPhoto3x4()) {
+			if (empty($form['photo3x4_name'])) {
+				$form = $this->setFormErrorFile($form, 'photo3x4', 'Скан-копия "Фотография 3х4" обязательна для заполнения!');
+			}
+		}
+		// medical_certificate
+		if ($place->getByAppForMedicalA1() || $place->getByAppForMedicalA2() || getByAppForMedicalB1() || getByAppForMedicalC1()) {
+			if (empty($form['medical_certificate_face_name'])) {
+				$form = $this->setFormErrorFile($form, 'medical_certificate_face', 'Скан-копия "Медицинская справка (лицевая сторона)" обязательна для заполнения!');
+			}
+			if (empty($form['medical_certificate_back_name'])) {
+				$form = $this->setFormErrorFile($form, 'medical_certificate_back', 'Скан-копия "Медицинская справка (оборотная сторона)" обязательна для заполнения!');
+			}
+		}
+		return $form;
+	}
+
+	/**
      * Gets application spec data from database.
      *
      * @return array
@@ -94,6 +121,8 @@ class Model_ApplicationSpec extends Model
      */
 	public function unsetScans($form)
 	{
+		$place = new ApplicationPlaces();
+		$place->pid = $form['id'];
 		$dict_scans = new Model_DictScans();
 		$dict_scans->doc_code = 'application';
 		$dict_scans_arr = $dict_scans->getByDocument();
@@ -103,7 +132,19 @@ class Model_ApplicationSpec extends Model
 			$docs_row = $docs->getByCode();
 			$scans = new Scans();
 			foreach ($dict_scans_arr as $dict_scans_row) {
+				// check
+				$unset = 0;
 				if ($dict_scans_row['required'] == 1) {
+					$unset = 1;
+				} elseif ($dict_scans_row['scan_code'] == 'photo3x4' && $place->getByAppForPhoto3x4()) {
+					$unset = 1;
+				} elseif ($dict_scans_row['scan_code'] == 'medical_certificate_face' && ($place->getByAppForMedicalA1() || $place->getByAppForMedicalA2() || getByAppForMedicalB1() || getByAppForMedicalC1())) {
+					$unset = 1;
+				} elseif ($dict_scans_row['scan_code'] == 'medical_certificate_back' && ($place->getByAppForMedicalA1() || $place->getByAppForMedicalA2() || getByAppForMedicalB1() || getByAppForMedicalC1())) {
+					$unset = 1;
+				}
+				// unset
+				if ($unset == 1) {
 					$scans->id_doc = $docs_row['id'];
 					$scans->id_scans = $dict_scans_row['id'];
 					if (!$scans->getByDoc()) {
@@ -116,20 +157,7 @@ class Model_ApplicationSpec extends Model
 						$form[$dict_scans_row['scan_code'].'_scs'] = null;
 						$form[$dict_scans_row['scan_code'].'_err'] = 'Скан-копия "'.ucfirst($dict_scans_row['scan_name']).'" обязательна для заполнения!';
 					}
-				}/* elseif ($dict_scans_row['scan_code'] == 'passport_old' && $form['passport_old_yes'] == 'checked') {
-					$scans->id_doc = $docs_row['id'];
-					$scans->id_scans = $dict_scans_row['id'];
-					if (!$scans->getByDoc()) {
-						$form[$dict_scans_row['scan_code'].'_id'] = null;
-						$form[$dict_scans_row['scan_code']] = null;
-						$form[$dict_scans_row['scan_code'].'_id'] = null;
-						$form[$dict_scans_row['scan_code'].'_name'] = null;
-						$form[$dict_scans_row['scan_code'].'_type'] = null;
-						$form[$dict_scans_row['scan_code'].'_size'] = null;
-						$form[$dict_scans_row['scan_code'].'_scs'] = null;
-						$form[$dict_scans_row['scan_code'].'_err'] = 'Скан-копия "'.ucfirst($dict_scans_row['scan_name']).'" обязательна для заполнения!';
-					}
-				}*/
+				}
 			}
 		}
 		return $form;

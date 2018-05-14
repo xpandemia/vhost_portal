@@ -41,6 +41,21 @@ class Model_Ege extends Model
 	}
 
 	/**
+     * Validates resume advanced.
+     *
+     * @return array
+     */
+	public function validateFormAdvanced($form)
+	{
+		// reg_year
+		if (date('Y') - $form['reg_year'] > 4) {
+			$form = $this->setFormErrorField($form, 'reg_year', 'Неактуальный год сдачи ЕГЭ!');
+			return $form;
+		}
+		return $form;
+	}
+
+	/**
      * Gets ege from database.
      *
      * @return array
@@ -75,11 +90,6 @@ class Model_Ege extends Model
      */
 	public function check($form)
 	{
-		// check reg_year
-		if (date('Y') - $form['reg_year'] > 5) {
-			$form['error_msg'] = 'Неактуальный год сдачи ЕГЭ!';
-			return $form;
-		};
 		$ege = new Ege();
 		$ege->id_user = $_SESSION[APP_CODE]['user_id'];
 		if (empty($form['description'])) {

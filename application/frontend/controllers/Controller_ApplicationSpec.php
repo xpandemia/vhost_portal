@@ -24,6 +24,16 @@ class Controller_ApplicationSpec extends Controller
 	}
 
 	/**
+     * Cancels application spec page.
+     *
+     * @return mixed
+     */
+	public function actionCancel()
+	{
+		return Basic_Helper::redirect('Заявления', 200, 'Application', 'Index');
+	}
+
+	/**
      * Displays application places add page.
      *
      * @return mixed
@@ -67,6 +77,7 @@ class Controller_ApplicationSpec extends Controller
 		$this->form = $this->model->getForm($this->model->rules(), $_POST, $_FILES);
 		$this->form = $this->model->getExams($this->form);
 		$this->form = $this->model->validateForm($this->form, $this->model->rules());
+		$this->form = $this->model->validateFormAdvanced($this->form, $id);
 		$this->form['id'] = $id;
 		$this->form['status'] = $status;
 		if ($this->form['validate']) {

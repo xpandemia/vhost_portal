@@ -182,15 +182,15 @@ class Db_Helper
      *
      * @return array
      */
-	public function rowSelectAll($fields, $tables, $conds = null, $params = null)
+	public function rowSelectAll($fields, $tables, $conds = null, $params = null, $order = null)
 	{
 		try {
 			self::$pdo->beginTransaction();
 			if (!empty($conds) && (!empty($params))) {
-				$sql = self::$pdo->prepare('SELECT '.$fields.' FROM '.$tables.' WHERE '.$conds);
+				$sql = self::$pdo->prepare('SELECT '.$fields.' FROM '.$tables.' WHERE '.$conds.((!empty($order)) ? ' ORDER BY '.$order : ''));
 				$sql->execute($params);
 			} else {
-				$sql = self::$pdo->prepare('SELECT '.$fields.' FROM '.$tables);
+				$sql = self::$pdo->prepare('SELECT '.$fields.' FROM '.$tables.((!empty($order)) ? ' ORDER BY'.$order : ''));
 				$sql->execute();
 			}
 			$row = $sql->fetchAll();

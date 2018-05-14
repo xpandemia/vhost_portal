@@ -29,6 +29,18 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 		echo Model_Resume::showStatus($data['status']);
 		/* personal data */
 		echo Form_Helper::setFormHeaderSub('Личные данные');
+		// name_last
+		echo Form_Helper::setFormInput(['label' => LASTNAME_PLC,
+										'control' => 'name_last',
+										'type' => 'text',
+										'class' => $data['name_last_cls'],
+										'required' => 'yes',
+										'required_style' => 'StarUp',
+										'placeholder' => LASTNAME_PLC,
+										'value' => $data['name_last'],
+										'success' => $data['name_last_scs'],
+										'error' => $data['name_last_err'],
+										'help' => LASTNAME_HELP]);
 		// name_first
 		echo Form_Helper::setFormInput(['label' => FIRSTNAME_PLC,
 										'control' => 'name_first',
@@ -52,18 +64,6 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 										'success' => $data['name_middle_scs'],
 										'error' => $data['name_middle_err'],
 										'help' => MIDDLENAME_HELP]);
-		// name_last
-		echo Form_Helper::setFormInput(['label' => LASTNAME_PLC,
-										'control' => 'name_last',
-										'type' => 'text',
-										'class' => $data['name_last_cls'],
-										'required' => 'yes',
-										'required_style' => 'StarUp',
-										'placeholder' => LASTNAME_PLC,
-										'value' => $data['name_last'],
-										'success' => $data['name_last_scs'],
-										'error' => $data['name_last_err'],
-										'help' => LASTNAME_HELP]);
 		// sex
 		echo Form_Helper::setFormRadio(['label' => 'Пол',
 										'control' => 'sex',
@@ -331,6 +331,16 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 												'value' => $data['dt_end_old'],
 												'success' => $data['dt_end_old_scs'],
 												'error' => $data['dt_end_old_err']]);
+				// passport_old
+				echo Form_Helper::setFormFile(['label' => 'Ранее выданные паспорта',
+												'control' => 'passport_old',
+												'required' => 'yes',
+												'required_style' => 'StarUp',
+												'data' => $data,
+												'home_ctr' => RESUME['ctr'],
+												'home_hdr' => RESUME['hdr'],
+												'home_act' => 'Index',
+												'ext' => FILES_EXT_SCANS]);
 			?>
 		</div>
 
@@ -653,7 +663,7 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 							        }, ARRAY_FILTER_USE_KEY) as $key => $value)
         {
 			$lang = new DictForeignLangs();
-			$lang_arr = $lang->getAll();
+			$lang_arr = $lang->getBsu();
 			if ($lang_arr) {
 				echo '<div class="form-group row" id="div_lang'.$i.'">';
 				echo '<div class="col col-sm-3">';

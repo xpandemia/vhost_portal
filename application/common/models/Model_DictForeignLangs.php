@@ -80,7 +80,27 @@ class Model_DictForeignLangs extends Db_Helper
      */
 	public function getAll()
 	{
-		return $this->rowSelectAll('*', self::TABLE_NAME, 'isfolder = :isfolder', [':isfolder' => 0]);
+		return $this->rowSelectAll('*',
+									self::TABLE_NAME,
+									'isfolder = :isfolder',
+									[':isfolder' => 0],
+									'description');
+	}
+
+	/**
+     * Gets BSU foreign languages.
+     *
+     * @return array
+     */
+	public function getBsu()
+	{
+		return $this->rowSelectAll('*',
+									self::TABLE_NAME,
+									'code in (:code1, :code2, :code3)',
+									[':code1' => '000000002',
+									':code2' => '000000005',
+									':code3' => '000000006'],
+									'description');
 	}
 
 	/**

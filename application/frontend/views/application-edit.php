@@ -16,6 +16,7 @@ use frontend\models\Model_Application as Model_Application;
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
 	<h2>Заявление</h2>
 	<?php
+		echo HTML_Helper::setAlert($_SESSION[APP_CODE]['success_msg'], 'alert-success');
 		echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
 		echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
 		/* status */
@@ -163,7 +164,7 @@ use frontend\models\Model_Application as Model_Application;
 			<div class="col">
 				<?php
 					echo HTML_Helper::setSubmit('btn btn-success', 'btn_save', 'Сохранить');
-					echo HTML_Helper::setHrefButton(APP['ctr'], 'Index', 'btn btn-warning', 'Отмена');
+					echo HTML_Helper::setHrefButton('ApplicationSpec', 'Cancel', 'btn btn-warning', 'Отмена');
 				?>
 			</div>
 		</div>

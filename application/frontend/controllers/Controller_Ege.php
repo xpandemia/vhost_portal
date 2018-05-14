@@ -109,6 +109,7 @@ class Controller_Ege extends Controller
 	{
 		$this->form = $this->model->getForm($this->model->rules(), $_POST);
 		$this->form = $this->model->validateForm($this->form, $this->model->rules());
+		$this->form = $this->model->validateFormAdvanced($this->form);
 		if ($this->form['validate']) {
 			$this->form = $this->model->check($this->form);
 			if (!$this->form['error_msg']) {
