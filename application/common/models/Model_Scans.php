@@ -126,6 +126,22 @@ class Model_Scans extends Db_Helper
 	}
 
 	/**
+     * Gets scan by document/scan.
+     *
+     * @return array
+     */
+	public function getByDocScan($doc_code, $doc_id, $scan_code)
+	{
+		return $this->rowSelectOne('scans.*',
+								'scans INNER JOIN docs ON scans.id_doc = docs.id'.
+								' INNER JOIN dict_scans ON scans.id_scans = dict_scans.id',
+								'docs.doc_code = :doc_code AND scans.id_row = :id_row AND dict_scans.scan_code = :scan_code',
+								[':doc_code' => $doc_code,
+								':id_row' => $doc_id,
+								':scan_code' => $scan_code]);
+	}
+
+	/**
      * Gets scans by document row FULL.
      *
      * @return array

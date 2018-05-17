@@ -33,7 +33,7 @@ class Model_Application extends Db_Helper
 	public $type;
 	public $status;
 	public $numb;
-	public $numb1c;
+	public $numb1s;
 	public $campus;
 	public $remote;
 	public $dt_created;
@@ -113,11 +113,11 @@ class Model_Application extends Db_Helper
 							'update' => 1,
 							'value' => $this->numb
 							],
-				'numb1c' => [
+				'numb1s' => [
 							'required' => 0,
 							'insert' => 1,
 							'update' => 1,
-							'value' => $this->numb1c
+							'value' => $this->numb1s
 							],
 				'campus' => [
 							'required' => 1,

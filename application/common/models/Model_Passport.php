@@ -66,7 +66,7 @@ class Model_Passport extends Db_Helper
 				'id_doctype' => [
 								'required' => 1,
 								'insert' => 1,
-								'update' => 0,
+								'update' => 1,
 								'value' => $this->id_doctype
 								],
 				'main' => [

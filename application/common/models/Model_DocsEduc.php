@@ -173,7 +173,17 @@ class Model_DocsEduc extends Db_Helper
 			if (!is_array($doc_type)) {
 				$doc_type = ['doc_type' => null];
 			}
-			$result = array_merge($doc_educ, $educ_type, $doc_type);
+			$change_name = $this->rowSelectOne('scans.id as change_name_id, file_data as change_name, file_type as change_name_type',
+											'scans INNER JOIN docs ON scans.id_doc = docs.id'.
+											' INNER JOIN dict_scans ON scans.id_scans = dict_scans.id',
+											'id_row = :id_row AND doc_code = :doc_code AND scan_code = :scan_code',
+											[':id_row' => $doc_educ['id'],
+											':doc_code' => 'docs_educ',
+											':scan_code' => 'change_name']);
+			if (!is_array($change_name)) {
+				$change_name = ['change_name_id' => null, 'change_name' => null, 'change_name_type' => null];
+			}
+			$result = array_merge($doc_educ, $educ_type, $doc_type, $change_name);
 			$scan = new Model_Scans();
 			$scan_arr = $scan->getByDocrowFull('docs_educ', $doc_educ['id']);
 			$result = array_merge($result, $scan_arr);

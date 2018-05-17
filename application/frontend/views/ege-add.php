@@ -9,15 +9,6 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 		echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
 		echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
 		echo Form_Helper::setFormBegin(EGE['ctr'], EGE['act'], EGE['id'], EGE['hdr']);
-			// description
-			echo Form_Helper::setFormInput(['label' => 'Описание',
-											'control' => 'description',
-											'type' => 'text',
-											'class' => $data['description_cls'],
-											'required' => 'no',
-											'value' => $data['description'],
-											'success' => $data['description_scs'],
-											'error' => $data['description_err']]);			
 			// reg_year
 			echo Form_Helper::setFormInput(['label' => 'Год сдачи',
 											'control' => 'reg_year',

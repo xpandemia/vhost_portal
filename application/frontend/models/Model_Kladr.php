@@ -40,7 +40,8 @@ class Model_Kladr extends Db_Helper
 			$kladr = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
 											'kladr',
 											'kladr.level = :level',
-											[':level' => $level]);
+											[':level' => $level],
+											'kladr_name');
 		}
 			foreach ($kladr as $value) {
 				$kladr_json[] = ['kladr_code' => $value['kladr_code'],
@@ -64,7 +65,8 @@ class Model_Kladr extends Db_Helper
 		$area = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
 										'kladr',
 										'level = :level AND code_region = :code_region',
-										[':level' => self::AREA, ':code_region' => $code_region]);
+										[':level' => self::AREA, ':code_region' => $code_region],
+										'kladr_name');
 		foreach ($area as $value) {
 			$area_json[] = ['kladr_code' => $value['kladr_code'],
 							'kladr_name' => $value['kladr_name'],
@@ -87,7 +89,8 @@ class Model_Kladr extends Db_Helper
 		$city = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
 										'kladr',
 										'level = :level AND code_region = :code_region',
-										[':level' => self::CITY, ':code_region' => $code_region]);
+										[':level' => self::CITY, ':code_region' => $code_region],
+										'kladr_name');
 		foreach ($city as $value) {
 			$city_json[] = ['kladr_code' => $value['kladr_code'],
 							'kladr_name' => $value['kladr_name'],
@@ -115,7 +118,8 @@ class Model_Kladr extends Db_Helper
 											[':level' => self::LOCATION,
 											':code_region' => $code_region,
 											':code_area' => $code_area,
-											':code_city' => $code_city]);
+											':code_city' => $code_city],
+											'kladr_name');
 		foreach ($location as $value) {
 			$location_json[] = ['kladr_code' => $value['kladr_code'],
 								'kladr_name' => $value['kladr_name'],
@@ -141,7 +145,8 @@ class Model_Kladr extends Db_Helper
 											'level = :level AND code_region = :code_region AND code_area = :code_area',
 											[':level' => self::LOCATION,
 											':code_region' => $code_region,
-											':code_area' => $code_area]);
+											':code_area' => $code_area],
+											'kladr_name');
 		foreach ($location as $value) {
 			$location_json[] = ['kladr_code' => $value['kladr_code'],
 								'kladr_name' => $value['kladr_name'],
@@ -167,7 +172,8 @@ class Model_Kladr extends Db_Helper
 										'level = :level AND code_region = :code_region AND code_city = :code_city',
 										[':level' => self::STREET,
 										':code_region' => $code_region,
-										':code_city' => $code_city]);
+										':code_city' => $code_city],
+										'kladr_name');
 		foreach ($street as $value) {
 			$street_json[] = ['kladr_code' => $value['kladr_code'],
 								'kladr_name' => $value['kladr_name'],
@@ -195,7 +201,8 @@ class Model_Kladr extends Db_Helper
 										[':level' => self::STREET,
 										':code_region' => $code_region,
 										':code_area' => $code_area,
-										':code_location' => $code_location]);
+										':code_location' => $code_location],
+										'kladr_name');
 		foreach ($street as $value) {
 			$street_json[] = ['kladr_code' => $value['kladr_code'],
 								'kladr_name' => $value['kladr_name'],

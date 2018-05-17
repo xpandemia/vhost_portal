@@ -31,7 +31,7 @@ class Model_Scans extends Model
 													'class' => 'form-control',
 													'required' => ['default' => '', 'msg' => 'Скан-копия "'.ucfirst($scans_row['scan_name']).'" обязательна для заполнения!'],
 													'size' => ['value' => FILES_SIZE['value'], 'msg' => 'Размер скан-копии "'.ucfirst($scans_row['scan_name']).'" превышает '.FILES_SIZE['value'].' '.FILES_SIZE['size'].' !'],
-													'ext' => ['value' => FILES_EXT_SCANS, 'msg' => 'Недопустимый тип скан-копии "'.ucfirst($scans_row['scan_name']).'" !'],
+													'ext' => ['value' => FILES_EXT_SCANS, 'msg' => 'Недопустимый тип скан-копии "'.ucfirst($scans_row['scan_name']).'"!'],
 													'success' => 'Скан-копия "'.ucfirst($scans_row['scan_name']).'" заполнена верно.'
 													];
 				} else {
@@ -39,7 +39,7 @@ class Model_Scans extends Model
 													'type' => 'file',
 													'class' => 'form-control',
 													'size' => ['value' => FILES_SIZE['value'], 'msg' => 'Размер скан-копии "'.ucfirst($scans_row['scan_name']).'" превышает '.FILES_SIZE['value'].' '.FILES_SIZE['size'].' !'],
-													'ext' => ['value' => FILES_EXT_SCANS, 'msg' => 'Недопустимый тип скан-копии "'.ucfirst($scans_row['scan_name']).'" !'],
+													'ext' => ['value' => FILES_EXT_SCANS, 'msg' => 'Недопустимый тип скан-копии "'.ucfirst($scans_row['scan_name']).'"!'],
 													'success' => 'Скан-копия "'.ucfirst($scans_row['scan_name']).'" заполнена верно.'
 													];
 				}
@@ -104,6 +104,31 @@ class Model_Scans extends Model
 		} else {
 			$form['success_msg'] = null;
 			$form['error_msg'] = 'Ошибка при сохранении скан-копии "'.$dict_scans_row['scan_name'].'"!';
+		}
+		return $form;
+	}
+
+	/**
+     * Unpushes scan.
+     *
+     * @return array
+     */
+	public static function unpush($doc_code, $scan_code, $form)
+	{
+		$scans = new Scans();
+		$scans_row = $scans->getByDocScan($doc_code, $form['id'], $scan_code);
+		if ($scans_row) {
+			$scans->id = $scans_row['id'];
+			if ($scans->clear() > 0) {
+				$form[$scan_code.'_id'] = null;
+				$form[$scan_code] = null;
+				$form[$scan_code.'_id'] = null;
+				$form[$scan_code.'_name'] = null;
+				$form[$scan_code.'_type'] = null;
+				$form[$scan_code.'_size'] = null;
+				$form[$scan_code.'_scs'] = null;
+				$form[$scan_code.'_err'] = null;
+			}
 		}
 		return $form;
 	}

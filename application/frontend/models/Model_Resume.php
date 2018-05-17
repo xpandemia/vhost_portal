@@ -37,6 +37,14 @@ class Model_Resume extends Model
 	public function rules()
 	{
 		$rules = [
+                'name_last' => [
+                                'type' => 'text',
+                                'class' => 'form-control',
+                                'required' => ['default' => '', 'msg' => 'Фамилия обязательна для заполнения!'],
+                                'pattern' => ['value' => PATTERN_ALPHA_RUS, 'msg' => 'Для фамилии можно использовать только русские буквы!'],
+                                'width' => ['format' => 'string', 'min' => 1, 'max' => 50, 'msg' => 'Слишком длинная фамилия!'],
+                                'success' => 'Фамилия заполнена верно.'
+                               ],
                 'name_first' => [
                                 'type' => 'text',
                                 'class' => 'form-control',
@@ -51,14 +59,6 @@ class Model_Resume extends Model
                                 'pattern' => ['value' => PATTERN_ALPHA_RUS, 'msg' => 'Для отчества можно использовать только русские буквы!'],
                                 'width' => ['format' => 'string', 'min' => 1, 'max' => 50, 'msg' => 'Слишком длинное отчество!'],
                                 'success' => 'Отчество заполнено верно.'
-                               ],
-                'name_last' => [
-                                'type' => 'text',
-                                'class' => 'form-control',
-                                'required' => ['default' => '', 'msg' => 'Фамилия обязательна для заполнения!'],
-                                'pattern' => ['value' => PATTERN_ALPHA_RUS, 'msg' => 'Для фамилии можно использовать только русские буквы!'],
-                                'width' => ['format' => 'string', 'min' => 1, 'max' => 50, 'msg' => 'Слишком длинная фамилия!'],
-                                'success' => 'Фамилия заполнена верно.'
                                ],
                 'sex' => [
                             'type' => 'radio',
@@ -78,7 +78,9 @@ class Model_Resume extends Model
                 'agreement' => [
 								'type' => 'file',
 								'class' => 'form-control',
-								'success' => 'Скан-копия "Согласие родителей/опекунов" заполнено верно.'
+								'size' => ['value' => FILES_SIZE['value'], 'msg' => 'Размер скан-копии "Согласие родителей/опекунов" превышает '.FILES_SIZE['value'].' '.FILES_SIZE['size'].' !'],
+									'ext' => ['value' => FILES_EXT_SCANS, 'msg' => 'Недопустимый тип скан-копии "Согласие родителей/опекунов"!'],
+								'success' => 'Скан-копия "Согласие родителей/опекунов" заполнена верно.'
 								],
 				'birth_place' => [
                                 'type' => 'text',
@@ -151,7 +153,6 @@ class Model_Resume extends Model
                 'unit_name' => [
                                 'type' => 'text',
                                 'class' => 'form-control',
-                                'required' => ['default' => '', 'msg' => 'Наименование подразделения обязательно для заполнения!'],
                                 'pattern' => ['value' => PATTERN_INFO_RUS, 'msg' => 'Для наименования подразделения можно использовать только русские буквы, тире, точки, запятые и пробелы!'],
                                 'width' => ['format' => 'string', 'min' => 1, 'max' => 100, 'msg' => 'Слишком длинное наименование подразделения!'],
                                 'success' => 'Наименование подразделения заполнено верно.'
@@ -159,7 +160,7 @@ class Model_Resume extends Model
                 'unit_code' => [
 	                            'type' => 'text',
 	                            'class' => 'form-control',
-	                            'success' => 'Код подразделения заполнена верно.'
+	                            'success' => 'Код подразделения заполнен верно.'
 	                           ],
 	            'dt_end' => [
                             'type' => 'date',
@@ -210,7 +211,7 @@ class Model_Resume extends Model
                 'unit_code_old' => [
 		                            'type' => 'text',
 		                            'class' => 'form-control',
-		                            'success' => 'Код подразделения заполнена верно.'
+		                            'success' => 'Код подразделения заполнен верно.'
 		                           ],
 	            'dt_end_old' => [
 	                            'type' => 'date',
@@ -223,6 +224,8 @@ class Model_Resume extends Model
 	            'passport_old' => [
 									'type' => 'file',
 									'class' => 'form-control',
+									'size' => ['value' => FILES_SIZE['value'], 'msg' => 'Размер скан-копии "Сведения о ранее выданных паспортах" превышает '.FILES_SIZE['value'].' '.FILES_SIZE['size'].' !'],
+									'ext' => ['value' => FILES_EXT_SCANS, 'msg' => 'Недопустимый тип скан-копии "Сведения о ранее выданных паспортах"!'],
 									'success' => 'Скан-копия "Сведения о ранее выданных паспортах" заполнена верно.'
 									],
 				'country_reg' => [
@@ -252,7 +255,13 @@ class Model_Resume extends Model
                                 'pattern' => ['value' => PATTERN_INFO_RUS, 'msg' => 'Для адреса проживания можно использовать только цифры, русские буквы, тире, точки, запятые и пробелы!'],
                                 'width' => ['format' => 'string', 'min' => 1, 'max' => 255, 'msg' => 'Слишком длинный адрес проживания!'],
                                 'success' => 'Адрес проживания заполнен верно.'
-                               ]
+                               ],
+                'personal' => [
+	                            'type' => 'checkbox',
+	                            'class' => 'form-check-input',
+	                            'required' => ['default' => '', 'msg' => 'Необходимо согласие на обработку персональных данных!'],
+	                            'success' => 'Получено согласие на обработку персональных данных.'
+	                           ]
                 ];
         $scans = Model_Scans::createRules('resume');
         $rules = array_merge($rules, $scans);
@@ -294,12 +303,12 @@ class Model_Resume extends Model
 	public function validateFormAdvanced($form)
 	{
 		// birth_dt
-		if (Calc_Helper::getAge($form['birth_dt'], 'd.m.Y') <= 12) {
+		if (!empty($form['birth_dt']) && Calc_Helper::getAge($form['birth_dt'], 'd.m.Y') <= 12) {
 			$form = $this->setFormErrorField($form, 'birth_dt', 'Ваш возраст меньше или равен 12 лет!');
 			return $form;
 		}
 		// dt_issue
-		if (date('Y-m-d', strtotime($form['dt_issue'])) <= date('Y-m-d', strtotime($form['birth_dt']))) {
+		if (!empty($form['dt_issue']) && date('Y-m-d', strtotime($form['dt_issue'])) <= date('Y-m-d', strtotime($form['birth_dt']))) {
 			$form = $this->setFormErrorField($form, 'dt_issue', 'Дата выдачи документа, удостоверяющего личность, меньше или равна дате рождения!');
 			return $form;
 		}
@@ -332,20 +341,83 @@ class Model_Resume extends Model
 	public function validatePassport($form)
 	{
 		if (!empty($form['passport_type'])) {
-			if ($form['passport_type'] == '000000047') {
-				// series
-				if (empty($form['series'])) {
-					$form = $this->setFormErrorField($form, 'series', 'Серия обязательна для заполнения!');
-				}
-				// unit_code
-				if (empty($form['unit_code'])) {
-					$form = $this->setFormErrorField($form, 'unit_code', 'Код подразделения обязателен для заполнения!');
-				}
-			} else {
-				// dt_end
-				if (empty($form['dt_end'])) {
-					$form = $this->setFormErrorField($form, 'dt_end', 'Дата окончания действия обязательна для заполнения!');
-				}
+			switch ($form['passport_type']) {
+				// Паспорт РФ
+				case '000000047':
+					// series
+					if (empty($form['series'])) {
+						$form = $this->setFormErrorField($form, 'series', 'Серия обязательна для заполнения!');
+					}
+					// unit_name
+					if (empty($form['unit_name'])) {
+						$form = $this->setFormErrorField($form, 'unit_name', 'Наименование подразделения обязательно для заполнения!');
+					}
+					// unit_code
+					if (empty($form['unit_code'])) {
+						$form = $this->setFormErrorField($form, 'unit_code', 'Код подразделения обязателен для заполнения!');
+					}
+					$form = $this->checkPassportRussian($form);
+					break;
+				// Паспорт иностранного гражданина
+				case '000000049':
+					// series
+					if (empty($form['series'])) {
+						$form = $this->setFormErrorField($form, 'series', 'Серия обязательна для заполнения!');
+					}
+					// unit_name
+					if (empty($form['unit_name'])) {
+						$form = $this->setFormErrorField($form, 'unit_name', 'Наименование подразделения обязательно для заполнения!');
+					}
+					$form = $this->checkPassportForeign($form);
+					break;
+				// Вид на жительство иностранного гражданина
+				case '000000075':
+					// series
+					if (empty($form['series'])) {
+						$form = $this->setFormErrorField($form, 'series', 'Серия обязательна для заполнения!');
+					}
+					// unit_name
+					if (empty($form['unit_name'])) {
+						$form = $this->setFormErrorField($form, 'unit_name', 'Наименование подразделения обязательно для заполнения!');
+					}
+					// dt_end
+					if (empty($form['dt_end'])) {
+						$form = $this->setFormErrorField($form, 'dt_end', 'Дата окончания действия обязательна для заполнения!');
+					}
+					$form = $this->checkResidencyForeign($form);
+					break;
+				// Временное удостоверение личности гражданина РФ
+				case '000000202':
+					// unit_name
+					if (empty($form['unit_name'])) {
+						$form = $this->setFormErrorField($form, 'unit_name', 'Наименование подразделения обязательно для заполнения!');
+					}
+					// dt_end
+					if (empty($form['dt_end'])) {
+						$form = $this->setFormErrorField($form, 'dt_end', 'Дата окончания действия обязательна для заполнения!');
+					}
+					$form = $this->checkIdRussian($form);
+					break;
+				// Удостоверение личности иностранного гражданина
+				case '000000223':
+					// dt_end
+					if (empty($form['dt_end'])) {
+						$form = $this->setFormErrorField($form, 'dt_end', 'Дата окончания действия обязательна для заполнения!');
+					}
+					$form = $this->checkIdForeign($form);
+					break;
+				// Свидетельство о рождении, выданное уполномоченным органом иностранного государства
+				case '000000226':
+					// series
+					if (empty($form['series'])) {
+						$form = $this->setFormErrorField($form, 'series', 'Серия обязательна для заполнения!');
+					}
+					// unit_name
+					if (empty($form['unit_name'])) {
+						$form = $this->setFormErrorField($form, 'unit_name', 'Наименование подразделения обязательно для заполнения!');
+					}
+					$form = $this->checkCertificateBirth($form);
+					break;
 			}
 		}
 		return $form;
@@ -632,7 +704,6 @@ class Model_Resume extends Model
 			if (empty($form['agreement_name'])) {
 				$form['agreement_err'] = 'Скан-копия "Согласие родителей/опекунов" обязательна для заполнения!';
 				$form['agreement_scs'] = null;
-				$form['validate'] = false;
 			}
 		}
 		// passport_old
@@ -640,34 +711,132 @@ class Model_Resume extends Model
 			if (empty($form['agreement_name'])) {
 				$form['passport_old_err'] = 'Скан-копия "Сведения о ранее выданных паспортах" обязательна для заполнения!';
 				$form['passport_old_scs'] = null;
-				$form['validate'] = false;
 			}
 		}
 		// main
-		$dict_scans = new Model_DictScans();
-		$dict_scans->doc_code = 'resume';
-		$dict_scans_arr = $dict_scans->getByDocument();
-		if ($dict_scans_arr) {
-			$docs = new Model_Docs();
-			$docs->doc_code = 'resume';
-			$docs_row = $docs->getByCode();
-			$scans = new Scans();
-			foreach ($dict_scans_arr as $dict_scans_row) {
-				if ($dict_scans_row['required'] == 1) {
-					$scans->id_doc = $docs_row['id'];
-					$scans->id_scans = $dict_scans_row['id'];
-					if (!$scans->getByDoc()) {
-						$form[$dict_scans_row['scan_code'].'_id'] = null;
-						$form[$dict_scans_row['scan_code']] = null;
-						$form[$dict_scans_row['scan_code'].'_id'] = null;
-						$form[$dict_scans_row['scan_code'].'_name'] = null;
-						$form[$dict_scans_row['scan_code'].'_type'] = null;
-						$form[$dict_scans_row['scan_code'].'_size'] = null;
-						$form[$dict_scans_row['scan_code'].'_scs'] = null;
-						$form[$dict_scans_row['scan_code'].'_err'] = 'Скан-копия "'.ucfirst($dict_scans_row['scan_name']).'" обязательна для заполнения!';
-					}
-				}
-			}
+		Model_Scans::unsets('resume', $form);
+		// passport
+		switch ($form['passport_type']) {
+			// Паспорт РФ
+			case '000000047':
+				$form = $this->checkPassportRussian($form);
+				break;
+			// Паспорт иностранного гражданина
+			case '000000049':
+				$form = $this->checkPassportForeign($form);
+				break;
+			// Вид на жительство иностранного гражданина
+			case '000000075':
+				$form = $this->checkResidencyForeign($form);
+				break;
+			// Временное удостоверение личности гражданина РФ
+			case '000000202':
+				$form = $this->checkIdRussian($form);
+				break;
+			// Удостоверение личности иностранного гражданина
+			case '000000223':
+				$form = $this->checkIdForeign($form);
+				break;
+			// Свидетельство о рождении, выданное уполномоченным органом иностранного государства
+			case '000000226':
+				$form = $this->checkCertificateBirth($form);
+				break;
+		}
+		return $form;
+	}
+
+	/**
+     * Checks passport russian files.
+     *
+     * @return array
+     */
+	public function checkPassportRussian($form)
+	{
+		// passport_face
+		if (empty($form['passport_face'])) {
+			$form = $this->setFormErrorFile($form, 'passport_face', 'Скан-копия "Первая страница паспорта" обязательна для заполнения!');
+		}
+		// passport_reg
+		if (empty($form['passport_reg'])) {
+			$form = $this->setFormErrorFile($form, 'passport_reg', 'Скан-копия "Страница паспорта с регистрацией по месту жительства" обязательна для заполнения!');
+		}
+		return $form;
+	}
+
+	/**
+     * Checks id russian files.
+     *
+     * @return array
+     */
+	public function checkIdRussian($form)
+	{
+		// id_russian
+		if (empty($form['id_russian'])) {
+			$form = $this->setFormErrorFile($form, 'id_russian', 'Скан-копия "Временное удостоверение личности гражданина РФ" обязательна для заполнения!');
+		}
+		return $form;
+	}
+
+	/**
+     * Checks passport foreign files.
+     *
+     * @return array
+     */
+	public function checkPassportForeign($form)
+	{
+		// passport_foreign_face
+		if (empty($form['passport_foreign_face'])) {
+			$form = $this->setFormErrorFile($form, 'passport_foreign_face', 'Скан-копия "Первая страница паспорта иностранного гражданина" обязательна для заполнения!');
+		}
+		return $form;
+	}
+
+	/**
+     * Checks id foreign files.
+     *
+     * @return array
+     */
+	public function checkIdForeign($form)
+	{
+		// id_foreign_face
+		if (empty($form['id_foreign_face'])) {
+			$form = $this->setFormErrorFile($form, 'id_foreign_face', 'Скан-копия "Лицевая сторона удостоверения личности иностранного гражданина" обязательна для заполнения!');
+		}
+		// id_foreign_back
+		if (empty($form['id_foreign_back'])) {
+			$form = $this->setFormErrorFile($form, 'id_foreign_back', 'Скан-копия "Оборотная сторона удостоверения личности иностранного гражданина" обязательна для заполнения!');
+		}
+		return $form;
+	}
+
+	/**
+     * Checks residency foreign files.
+     *
+     * @return array
+     */
+	public function checkResidencyForeign($form)
+	{
+		// residency_foreign_face
+		if (empty($form['residency_foreign_face'])) {
+			$form = $this->setFormErrorFile($form, 'residency_foreign_face', 'Скан-копия "Первая страница вида на жительство иностранного гражданина" обязательна для заполнения!');
+		}
+		// residency_foreign_reg
+		if (empty($form['residency_foreign_reg'])) {
+			$form = $this->setFormErrorFile($form, 'residency_foreign_reg', 'Скан-копия "Страница с регистрацией по месту пребывания вида на жительство иностранного гражданина" обязательна для заполнения!');
+		}
+		return $form;
+	}
+
+	/**
+     * Checks birth certificate files.
+     *
+     * @return array
+     */
+	public function checkCertificateBirth($form)
+	{
+		// certificate_birth
+		if (empty($form['certificate_birth'])) {
+			$form = $this->setFormErrorFile($form, 'certificate_birth', 'Скан-копия "Свидетельство о рождении" обязательна для заполнения!');
 		}
 		return $form;
 	}
@@ -809,8 +978,8 @@ class Model_Resume extends Model
 		$passport->id_resume = $form['id'];
 			$passport_type = new Model_DictDoctypes();
 			$passport_type->code = $form['passport_type'];
-			$row_passport_type = $passport_type->getByCode();
-		$passport->id_doctype = $row_passport_type['id'];
+			$passport_row_type = $passport_type->getByCode();
+		$passport->id_doctype = $passport_row_type['id'];
 		$passport->main = 1;
 		$passport->series = (empty($form['series'])) ? null : $form['series'];
 		$passport->numb = $form['numb'];
@@ -818,8 +987,9 @@ class Model_Resume extends Model
 		$passport->unit_name = $form['unit_name'];
 		$passport->unit_code = (empty($form['unit_code'])) ? null : $form['unit_code'];
 		$passport->dt_end = (empty($form['dt_end'])) ? null : date('Y-m-d', strtotime($form['dt_end']));
-		$row_passport = $passport->getByResume();
-		if ($row_passport) {
+		$passport_row = $passport->getByResume();
+		if ($passport_row) {
+			$passport->id = $passport_row['id'];
 			if (!$passport->changeAll()) {
 				$form['error_msg'] = 'Ошибка при изменении данных документа, удостоверяющего личность!';
 				return $form;
@@ -834,8 +1004,8 @@ class Model_Resume extends Model
 		if ($form['passport_old_yes'] == 'checked') {
 			$passport_type = new Model_DictDoctypes();
 			$passport_type->code = $form['passport_type_old'];
-			$row_passport_type = $passport_type->getByCode();
-			$passport->id_doctype = $row_passport_type['id'];
+			$passport_row_type = $passport_type->getByCode();
+			$passport->id_doctype = $passport_row_type['id'];
 				$passport->main = 0;
 				$passport->series = (empty($form['series_old'])) ? null : $form['series_old'];
 				$passport->numb = $form['numb_old'];
@@ -843,8 +1013,9 @@ class Model_Resume extends Model
 				$passport->unit_name = (empty($form['unit_name_old'])) ? null : $form['unit_name_old'];
 				$passport->unit_code = (empty($form['unit_code_old'])) ? null : $form['unit_code_old'];
 				$passport->dt_end = (empty($form['dt_end_old'])) ? null : date('Y-m-d', strtotime($form['dt_end_old']));
-				$row_passport = $passport->getByResume();
-				if ($row_passport) {
+				$passport_row = $passport->getByResume();
+				if ($passport_row) {
+					$passport->id = $passport_row['id'];
 					if (!$passport->changeAll()) {
 						$form['error_msg'] = 'Ошибка при изменении данных старого документа, удостоверяющего личность!';
 						return $form;
@@ -983,6 +1154,73 @@ class Model_Resume extends Model
 		/* scans */
 		$dict_scans = new Model_DictScans();
 		$dict_scans->doc_code = 'resume';
+		// clear
+		switch ($form['passport_type']) {
+			// Паспорт РФ
+			case '000000047':
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'passport_foreign_face', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'residency_foreign_face', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'residency_foreign_reg', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'id_russian', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'id_foreign_face', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'id_foreign_back', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'certificate_birth', $form);
+				break;
+			// Паспорт иностранного гражданина
+			case '000000049':
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'passport_face', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'passport_reg', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'residency_foreign_face', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'residency_foreign_reg', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'id_russian', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'id_foreign_face', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'id_foreign_back', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'certificate_birth', $form);
+				break;
+			// Вид на жительство иностранного гражданина
+			case '000000075':
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'passport_face', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'passport_reg', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'passport_foreign_face', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'id_russian', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'id_foreign_face', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'id_foreign_back', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'certificate_birth', $form);
+				break;
+			// Временное удостоверение личности гражданина РФ
+			case '000000202':
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'passport_face', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'passport_reg', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'passport_foreign_face', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'residency_foreign_face', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'residency_foreign_reg', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'id_foreign_face', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'id_foreign_back', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'certificate_birth', $form);
+				break;
+			// Удостоверение личности иностранного гражданина
+			case '000000223':
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'passport_face', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'passport_reg', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'passport_foreign_face', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'residency_foreign_face', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'residency_foreign_reg', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'id_russian', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'certificate_birth', $form);
+				break;
+			// Свидетельство о рождении, выданное уполномоченным органом иностранного государства
+			case '000000226':
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'passport_face', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'passport_reg', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'passport_foreign_face', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'residency_foreign_face', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'residency_foreign_reg', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'id_russian', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'id_foreign_face', $form);
+				$form = Model_Scans::unpush($dict_scans->doc_code, 'id_foreign_back', $form);
+				break;
+		}
+		// save
 		$dict_scans_arr = $dict_scans->getByDocument();
 		if ($dict_scans_arr) {
 			foreach ($dict_scans_arr as $dict_scans_row) {

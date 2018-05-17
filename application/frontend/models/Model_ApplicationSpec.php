@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use tinyframe\core\Model as Model;
+use tinyframe\core\helpers\Encode_Helper as Encode_Helper;
 use tinyframe\core\helpers\PDF_Helper as PDF_Helper;
 use common\models\Model_Application as Application;
 use common\models\Model_DictScans as Model_DictScans;
@@ -17,6 +18,7 @@ use common\models\Model_DictDiscipline as Model_DictDiscipline;
 use common\models\Model_EgeDisciplines as Model_EgeDisciplines;
 use common\models\Model_DictTestingScopes as Model_DictTestingScopes;
 use common\models\Model_DictDocships as Model_DictDocships;
+use common\models\Model_Resume as Resume;
 
 include ROOT_DIR.'/application/frontend/models/Model_Scans.php';
 
@@ -70,7 +72,7 @@ class Model_ApplicationSpec extends Model
 		$place = new ApplicationPlaces();
 		$place->pid = $id;
 		// photo3x4
-		if ($place->getByAppForPhoto3x4()) {
+		if ($place->getByAppForBachelorSpec()) {
 			if (empty($form['photo3x4_name'])) {
 				$form = $this->setFormErrorFile($form, 'photo3x4', 'Скан-копия "Фотография 3х4" обязательна для заполнения!');
 			}
@@ -136,7 +138,7 @@ class Model_ApplicationSpec extends Model
 				$unset = 0;
 				if ($dict_scans_row['required'] == 1) {
 					$unset = 1;
-				} elseif ($dict_scans_row['scan_code'] == 'photo3x4' && $place->getByAppForPhoto3x4()) {
+				} elseif ($dict_scans_row['scan_code'] == 'photo3x4' && $place->getByAppForBachelorSpec()) {
 					$unset = 1;
 				} elseif ($dict_scans_row['scan_code'] == 'medical_certificate_face' && ($place->getByAppForMedicalA1() || $place->getByAppForMedicalA2() || getByAppForMedicalB1() || getByAppForMedicalC1())) {
 					$unset = 1;
@@ -330,15 +332,49 @@ class Model_ApplicationSpec extends Model
      *
      * @return array
      */
-	public function savePdf()
+	public function savePdf($id)
 	{
 		$pdf = new PDF_Helper();
-		$data = [
-                'famely' => 'Ivanov'
-                ];
-        $names = [
-				'ass' => 'Yes'
-				];
-		$pdf->create($data, $names, 'zayavblank2017_8', 'Заявление № 00000000001');
+		$app = new Application();
+		$app->id = $id;
+		$app_row = $app->get();
+		$place = new ApplicationPlaces();
+		$place->pid = $id;
+		if ($place->getByAppForBachelorSpec()) {
+			$resume = new Resume();
+			$resume->id_user = $_SESSION[APP_CODE]['user_id'];
+			$resume_row = $resume->getByUser();
+			mb_internal_encoding('UTF-8');
+			$data = [
+	                'name_last' => $resume_row['name_last'],
+	                'name_first' => $resume_row['name_first'],
+	                'name_middle' => $resume_row['name_middle'],
+	                'birth_dt' => date('d.m.Y', strtotime($resume_row['birth_dt'])),
+	                'citizenship' => mb_convert_case(mb_convert_case($resume_row['citizenship_name'], MB_CASE_LOWER, 'UTF-8'), MB_CASE_TITLE, 'UTF-8'),
+	                'passport_type' => $resume_row['passport_type_name'],
+	                'series' => $resume_row['series'],
+	                'numb' => $resume_row['numb'],
+	                'unit_code' => $resume_row['unit_code'],
+	                'dt_issue' => date('d.m.Y', strtotime($resume_row['dt_issue'])),
+	                'unit_name' => $resume_row['unit_name'],
+	                'app_numb' => '№ '.$app_row['numb'],
+	                'campus_yes' => 'On'
+	                ];
+			$pdf->create($data, 'application_2018', 'заявление'.$app_row['numb']);
+		} else {
+			$resume = new Resume();
+			$resume->id_user = $_SESSION[APP_CODE]['user_id'];
+			$resume_row = $resume->getByUser();
+			if ($resume_row['sex'] == 0) {
+				$data = [
+		                'header' => 'Уважаемая '.$resume_row['name_last'].' '.$resume_row['name_first'].' '.$resume_row['name_middle'].'!'
+		                ];
+			} else {
+				$data = [
+		                'header' => 'Уважаемый '.$resume_row['name_last'].' '.$resume_row['name_first'].' '.$resume_row['name_middle'].'!'
+		                ];
+			}
+			$pdf->create($data, 'application_sorry', 'application_sorry'.$app_row['numb']);
+		}
 	}
 }

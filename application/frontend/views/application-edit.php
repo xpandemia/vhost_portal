@@ -23,11 +23,8 @@ use frontend\models\Model_Application as Model_Application;
 		echo Model_Application::showStatus($data['status']);
 	?>
 	<hr><h5>Направления подготовки</h5><br>
-	<div class="alert alert-warning">
-		<strong>Внимание!</strong>
-		<p>Чтобы добавить/изменить направления подготовки, нажмите "Создать запись".</p>
-	</div>
 	<?php
+		echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nЧтобы добавить/изменить направления подготовки, нажмите \"Создать запись\"."), 'alert-warning');
 		echo HTML_Helper::setGridDB(['model_class' => 'common\\models\\Model_ApplicationPlaces',
 									'model_method' => 'getGrid',
 									'model_filter' => 'pid',
@@ -140,6 +137,10 @@ use frontend\models\Model_Application as Model_Application;
 													'value' => $data['remote'],
 													'success' => $data['remote_scs'],
 													'error' => $data['remote_err']]);
+				/* save application as PDF */
+				echo '<p></p>';
+				echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nПожалуйста, не вносите изменения в печатную форму заявления.\nПросто распечатайте её, подпишите, отсканируйте и загрузите в электронное заявление."), 'alert-warning');
+				echo HTML_Helper::setHrefButtonIcon('ApplicationSpec', 'SavePdf/?pid='.$data['id'], 'font-weight-bold', 'fas fa-print fa-3x', 'Распечатать заявление');
 				/* scans */
 				echo Form_Helper::setFormHeaderSub('Скан-копии');
 				echo Form_Helper::setFormFileListDB(['required' => 'required',
@@ -155,8 +156,6 @@ use frontend\models\Model_Application as Model_Application;
 													'home_hdr' => 'Направления подготовки',
 													'home_act' => 'Edit/?id='.$data['id'],
 													'ext' => FILES_EXT_SCANS]);
-				/* save application as PDF */
-				echo HTML_Helper::setHrefButtonIcon('ApplicationSpec', 'SavePdf', 'font-weight-bold', 'fas fa-print fa-3x', 'Распечатать заявление');
 			?>
 		</div>
 		<!-- controls -->

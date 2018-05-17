@@ -86,6 +86,24 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 										'value' => $data['end_year'],
 										'success' => $data['end_year_scs'],
 										'error' => $data['end_year_err']]);
+		/* change_name */
+		echo Form_Helper::setFormCheckbox(['label' => 'На момент получения документа об образовании мои фамилия, имя или отчество были другими',
+												'control' => 'change_name_flag',
+												'class' => $data['change_name_flag_cls'],
+												'value' => $data['change_name_flag'],
+												'success' => $data['change_name_flag_scs'],
+												'error' => $data['change_name_flag_err']]);
+		echo '<br>';
+		echo Form_Helper::setFormFile(['label' => 'Свидетельство о перемене имени',
+										'control' => 'change_name',
+										'required' => 'yes',
+										'required_style' => 'StarUp',
+										'data' => $data,
+										'home_id' => (isset($data['id'])) ? $data['id'] : null,
+										'home_ctr' => DOCS_EDUC['ctr'],
+										'home_hdr' => DOCS_EDUC['hdr'],
+										'home_act' => 'Edit',
+										'ext' => FILES_EXT_SCANS]);
 		/* scans */
 		echo Form_Helper::setFormHeaderSub('Скан-копии');
 		echo Form_Helper::setFormFileListDB(['required' => 'required',
@@ -120,20 +138,41 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 
 <script>
 	$(document).ready(function(){
+		formInit();
 		formEvents();
 	});
 </script>
 
 <script>
+	// form init
+	function formInit() {
+		// change name flag
+		if ($('#change_name_flag').prop('checked')) {
+			$('#change_name_div').show();
+		} else {
+			$('#change_name_div').hide();
+		}
+	}
+</script>
+
+<script>
 	// form events
 	function formEvents() {
-		// educ_type change
+		// education type change
 		$('#educ_type').change(function() {
 			var educ_type = $('#educ_type').val();
 			if (educ_type == '') {
 				$('#doc_type').empty();
 			} else {
 				getDiplomaAJAX('/frontend/DictDoctypes/DiplomasByEducCodeJSON', educ_type, '#doc_type');
+			}
+		});
+		// change name flag change
+		$('#change_name_flag').change(function() {
+			if ($('#change_name_flag').prop('checked')) {
+				$('#change_name_div').show();
+			} else {
+				$('#change_name_div').hide();
 			}
 		});
 	}

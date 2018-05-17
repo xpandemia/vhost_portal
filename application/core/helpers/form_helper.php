@@ -503,6 +503,7 @@ class Form_Helper
 		'required' => {FILE_REQUIRED},
 		'required_style' => {FILE_STYLE},
 		+ 'data' => {FILE_DATA},
+		'sample' => {SAMPLE},
 		'home_id' => {HOME_ID},
 		+ 'home_hdr' => {HOME_HEADER},
 		+ 'home_ctr' => {HOME_CONTROLLER},
@@ -523,6 +524,12 @@ class Form_Helper
 							'<p class="font-weight-bold font-italic">Допустимый размер файла: '.FILES_SIZE['value'].' '.FILES_SIZE['size'].'</p>'.
 							'<p class="font-weight-bold font-italic">Допустимые расширения файла: '.strtoupper(implode(', ', array_keys($rules['ext']))).'</p>'.
 						'</div>';
+			// sample
+			if (isset($rules['sample'])) {
+				$result .= '<div class="col">'.
+							'<a href="'.$rules['sample'].'">Образец можно скачать здесь</a><p></p>'.
+							'</div>';
+			}
 			// file
 			if (isset($rules['data'][$field.'_id'])) {
 				$result .= '<input type="hidden" id="'.$field.'_id" name="'.$field.'_id" value="'.$rules['data'][$field.'_id'].'"/>'.
@@ -552,8 +559,9 @@ class Form_Helper
      * @return string
      */
     /* RULES (+ required)
-		'required' => {FILELIST_REQUIRED},
-		'required_style' => {FILELIST_STYLE},
+		'id' => {ID},
+		'required' => {REQUIRED_FIELD}
+		'required_style' => {FILELIST_REQUIRED_STYLE},
 		+ 'model_class' => {MODEL_CLASS},
 		+ 'model_method' => {MODEL_METHOD},
 		'model_filter' => {MODEL_FILTER},
@@ -570,7 +578,11 @@ class Form_Helper
     public static function setFormFileListDB($rules) : string
     {
 		if (isset($rules) && is_array($rules)) {
-			$result = '<div class="form-group">';
+			if (isset($rules['id'])) {
+				$result = '<div class="form-group" id="'.$rules['id'].'">';
+			} else {
+				$result = '<div class="form-group">';
+			}
 			// set help
 			$result .= '<div class="col">'.
 							'<p class="font-weight-bold font-italic">Допустимый размер файлов: '.FILES_SIZE['value'].' '.FILES_SIZE['size'].'</p>'.
@@ -590,7 +602,7 @@ class Form_Helper
 			// making file list
 			foreach ($table as $row) {
 				$field = $row[$rules['model_field']];
-				$result .= '<div class="col">';
+				$result .= '<div class="col" id="'.$field.'_div">';
 				// next label
 				if (isset($rules['required'])) {
 					if ($row[$rules['required']] == 1) {
@@ -602,14 +614,14 @@ class Form_Helper
 				} else {
 					$result .= HTML_Helper::setLabel('font-weight-bold', $field, $row[$rules['model_field_name']]);
 				}
-				// next row
+				// next input
 				if (isset($rules['data'][$field.'_id'])) {
 					$result .= '<input type="hidden" id="'.$field.'_id" name="'.$field.'_id" value="'.$rules['data'][$field.'_id'].'"/>'.
 								'<span style="padding-left:10px;"> </span><img class="img-fluid" src="data:'.$rules['data'][$field.'_type'].';base64,'.base64_encode( $rules['data'][$field] ).'" width="80" height="100">'.
 								'<span style="padding-left:10px;"> </span>'.
 								HTML_Helper::setHrefButtonIcon('Scans', 'Show/?id='.$rules['data'][$field.'_id'].((isset($rules['home_id']) && !empty($rules['home_id'])) ? '&pid='.$rules['home_id'] : '').'&ctr='.$rules['home_ctr'].'&act='.$rules['home_act'], 'font-weight-bold', 'far fa-file-image fa-2x', 'Посмотреть файл').
 								'<span style="padding-left:10px;"> </span>'.
-								HTML_Helper::setHrefButtonIcon('Scans', 'DeleteConfirm/?id='.$rules['data'][$field.'_id'].((isset($rules['home_id']) && !empty($rules['home_id'])) ? '&pid='.$rules['home_id'] : '').'&hdr='.$rules['home_hdr'].'&ctr='.$rules['home_ctr'].'&act='.$rules['home_act'], 'text-danger font-weight-bold', 'fas fa-times fa-2x', 'Удалить файл');
+								HTML_Helper::setHrefButtonIcon('Scans', 'DeleteConfirm/?id='.$rules['data'][$field.'_id'].((isset($rules['home_id']) && !empty($rules['home_id'])) ? '&pid='.$rules['home_id'] : '').'&hdr='.$rules['home_hdr'].'&ctr='.$rules['home_ctr'].'&act='.$rules['home_act'], 'text-danger font-weight-bold', 'fas fa-times fa-2x', 'Удалить файл').'</div>';
 				} else {
 					$result .= '<span style="padding-left:10px;"> </span><input type="file" id="'.$field.'" name="'.$field.'"/></div>';
 				}

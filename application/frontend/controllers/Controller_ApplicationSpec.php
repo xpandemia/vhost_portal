@@ -104,7 +104,11 @@ class Controller_ApplicationSpec extends Controller
      */
 	public function actionSavePdf()
 	{
-		$this->model->savePdf();
+		if (isset($_GET['pid']) && !empty($_GET['pid'])) {
+			$this->model->savePdf(htmlspecialchars($_GET['pid']));
+		} else {
+			exit("<p><strong>Ошибка!</strong> Отсутствует идент-р заявления!</p>");
+		}
 	}
 
 	public function __destruct()

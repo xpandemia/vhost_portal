@@ -69,6 +69,9 @@ class Controller_DocsEduc extends Controller
 		}
 		$this->form = $this->model->setForm($this->model->rules(), $this->model->get($id));
 		$this->form['id'] = $id;
+		if (!empty($this->form['change_name_id'])) {
+			$this->form['change_name_flag'] = 'checked';
+		}
 		return $this->view->generate('docs-educ-add.php', 'form.php', 'Изменение документа об образовании', $this->form);
 	}
 
@@ -109,6 +112,7 @@ class Controller_DocsEduc extends Controller
 	{
 		$this->form = $this->model->getForm($this->model->rules(), $_POST, $_FILES);
 		$this->form = $this->model->validateForm($this->form, $this->model->rules());
+		$this->form = $this->model->validateFormAdvanced($this->form);
 		if ($this->form['validate']) {
 			$this->form = $this->model->check($this->form);
 			if (!$this->form['error_msg']) {

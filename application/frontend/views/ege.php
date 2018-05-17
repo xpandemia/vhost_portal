@@ -4,11 +4,11 @@ use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 
 ?>
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
-	<h2>ЕГЭ</h2>
+	<h2>Результаты ЕГЭ</h2>
 	<div class="alert alert-warning">
 		<strong>Внимание!</strong>
-		<p>Чтобы добавить документ ЕГЭ, нажмите "Создать запись".</p>
-		<p>Чтобы добавить/изменить/удалить дисциплины ЕГЭ, нажмите "Редактировать запись" на нужном документе ЕГЭ.</p>
+		<p>Чтобы добавить результаты ЕГЭ, нажмите "Создать запись".</p>
+		<p>Чтобы добавить/изменить/удалить дисциплины ЕГЭ, нажмите "Редактировать запись" на нужных результатах ЕГЭ.</p>
 	</div>
 	<?php
 		echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');

@@ -51,7 +51,7 @@ define('DOCS_EDUC', array(
 // Ege form
 define('EGE', array(
 					'id' => 'form_ege',
-					'hdr' => 'ЕГЭ',
+					'hdr' => 'Результаты ЕГЭ',
 					'ctr' => 'Ege',
 					'act' => 'Save'));
 // Ege form

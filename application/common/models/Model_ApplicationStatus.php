@@ -15,7 +15,7 @@ class Model_ApplicationStatus extends Db_Helper
 	public $id;
 	public $id_application;
 	public $numb;
-	public $numb1c;
+	public $numb1s;
 	public $status;
 	public $comment;
 	public $dt_created;
@@ -53,11 +53,11 @@ class Model_ApplicationStatus extends Db_Helper
 							'update' => 1,
 							'value' => $this->numb
 							],
-				'numb1c' => [
+				'numb1s' => [
 							'required' => 0,
 							'insert' => 1,
 							'update' => 1,
-							'value' => $this->numb1c
+							'value' => $this->numb1s
 							],
 				'status' => [
 							'required' => 1,

@@ -128,11 +128,11 @@ class Model_ApplicationPlaces extends Db_Helper
 	}
 
 	/**
-     * Gets specialities for photo 3x4.
+     * Gets specialities for bachelor and specialist.
      *
      * @return array
      */
-	public function getByAppForPhoto3x4()
+	public function getByAppForBachelorSpec()
 	{
 		return $this->rowSelectAll('application_places.*',
 									'application_places INNER JOIN dict_speciality ON application_places.id_spec = dict_speciality.id',

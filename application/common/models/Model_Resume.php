@@ -104,12 +104,12 @@ class Model_Resume extends Db_Helper
 	{
 		$resume = $this->rowSelectOne('*', self::TABLE_NAME, 'id_user = :id_user', [':id_user' => $this->id_user]);
 		if ($resume) {
-			$personal = $this->rowSelectOne('name_first, name_middle, name_last, sex, birth_dt, birth_place, dict_countries.code as citizenship',
+			$personal = $this->rowSelectOne('name_first, name_middle, name_last, sex, birth_dt, birth_place, dict_countries.code as citizenship, dict_countries.description as citizenship_name',
 											'personal INNER JOIN dict_countries ON personal.citizenship = dict_countries.id',
 											'id_resume = :id_resume',
 											[':id_resume' => $resume['id']]);
 			if (!is_array($personal)) {
-				$personal = ['name_first' => null, 'name_middle' => null, 'name_last' => null, 'sex' => null, 'birth_dt' => null, 'birth_place' => null, 'citizenship' => null];
+				$personal = ['name_first' => null, 'name_middle' => null, 'name_last' => null, 'sex' => null, 'birth_dt' => null, 'birth_place' => null, 'citizenship' => null, 'citizenship_name' => null];
 			}
 			$agreement = $this->rowSelectOne('scans.id as agreement_id, file_data as agreement, file_type as agreement_type',
 											'scans INNER JOIN docs ON scans.id_doc = docs.id'.
@@ -149,7 +149,7 @@ class Model_Resume extends Db_Helper
 			if (!is_array($phone_add)) {
 				$phone_add = ['phone_add' => null];
 			}
-			$passport = $this->rowSelectOne('dict_doctypes.code as passport_type, series, numb, dt_issue, unit_name, unit_code, dt_end',
+			$passport = $this->rowSelectOne('dict_doctypes.code as passport_type, dict_doctypes.description as passport_type_name, series, numb, dt_issue, unit_name, unit_code, dt_end',
 											'passport INNER JOIN dict_doctypes ON passport.id_doctype = dict_doctypes.id',
 											'id_resume = :id_resume AND main = :main',
 											[':id_resume' => $resume['id'], ':main' => 1]);
@@ -178,6 +178,7 @@ class Model_Resume extends Db_Helper
 				$address_res = ['country_res' => null, 'address_res' => null];
 			}
 			$result = array_merge($resume, $personal, $agreement, $email, $phone_mobile, $phone_home, $phone_add, $passport, $passport_old, $address_reg, $address_res);
+			// scans
 			$scans = new Model_DictScans();
 			$scans->doc_code = 'resume';
 			$scans_arr = $scans->getByDocument();

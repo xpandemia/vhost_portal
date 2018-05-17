@@ -95,7 +95,7 @@ class Controller_Ege extends Controller
 		if ($this->model->delete($this->form)) {
 			Basic_Helper::redirect($this->form['hdr'], 200, $this->form['ctr'], 'Index');
 		} else {
-			$this->form['error_msg'] = 'Ошибка удаления документа ЕГЭ! Свяжитесь с администратором.';
+			$this->form['error_msg'] = 'Ошибка удаления результатов ЕГЭ! Свяжитесь с администратором.';
 			return $this->view->generate('delete-confirm.php', 'form.php', 'Удаление документа '.$this->form['ctr'], $this->form);
 		}
 	}

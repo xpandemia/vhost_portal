@@ -135,20 +135,23 @@ class Model_AdmissionCampaign extends Db_Helper
 			case 'БелГУ':
 				return $this->rowSelectAll('code, description',
 											self::TABLE_NAME,
-											'description not like :code AND receipt_allowed = :receipt_allowed',
+											'description not like :code AND right(description, 4) = :year AND receipt_allowed = :receipt_allowed',
 											[':code' => '%СОФ%',
+											':year' => date('Y'),
 											':receipt_allowed' => 1]);
 			case 'СОФ':
 				return $this->rowSelectAll('code, description',
 											self::TABLE_NAME,
-											'description like :code AND receipt_allowed = :receipt_allowed',
+											'description like :code AND right(description, 4) = :year AND receipt_allowed = :receipt_allowed',
 											[':code' => '%СОФ%',
+											':year' => date('Y'),
 											':receipt_allowed' => 1]);
 			default:
 				return $this->rowSelectAll('code, description',
 											self::TABLE_NAME,
-											'receipt_allowed = :receipt_allowed',
-											[':receipt_allowed' => 1]);
+											'right(description, 4) = :year AND receipt_allowed = :receipt_allowed',
+											[':year' => date('Y'),
+											':receipt_allowed' => 1]);
 		}
 	}
 

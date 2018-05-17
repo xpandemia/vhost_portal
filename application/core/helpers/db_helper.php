@@ -190,7 +190,7 @@ class Db_Helper
 				$sql = self::$pdo->prepare('SELECT '.$fields.' FROM '.$tables.' WHERE '.$conds.((!empty($order)) ? ' ORDER BY '.$order : ''));
 				$sql->execute($params);
 			} else {
-				$sql = self::$pdo->prepare('SELECT '.$fields.' FROM '.$tables.((!empty($order)) ? ' ORDER BY'.$order : ''));
+				$sql = self::$pdo->prepare('SELECT '.$fields.' FROM '.$tables.((!empty($order)) ? ' ORDER BY '.$order : ''));
 				$sql->execute();
 			}
 			$row = $sql->fetchAll();

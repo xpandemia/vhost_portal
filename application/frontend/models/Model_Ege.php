@@ -20,13 +20,6 @@ class Model_Ege extends Model
 	public function rules()
 	{
 		return [
-                'description' => [
-	                            'type' => 'text',
-	                            'class' => 'form-control',
-	                            'pattern' => ['value' => PATTERN_INFO_RUS, 'msg' => 'Для описания можно использовать только русские буквы и цифры!'],
-	                            'width' => ['format' => 'string', 'min' => 0, 'max' => 100, 'msg' => 'Слишком длинное описание!'],
-	                            'success' => 'Описание заполнено верно.'
-	                           ],
                 'reg_year' => [
 	                            'type' => 'text',
 	                            'class' => 'form-control',
@@ -92,7 +85,6 @@ class Model_Ege extends Model
 	{
 		$ege = new Ege();
 		$ege->id_user = $_SESSION[APP_CODE]['user_id'];
-		if (empty($form['description'])) {
 			$personal = new Model_Personal();
 			$fio = $personal->getFioByUser();
 			if ($fio) {
@@ -101,15 +93,12 @@ class Model_Ege extends Model
 				$form['error_msg'] = 'Не найдены личные данные пользователя!';
 				return $form;
 			}
-		} else {
-			$ege->description = $form['description'];
-		}
 		$ege->reg_year = $form['reg_year'];
 		if ($ege->save() > 0) {
 			$form['error_msg'] = null;
-			$form['success_msg'] = 'Создан новый документ ЕГЭ.';
+			$form['success_msg'] = 'Созданы новые результаты ЕГЭ.';
 		} else {
-			$form['error_msg'] = 'Ошибка при создании документа ЕГЭ!';
+			$form['error_msg'] = 'Ошибка при создании результатов ЕГЭ!';
 		}
 		return $form;
 	}

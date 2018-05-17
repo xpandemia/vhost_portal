@@ -86,12 +86,12 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 										'success' => $data['birth_dt_scs'],
 										'error' => $data['birth_dt_err']]);
 		// agreement
-		// https://www.bsu.edu.ru/abitur/rules/doc/
 		echo Form_Helper::setFormFile(['label' => 'Согласие родителей/опекунов',
 										'control' => 'agreement',
 										'required' => 'yes',
 										'required_style' => 'StarUp',
 										'data' => $data,
+										'sample' => 'https://www.bsu.edu.ru/abitur/rules/doc/',
 										'home_ctr' => RESUME['ctr'],
 										'home_hdr' => RESUME['hdr'],
 										'home_act' => 'Index',
@@ -224,8 +224,7 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 										'control' => 'unit_name',
 										'type' => 'text',
 										'class' => $data['unit_name_cls'],
-										'required' => 'yes',
-										'required_style' => 'StarUp',
+										'required' => 'no',
 										'placeholder' => UNITNAME_PLC,
 										'value' => $data['unit_name'],
 										'success' => $data['unit_name_scs'],
@@ -249,7 +248,6 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 										'value' => $data['dt_end'],
 										'success' => $data['dt_end_scs'],
 										'error' => $data['dt_end_err']]);
-
 		/* old passport */
 		echo Form_Helper::setFormCheckbox(['label' => 'В случае несовпадения введённых данных и данных на момент сдачи ЕГЭ, рекомендуем указать дополнительные реквизиты старого документа, удостоверяющего личность',
 												'control' => 'passport_old_yes',
@@ -735,7 +733,7 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 
 <script>
 	// form init
-	function formInit(){
+	function formInit() {
 		// agreement
 		if (getAge($('#birth_dt').val()) < 18) {
 			$('#agreement_div').show();
@@ -834,6 +832,9 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 		// citizenship
 		$('#citizenship').change(function() {
 			setCitizenship($('#citizenship').val());
+			$('#passport_type').val('');
+			unsetPassport();
+			setPassport();
 		});
 		// no citizenship
 		$('#citizenship_not').change(function() {
@@ -856,6 +857,7 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 			$('#unit_name').val('');
 			$('#unit_code').val('');
 			$('#dt_end').val('');
+			unsetPassport();
 			setPassport();
 		});
 		// old passport yes
@@ -1512,21 +1514,303 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 
 	function setPassport()
 	{
-		if ($('#passport_type').val() == '000000047') {
-			$("label[for='series']").html('Серия*');
-			$('#series').mask('9999');
-			$('#numb').mask('999999');
-			$("label[for='unit_code']").html('Код подразделения*');
-			$('#unit_code').mask('999-999');
-			$("label[for='dt_end']").html('Дата окончания действия');
+		if ($('#passport_type').val() != '') {
+			switch ($('#passport_type').val()) {
+				// Паспорт РФ
+				case '000000047':
+					$("label[for='series']").html('Серия*');
+					$('#series').mask('9999');
+					$('#numb').mask('999999');
+					$("label[for='unit_name']").html('Наименование подразделения*');
+					$("label[for='unit_code']").html('Код подразделения*');
+					$('#unit_code').mask('999-999');
+					$("label[for='dt_end']").html('Дата окончания действия');
+						$("label[for='passport_face']").html('Первая страница паспорта*');
+						$('#passport_face_div').show();
+						$("label[for='passport_reg']").html('Страница паспорта с регистрацией*');
+						$('#passport_reg_div').show();
+						$("label[for='passport_foreign_face']").html('Первая страница паспорта иностранного гражданина');
+						$('#passport_foreign_face_div').hide();
+						$("label[for='passport_foreign_reg']").html('Страница паспорта иностранного гражданина с регистрацией по месту жительства');
+						$('#passport_foreign_reg_div').hide();
+						$("label[for='passport_foreign_rus']").html('Страница паспорта иностранного гражданина с информацией на русском языке');
+						$('#passport_foreign_rus_div').hide();
+						$("label[for='passport_pforeign_face']").html('Первая страница паспорта родителя иностранного гражданина');
+						$('#passport_pforeign_face_div').hide();
+						$("label[for='passport_pforeign_rus']").html('Страница паспорта родителя иностранного гражданина с информацией на русском языке');
+						$('#passport_pforeign_rus_div').hide();
+						$("label[for='residency_foreign_face']").html('Первая страница вида на жительство иностранного гражданина');
+						$('#residency_foreign_face_div').hide();
+						$("label[for='residency_foreign_reg']").html('Страница с регистрацией по месту пребывания вида на жительство иностранного гражданина');
+						$('#residency_foreign_reg_div').hide();
+						$("label[for='id_russian']").html('Временное удостоверение личности гражданина РФ');
+						$('#id_russian_div').hide();
+						$("label[for='id_foreign_face']").html('Лицевая сторона удостоверения личности иностранного гражданина');
+						$('#id_foreign_face_div').hide();
+						$("label[for='id_foreign_back']").html('Оборотная сторона удостоверения личности иностранного гражданина');
+						$('#id_foreign_back_div').hide();
+						$("label[for='certificate_birth']").html('Свидетельство о рождении');
+						$('#certificate_birth_div').hide();
+						$("label[for='certificate_pbirth']").html('Свидетельство о рождении родителя');
+						$('#certificate_pbirth_div').hide();
+					break;
+				// Паспорт иностранного гражданина
+				case '000000049':
+					$("label[for='series']").html('Серия*');
+					$('#series').unmask();
+					$("label[for='numb']").html('Номер*');
+					$('#numb').unmask();
+					$("label[for='dt_issue']").html('Дата выдачи*');
+					$("label[for='unit_name']").html('Наименование подразделения*');
+					$("label[for='unit_code']").html('Код подразделения');
+					$('#unit_code').unmask();
+					$("label[for='dt_end']").html('Дата окончания действия');
+						$("label[for='passport_face']").html('Первая страница паспорта');
+						$('#passport_face_div').hide();
+						$("label[for='passport_reg']").html('Страница паспорта с регистрацией');
+						$('#passport_reg_div').hide();
+						$("label[for='passport_foreign_face']").html('Первая страница паспорта иностранного гражданина*');
+						$('#passport_foreign_face_div').show();
+						$("label[for='passport_foreign_reg']").html('Страница паспорта иностранного гражданина с регистрацией по месту жительства');
+						$('#passport_foreign_reg_div').show();
+						$("label[for='passport_foreign_rus']").html('Страница паспорта иностранного гражданина с информацией на русском языке');
+						$('#passport_foreign_rus_div').show();
+						$("label[for='passport_pforeign_face']").html('Первая страница паспорта родителя иностранного гражданина');
+						$('#passport_pforeign_face_div').show();
+						$("label[for='passport_pforeign_rus']").html('Страница паспорта родителя иностранного гражданина с информацией на русском языке');
+						$('#passport_pforeign_rus_div').show();
+						$("label[for='residency_foreign_face']").html('Первая страница вида на жительство иностранного гражданина');
+						$('#residency_foreign_face_div').hide();
+						$("label[for='residency_foreign_reg']").html('Страница с регистрацией по месту пребывания вида на жительство иностранного гражданина');
+						$('#residency_foreign_reg_div').hide();
+						$("label[for='id_russian']").html('Временное удостоверение личности гражданина РФ');
+						$('#id_russian_div').hide();
+						$("label[for='id_foreign_face']").html('Лицевая сторона удостоверения личности иностранного гражданина');
+						$('#id_foreign_face_div').hide();
+						$("label[for='id_foreign_back']").html('Оборотная сторона удостоверения личности иностранного гражданина');
+						$('#id_foreign_back_div').hide();
+						$("label[for='certificate_birth']").html('Свидетельство о рождении');
+						$('#certificate_birth_div').show();
+						$("label[for='certificate_pbirth']").html('Свидетельство о рождении родителя');
+						$('#certificate_pbirth_div').show();
+					break;
+				// Вид на жительство иностранного гражданина
+				case '000000075':
+					$("label[for='series']").html('Серия*');
+					$('#series').unmask();
+					$("label[for='numb']").html('Номер*');
+					$('#numb').unmask();
+					$("label[for='dt_issue']").html('Дата выдачи*');
+					$("label[for='unit_name']").html('Наименование подразделения');
+					$("label[for='unit_code']").html('Код подразделения');
+					$('#unit_code').unmask();
+					$("label[for='dt_end']").html('Дата окончания действия*');
+					$('#unit_code').unmask();
+						$("label[for='passport_face']").html('Первая страница паспорта');
+						$('#passport_face_div').hide();
+						$("label[for='passport_reg']").html('Страница паспорта с регистрацией');
+						$('#passport_reg_div').hide();
+						$("label[for='passport_foreign_face']").html('Первая страница паспорта иностранного гражданина');
+						$('#passport_foreign_face_div').hide();
+						$("label[for='passport_foreign_reg']").html('Страница паспорта иностранного гражданина с регистрацией по месту жительства');
+						$('#passport_foreign_reg_div').hide();
+						$("label[for='passport_foreign_rus']").html('Страница паспорта иностранного гражданина с информацией на русском языке');
+						$('#passport_foreign_rus_div').hide();
+						$("label[for='passport_pforeign_face']").html('Первая страница паспорта родителя иностранного гражданина');
+						$('#passport_pforeign_face_div').show();
+						$("label[for='passport_pforeign_rus']").html('Страница паспорта родителя иностранного гражданина с информацией на русском языке');
+						$('#passport_pforeign_rus_div').show();
+						$("label[for='residency_foreign_face']").html('Первая страница вида на жительство иностранного гражданина*');
+						$('#residency_foreign_face_div').show();
+						$("label[for='residency_foreign_reg']").html('Страница с регистрацией по месту пребывания вида на жительство иностранного гражданина*');
+						$('#residency_foreign_reg_div').show();
+						$("label[for='id_russian']").html('Временное удостоверение личности гражданина РФ');
+						$('#id_russian_div').hide();
+						$("label[for='id_foreign_face']").html('Лицевая сторона удостоверения личности иностранного гражданина');
+						$('#id_foreign_face_div').hide();
+						$("label[for='id_foreign_back']").html('Оборотная сторона удостоверения личности иностранного гражданина');
+						$('#id_foreign_back_div').hide();
+						$("label[for='certificate_birth']").html('Свидетельство о рождении');
+						$('#certificate_birth_div').show();
+						$("label[for='certificate_pbirth']").html('Свидетельство о рождении родителя');
+						$('#certificate_pbirth_div').show();
+					break;
+				// Временное удостоверение личности гражданина РФ
+				case '000000202':
+					$("label[for='series']").html('Серия');
+					$('#series').unmask();
+					$("label[for='numb']").html('Номер*');
+					$('#numb').unmask();
+					$("label[for='dt_issue']").html('Дата выдачи*');
+					$("label[for='unit_name']").html('Наименование подразделения*');
+					$("label[for='unit_code']").html('Код подразделения');
+					$('#unit_code').unmask();
+					$("label[for='dt_end']").html('Дата окончания действия*');
+						$("label[for='passport_face']").html('Первая страница паспорта');
+						$('#passport_face_div').hide();
+						$("label[for='passport_reg']").html('Страница паспорта с регистрацией');
+						$('#passport_reg_div').hide();
+						$("label[for='passport_foreign_face']").html('Первая страница паспорта иностранного гражданина');
+						$('#passport_foreign_face_div').hide();
+						$("label[for='passport_foreign_reg']").html('Страница паспорта иностранного гражданина с регистрацией по месту жительства');
+						$('#passport_foreign_reg_div').hide();
+						$("label[for='passport_foreign_rus']").html('Страница паспорта иностранного гражданина с информацией на русском языке');
+						$('#passport_foreign_rus_div').hide();
+						$("label[for='passport_pforeign_face']").html('Первая страница паспорта родителя иностранного гражданина');
+						$('#passport_pforeign_face_div').hide();
+						$("label[for='passport_pforeign_rus']").html('Страница паспорта родителя иностранного гражданина с информацией на русском языке');
+						$('#passport_pforeign_rus_div').hide();
+						$("label[for='residency_foreign_face']").html('Первая страница вида на жительство иностранного гражданина');
+						$('#residency_foreign_face_div').hide();
+						$("label[for='residency_foreign_reg']").html('Страница с регистрацией по месту пребывания вида на жительство иностранного гражданина');
+						$('#residency_foreign_reg_div').hide();
+						$("label[for='id_russian']").html('Временное удостоверение личности гражданина РФ*');
+						$('#id_russian_div').show();
+						$("label[for='id_foreign_face']").html('Лицевая сторона удостоверения личности иностранного гражданина');
+						$('#id_foreign_face_div').hide();
+						$("label[for='id_foreign_back']").html('Оборотная сторона удостоверения личности иностранного гражданина');
+						$('#id_foreign_back_div').hide();
+						$("label[for='certificate_birth']").html('Свидетельство о рождении');
+						$('#certificate_birth_div').hide();
+						$("label[for='certificate_pbirth']").html('Свидетельство о рождении родителя');
+						$('#certificate_pbirth_div').hide();
+					break;
+				// Удостоверение личности иностранного гражданина
+				case '000000223':
+					$("label[for='series']").html('Серия');
+					$('#series').unmask();
+					$("label[for='numb']").html('Номер*');
+					$('#numb').unmask();
+					$("label[for='dt_issue']").html('Дата выдачи*');
+					$("label[for='unit_name']").html('Наименование подразделения');
+					$("label[for='unit_code']").html('Код подразделения');
+					$('#unit_code').unmask();
+					$("label[for='dt_end']").html('Дата окончания действия*');
+						$("label[for='passport_face']").html('Первая страница паспорта');
+						$('#passport_face_div').hide();
+						$("label[for='passport_reg']").html('Страница паспорта с регистрацией');
+						$('#passport_reg_div').hide();
+						$("label[for='passport_foreign_face']").html('Первая страница паспорта иностранного гражданина');
+						$('#passport_foreign_face_div').hide();
+						$("label[for='passport_foreign_reg']").html('Страница паспорта иностранного гражданина с регистрацией по месту жительства');
+						$('#passport_foreign_reg_div').hide();
+						$("label[for='passport_foreign_rus']").html('Страница паспорта иностранного гражданина с информацией на русском языке');
+						$('#passport_foreign_rus_div').hide();
+						$("label[for='passport_pforeign_face']").html('Первая страница паспорта родителя иностранного гражданина');
+						$('#passport_pforeign_face_div').show();
+						$("label[for='passport_pforeign_rus']").html('Страница паспорта родителя иностранного гражданина с информацией на русском языке');
+						$('#passport_pforeign_rus_div').show();
+						$("label[for='residency_foreign_face']").html('Первая страница вида на жительство иностранного гражданина');
+						$('#residency_foreign_face_div').hide();
+						$("label[for='residency_foreign_reg']").html('Страница с регистрацией по месту пребывания вида на жительство иностранного гражданина');
+						$('#residency_foreign_reg_div').hide();
+						$("label[for='id_russian']").html('Временное удостоверение личности гражданина РФ');
+						$('#id_russian_div').hide();
+						$("label[for='id_foreign_face']").html('Лицевая сторона удостоверения личности иностранного гражданина*');
+						$('#id_foreign_face_div').show();
+						$("label[for='id_foreign_back']").html('Оборотная сторона удостоверения личности иностранного гражданина*');
+						$('#id_foreign_back_div').show();
+						$("label[for='certificate_birth']").html('Свидетельство о рождении');
+						$('#certificate_birth_div').hide();
+						$("label[for='certificate_pbirth']").html('Свидетельство о рождении родителя');
+						$('#certificate_pbirth_div').show();
+					break;
+				// Свидетельство о рождении, выданное уполномоченным органом иностранного государства
+				case '000000226':
+					$("label[for='series']").html('Серия*');
+					$('#series').unmask();
+					$("label[for='numb']").html('Номер*');
+					$('#numb').unmask();
+					$("label[for='dt_issue']").html('Дата выдачи*');
+					$("label[for='unit_name']").html('Наименование подразделения*');
+					$("label[for='unit_code']").html('Код подразделения');
+					$('#unit_code').unmask();
+					$("label[for='dt_end']").html('Дата окончания действия');
+						$("label[for='passport_face']").html('Первая страница паспорта');
+						$('#passport_face_div').hide();
+						$("label[for='passport_reg']").html('Страница паспорта с регистрацией');
+						$('#passport_reg_div').hide();
+						$("label[for='passport_foreign_face']").html('Первая страница паспорта иностранного гражданина');
+						$('#passport_foreign_face_div').hide();
+						$("label[for='passport_foreign_reg']").html('Страница паспорта иностранного гражданина с регистрацией по месту жительства');
+						$('#passport_foreign_reg_div').hide();
+						$("label[for='passport_foreign_rus']").html('Страница паспорта иностранного гражданина с информацией на русском языке');
+						$('#passport_foreign_rus_div').hide();
+						$("label[for='passport_pforeign_face']").html('Первая страница паспорта родителя иностранного гражданина');
+						$('#passport_pforeign_face_div').show();
+						$("label[for='passport_pforeign_rus']").html('Страница паспорта родителя иностранного гражданина с информацией на русском языке');
+						$('#passport_pforeign_rus_div').show();
+						$("label[for='residency_foreign_face']").html('Первая страница вида на жительство иностранного гражданина');
+						$('#residency_foreign_face_div').hide();
+						$("label[for='residency_foreign_reg']").html('Страница с регистрацией по месту пребывания вида на жительство иностранного гражданина');
+						$('#residency_foreign_reg_div').hide();
+						$("label[for='id_russian']").html('Временное удостоверение личности гражданина РФ');
+						$('#id_russian_div').hide();
+						$("label[for='id_foreign_face']").html('Лицевая сторона удостоверения личности иностранного гражданина');
+						$('#id_foreign_face_div').hide();
+						$("label[for='id_foreign_back']").html('Оборотная сторона удостоверения личности иностранного гражданина');
+						$('#id_foreign_back_div').hide();
+						$("label[for='certificate_birth']").html('Свидетельство о рождении*');
+						$('#certificate_birth_div').show();
+						$("label[for='certificate_pbirth']").html('Свидетельство о рождении родителя');
+						$('#certificate_pbirth_div').show();
+					break;
+			}
 		} else {
 			$("label[for='series']").html('Серия');
 			$('#series').unmask();
-			$('#numb').mask('999999999999999');
+			$("label[for='numb']").html('Номер');
+			$('#numb').unmask();
+			$("label[for='dt_issue']").html('Дата выдачи');
+			$("label[for='unit_name']").html('Наименование подразделения');
 			$("label[for='unit_code']").html('Код подразделения');
 			$('#unit_code').unmask();
-			$("label[for='dt_end']").html('Дата окончания действия*');
+			$("label[for='dt_end']").html('Дата окончания действия');
+				$("label[for='passport_face']").html('Первая страница паспорта');
+				$('#passport_face_div').hide();
+				$("label[for='passport_reg']").html('Страница паспорта с регистрацией');
+				$('#passport_reg_div').hide();
+				$("label[for='passport_foreign_face']").html('Первая страница паспорта иностранного гражданина');
+				$('#passport_foreign_face_div').hide();
+				$("label[for='passport_foreign_reg']").html('Страница паспорта иностранного гражданина с регистрацией по месту жительства');
+				$('#passport_foreign_reg_div').hide();
+				$("label[for='passport_foreign_rus']").html('Страница паспорта иностранного гражданина с информацией на русском языке');
+				$('#passport_foreign_rus_div').hide();
+				$("label[for='passport_pforeign_face']").html('Первая страница паспорта родителя иностранного гражданина');
+				$('#passport_pforeign_face_div').hide();
+				$("label[for='passport_pforeign_rus']").html('Страница паспорта родителя иностранного гражданина с информацией на русском языке');
+				$('#passport_pforeign_rus_div').hide();
+				$("label[for='residency_foreign_face']").html('Первая страница вида на жительство иностранного гражданина');
+				$('#residency_foreign_face_div').hide();
+				$("label[for='residency_foreign_reg']").html('Страница с регистрацией по месту пребывания вида на жительство иностранного гражданина');
+				$('#residency_foreign_reg_div').hide();
+				$("label[for='id_russian']").html('Временное удостоверение личности гражданина РФ');
+				$('#id_russian_div').hide();
+				$("label[for='id_foreign_face']").html('Лицевая сторона удостоверения личности иностранного гражданина');
+				$('#id_foreign_face_div').hide();
+				$("label[for='id_foreign_back']").html('Оборотная сторона удостоверения личности иностранного гражданина');
+				$('#id_foreign_back_div').hide();
+				$("label[for='certificate_birth']").html('Свидетельство о рождении');
+				$('#certificate_birth_div').hide();
+				$("label[for='certificate_pbirth']").html('Свидетельство о рождении родителя');
+				$('#certificate_pbirth_div').hide();
 		}
+	}
+
+	function unsetPassport()
+	{
+		$("label[for='series']").html('Серия');
+		$('#series').val('');
+		$("label[for='numb']").html('Номер');
+		$('#numb').val('');
+		$("label[for='dt_issue']").html('Дата выдачи');
+		$('#dt_issue').val('');
+		$("label[for='unit_name']").html('Наименование подразделения');
+		$('#unit_name').val('');
+		$("label[for='unit_code']").html('Код подразделения');
+		$('#unit_code').val('');
+		$("label[for='dt_end']").html('Дата окончания действия');
+		$('#dt_end').val('');
 	}
 
 	function setPassportOld()
@@ -1542,7 +1826,7 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 			$("label[for='series_old']").html('Серия');
 			$('#series_old').unmask();
 			$("label[for='numb_old']").html('Номер*');
-			$('#numb_old').mask('999999999999999');1
+			$('#numb_old').unmask();
 			$("label[for='unit_code_old']").html('Код подразделения');
 			$('#unit_code_old').unmask();
 		}

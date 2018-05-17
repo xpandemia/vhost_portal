@@ -77,10 +77,35 @@ class Model_DocsEduc extends Model
 	                            'width' => ['format' => 'string', 'min' => 1, 'max' => 4, 'msg' => 'Слишком длинный год окончания!'],
 	                            'compared' => ['value' => date('Y'), 'type' => '<=', 'msg' => 'Год окончания больше текущего года!'],
 	                            'success' => 'Год окончания заполнен верно.'
-	                           ]
+	                           ],
+	            'change_name_flag' => [
+			                            'type' => 'checkbox',
+			                            'class' => 'form-check-input',
+			                            'success' => ''
+			                           ],
+	            'change_name' => [
+									'type' => 'file',
+									'class' => 'form-control',
+									'size' => ['value' => FILES_SIZE['value'], 'msg' => 'Размер скан-копии "Свидетельство о перемене имени" превышает '.FILES_SIZE['value'].' '.FILES_SIZE['size'].' !'],
+									'ext' => ['value' => FILES_EXT_SCANS, 'msg' => 'Недопустимый тип скан-копии "Свидетельство о перемене имени"!'],
+									'success' => 'Скан-копия "Свидетельство о перемене имени" заполнена верно.'
+									]
 	            ];
 		$scans = Model_Scans::createRules('docs_educ');
 		return array_merge($rules, $scans);
+	}
+
+	/**
+     * Validates education document advanced.
+     *
+     * @return array
+     */
+	public function validateFormAdvanced($form)
+	{
+		if ($form['change_name_flag'] == 'checked' && empty($form['change_name_name'])) {
+			$form = $this->setFormErrorFile($form, 'change_name', 'Скан-копия "Свидетельство о перемене имени" обязательна для заполнения!');
+		}
+		return $form;
 	}
 
 	/**
@@ -118,6 +143,14 @@ class Model_DocsEduc extends Model
      */
 	public function unsetScans($form)
 	{
+		// change_name
+		if ($form['change_name_flag'] == 'checked') {
+			if (empty($form['change_name_name'])) {
+				$form['change_name_err'] = 'Скан-копия "Свидетельство о перемене имени" обязательна для заполнения!';
+				$form['change_name_scs'] = null;
+				$form['validate'] = false;
+			}
+		}
 		return Model_Scans::unsets('docs_educ', $form);
 	}
 
@@ -164,6 +197,10 @@ class Model_DocsEduc extends Model
 				$form['error_msg'] = 'Ошибка при создании документа об образовании!';
 				return $form;
 			}
+		}
+		/* change_name */
+		if ($form['change_name_flag'] == 'checked') {
+			$form = Model_Scans::push('docs_educ', 'change_name', $form);
 		}
 		/* scans */
 		$dict_scans = new Model_DictScans();

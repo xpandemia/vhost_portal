@@ -118,8 +118,9 @@ class Model_DictDoctypes extends Db_Helper
 	{
 		return $this->rowSelectAll('*',
 									'dict_doctypes',
-									'code in (:code1)',
-									[':code1' => '000000047']);
+									'code in (:code1, :code2)',
+									[':code1' => '000000047',
+									':code2' => '000000202']);
 	}
 
 	/**
