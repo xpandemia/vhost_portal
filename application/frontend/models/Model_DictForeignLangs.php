@@ -32,4 +32,19 @@ class Model_DictForeignLangs extends Model
 			}
 			return json_encode($lang_json);
 	}
+
+	/**
+     * Gets BSU foreign languages JSON.
+     *
+     * @return JSON
+     */
+	public function getForeignLangsBsuJSON() : string
+	{
+		$lang = $this->lang->getBsu();
+			foreach ($lang as $value) {
+				$lang_json[] = ['code' => $value['code'],
+								'description' => $value['description']];
+			}
+			return json_encode($lang_json);
+	}
 }

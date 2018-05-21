@@ -9,7 +9,7 @@ use common\models\Model_ForeignLangs as ForeignLangs;
 use common\models\Model_DictForeignLangs as DictForeignLangs;
 
 	// check resume
-	if (!isset($data['status'])) {
+	if ((!isset($data['id']) || empty($data['id'])) && (!isset($data['status']) || empty($data['status']))) {
 		$data['error_msg'] = 'Ошибка открытия анкеты! Свяжитесь с администратором.';
 		Basic_Helper::redirect(APP_NAME, 401, 'Main', 'Index', $data);
 	} else {
@@ -121,12 +121,20 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 												'value' => $data['citizenship'],
 												'success' => $data['citizenship_scs'],
 												'error' => $data['citizenship_err']]); ?>
-		<div class="form-group">
-			<div class="form-group">
+		<div class="form-check">
+			<div class="col">
 				<input type="checkbox" class="form-check-input" id="citizenship_not" name="citizenship_not"><b>Не имею гражданства</b>
 			</div>
-		</div>
+		</div><br>
 		<?php
+		// beneficiary
+		echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nЕсли Вы имеете льготы, то Вам разрешена только личная подача документов."), 'alert-warning');
+		echo Form_Helper::setFormCheckbox(['label' => 'Имею льготы',
+										'control' => 'beneficiary',
+										'class' => $data['beneficiary_cls'],
+										'value' => $data['beneficiary'],
+										'success' => $data['beneficiary_scs'],
+										'error' => $data['beneficiary_err']]);
 		/* contacts */
 		echo Form_Helper::setFormHeaderSub('Контактная информация');
 		// email
@@ -142,7 +150,7 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 										'error' => $data['email_err'],
 										'help' => CONTACT_EMAIL['help']]);
 		// phones
-		echo HTML_Helper::setAlert('Пожалуйста, укажите хотя бы один номер.', 'alert-warning');
+		echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nПожалуйста, укажите хотя бы мобильный или домаший номер телефона."), 'alert-warning');
 		// phone mobile
 		echo Form_Helper::setFormInput(['label' => 'Номер мобильного телефона',
 										'control' => 'phone_mobile',
@@ -176,7 +184,7 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 										'help' => CONTACT_PHONE_ADD['help']]);
 		/* passport */
 		echo Form_Helper::setFormHeaderSub('Документ, удостоверяющий личность');
-		echo HTML_Helper::setAlert('Пожалуйста, при наличии паспорта, указывайте паспортные данные.', 'alert-warning');
+		echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nПожалуйста, при наличии паспорта, указывайте паспортные данные."), 'alert-warning');
 		// type
 		echo Form_Helper::setFormSelectListDB(['label' => 'Тип документа',
 												'control' => 'passport_type',
@@ -467,17 +475,16 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 			?>
 		</div>
 
-		<div class="form-group">
-			<div class="form-group">
+		<div class="form-check">
+			<div class="col">
 				<input type="checkbox" class="form-check-input" id="kladr_reg_not" name="kladr_reg_not"><b>Не нашёл адрес регистрации в КЛАДРе</b>
 			</div>
-		</div>
-		<div class="form-group">
-			<div class="form-group">
+		</div><br>
+		<div class="form-check">
+			<div class="col">
 				<input type="checkbox" class="form-check-input" id="homeless_reg" name="homeless_reg"><b>Не имею адреса регистрации</b>
 			</div>
-		</div>
-
+		</div><br>
 		<?php
 		// address string (registration)
 		echo Form_Helper::setFormInput(['label' => ADRREG['name'],
@@ -626,17 +633,16 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 			?>
 		</div>
 
-		<div class="form-group">
-			<div class="form-group">
+		<div class="form-check">
+			<div class="col">
 				<input type="checkbox" class="form-check-input" id="kladr_res_not" name="kladr_reg_not"><b>Не нашёл адрес проживания в КЛАДРе</b>
 			</div>
-		</div>
-		<div class="form-group">
-			<div class="form-group">
+		</div><br>
+		<div class="form-check">
+			<div class="col">
 				<input type="checkbox" class="form-check-input" id="homeless_res" name="homeless_res"><b>Не имею адреса проживания</b>
 			</div>
-		</div>
-
+		</div><br>
 		<?php
 		// address string (residential)
 		echo Form_Helper::setFormInput(['label' => ADRRES['name'],
@@ -712,7 +718,8 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 		<div class="form-group">
 			<div class="col">
 				<?php
-					echo HTML_Helper::setSubmit('btn btn-success', 'btn_save', 'Сохранить');
+					echo HTML_Helper::setSubmit('btn btn-info', 'btn_save', 'Сохранить');
+					echo HTML_Helper::setHrefButton(RESUME['ctr'], 'Send', 'btn btn-success', 'Отправить');
 					echo HTML_Helper::setHrefButton(RESUME['ctr'], 'Reset', 'btn btn-danger', 'Очистить');
 					echo HTML_Helper::setHrefButton('Main', 'Index', 'btn btn-primary', 'На главную');
 				?>
@@ -1464,12 +1471,12 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 			var langs = $("select[id^='lang']").length;
 			if (langs == 0) {
 				$('#btn_lang_add').after('<div class="form-group row" id="div_lang1"><div class="col col-sm-3"><label class="font-weight-bold" for="lang1">Иностранный язык №1</label></div><div class="col col-sm-9"><select class="form-control" id="lang1" name="lang1"></select></div></div>');
-				getLangAJAX('/frontend/DictForeignLangs/ForeignLangsJSON', '#lang1');
+				getLangAJAX('/frontend/DictForeignLangs/ForeignLangsBsuJSON', '#lang1');
 			} else {
 				var lang_numb = langs + 1;
 				var lang = 'lang'+lang_numb;
 				$('#div_lang'+langs).after('<div class="form-group row" id="div_lang'+lang_numb+'"><div class="col col-sm-3"><label class="font-weight-bold" for="'+lang+'">Иностранный язык №'+lang_numb+'</label></div><div class="col col-sm-9"><select class="form-control" id="'+lang+'" name="'+lang+'"></select></div></div>');
-				getLangAJAX('/frontend/DictForeignLangs/ForeignLangsJSON', '#'+lang);
+				getLangAJAX('/frontend/DictForeignLangs/ForeignLangsBsuJSON', '#'+lang);
 			}
 		});
 
@@ -1520,7 +1527,9 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 				case '000000047':
 					$("label[for='series']").html('Серия*');
 					$('#series').mask('9999');
+					$("label[for='numb']").html('Номер*');
 					$('#numb').mask('999999');
+					$("label[for='dt_issue']").html('Дата выдачи*');
 					$("label[for='unit_name']").html('Наименование подразделения*');
 					$("label[for='unit_code']").html('Код подразделения*');
 					$('#unit_code').mask('999-999');

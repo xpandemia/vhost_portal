@@ -22,7 +22,6 @@ use tinyframe\core\Routing as Routing;
 	require_once ROOT_DIR.'/application/core/config/files_config.php'; // FILES configuration
 	require_once ROOT_DIR.'/application/core/config/form_config.php'; // FORMS configuration
 	require_once ROOT_DIR.'/application/core/config/mail_config.php'; // EMAIL configuration
-	require_once ROOT_DIR.'/application/core/config/pdf_config.php'; // PDF configuration
 	// base classes
 	require_once ROOT_DIR.'/application/core/model.php';
 	require_once ROOT_DIR.'/application/core/view.php';

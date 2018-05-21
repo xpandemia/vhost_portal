@@ -114,17 +114,32 @@ class Model_ApplicationPlaces extends Db_Helper
 	}
 
 	/**
-     * Gets specialities for application.
+     * Gets first high specialities for application.
      *
      * @return array
      */
-	public function getSpecsForApp()
+	public function getSpecsFirstForApp()
 	{
 		return $this->rowSelectAll('dict_speciality.id, speciality_name, profil_name, finance_name, eduform_name, edulevel_name',
 									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
 									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
-									'application.id = :pid',
+									'application.id = :pid AND dict_speciality.eduprogram_name is null',
 									[':pid' => $this->pid]);
+	}
+
+	/**
+     * Gets second high specialities for application.
+     *
+     * @return array
+     */
+	public function getSpecsSecondForApp()
+	{
+		return $this->rowSelectAll('dict_speciality.id, speciality_name, profil_name, finance_name, eduform_name, edulevel_name',
+									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
+									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
+									'application.id = :pid AND dict_speciality.eduprogram_name = :eduprogram_name',
+									[':pid' => $this->pid,
+									':eduprogram_name' => 'Высшее']);
 	}
 
 	/**
@@ -207,7 +222,7 @@ class Model_ApplicationPlaces extends Db_Helper
 	{
 		return $this->rowSelectAll('application_places.*',
 									'application_places INNER JOIN dict_speciality ON application_places.id_spec = dict_speciality.id',
-									'pid = :pid AND eduform_name = :eduform_name AND speciality_name in (:speciality_name1, :speciality_name2, :speciality_name3, :speciality_name4, :speciality_name5, :speciality_name6, :speciality_name7, :speciality_name8, :speciality_name9, :speciality_name10, :speciality_name11)',
+									'pid = :pid AND edulevel_name = :edulevel_name AND speciality_name in (:speciality_name1, :speciality_name2, :speciality_name3, :speciality_name4, :speciality_name5, :speciality_name6, :speciality_name7, :speciality_name8, :speciality_name9, :speciality_name10, :speciality_name11)',
 									[':pid' => $this->pid,
 									':edulevel_name' => 'СПО',
 									':speciality_name1' => '31.02.01 Лечебное дело',

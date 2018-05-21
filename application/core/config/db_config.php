@@ -29,6 +29,7 @@ define('DB_TABLES', array(
 						'dict_discipline',
 						'dict_docships',
 						'dict_doctypes',
+						'dict_educforms',
 						'dict_eductypes',
 						'dict_ege',
 						'dict_entrance_exams',

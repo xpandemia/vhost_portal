@@ -20,6 +20,8 @@ class Model_DictEductypes extends Db_Helper
 	public $guid;
 	public $active;
 
+	const EDUCTYPES_DIPLOMA = ['000000001', '000000003', '000000004', '000000006'];
+
 	public $db;
 
 	public function __construct()

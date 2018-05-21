@@ -26,6 +26,16 @@ class Controller_DictForeignLangs extends Controller
 		echo $this->model->getForeignLangsJSON();
 	}
 
+	/**
+     * Prints BSU foreign languages JSON.
+     *
+     * @return void
+     */
+	public function actionForeignLangsBsuJSON()
+	{
+		echo $this->model->getForeignLangsBsuJSON();
+	}
+
 	public function __destruct()
 	{
 		$this->model = null;

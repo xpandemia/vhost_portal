@@ -9,6 +9,11 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 		echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
 		echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
 		echo Form_Helper::setFormBegin(DOCS_EDUC['ctr'], DOCS_EDUC['act'], DOCS_EDUC['id'], DOCS_EDUC['hdr']);
+	?>
+	<div class="form-group">
+		<input type="hidden" id="doc_type_hidden" name="doc_type_hidden" value="<?php echo $data['doc_type']; ?>"/>
+	</div>
+	<?php
 		// educ type
 		echo Form_Helper::setFormSelectListDB(['label' => 'Вид образования',
 												'control' => 'educ_type',
@@ -86,6 +91,27 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 										'value' => $data['end_year'],
 										'success' => $data['end_year_scs'],
 										'error' => $data['end_year_err']]);
+		// educ form
+		echo Form_Helper::setFormSelectListDB(['label' => 'Форма обучения',
+												'control' => 'educ_form',
+												'class' => $data['educ_form_cls'],
+												'required' => 'no',
+												'model_class' => 'common\\models\\Model_DictEducforms',
+												'model_method' => 'getAll',
+												'model_field' => 'code',
+												'model_field_name' => 'description',
+												'value' => $data['educ_form'],
+												'success' => $data['educ_form_scs'],
+												'error' => $data['educ_form_err']]);
+		// speciality
+		echo Form_Helper::setFormInput(['label' => 'Специальность по диплому',
+										'control' => 'speciality',
+										'type' => 'text',
+										'class' => $data['speciality_cls'],
+										'required' => 'no',
+										'value' => $data['speciality'],
+										'success' => $data['speciality_scs'],
+										'error' => $data['speciality_err']]);
 		/* change_name */
 		echo Form_Helper::setFormCheckbox(['label' => 'На момент получения документа об образовании мои фамилия, имя или отчество были другими',
 												'control' => 'change_name_flag',
@@ -146,6 +172,8 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 <script>
 	// form init
 	function formInit() {
+		// education type
+		setEductype();
 		// change name flag
 		if ($('#change_name_flag').prop('checked')) {
 			$('#change_name_div').show();
@@ -160,12 +188,7 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 	function formEvents() {
 		// education type change
 		$('#educ_type').change(function() {
-			var educ_type = $('#educ_type').val();
-			if (educ_type == '') {
-				$('#doc_type').empty();
-			} else {
-				getDiplomaAJAX('/frontend/DictDoctypes/DiplomasByEducCodeJSON', educ_type, '#doc_type');
-			}
+			setEductype();
 		});
 		// change name flag change
 		$('#change_name_flag').change(function() {
@@ -177,7 +200,33 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 		});
 	}
 
-	function getDiplomaAJAX(url, code, select)
+	function setEductype()
+	{
+		var eductypes_diploma = ['000000001', '000000003', '000000004', '000000006'];
+		var educ_type = $('#educ_type').val();
+		if (educ_type == '') {
+			$('#doc_type').empty();
+			$("label[for='educ_form']").html('Форма обучения');
+			$('#educ_form_div').hide();
+			$("label[for='speciality']").html('Специальность по диплому');
+			$('#speciality_div').hide();
+		} else {
+			getDiplomaAJAX('/frontend/DictDoctypes/DiplomasByEducCodeJSON', educ_type, '#doc_type', $('#doc_type_hidden').val());
+			if (jQuery.inArray(educ_type, eductypes_diploma) == -1) {
+				$("label[for='educ_form']").html('Форма обучения');
+				$('#educ_form_div').hide();
+				$("label[for='speciality']").html('Специальность по диплому');
+				$('#speciality_div').hide();
+			} else {
+				$("label[for='educ_form']").html('Форма обучения*');
+				$('#educ_form_div').show();
+				$("label[for='speciality']").html('Специальность по диплому*');
+				$('#speciality_div').show();
+			}
+		}
+	}
+
+	function getDiplomaAJAX(url, code, select, value_test)
 	{
 		startLoadingAnimation();
 		$.ajax({
@@ -190,7 +239,11 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 	        $(select).empty();
             $(select).append('<option></option>');
 	        $.each(result, function(key, value){
-	            $(select).append('<option value="' + value.code + '">' + value.description + '</option>');
+	            if (value_test == value.code) {
+					$(select).append('<option value="' + value.code + '" selected>' + value.description + '</option>');
+				} else {
+					$(select).append('<option value="' + value.code + '">' + value.description + '</option>');
+				}
 	        });
 	      },
 	      error: function(xhr, status, error) {
@@ -198,7 +251,6 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 		  }
 	    });
 	    stopLoadingAnimation();
-	    $(select).val('');
 	}
 
 	function startLoadingAnimation()

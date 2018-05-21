@@ -44,6 +44,7 @@ PORTALBSU
 |   |           Model_DictDiscipline.php - модель DICT_DISCIPLINE (справочник дисциплин)
 |   |           Model_DictDocships.php - модель DICT_DOCSHIPS (справочник типов доставки документов)
 |   |           Model_DictDoctypes.php - модель DICT_DOCTYPES (справочник типов документов)
+|   |           Model_DictEducforms.php - модель DICT_EDUCFORMS (справочник форм обучения)
 |   |           Model_DictEductypes.php - модель DICT_EDUCTYPES (справочник видов образований)
 |   |           Model_DictEge.php - модель DICT_EGE (справочник ЕГЭ)
 |   |           Model_DictEntranceExams.php - модель DICT_ENTRANCE_EXAMS (справочник вступительных испытаний)
@@ -181,7 +182,7 @@ PORTALBSU
 +---files - разные файлы
 |   +---pdf - шаблоны PDF
 |   |       application_2018.pdf - шаблон заявления 2018
-|   |       zayavblank2017_8.pdf - старый шаблон заявления
+|   |       application_sorry.pdf - шаблон для отсутствующих заявлений
 |   |
 |   \---temp - временные файлы
 +---fonts - шрифты
@@ -279,9 +280,85 @@ PORTALBSU
     |
     +---maskedinput - JQuery Masked Input (версия 1.4.1) - "маски" ввода
     |       jquery.maskedinput.min.js
-    |       
-    +---pdftk-php - PDF toolkit PHP - работа с PDF
-    |       pdftk-php.php
+    |
+    +---php-pdftk - PDF toolkit PHP (версия 0.4.4) - работа с PDF
+    |   |   .gitignore
+    |   |   .travis.yml
+    |   |   composer.json
+    |   |   composer.lock
+    |   |   LICENSE
+    |   |   phpunit.xml.dist
+    |   |   README.md
+    |   |
+    |   +---src
+    |   |       Command.php
+    |   |       DataFields.php
+    |   |       FdfFile.php
+    |   |       Pdf.php
+    |   |       XfdfFile.php
+    |   |
+    |   +---tests
+    |   |   |   bootstrap.php
+    |   |   |   CommandTest.php
+    |   |   |   DataFieldsTest.php
+    |   |   |   FdfFileTest.php
+    |   |   |   PdfTest.php
+    |   |   |   XfdfFileTest.php
+    |   |   |
+    |   |   \---files
+    |   |           data.fdf
+    |   |           document1.pdf
+    |   |           document2.pdf
+    |   |           fdfdata.fdf
+    |   |           FdfFileTest.fdf
+    |   |           filledform.pdf
+    |   |           form.pdf
+    |   |           XfdfFileTest.xfdf
+    |   |
+    |   \---vendor
+    |       |   autoload.php
+    |       |
+    |       +---composer
+    |       |       autoload_classmap.php
+    |       |       autoload_namespaces.php
+    |       |       autoload_psr4.php
+    |       |       autoload_real.php
+    |       |       autoload_static.php
+    |       |       ClassLoader.php
+    |       |       installed.json
+    |       |       LICENSE
+    |       |
+    |       \---mikehaertl
+    |           +---php-shellcommand
+    |           |   |   .gitignore
+    |           |   |   .travis.yml
+    |           |   |   CHANGELOG.md
+    |           |   |   composer.json
+    |           |   |   LICENSE
+    |           |   |   phpunit.xml.dist
+    |           |   |   README.md
+    |           |   |
+    |           |   +---src
+    |           |   |       Command.php
+    |           |   |
+    |           |   \---tests
+    |           |           bootstrap.php
+    |           |           CommandTest.php
+    |           |
+    |           \---php-tmpfile
+    |               |   .gitignore
+    |               |   .travis.yml
+    |               |   composer.json
+    |               |   LICENSE
+    |               |   phpunit.xml.dist
+    |               |   README.md
+    |               |
+    |               +---src
+    |               |       File.php
+    |               |
+    |               \---tests
+    |                       bootstrap.php
+    |                       FileTest.php
     |
     +---PHPMailer - PHPMailer (версия 6.0.3) - работа с эл. почтой
     |   \---src

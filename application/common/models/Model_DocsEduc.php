@@ -16,13 +16,18 @@ class Model_DocsEduc extends Db_Helper
 	public $id_user;
 	public $id_eductype;
 	public $id_doctype;
+	public $id_educform;
 	public $series;
 	public $numb;
 	public $school;
 	public $dt_issue;
 	public $end_year;
+	public $speciality;
 	public $dt_created;
 	public $dt_updated;
+
+	const HIGH_BEFORE = ['000000026', '000000046', '000000048', '000000088'];
+	const HIGH_AFTER = ['000000022', '000000023', '000000024', '000000025'];
 
 	public $db;
 
@@ -60,8 +65,14 @@ class Model_DocsEduc extends Db_Helper
 				'id_doctype' => [
 								'required' => 1,
 								'insert' => 1,
-								'update' => 0,
+								'update' => 1,
 								'value' => $this->id_doctype
+								],
+				'id_educform' => [
+								'required' => 0,
+								'insert' => 1,
+								'update' => 1,
+								'value' => $this->id_educform
 								],
 				'series' => [
 							'required' => 0,
@@ -92,6 +103,12 @@ class Model_DocsEduc extends Db_Helper
 								'insert' => 1,
 								'update' => 1,
 								'value' => $this->end_year
+								],
+				'speciality' => [
+								'required' => 0,
+								'insert' => 1,
+								'update' => 1,
+								'value' => $this->speciality
 								],
 				'dt_created' => [
 								'required' => 1,
@@ -173,6 +190,13 @@ class Model_DocsEduc extends Db_Helper
 			if (!is_array($doc_type)) {
 				$doc_type = ['doc_type' => null];
 			}
+			$educ_form = $this->rowSelectOne('code as educ_form',
+											'dict_educforms',
+											'id = :id',
+											[':id' => $doc_educ['id_educform']]);
+			if (!is_array($educ_form)) {
+				$educ_form = ['educ_form' => null];
+			}
 			$change_name = $this->rowSelectOne('scans.id as change_name_id, file_data as change_name, file_type as change_name_type',
 											'scans INNER JOIN docs ON scans.id_doc = docs.id'.
 											' INNER JOIN dict_scans ON scans.id_scans = dict_scans.id',
@@ -183,7 +207,7 @@ class Model_DocsEduc extends Db_Helper
 			if (!is_array($change_name)) {
 				$change_name = ['change_name_id' => null, 'change_name' => null, 'change_name_type' => null];
 			}
-			$result = array_merge($doc_educ, $educ_type, $doc_type, $change_name);
+			$result = array_merge($doc_educ, $educ_type, $doc_type, $educ_form, $change_name);
 			$scan = new Model_Scans();
 			$scan_arr = $scan->getByDocrowFull('docs_educ', $doc_educ['id']);
 			$result = array_merge($result, $scan_arr);
@@ -234,7 +258,7 @@ class Model_DocsEduc extends Db_Helper
 	}
 
 	/**
-     * Gets education document by doctype/series/numb.
+     * Gets education document by series/numb.
      *
      * @return array
      */
@@ -243,15 +267,13 @@ class Model_DocsEduc extends Db_Helper
 		if (empty($this->series)) {
 			return $this->rowSelectOne('*',
 									self::TABLE_NAME,
-									'id_doctype = :id_doctype AND series is null AND numb = :numb',
-									[':id_doctype' => $this->id_doctype,
-									':numb' => $this->numb]);
+									'series is null AND numb = :numb',
+									[':numb' => $this->numb]);
 		} else {
 			return $this->rowSelectOne('*',
 									self::TABLE_NAME,
-									'id_doctype = :id_doctype AND series = :series AND numb = :numb',
-									[':id_doctype' => $this->id_doctype,
-									':series' => $this->series,
+									'series = :series AND numb = :numb',
+									[':series' => $this->series,
 									':numb' => $this->numb]);
 		}
 	}

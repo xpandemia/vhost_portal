@@ -5,6 +5,7 @@ namespace frontend\models;
 use tinyframe\core\Model as Model;
 use tinyframe\core\helpers\Form_Helper as Form_Helper;
 use common\models\Model_DocsEduc as DocsEduc;
+use common\models\Model_DictEducforms as DictEducforms;
 use common\models\Model_DictEductypes as Model_DictEductypes;
 use common\models\Model_DictDoctypes as Model_DictDoctypes;
 use common\models\Model_DictScans as Model_DictScans;
@@ -78,6 +79,18 @@ class Model_DocsEduc extends Model
 	                            'compared' => ['value' => date('Y'), 'type' => '<=', 'msg' => 'Год окончания больше текущего года!'],
 	                            'success' => 'Год окончания заполнен верно.'
 	                           ],
+	            'educ_form' => [
+								'type' => 'selectlist',
+                                'class' => 'form-control',
+								'success' => 'Форма обучения заполнена верно.'
+                               ],
+                'speciality' => [
+                            'type' => 'text',
+                            'class' => 'form-control',
+                            'pattern' => ['value' => PATTERN_SPEC_RUS, 'msg' => 'Для специальности по диплому можно использовать только русские буквы и тире!'],
+                            'width' => ['format' => 'string', 'min' => 1, 'max' => 100, 'msg' => 'Слишком длинная специальность по диплому!'],
+                            'success' => 'Специальность по диплому заполнена верно.'
+                           ],
 	            'change_name_flag' => [
 			                            'type' => 'checkbox',
 			                            'class' => 'form-check-input',
@@ -102,6 +115,19 @@ class Model_DocsEduc extends Model
      */
 	public function validateFormAdvanced($form)
 	{
+		// educ type
+		if (!empty($form['educ_type']) && in_array($form['educ_type'], Model_DictEductypes::EDUCTYPES_DIPLOMA)) {
+			// educ form
+			if (empty($form['educ_form'])) {
+				$form = $this->setFormErrorField($form, 'educ_form', 'Форма обучения обязательна для заполнения!');
+			}
+			// speciality
+			if (empty($form['speciality'])) {
+				$form = $this->setFormErrorField($form, 'speciality', 'Специальность по диплому обязательна для заполнения!');
+				return $form;
+			}
+		}
+		// change name
 		if ($form['change_name_flag'] == 'checked' && empty($form['change_name_name'])) {
 			$form = $this->setFormErrorFile($form, 'change_name', 'Скан-копия "Свидетельство о перемене имени" обязательна для заполнения!');
 		}
@@ -165,17 +191,24 @@ class Model_DocsEduc extends Model
 		$docs->id_user = $_SESSION[APP_CODE]['user_id'];
 			$eductype = new Model_DictEductypes();
 			$eductype->code = $form['educ_type'];
-			$row_eductype = $eductype->getByCode();
-		$docs->id_eductype = $row_eductype['id'];
+			$eductype_row = $eductype->getByCode();
+		$docs->id_eductype = $eductype_row['id'];
 			$doctype = new Model_DictDoctypes();
 			$doctype->code = $form['doc_type'];
-			$row_doctype = $doctype->getByCode();
-		$docs->id_doctype = $row_doctype['id'];
+			$doctype_row = $doctype->getByCode();
+		$docs->id_doctype = $doctype_row['id'];
+		if (!empty($form['educ_form'])) {
+			$educform = new DictEducforms();
+			$educform->code = $form['educ_form'];
+			$educform_row = $educform->getByCode();
+			$docs->id_educform = $educform_row['id'];
+		}
 		$docs->series = (empty($form['series'])) ? null : $form['series'];
 		$docs->numb = $form['numb'];
 		$docs->school = $form['school'];
 		$docs->dt_issue = date('Y-m-d', strtotime($form['dt_issue']));
 		$docs->end_year = $form['end_year'];
+		$docs->speciality = (empty($form['speciality'])) ? null : $form['speciality'];
 		$row_docs = $docs->getByNumb();
 		if ($row_docs) {
 			$docs->id = $row_docs['id'];

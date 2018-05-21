@@ -78,7 +78,7 @@ class Model_ApplicationSpec extends Model
 			}
 		}
 		// medical_certificate
-		if ($place->getByAppForMedicalA1() || $place->getByAppForMedicalA2() || getByAppForMedicalB1() || getByAppForMedicalC1()) {
+		if ($place->getByAppForMedicalA1() || $place->getByAppForMedicalA2() || $place->getByAppForMedicalB1() || $place->getByAppForMedicalC1()) {
 			if (empty($form['medical_certificate_face_name'])) {
 				$form = $this->setFormErrorFile($form, 'medical_certificate_face', 'Скан-копия "Медицинская справка (лицевая сторона)" обязательна для заполнения!');
 			}
@@ -140,9 +140,9 @@ class Model_ApplicationSpec extends Model
 					$unset = 1;
 				} elseif ($dict_scans_row['scan_code'] == 'photo3x4' && $place->getByAppForBachelorSpec()) {
 					$unset = 1;
-				} elseif ($dict_scans_row['scan_code'] == 'medical_certificate_face' && ($place->getByAppForMedicalA1() || $place->getByAppForMedicalA2() || getByAppForMedicalB1() || getByAppForMedicalC1())) {
+				} elseif ($dict_scans_row['scan_code'] == 'medical_certificate_face' && ($place->getByAppForMedicalA1() || $place->getByAppForMedicalA2() || $place->getByAppForMedicalB1() || $place->getByAppForMedicalC1())) {
 					$unset = 1;
-				} elseif ($dict_scans_row['scan_code'] == 'medical_certificate_back' && ($place->getByAppForMedicalA1() || $place->getByAppForMedicalA2() || getByAppForMedicalB1() || getByAppForMedicalC1())) {
+				} elseif ($dict_scans_row['scan_code'] == 'medical_certificate_back' && ($place->getByAppForMedicalA1() || $place->getByAppForMedicalA2() || $place->getByAppForMedicalB1() || $place->getByAppForMedicalC1())) {
 					$unset = 1;
 				}
 				// unset
@@ -344,7 +344,6 @@ class Model_ApplicationSpec extends Model
 			$resume = new Resume();
 			$resume->id_user = $_SESSION[APP_CODE]['user_id'];
 			$resume_row = $resume->getByUser();
-			mb_internal_encoding('UTF-8');
 			$data = [
 	                'name_last' => $resume_row['name_last'],
 	                'name_first' => $resume_row['name_first'],
@@ -355,8 +354,12 @@ class Model_ApplicationSpec extends Model
 	                'series' => $resume_row['series'],
 	                'numb' => $resume_row['numb'],
 	                'unit_code' => $resume_row['unit_code'],
-	                'dt_issue' => date('d.m.Y', strtotime($resume_row['dt_issue'])),
-	                'unit_name' => $resume_row['unit_name'],
+	                'when_where' => $resume_row['unit_name'].' '.date('d.m.Y', strtotime($resume_row['dt_issue'])),
+	                'address_reg' => $resume_row['address_reg'],
+	                'phone_main' => ((!empty($resume_row['phone_mobile'])) ? $resume_row['phone_mobile'] : $resume_row['phone_home']),
+	                'phone_add' => $resume_row['phone_add'],
+	                'email' => $resume_row['email'],
+	                'address_res' => $resume_row['address_res'],
 	                'app_numb' => '№ '.$app_row['numb'],
 	                'campus_yes' => 'On'
 	                ];

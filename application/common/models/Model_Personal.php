@@ -32,6 +32,7 @@ class Model_Personal extends Db_Helper
 	public $birth_dt;
 	public $birth_place;
 	public $citizenship;
+	public $beneficiary;
 	public $dt_created;
 	public $dt_updated;
 	public $guid;
@@ -110,6 +111,12 @@ class Model_Personal extends Db_Helper
 								'insert' => 1,
 								'update' => 1,
 								'value' => $this->citizenship
+								],
+				'beneficiary' => [
+								'required' => 1,
+								'insert' => 1,
+								'update' => 1,
+								'value' => $this->beneficiary
 								],
 				'dt_created' => [
 								'required' => 1,

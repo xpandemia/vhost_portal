@@ -199,7 +199,39 @@ class Model_DictSpeciality extends Db_Helper
      */
 	public function getAll()
 	{
-		return $this->rowSelectAll('*', self::TABLE_NAME);
+		return $this->rowSelectAll('*',
+									self::TABLE_NAME,
+									null,
+									null,
+									'speciality_name, profil_name');
+	}
+
+	/**
+     * Gets all specialities of the first education.
+     *
+     * @return array
+     */
+	public function getAllFirst()
+	{
+		return $this->rowSelectAll('*',
+									self::TABLE_NAME,
+									'eduprogram_name is null',
+									null,
+									'speciality_name, profil_name');
+	}
+
+	/**
+     * Gets all specialities of the second education.
+     *
+     * @return array
+     */
+	public function getAllSecond()
+	{
+		return $this->rowSelectAll('*',
+									self::TABLE_NAME,
+									'eduprogram_name = :eduprogram_name',
+									[':eduprogram_name' => 'Высшее'],
+									'speciality_name, profil_name');
 	}
 
 	/**

@@ -185,6 +185,19 @@ class Model_Ege extends Db_Helper
 		return $this->rowDelete(self::TABLE_NAME, 'id = :id', [':id' => $this->id]);
 	}
 
+	/**
+     * Checks ege by user.
+     *
+     * @return array
+     */
+	public function checkByUser()
+	{
+		return $this->rowSelectAll('*',
+									self::TABLE_NAME,
+									'id_user = :id_user AND exists (select null from ege_disciplines where pid = ege.id)',
+									[':id_user' => $this->id_user]);
+	}
+
 	public function __destruct()
 	{
 		$this->db = null;

@@ -16,13 +16,15 @@ class Model_Resume extends Db_Helper
 	const TABLE_NAME = 'resume';
 
 	const STATUS_CREATED = 0;
-    const STATUS_SENDED = 1;
-    const STATUS_APPROVED = 2;
-    const STATUS_REJECTED = 3;
+	const STATUS_SAVED = 1;
+    const STATUS_SENDED = 2;
+    const STATUS_APPROVED = 3;
+    const STATUS_REJECTED = 4;
 
 	public $id;
 	public $id_user;
 	public $status;
+	public $app;
 	public $dt_created;
 	public $dt_updated;
 	public $dt_approve;
@@ -62,6 +64,12 @@ class Model_Resume extends Db_Helper
 							'update' => 1,
 							'value' => $this->status
 							],
+				'app' => [
+						'required' => 1,
+						'insert' => 1,
+						'update' => 1,
+						'value' => $this->app
+						],
 				'dt_created' => [
 								'required' => 1,
 								'insert' => 1,
@@ -104,12 +112,12 @@ class Model_Resume extends Db_Helper
 	{
 		$resume = $this->rowSelectOne('*', self::TABLE_NAME, 'id_user = :id_user', [':id_user' => $this->id_user]);
 		if ($resume) {
-			$personal = $this->rowSelectOne('name_first, name_middle, name_last, sex, birth_dt, birth_place, dict_countries.code as citizenship, dict_countries.description as citizenship_name',
+			$personal = $this->rowSelectOne('name_first, name_middle, name_last, sex, birth_dt, birth_place, dict_countries.code as citizenship, dict_countries.description as citizenship_name, beneficiary',
 											'personal INNER JOIN dict_countries ON personal.citizenship = dict_countries.id',
 											'id_resume = :id_resume',
 											[':id_resume' => $resume['id']]);
 			if (!is_array($personal)) {
-				$personal = ['name_first' => null, 'name_middle' => null, 'name_last' => null, 'sex' => null, 'birth_dt' => null, 'birth_place' => null, 'citizenship' => null, 'citizenship_name' => null];
+				$personal = ['name_first' => null, 'name_middle' => null, 'name_last' => null, 'sex' => null, 'birth_dt' => null, 'birth_place' => null, 'citizenship' => null, 'citizenship_name' => null, 'beneficiary' => null];
 			}
 			$agreement = $this->rowSelectOne('scans.id as agreement_id, file_data as agreement, file_type as agreement_type',
 											'scans INNER JOIN docs ON scans.id_doc = docs.id'.
@@ -134,6 +142,8 @@ class Model_Resume extends Db_Helper
 												[':id_resume' => $resume['id'], ':type' => Model_Contacts::TYPE_PHONE_MOBILE]);
 			if (!is_array($phone_mobile)) {
 				$phone_mobile = ['phone_mobile' => null];
+			} else {
+				$phone_mobile['phone_mobile'] = Model_Contacts::prettyPhoneMobile($phone_mobile['phone_mobile']);
 			}
 			$phone_home = $this->rowSelectOne('contact as phone_home',
 												'contacts',
@@ -241,6 +251,33 @@ class Model_Resume extends Db_Helper
 								':dt_updated' => date('Y-m-d H:i:s')],
 								['id' => $this->id]);
 		}
+	}
+
+	/**
+     * Changes resume app.
+     *
+     * @return boolean
+     */
+	public function changeApp()
+	{
+		return $this->rowUpdate(self::TABLE_NAME,
+							'app = :app, dt_updated = :dt_updated',
+							[':app' => $this->app,
+							':dt_updated' => date('Y-m-d H:i:s')],
+							['id' => $this->id]);
+	}
+
+	/**
+     * Checks resume by user.
+     *
+     * @return boolean
+     */
+	public function checkByUser()
+	{
+		return $this->rowSelectOne('*',
+									self::TABLE_NAME,
+									'id_user = :id_user',
+									[':id_user' => $this->id_user]);
 	}
 
 	public function __destruct()

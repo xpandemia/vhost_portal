@@ -10,8 +10,8 @@ define('CONTACT_EMAIL', array(
 							'help' => 'Адрес электронной почты должен быть в формате <b>user@domain</b>, содержать <b>только латинские буквы</b> и не более <b>45</b> символов длиной.'));
 define('CONTACT_PHONE_HOME', array(
 									'name' => 'Номер домашнего телефона',
-									'plc' => '(код города)1-23-45',
-									'help' => 'Номер домашнего телефона должен содержать <b>только цифры, тире и скобки</b> и быть не более <b>45</b> символов длиной.'));
+									'plc' => 'код города12345',
+									'help' => 'Номер домашнего телефона должен содержать <b>только цифры</b> и быть не более <b>45</b> символов длиной.'));
 define('CONTACT_PHONE_ADD', array(
 									'name' => 'Номер дополнительного телефона',
 									'plc' => '89031234567 Папа, 89101234567 Мама',
@@ -209,6 +209,16 @@ class Model_Contacts extends Db_Helper
 	public function clear()
 	{
 		return $this->rowDelete(self::TABLE_NAME, 'id = :id', [':id' => $this->id]);
+	}
+
+	/**
+     * Makes mobile phone pretty.
+     *
+     * @return string
+     */
+	public static function prettyPhoneMobile($phone_mobile)
+	{
+		return '+7('.substr($phone_mobile,1,3).') '.substr($phone_mobile,4,3).'-'.substr($phone_mobile,7,2).'-'.substr($phone_mobile,9,2);
 	}
 
 	public function __destruct()

@@ -147,22 +147,6 @@ class Model_EgeDisciplines extends Db_Helper
 	}
 
 	/**
-     * Checks discipline.
-     *
-     * @return boolean
-     */
-	public function checkDiscipline()
-	{
-		return $this->rowSelectOne('ege_disciplines.id',
-									'ege_disciplines INNER JOIN ege ON ege_disciplines.pid = ege.id'.
-									' INNER JOIN dict_ege ON ege_disciplines.id_discipline = dict_ege.id',
-									'dict_ege.code = :code_discipline AND ege.id_user = :id_user AND ege.reg_year >= :reg_year',
-									[':code_discipline' => $this->code_discipline,
-									':id_user' => $_SESSION[APP_CODE]['user_id'],
-									':reg_year' => date('Y') - 6]);
-	}
-
-	/**
      * Saves ege discipline data to database.
      *
      * @return integer
@@ -195,6 +179,22 @@ class Model_EgeDisciplines extends Db_Helper
 	public function clear()
 	{
 		return $this->rowDelete(self::TABLE_NAME, 'id = :id', [':id' => $this->id]);
+	}
+
+	/**
+     * Checks discipline.
+     *
+     * @return boolean
+     */
+	public function checkDiscipline()
+	{
+		return $this->rowSelectOne('ege_disciplines.id',
+									'ege_disciplines INNER JOIN ege ON ege_disciplines.pid = ege.id'.
+									' INNER JOIN dict_ege ON ege_disciplines.id_discipline = dict_ege.id',
+									'dict_ege.code = :code_discipline AND ege.id_user = :id_user AND ege.reg_year >= :reg_year',
+									[':code_discipline' => $this->code_discipline,
+									':id_user' => $_SESSION[APP_CODE]['user_id'],
+									':reg_year' => date('Y') - 6]);
 	}
 
 	public function __destruct()

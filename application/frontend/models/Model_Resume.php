@@ -96,6 +96,11 @@ class Model_Resume extends Model
                                 'required' => ['default' => '', 'msg' => 'Гражданство обязательно для заполнения!'],
 								'success' => 'Гражданство заполнено верно.'
                                ],
+                'beneficiary' => [
+	                            'type' => 'checkbox',
+	                            'class' => 'form-check-input',
+	                            'success' => ''
+	                           ],
                 'email' => [
                             'type' => 'email',
                             'class' => 'form-control',
@@ -112,7 +117,7 @@ class Model_Resume extends Model
 		        'phone_home' => [
 	                            'type' => 'text',
 	                            'class' => 'form-control',
-	                            'pattern' => ['value' => PATTERN_PHONE_HOME, 'msg' => 'Номер домашнего телефона должен содержать только цифры и тире!'],
+	                            'pattern' => ['value' => PATTERN_NUMB, 'msg' => 'Номер домашнего телефона должен содержать только цифры!'],
 	                            'success' => 'Номер домашнего телефона заполнен верно.'
 	                           ],
 		        'phone_add' => [
@@ -284,6 +289,8 @@ class Model_Resume extends Model
 		switch ($status) {
 			case Resume::STATUS_CREATED:
 				return '<div class="alert alert-info">Состояние анкеты: СОЗДАНА</div>';
+			case Resume::STATUS_SAVED:
+				return '<div class="alert alert-info">Состояние анкеты: СОХРАНЕНА</div>';
 			case Resume::STATUS_SENDED:
 				return '<div class="alert alert-primary">Состояние анкеты: ОТПРАВЛЕНА</div>';
 			case Resume::STATUS_APPROVED:
@@ -313,8 +320,8 @@ class Model_Resume extends Model
 			return $form;
 		}
 		// phones
-		if (empty($form['phone_mobile']) && empty($form['phone_home']) && empty($form['phone_add'])) {
-			$form = $this->setFormError($form, 'Необходимо заполнить хотя бы один номер телефона в контактной информации!');
+		if (empty($form['phone_mobile']) && empty($form['phone_home'])) {
+			$form = $this->setFormError($form, 'Необходимо заполнить мобильный или домашний номер телефона в контактной информации!');
 			return $form;
 		}
 		return $form;
@@ -848,6 +855,12 @@ class Model_Resume extends Model
      */
 	public function check($form)
 	{
+		/* check status */
+		$resume = new Resume();
+		if ($form['status'] != $resume::STATUS_CREATED && $form['status'] != $resume::STATUS_SAVED) {
+			$form['error_msg'] = 'Изменять можно только новые или сохранённые анкеты!';
+			return $form;
+		}
 		/* personal */
 		$personal = new Model_Personal();
 		$personal->id_user = $_SESSION[APP_CODE]['user_id'];
@@ -862,6 +875,13 @@ class Model_Resume extends Model
 				$citizenship->code = $form['citizenship'];
 				$row_citizenship =  $citizenship->getByCode();
 		$personal->citizenship = $row_citizenship['id'];
+		if ($form['beneficiary'] == 'checked') {
+			$personal->beneficiary = 1;
+			$resume->app = 0;
+		} else {
+			$personal->beneficiary = 0;
+			$resume->app = 1;
+		}
 		$row_personal = $personal->getByResume();
 		if ($row_personal) {
 			$personal->id = $row_personal['id'];
@@ -1230,6 +1250,40 @@ class Model_Resume extends Model
 				}
 			}
 		}
+		/* resume status */
+		$resume->id = $form['id'];
+		$resume->status = $resume::STATUS_SAVED;
+		$resume->changeStatus();
+		$form['status'] = $resume::STATUS_SAVED;
+		/* resume app */
+		if ($form['passport_type'] == '000000087') {
+			$resume->app = 0;
+		}
+		$resume->changeApp();
+		return $form;
+	}
+
+	/**
+     * Sends resume data.
+     *
+     * @return array
+     */
+	public function send($form)
+	{
+		/* check status */
+		$resume = new Resume();
+		if ($form['status'] != $resume::STATUS_SAVED) {
+			$form['success_msg'] = null;
+			$form['error_msg'] = 'Отправлять можно только сохранённые анкеты!';
+			return $form;
+		}
+		/* send */
+		$resume->id = $form['id'];
+		$resume->status = $resume::STATUS_SENDED;
+		$resume->changeStatus();
+		$form['status'] = $resume::STATUS_SENDED;
+		$form['success_msg'] = 'Анкета успешно отправлена.';
+		$form['error_msg'] = null;
 		return $form;
 	}
 }

@@ -19,6 +19,9 @@ class Model_DictIndAchievs extends Db_Helper
 	public $abbr;
 	public $confirm;
 	public $guid;
+	public $archive;
+
+	const IA_BSU = ['000000002', '000000003', '000000004', '000000005', '000000010', '000000015', '000000017', '000000022', '000000023', '000000031', '000000032', '000000035', '000000039', '000000040', '000000041', '000000042', '000000044', '000000045', '000000046', '000000047', '000000048', '000000049'];
 
 	public $db;
 
@@ -76,6 +79,12 @@ class Model_DictIndAchievs extends Db_Helper
 							'insert' => 1,
 							'update' => 0,
 							'value' => $this->guid
+							],
+				'archive' => [
+							'required' => 1,
+							'insert' => 1,
+							'update' => 0,
+							'value' => $this->archive
 							]
 				];
 	}
@@ -87,7 +96,11 @@ class Model_DictIndAchievs extends Db_Helper
      */
 	public function getAll()
 	{
-		return $this->rowSelectAll('*', self::TABLE_NAME);
+		return $this->rowSelectAll('*',
+									self::TABLE_NAME,
+									'archive = :archive',
+									[':archive' => 0],
+									'description');
 	}
 
 	/**
@@ -97,7 +110,10 @@ class Model_DictIndAchievs extends Db_Helper
      */
 	public function getByGuid()
 	{
-		return $this->rowSelectOne('*', self::TABLE_NAME, 'guid = :guid', [':guid' => $this->guid]);
+		return $this->rowSelectOne('*',
+									self::TABLE_NAME,
+									'guid = :guid',
+									[':guid' => $this->guid]);
 	}
 
 	/**
@@ -107,7 +123,10 @@ class Model_DictIndAchievs extends Db_Helper
      */
 	public function getByCode()
 	{
-		return $this->rowSelectOne('*', self::TABLE_NAME, 'code = :code', [':code' => $this->code]);
+		return $this->rowSelectOne('*',
+									self::TABLE_NAME,
+									'code = :code',
+									[':code' => $this->code]);
 	}
 
 	/**
@@ -229,6 +248,7 @@ class Model_DictIndAchievs extends Db_Helper
 				$this->numb = (string)$property->НомерИД;
 				$this->abbr = (string)$property->СокращенноеНаименование;
 				$this->confirm = ((string)$property->ТребуетсяПодтверждающийДокумент == 'false') ? 0 : 1;
+				$this->archive = (in_array($this->code, self::IA_BSU)) ? 0 : 1;
 					if ($ia == null) {
 						// insert
 						if ($this->save()) {

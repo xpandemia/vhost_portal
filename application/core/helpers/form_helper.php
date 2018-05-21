@@ -4,15 +4,17 @@ namespace tinyframe\core\helpers;
 
 // patterns
 define('PATTERN_NUMB', '/^[0-9]*$/u'); // numbers only
-define('PATTERN_ALPHA', '/^[a-zA-Z]*$/u'); // letters only ENG
-define('PATTERN_ALPHA_RUS', '/^[ёЁа-яА-Я]*$/u'); // letters only RUS
-define('PATTERN_TEXT', '/^[a-zA-Z-\.\,\s]*$/u'); // letters, "-", ".", ",", " " ENG
-define('PATTERN_TEXT_RUS', '/^[ёЁа-яА-Я-.,\s]*$/u'); // letters, "-", ".", ",", " " RUS
-define('PATTERN_INFO', '/^[a-zA-Z0-9-\.\,\#\s]*$/u'); // letters, numbers, "-", ".", ",", "#", " " ENG
-define('PATTERN_INFO_RUS', '/^[ёЁа-яА-Я0-9-.,№\s]*$/u'); // letters, numbers, "-", ".", ",", "№", " " RUS
+define('PATTERN_ALPHA', '/^[a-zA-Z]*$/u'); // letters ENG only
+define('PATTERN_ALPHA_RUS', '/^[ёЁа-яА-Я]*$/u'); // letters RUS only
+define('PATTERN_TEXT', '/^[a-zA-Z-\.\,\s]*$/u'); // letters ENG, "-", ".", ",", " "
+define('PATTERN_TEXT_RUS', '/^[ёЁа-яА-Я-.,\s]*$/u'); // letters RUS, "-", ".", ",", " "
+define('PATTERN_INFO', '/^[a-zA-Z0-9-\.\,\#\s]*$/u'); // letters ENG, numbers, "-", ".", ",", "#", " "
+define('PATTERN_INFO_RUS', '/^[ёЁа-яА-Я0-9-.,№\s]*$/u'); // letters RUS, numbers, "-", ".", ",", "№", " "
 define('PATTERN_ALPHA_NUMB', '/^[a-zA-Z0-9]*$/u'); // letters and numbers ENG
 define('PATTERN_ALPHA_NUMB_RUS', '/^[ёЁа-яА-Я0-9]*$/u'); // letters and numbers RUS
 define('PATTERN_ALPHA_NUMB_ALL', '/^[a-zA-ZёЁа-яА-Я0-9]*$/u'); // letters and numbers
+define('PATTERN_SPEC', '/^[a-zA-Z0-9-\s]*$/u'); // letters ENG, numbers, "-", " "
+define('PATTERN_SPEC_RUS', '/^[ёЁа-яА-Я0-9-\s]*$/u'); // letters RUS, numbers, "-", " "
 define('PATTERN_EMAIL_LIGHT', '/^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9_\-.]+$/'); // email light
 define('PATTERN_EMAIL_STRONG', '/^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9_\-]+\.[a-zA-Z0-9_\-]+$/'); // email strong
 define('PATTERN_PHONE_HOME', '/^[0-9-()]*$/u'); // numbers, "(", ")"
@@ -241,7 +243,7 @@ class Form_Helper
 	{
 		if (isset($rules) && is_array($rules)) {
 			$label = self::setFormLabelStyle($rules['required'], (isset($rules['required_style'])) ? $rules['required_style'] : null, $rules['label']);
-			return '<div class="form-group row">'.
+			return '<div class="form-group row" id="'.$rules['control'].'_div">'.
 						HTML_Helper::setLabel($label['class'], $rules['control'], $label['value']).
 						'<div class="col">'.
 							HTML_Helper::setInput($rules['type'],
@@ -405,7 +407,7 @@ class Form_Helper
 	{
 		if (isset($rules) && is_array($rules)) {
 			$label = self::setFormLabelStyle($rules['required'], (isset($rules['required_style'])) ? $rules['required_style'] : null, $rules['label']);
-			$result = '<div class="form-group row">'.
+			$result = '<div class="form-group row" id="'.$rules['control'].'_div">'.
 						HTML_Helper::setLabel($label['class'], $rules['control'], $label['value']).
 						'<div class="col">'.
 						'<select class="'.$rules['class'].'" id="'.$rules['control'].'" name="'.$rules['control'].'">';

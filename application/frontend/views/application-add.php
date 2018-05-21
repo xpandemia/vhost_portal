@@ -1,8 +1,16 @@
 <?php
 
+use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 use tinyframe\core\helpers\Form_Helper as Form_Helper;
+use common\models\Model_Resume as Resume;
 
+	$resume = new Resume();
+	$resume->id_user = $_SESSION[APP_CODE]['user_id'];
+	$resume_row = $resume->checkByUser();
+	if (!$resume_row || $resume_row['app'] == 0) {
+		Basic_Helper::redirect(APP_NAME, 202, APP['ctr'], 'Index', null, 'Вам не разрешена подача заявлений!');
+	}
 ?>
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
 	<?php

@@ -2,7 +2,9 @@
 
 use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
-use common\models\Model_ApplicationPlaces as Model_ApplicationPlaces;
+use common\models\Model_Application as Application;
+use common\models\Model_DocsEduc as DocsEduc;
+use common\models\Model_ApplicationPlaces as ApplicationPlaces;
 
 	// check data
 	if (!isset($data)) {
@@ -35,9 +37,19 @@ use common\models\Model_ApplicationPlaces as Model_ApplicationPlaces;
 					</tr>
 			    </thead>
 			<?php
-				$specs = new Model_ApplicationPlaces();
+				$app = new Application();
+				$app->id = $data['pid'];
+				$app_row = $app->get();
+				$specs = new ApplicationPlaces();
 				$specs->pid = $data['pid'];
-				$specs_arr = $specs->getSpecsForApp();
+				$docs = new DocsEduc();
+				$docs->id = $app_row['id_docseduc'];
+				$docs_row = $docs->get();
+				if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
+					$specs_arr = $specs->getSpecsFirstForApp();
+				} else {
+					$specs_arr = $specs->getSpecsSecondForApp();
+				}
 				if ($specs_arr) {
 					foreach ($specs_arr as $specs_row) {
 						echo '<tr>';

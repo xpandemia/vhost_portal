@@ -131,6 +131,30 @@ class Controller_Resume extends Controller
 		return $this->view->generate('resume.php', 'form.php', RESUME['hdr'], $this->form);
 	}
 
+	/**
+     * Sends resume.
+     *
+     * @return mixed
+     */
+	public function actionSend()
+	{
+		$this->form = $this->model->getForm($this->model->rules(), $_POST, $_FILES);
+		$this->form = $this->model->getAddressReg($this->form);
+		$this->form = $this->model->getAddressRes($this->form);
+		$this->form = $this->model->getForeignLangs($this->form);
+			$row = $this->resume->getByUser();
+			if ($row) {
+				$this->form['id'] = $row['id'];
+				$this->form['status'] = $row['status'];
+			} else {
+				$this->form['error_msg'] = 'Ошибка при создании анкеты!';
+				Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Index', $this->form);
+			}
+			($this->form['status'] === $this->resume::STATUS_CREATED) ? $this->form['personal_vis'] = true : $this->form['personal_vis'] = false;
+		$this->form = $this->model->send($this->form);
+		return $this->view->generate('resume.php', 'form.php', RESUME['hdr'], $this->form);
+	}
+
 	public function __destruct()
 	{
 		$this->model = null;

@@ -233,6 +233,19 @@ class Model_Application extends Db_Helper
 	}
 
 	/**
+     * Gets applications by user.
+     *
+     * @return array
+     */
+	public function getByUser()
+	{
+		return $this->rowSelectAll('*',
+									self::TABLE_NAME,
+									'id_user = :id_user',
+									[':id_user' => $this->id_user]);
+	}
+
+	/**
      * Gets application spec.
      *
      * @return array
@@ -309,6 +322,49 @@ class Model_Application extends Db_Helper
 		$scans->id_row = $this->id;
 		$scans->clearbyDoc('application');
 		return $this->rowDelete(self::TABLE_NAME, 'id = :id', [':id' => $this->id]);
+	}
+
+	/**
+     * Checks magistrature first.
+     *
+     * @return boolean
+     */
+	public function checkMagistratureFirst()
+	{
+		$row = $this->rowSelectOne('application.*',
+									'application INNER JOIN admission_campaign ON application.id_campaign = admission_campaign.id'.
+									' INNER JOIN docs_educ ON application.id_docseduc = docs_educ.id'.
+									' INNER JOIN dict_doctypes ON docs_educ.id_doctype = dict_doctypes.id',
+									'application.id = :id AND left(admission_campaign.description, 12) = :description AND dict_doctypes.code in (:doc_type1, :doc_type2)',
+									[':id' => $this->id,
+									':description' => 'Магистратура',
+									':doc_type1' => '000000022',
+									':doc_type1' => '000000025']);
+		if (!empty($row)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+     * Checks high after.
+     *
+     * @return boolean
+     */
+	public function checkHighAfter()
+	{
+		$row = $this->rowSelectOne('application.*',
+									'application INNER JOIN admission_campaign ON application.id_campaign = admission_campaign.id',
+									'application.id = :id AND (left(admission_campaign.description1, 10) = :description OR left(admission_campaign.description, 11) = :description2)',
+									[':id' => $this->id,
+									':description1' => 'Ординатура',
+									':description2' => 'Аспирантура']);
+		if (!empty($row)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public function __destruct()
