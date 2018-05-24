@@ -104,6 +104,29 @@ class Model_DictForeignLangs extends Db_Helper
 	}
 
 	/**
+     * Gets BSU not studied.
+     *
+     * @return array
+     */
+	public function getBsuNot()
+	{
+		return $this->rowSelectOne('*',
+								self::TABLE_NAME,
+								'code = :code)',
+								[':code' => '000000007']);
+	}
+
+	/**
+     * Gets foreign language by ID.
+     *
+     * @return array
+     */
+	public function get()
+	{
+		return $this->rowSelectOne('*', self::TABLE_NAME, 'id = :id', [':id' => $this->id]);
+	}
+
+	/**
      * Gets foreign language by GUID.
      *
      * @return array

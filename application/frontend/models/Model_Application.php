@@ -9,6 +9,8 @@ use common\models\Model_ApplicationStatus as ApplicationStatus;
 use common\models\Model_DictUniversity as Model_DictUniversity;
 use common\models\Model_AdmissionCampaign as Model_AdmissionCampaign;
 use common\models\Model_DictDocships as Model_DictDocships;
+use common\models\Model_DictForeignLangs as DictForeignLangs;
+use common\models\Model_ForeignLangs as ForeignLangs;
 use common\models\Model_IndAchievs as Model_IndAchievs;
 use common\models\Model_ApplicationAchievs as Model_ApplicationAchievs;
 
@@ -132,7 +134,6 @@ class Model_Application extends Model
 	public function check($form)
 	{
 		$app = new Application();
-		$app->id_user = $_SESSION[APP_CODE]['user_id'];
 			$university = new Model_DictUniversity();
 			$university->code = $form['university'];
 			$university_row = $university->getByCode();
@@ -146,6 +147,29 @@ class Model_Application extends Model
 			$docship->code = '000000001';
 			$docship_row = $docship->getByCode();
 		$app->id_docship = $docship_row['id'];
+			// foreign lang
+			$lang = new ForeignLangs();
+			$lang_row = $lang->getFirstByUser();
+			if ($lang_row) {
+				$lang = new DictForeignLangs();
+				$lang->id = $lang_row['id_lang'];
+				$lang_row = $lang->get();
+				if ($lang_row) {
+					$app->id_lang = $lang_row['id'];
+				} else {
+					$form['error_msg'] = 'Ошибка при создании отметки об изучаемом иностранном языке!';
+					return $form;
+				}
+			} else {
+				$lang = new DictForeignLangs();
+				$lang_row = $lang->getBsuNot();
+				if ($lang_row) {
+					$app->id_lang = $lang_row['id'];
+				} else {
+					$form['error_msg'] = 'Ошибка при создании отметки о том, что иностранный язык не изучался!';
+					return $form;
+				}
+			}
 		$app->type = $app::TYPE_NEW;
 		$app->campus = (($form['campus'] == 'checked') ? 1 : 0);
 		$app->conds = (($form['conds'] == 'checked') ? 1 : 0);
@@ -157,13 +181,11 @@ class Model_Application extends Model
 			$applog->create();
 			// set individual achievments
 			$ia = new Model_IndAchievs();
-			$ia->id_user = $_SESSION[APP_CODE]['user_id'];
 			$ia->campaign_code = $form['campaign'];
 			$ia_arr = $ia->getByUserCampaign();
 			if ($ia_arr) {
 				$appia = new Model_ApplicationAchievs();
 				$appia->pid = $app->id;
-				$appia->id_user = $_SESSION[APP_CODE]['user_id'];
 				foreach ($ia_arr as $ia_row) {
 					$appia->id_achiev = $ia_row['id'];
 					$appia->save();

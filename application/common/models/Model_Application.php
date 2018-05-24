@@ -45,6 +45,7 @@ class Model_Application extends Db_Helper
 	public $id_campaign;
 	public $id_docseduc;
 	public $id_docship;
+	public $id_lang;
 	public $id_app;
 	public $type;
 	public $status;
@@ -107,6 +108,12 @@ class Model_Application extends Db_Helper
 								'update' => 1,
 								'value' => $this->id_docship
 								],
+				'id_lang' => [
+							'required' => 1,
+							'insert' => 1,
+							'update' => 1,
+							'value' => $this->id_lang
+							],
 				'id_app' => [
 							'required' => 0,
 							'insert' => 1,
@@ -243,7 +250,7 @@ class Model_Application extends Db_Helper
 									' INNER JOIN dict_doctypes ON docs_educ.id_doctype = dict_doctypes.id'.
 									' LEFT OUTER JOIN application reason ON application.id_app = reason.id',
 									'application.id_user = :id_user AND application.active = :active',
-									[':id_user' => $this->id_user,
+									[':id_user' => $_SESSION[APP_CODE]['user_id'],
 									':active' => 1]);
 	}
 
@@ -267,7 +274,7 @@ class Model_Application extends Db_Helper
 		return $this->rowSelectAll('*',
 									self::TABLE_NAME,
 									'id_user = :id_user',
-									[':id_user' => $this->id_user]);
+									[':id_user' => $_SESSION[APP_CODE]['user_id']]);
 	}
 
 	/**
@@ -303,6 +310,7 @@ class Model_Application extends Db_Helper
      */
 	public function save()
 	{
+		$this->id_user = $_SESSION[APP_CODE]['user_id'];
 		$this->status = self::STATUS_CREATED;
 		$this->active = 1;
 		$this->dt_created = date('Y-m-d H:i:s');
@@ -323,6 +331,7 @@ class Model_Application extends Db_Helper
      */
 	public function changeAll()
 	{
+		$this->numb = $this->generateNumb();
 		$prepare = $this->prepareUpdate(self::TABLE_NAME, $this->rules());
 		return $this->rowUpdate(self::TABLE_NAME,
 								$prepare['fields'],
@@ -405,12 +414,12 @@ class Model_Application extends Db_Helper
 		$app_old = $this->get();
 		$this->active = 0;
 		$this->changeActive();
-		// application
-		$this->id_user = $app_old['id_user'];
+		// new application
 		$this->id_university = $app_old['id_university'];
 		$this->id_campaign = $app_old['id_campaign'];
 		$this->id_docseduc = $app_old['id_docseduc'];
 		$this->id_docship = $app_old['id_docship'];
+		$this->id_lang = $app_old['id_lang'];
 		$this->id_app = $app_old['id'];
 		if (empty($type)) {
 			$this->type = self::TYPE_NEW;
@@ -434,7 +443,6 @@ class Model_Application extends Db_Helper
 			if ($places_arr) {
 				foreach ($places_arr as $places_row) {
 					$places->pid = $this->id;
-					$places->id_user = $places_row['id_user'];
 					$places->id_spec = $places_row['id_spec'];
 					$place = $places->save();
 					// exams
@@ -444,7 +452,6 @@ class Model_Application extends Db_Helper
 					if ($exams_arr) {
 						foreach ($exams_arr as $exams_row) {
 							$exams->pid = $place;
-							$exams->id_user = $exams_row['id_user'];
 							$exams->id_test = $exams_row['id_test'];
 							$exams->id_discipline = $exams_row['id_discipline'];
 							$exams->save();
@@ -459,7 +466,6 @@ class Model_Application extends Db_Helper
 			if ($ia_arr) {
 				foreach ($ia_arr as $ia_row) {
 					$ia->pid = $this->id;
-					$ia->id_user = $ia_row['id_user'];
 					$ia->id_achiev = $ia_row['id_achiev'];
 					$ia->save();
 				}
@@ -470,7 +476,6 @@ class Model_Application extends Db_Helper
 			$scans_arr = $scans->getByDocrow('application');
 			if ($scans_arr) {
 				foreach ($scans_arr as $scans_row) {
-					$scans->id_user = $scans_row['id_user'];
 					$scans->id_doc = $scans_row['id_doc'];
 					$scans->id_row = $this->id;
 					$scans->id_scans = $scans_row['id_scans'];

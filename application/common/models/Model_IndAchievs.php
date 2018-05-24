@@ -166,7 +166,7 @@ class Model_IndAchievs extends Db_Helper
 		return $this->rowSelectAll('*',
 									self::TABLE_NAME,
 									'id_user = :id_user',
-									[':id_user' => $this->id_user]);
+									[':id_user' => $_SESSION[APP_CODE]['user_id']]);
 	}
 
 	/**
@@ -180,7 +180,7 @@ class Model_IndAchievs extends Db_Helper
 									'ind_achievs INNER JOIN dict_ind_achievs ON ind_achievs.id_achiev = dict_ind_achievs.id'.
 									' INNER JOIN dict_ind_achievs_ac ON dict_ind_achievs.code = dict_ind_achievs_ac.achiev_code',
 									'ind_achievs.id_user = :id_user AND dict_ind_achievs_ac.campaign_code = :campaign_code',
-									[':id_user' => $this->id_user,
+									[':id_user' => $_SESSION[APP_CODE]['user_id'],
 									':campaign_code' => $this->campaign_code]);
 	}
 
@@ -194,7 +194,7 @@ class Model_IndAchievs extends Db_Helper
 		return $this->rowSelectAll("ind_achievs.id, dict_ind_achievs.description as achiev_type, series, ind_achievs.numb, date_format(dt_issue, '%d.%m.%Y') as dt_issue, company",
 									'ind_achievs INNER JOIN dict_ind_achievs ON ind_achievs.id_achiev = dict_ind_achievs.id',
 									'id_user = :id_user',
-									[':id_user' => $this->id_user]);
+									[':id_user' => $_SESSION[APP_CODE]['user_id']]);
 	}
 
 	/**
@@ -227,6 +227,7 @@ class Model_IndAchievs extends Db_Helper
      */
 	public function save()
 	{
+		$this->id_user = $_SESSION[APP_CODE]['user_id'];
 		$this->dt_created = date('Y-m-d H:i:s');
 		$this->dt_updated = null;
 		$prepare = $this->prepareInsert(self::TABLE_NAME, $this->rules());

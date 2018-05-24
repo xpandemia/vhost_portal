@@ -117,6 +117,20 @@ class Model_ForeignLangs extends Db_Helper
 	}
 
 	/**
+     * Gets first foreign language by resume.
+     *
+     * @return array
+     */
+	public function getFirstByUser()
+	{
+		return $this->rowSelectOne('*',
+								'foreign_langs INNER JOIN resume ON foreign_langs.id_resume = resume.id',
+								'resume.id_user = :id_user AND numb = :numb',
+								[':id_user' => $_SESSION[APP_CODE]['user_id'],
+								':numb' => 1]);
+	}
+
+	/**
      * Checks if lang exists.
      *
      * @return boolean
@@ -142,6 +156,7 @@ class Model_ForeignLangs extends Db_Helper
      */
 	public function save()
 	{
+		$this->id_user = $_SESSION[APP_CODE]['user_id'];
 		$this->dt_created = date('Y-m-d H:i:s');
 		$this->dt_updated = null;
 		$prepare = $this->prepareInsert(self::TABLE_NAME, $this->rules());

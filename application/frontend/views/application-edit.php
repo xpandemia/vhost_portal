@@ -48,8 +48,8 @@ use frontend\models\Model_Application as Model_Application;
 			<table class="table table-bordered table-hover">
 				<thead class="thead-dark">
 					<tr>
-						<th>Предмет</th>
-						<th>Тип испытания</th>
+						<th class="align-text-top">Предмет</th>
+						<th class="align-text-top">Тип испытания</th>
 					</tr>
 			    </thead>
 			<?php
@@ -82,10 +82,10 @@ use frontend\models\Model_Application as Model_Application;
 			<table class="table table-bordered table-hover">
 				<thead class="thead-dark">
 					<tr>
-						<th>Индивидуальное достижение</th>
-						<th>Документ</th>
-						<th>Выдан</th>
-						<th>Дата выдачи</th>
+						<th class="align-text-top">Индивидуальное достижение</th>
+						<th class="align-text-top">Документ</th>
+						<th class="align-text-top">Выдан</th>
+						<th class="align-text-top">Дата выдачи</th>
 					</tr>
 			    </thead>
 			<?php

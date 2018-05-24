@@ -115,7 +115,7 @@ class Model_Ege extends Db_Helper
 		return $this->rowSelectAll('*',
 									self::TABLE_NAME,
 									'id_user = :id_user',
-									[':id_user' => $this->id_user]);
+									[':id_user' => $_SESSION[APP_CODE]['user_id']]);
 	}
 
 	/**
@@ -128,7 +128,7 @@ class Model_Ege extends Db_Helper
 		return $this->rowSelectAll('id, description, reg_year',
 									self::TABLE_NAME,
 									'id_user = :id_user',
-									[':id_user' => $this->id_user]);
+									[':id_user' => $_SESSION[APP_CODE]['user_id']]);
 	}
 
 	/**
@@ -157,6 +157,7 @@ class Model_Ege extends Db_Helper
      */
 	public function save()
 	{
+		$this->id_user = $_SESSION[APP_CODE]['user_id'];
 		$this->dt_created = date('Y-m-d H:i:s');
 		$this->dt_updated = null;
 		$prepare = $this->prepareInsert(self::TABLE_NAME, $this->rules());
@@ -195,7 +196,7 @@ class Model_Ege extends Db_Helper
 		return $this->rowSelectAll('*',
 									self::TABLE_NAME,
 									'id_user = :id_user AND exists (select null from ege_disciplines where pid = ege.id)',
-									[':id_user' => $this->id_user]);
+									[':id_user' => $_SESSION[APP_CODE]['user_id']]);
 	}
 
 	public function __destruct()

@@ -88,10 +88,14 @@ class Controller_ApplicationSpec extends Controller
 			$this->form = $this->model->check($this->form);
 			if (!$this->form['error_msg']) {
 				$id = $this->form['id'];
+				$type = $this->form['type'];
 				$status = $this->form['status'];
-				$this->form = $this->model->setForm($this->model->rules(), $this->model->get($id));
+				$numb = $this->form['numb'];
+					$this->form = $this->model->setForm($this->model->rules(), $this->model->get($id));
 				$this->form['id'] = $id;
+				$this->form['type'] = $type;
 				$this->form['status'] = $status;
+				$this->form['numb'] = $numb;
 				Basic_Helper::msgReset();
 				$this->form['success_msg'] = 'Заявление успешно сохранено!';
 				return $this->view->generate('application-edit.php', 'main.php', 'Заявление', $this->form);

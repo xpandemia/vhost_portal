@@ -202,7 +202,6 @@ class Model_ApplicationSpec extends Model
 				// clear specs
 				$places->clearByApplication();
 				// set specs
-				$places->id_user = $_SESSION[APP_CODE]['user_id'];
 				foreach ($spec_arr as $spec_row) {
 					$places->id_spec = $spec_row[0];
 					$id = $places->save();
@@ -216,7 +215,6 @@ class Model_ApplicationSpec extends Model
 							// set entrance exams
 							$enter = new ApplicationPlacesExams();
 							$enter->pid = $id;
-							$enter->id_user = $_SESSION[APP_CODE]['user_id'];
 							foreach ($exams_arr as $exams_row) {
 								$disc = new Model_DictDiscipline();
 								$disc->code = $exams_row['exam_code'];
@@ -274,7 +272,7 @@ class Model_ApplicationSpec extends Model
 			return $form;
 		}
 		/* check status */
-		if ($app_row['status'] != $app::STATUS_CREATED && $app_row['status'] != $app::STATUS_SAVED && $app_row['status'] != $app::STATUS_CHANGED) {
+		if ($form['status'] != $app::STATUS_CREATED && $form['status'] != $app::STATUS_SAVED && $form['status'] != $app::STATUS_CHANGED) {
 			$form['error_msg'] = 'Сохранять можно только заявления с состоянием: <strong>'.mb_convert_case($app::STATUS_CREATED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_SAVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_CHANGED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!';
 			return $form;
 		}
@@ -309,8 +307,8 @@ class Model_ApplicationSpec extends Model
 		$app_row = $app->get();
 		$app->id_docseduc = $app_row['id_docseduc'];
 		$app->id_docship = $app_row['id_docship'];
+		$app->id_lang = $app_row['id_lang'];
 		$app->status = $app::STATUS_SAVED;
-		$app->numb = $app->generateNumb();
 		// additional info
 		$app->campus = (($form['campus'] == 'checked') ? 1 : 0);
 		$app->conds = (($form['conds'] == 'checked') ? 1 : 0);
@@ -323,11 +321,11 @@ class Model_ApplicationSpec extends Model
 		$app->active = $app_row['active'];
 		$app->changeAll();
 		$form['status'] = $app->status;
-			$applog = new ApplicationStatus();
-			$applog->id_application = $app->id;
-			$applog->numb = $app->numb;
-			$applog->status = $app->status;
-			$applog->save();
+			if ($app_row['status'] != $app::STATUS_SAVED) {
+				$applog = new ApplicationStatus();
+				$applog->id_application = $app->id;
+				$applog->create();
+			}
 		/* scans */
 		$dict_scans = new Model_DictScans();
 		$dict_scans->doc_code = 'application';
@@ -363,11 +361,11 @@ class Model_ApplicationSpec extends Model
 		$app->status = $app::STATUS_SENDED;
 		$app->changeStatus();
 		$form['status'] = $app->status;
-			$applog = new ApplicationStatus();
-			$applog->id_application = $app->id;
-			$applog->numb = $app->generateNumb();
-			$applog->status = $app->status;
-			$applog->save();
+			if ($app_row['status'] != $app::STATUS_SENDED) {
+				$applog = new ApplicationStatus();
+				$applog->id_application = $app->id;
+				$applog->create();
+			}
 		Basic_Helper::msgReset();
 		$form['success_msg'] = 'Заявление успешно отправлено.';
 		$form['error_msg'] = null;
@@ -398,10 +396,12 @@ class Model_ApplicationSpec extends Model
 		$app->id = $form['id'];
 		$app->status = $app::STATUS_CHANGED;
 		$app->changeStatus();
+			if ($form['status'] != $app::STATUS_CHANGED) {
+				$applog = new ApplicationStatus();
+				$applog->id_application = $app->id;
+				$applog->create();
+			}
 		$form['status'] = $app->status;
-			$applog = new ApplicationStatus();
-			$applog->id_application = $app->id;
-			$applog->create();
 		$id = $app->copy($app::TYPE_CHANGE);
 		if ($id > 0) {
 			$spec_row = $this->get($id);
@@ -444,10 +444,12 @@ class Model_ApplicationSpec extends Model
 		$app->id = $form['id'];
 		$app->status = $app::STATUS_RECALLED;
 		$app->changeStatus();
+			if ($form['status'] != $app::STATUS_RECALLED) {
+				$applog = new ApplicationStatus();
+				$applog->id_application = $app->id;
+				$applog->create();
+			}
 		$form['status'] = $app->status;
-			$applog = new ApplicationStatus();
-			$applog->id_application = $app->id;
-			$applog->create();
 		$id = $app->copy($app::TYPE_RECALL);
 		if ($id > 0) {
 			$spec_row = $this->get($id);
@@ -481,7 +483,6 @@ class Model_ApplicationSpec extends Model
 		$place->pid = $id;
 		if ($place->getByAppForBachelorSpec()) {
 			$resume = new Resume();
-			$resume->id_user = $_SESSION[APP_CODE]['user_id'];
 			$resume_row = $resume->getByUser();
 			$data = [
 	                'name_last' => $resume_row['name_last'],
@@ -505,7 +506,6 @@ class Model_ApplicationSpec extends Model
 			$pdf->create($data, 'application_2018', 'заявление'.$app_row['numb']);
 		} else {
 			$resume = new Resume();
-			$resume->id_user = $_SESSION[APP_CODE]['user_id'];
 			$resume_row = $resume->getByUser();
 			if ($resume_row['sex'] == 0) {
 				$data = [

@@ -193,6 +193,7 @@ class Model_Scans extends Db_Helper
      */
 	public function save()
 	{
+		$this->id_user = $_SESSION[APP_CODE]['user_id'];
 		$this->dt_created = date('Y-m-d H:i:s');
 		$prepare = $this->prepareInsert(self::TABLE_NAME, $this->rules());
 		return $this->rowInsert($prepare['fields'], self::TABLE_NAME, $prepare['conds'], $prepare['params']);

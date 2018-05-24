@@ -167,6 +167,7 @@ class Model_Contacts extends Db_Helper
      */
 	public function save()
 	{
+		$this->id_user = $_SESSION[APP_CODE]['user_id'];
 		switch ($this->type) {
 			case self::TYPE_PHONE_MOBILE:
 				$this->contact = strtr($this->contact, self::TRANS_PHONE_MOBILE);

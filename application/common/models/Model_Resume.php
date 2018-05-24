@@ -115,7 +115,10 @@ class Model_Resume extends Db_Helper
      */
 	public function getByUser()
 	{
-		$resume = $this->rowSelectOne('*', self::TABLE_NAME, 'id_user = :id_user', [':id_user' => $this->id_user]);
+		$resume = $this->rowSelectOne('*',
+									self::TABLE_NAME,
+									'id_user = :id_user',
+									[':id_user' => $_SESSION[APP_CODE]['user_id']]);
 		if ($resume) {
 			$personal = $this->rowSelectOne('name_first, name_middle, name_last, sex, birth_dt, birth_place, dict_countries.code as citizenship, dict_countries.description as citizenship_name, beneficiary',
 											'personal INNER JOIN dict_countries ON personal.citizenship = dict_countries.id',
@@ -227,6 +230,7 @@ class Model_Resume extends Db_Helper
      */
 	public function save()
 	{
+		$this->id_user = $_SESSION[APP_CODE]['user_id'];
 		$this->status = self::STATUS_CREATED;
 		$this->app = 1;
 		$this->dt_created = date('Y-m-d H:i:s');
@@ -283,7 +287,7 @@ class Model_Resume extends Db_Helper
 		return $this->rowSelectOne('*',
 									self::TABLE_NAME,
 									'id_user = :id_user',
-									[':id_user' => $this->id_user]);
+									[':id_user' => $_SESSION[APP_CODE]['user_id']]);
 	}
 
 	public function __destruct()

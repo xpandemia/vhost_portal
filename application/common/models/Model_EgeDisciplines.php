@@ -14,6 +14,7 @@ class Model_EgeDisciplines extends Db_Helper
 
 	public $id;
 	public $pid;
+	public $id_user;
 	public $id_discipline;
 	public $points;
 	public $dt_created;
@@ -48,6 +49,12 @@ class Model_EgeDisciplines extends Db_Helper
 						'update' => 0,
 						'value' => $this->pid
 						],
+				'id_user' => [
+							'required' => 1,
+							'insert' => 1,
+							'update' => 0,
+							'value' => $this->id_user
+							],
 				'id_discipline' => [
 								'required' => 1,
 								'insert' => 1,
@@ -153,6 +160,7 @@ class Model_EgeDisciplines extends Db_Helper
      */
 	public function save()
 	{
+		$this->id_user = $_SESSION[APP_CODE]['user_id'];
 		$this->dt_created = date('Y-m-d H:i:s');
 		$this->dt_updated = null;
 		$prepare = $this->prepareInsert(self::TABLE_NAME, $this->rules());

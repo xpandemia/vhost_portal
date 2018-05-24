@@ -227,7 +227,7 @@ class Model_DocsEduc extends Db_Helper
 		return $this->rowSelectAll('*',
 									self::TABLE_NAME,
 									'id_user = :id_user',
-									[':id_user' => $this->id_user]);
+									[':id_user' => $_SESSION[APP_CODE]['user_id']]);
 	}
 
 	/**
@@ -240,7 +240,7 @@ class Model_DocsEduc extends Db_Helper
 		return $this->rowSelectAll("docs_educ.id, concat(dict_doctypes.description, ' № ', ifnull(concat(docs_educ.series, '-'), ''), docs_educ.numb, ' от ', date_format(dt_issue, '%d.%m.%Y')) as description",
 									'docs_educ INNER JOIN dict_doctypes ON docs_educ.id_doctype = dict_doctypes.id',
 									'docs_educ.id_user = :id_user',
-									[':id_user' => $this->id_user]);
+									[':id_user' => $_SESSION[APP_CODE]['user_id']]);
 	}
 
 	/**
@@ -254,7 +254,7 @@ class Model_DocsEduc extends Db_Helper
 									'docs_educ INNER JOIN dict_eductypes ON docs_educ.id_eductype = dict_eductypes.id'.
 									' INNER JOIN dict_doctypes ON docs_educ.id_doctype = dict_doctypes.id',
 									'id_user = :id_user',
-									[':id_user' => $this->id_user]);
+									[':id_user' => $_SESSION[APP_CODE]['user_id']]);
 	}
 
 	/**
@@ -285,6 +285,7 @@ class Model_DocsEduc extends Db_Helper
      */
 	public function save()
 	{
+		$this->id_user = $_SESSION[APP_CODE]['user_id'];
 		$this->dt_created = date('Y-m-d H:i:s');
 		$this->dt_updated = null;
 		$prepare = $this->prepareInsert(self::TABLE_NAME, $this->rules());

@@ -143,18 +143,20 @@ class HTML_Helper
 	{
 		if (isset($rules) && is_array($rules)) {
 			$result = HTML_Helper::setHrefButtonIcon($rules['controller'], $rules['action_add'], 'font-weight-bold', 'far fa-file fa-2x', 'Создать');
-			$result .= '<table class="table table-bordered">';
+			$result .= '<table class="table table-bordered table-hover">';
 			// using model
 			$model = new $rules['model_class'];
 			// using model method
 			$method = $rules['model_method'];
 			/* header */
-			$result .= '<tr class="font-italic">';
+			$result .= '<thead class="thead-dark">';
+			$result .= '<tr>';
 			$grid = $rules['grid'];
 			foreach ($model->$grid() as $key => $value) {
-				$result .= '<td><strong>'.$value['name'].'</strong></td>';
+				$result .= '<th class="align-text-top">'.$value['name'].'</th>';
 			}
 			$result .= '</tr>';
+			$result .= '</thead>';
 			/* data */
 			// using model filter
 			if (isset($rules['model_filter']) && isset($rules['model_filter_var'])) {

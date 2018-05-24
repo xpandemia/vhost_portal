@@ -142,11 +142,11 @@ use common\models\Model_ApplicationPlaces as ApplicationPlaces;
 			<table class="table table-bordered table-hover" id="table_specs" name="table_specs">
 				<thead class="thead-dark">
 					<tr>
-						<th valign="top"></th>
-						<th valign="top">Специальность/профиль</th>
-						<th>Тип оплаты</th>
-						<th>Форма обучения</th>
-						<th>Уровень обучения</th>
+						<th class="align-text-top"></th>
+						<th class="align-text-top">Специальность/профиль</th>
+						<th class="align-text-top">Тип оплаты</th>
+						<th class="align-text-top">Форма обучения</th>
+						<th class="align-text-top">Уровень обучения</th>
 					</tr>
 			    </thead>
 			<?php
