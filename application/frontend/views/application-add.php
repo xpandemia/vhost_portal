@@ -4,11 +4,15 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 use tinyframe\core\helpers\Form_Helper as Form_Helper;
 use common\models\Model_Resume as Resume;
+use common\models\Model_DocsEduc as DocsEduc;
 
 	$resume = new Resume();
 	$resume->id_user = $_SESSION[APP_CODE]['user_id'];
 	$resume_row = $resume->checkByUser();
-	if (!$resume_row || $resume_row['app'] == 0) {
+		$docs = new DocsEduc();
+		$docs->id_user = $_SESSION[APP_CODE]['user_id'];
+		$docs_arr = $docs->getByUser();
+	if (!$resume_row || $resume_row['app'] == 0 || $resume_row['status'] == $resume::STATUS_CREATED || $resume_row['status'] == $resume::STATUS_REJECTED || !$docs_arr) {
 		Basic_Helper::redirect(APP_NAME, 202, APP['ctr'], 'Index', null, 'Вам не разрешена подача заявлений!');
 	}
 ?>
@@ -60,19 +64,6 @@ use common\models\Model_Resume as Resume;
 												'value' => $data['docs_educ'],
 												'success' => $data['docs_educ_scs'],
 												'error' => $data['docs_educ_err']]);
-		// docs shipment
-		echo Form_Helper::setFormSelectListDB(['label' => 'Тип возврата документов',
-												'control' => 'docs_ship',
-												'class' => $data['docs_ship_cls'],
-												'required' => 'yes',
-												'required_style' => 'StarUp',
-												'model_class' => 'common\\models\\Model_DictDocships',
-												'model_method' => 'getAll',
-												'model_field' => 'code',
-												'model_field_name' => 'description',
-												'value' => $data['docs_ship'],
-												'success' => $data['docs_ship_scs'],
-												'error' => $data['docs_ship_err']]);
 		/* additional info */
 		echo Form_Helper::setFormHeaderSub('Дополнительная информация');
 		// campus
@@ -145,9 +136,11 @@ use common\models\Model_Resume as Resume;
 	      success: function(result) {
 	        $(select).empty();
             $(select).append('<option></option>');
-	        $.each(result, function(key, value){
-	            $(select).append('<option value="' + value.code + '">' + value.description + '</option>');
-	        });
+	        if (!jQuery.isEmptyObject(result)) {
+		        $.each(result, function(key, value){
+		            $(select).append('<option value="' + value.code + '">' + value.description + '</option>');
+		        });
+			}
 	      },
 	      error: function(xhr, status, error) {
 		      console.log('Request Failed: ' + status + ' ' + error + ' ' + xhr.status + ' ' + xhr.statusText);

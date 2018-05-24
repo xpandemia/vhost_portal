@@ -128,6 +128,62 @@ class Model_ApplicationPlaces extends Db_Helper
 	}
 
 	/**
+     * Gets first high specialities UNIQUE for application.
+     *
+     * @return array
+     */
+	public function getSpecialityFirstForApp()
+	{
+		return $this->rowSelectAll('DISTINCT speciality_code, speciality_name',
+									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
+									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
+									'application.id = :pid AND dict_speciality.eduprogram_name is null',
+									[':pid' => $this->pid]);
+	}
+
+	/**
+     * Gets first high finances UNIQUE for application.
+     *
+     * @return array
+     */
+	public function getFinanceFirstForApp()
+	{
+		return $this->rowSelectAll('DISTINCT finance_code, finance_name',
+									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
+									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
+									'application.id = :pid AND dict_speciality.eduprogram_name is null',
+									[':pid' => $this->pid]);
+	}
+
+	/**
+     * Gets first high eduforms UNIQUE for application.
+     *
+     * @return array
+     */
+	public function getEduformFirstForApp()
+	{
+		return $this->rowSelectAll('DISTINCT eduform_code, eduform_name',
+									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
+									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
+									'application.id = :pid AND dict_speciality.eduprogram_name is null',
+									[':pid' => $this->pid]);
+	}
+
+	/**
+     * Gets first high edulevels UNIQUE for application.
+     *
+     * @return array
+     */
+	public function getEdulevelFirstForApp()
+	{
+		return $this->rowSelectAll('DISTINCT edulevel_code, edulevel_name',
+									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
+									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
+									'application.id = :pid AND dict_speciality.eduprogram_name is null',
+									[':pid' => $this->pid]);
+	}
+
+	/**
      * Gets second high specialities for application.
      *
      * @return array
@@ -135,6 +191,66 @@ class Model_ApplicationPlaces extends Db_Helper
 	public function getSpecsSecondForApp()
 	{
 		return $this->rowSelectAll('dict_speciality.id, speciality_name, profil_name, finance_name, eduform_name, edulevel_name',
+									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
+									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
+									'application.id = :pid AND dict_speciality.eduprogram_name = :eduprogram_name',
+									[':pid' => $this->pid,
+									':eduprogram_name' => 'Высшее']);
+	}
+
+	/**
+     * Gets second high specialities UNIQUE for application.
+     *
+     * @return array
+     */
+	public function getSpecialitySecondForApp()
+	{
+		return $this->rowSelectAll('DISTINCT speciality_code, speciality_name',
+									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
+									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
+									'application.id = :pid AND dict_speciality.eduprogram_name = :eduprogram_name',
+									[':pid' => $this->pid,
+									':eduprogram_name' => 'Высшее']);
+	}
+
+	/**
+     * Gets second high finances UNIQUE for application.
+     *
+     * @return array
+     */
+	public function getFinanceSecondForApp()
+	{
+		return $this->rowSelectAll('DISTINCT finance_code, finance_name',
+									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
+									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
+									'application.id = :pid AND dict_speciality.eduprogram_name = :eduprogram_name',
+									[':pid' => $this->pid,
+									':eduprogram_name' => 'Высшее']);
+	}
+
+	/**
+     * Gets second high eduforms UNIQUE for application.
+     *
+     * @return array
+     */
+	public function getEduformSecondForApp()
+	{
+		return $this->rowSelectAll('DISTINCT eduform_code, eduform_name',
+									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
+									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
+									'application.id = :pid AND dict_speciality.eduprogram_name = :eduprogram_name',
+									[':pid' => $this->pid,
+									':eduprogram_name' => 'Высшее']);
+	}
+
+	/**
+     * Gets second high edulevels UNIQUE for application.
+     *
+     * @return array
+     */
+	public function getEdulevelSecondForApp()
+	{
+		return $this->rowSelectAll('DISTINCT edulevel_code, edulevel_name',
 									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
 									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
 									'application.id = :pid AND dict_speciality.eduprogram_name = :eduprogram_name',
@@ -236,6 +352,21 @@ class Model_ApplicationPlaces extends Db_Helper
 									':speciality_name9' => '34.02.02 Медицинский массаж (для обучения лиц с ограниченными возможностями здоровья по зрению)',
 									':speciality_name10' => '44.02.01 Дошкольное образование',
 									':speciality_name11' => '44.02.02 Преподавание в начальных классах']);
+	}
+
+	/**
+     * Gets specialities for payed online education.
+     *
+     * @return array
+     */
+	public function getByAppForPayedOnline()
+	{
+		return $this->rowSelectAll('application_places.*',
+									'application_places INNER JOIN dict_speciality ON application_places.id_spec = dict_speciality.id',
+									'pid = :pid AND finance_name = :finance_name AND eduform_name = :eduform_name',
+									[':pid' => $this->pid,
+									':finance_name' => 'Полное возмещение затрат',
+									':eduform_name' => 'Заочная']);
 	}
 
 	/**

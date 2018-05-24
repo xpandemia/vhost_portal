@@ -288,17 +288,17 @@ class Model_Resume extends Model
 	{
 		switch ($status) {
 			case Resume::STATUS_CREATED:
-				return '<div class="alert alert-info">Состояние анкеты: СОЗДАНА</div>';
+				return '<div class="alert alert-info">Состояние: <strong>'.mb_convert_case(Resume::STATUS_CREATED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong></div>';
 			case Resume::STATUS_SAVED:
-				return '<div class="alert alert-info">Состояние анкеты: СОХРАНЕНА</div>';
+				return '<div class="alert alert-info">Состояние: <strong>'.mb_convert_case(Resume::STATUS_SAVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong></div>';
 			case Resume::STATUS_SENDED:
-				return '<div class="alert alert-primary">Состояние анкеты: ОТПРАВЛЕНА</div>';
+				return '<div class="alert alert-primary">Состояние: <strong>'.mb_convert_case(Resume::STATUS_SENDED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong></div>';
 			case Resume::STATUS_APPROVED:
-				return '<div class="alert alert-success">Состояние анкеты: ОДОБРЕНА</div>';
+				return '<div class="alert alert-success">Состояние: <strong>'.mb_convert_case(Resume::STATUS_APPROVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong></div>';
 			case Resume::STATUS_REJECTED:
-				return '<div class="alert alert-danger">Состояние анкеты: ОТКЛОНЕНА</div>';
+				return '<div class="alert alert-danger">Состояние: <strong>'.mb_convert_case(Resume::STATUS_REJECTED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong></div>';
 			default:
-				return '<div class="alert alert-warning">Состояние анкеты: НЕИЗВЕСТНО</div>';
+				return '<div class="alert alert-warning">Состояние: <strong>НЕИЗВЕСТНО</strong></div>';
 		}
 	}
 
@@ -855,10 +855,12 @@ class Model_Resume extends Model
      */
 	public function check($form)
 	{
-		/* check status */
 		$resume = new Resume();
+		$form['success_msg'] = null;
+		$form['error_msg'] = null;
+		/* check status */
 		if ($form['status'] != $resume::STATUS_CREATED && $form['status'] != $resume::STATUS_SAVED) {
-			$form['error_msg'] = 'Изменять можно только новые или сохранённые анкеты!';
+			$form['error_msg'] = 'Сохранять анкеты можно только с состоянием: <strong>'.mb_convert_case($resume::STATUS_CREATED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($resume::STATUS_SAVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!';
 			return $form;
 		}
 		/* personal */
@@ -1254,7 +1256,7 @@ class Model_Resume extends Model
 		$resume->id = $form['id'];
 		$resume->status = $resume::STATUS_SAVED;
 		$resume->changeStatus();
-		$form['status'] = $resume::STATUS_SAVED;
+		$form['status'] = $resume->status;
 		/* resume app */
 		if ($form['passport_type'] == '000000087') {
 			$resume->app = 0;
@@ -1270,18 +1272,19 @@ class Model_Resume extends Model
      */
 	public function send($form)
 	{
-		/* check status */
 		$resume = new Resume();
+		$form['success_msg'] = null;
+		$form['error_msg'] = null;
+		/* check status */
 		if ($form['status'] != $resume::STATUS_SAVED) {
-			$form['success_msg'] = null;
-			$form['error_msg'] = 'Отправлять можно только сохранённые анкеты!';
+			$form['error_msg'] = 'Отправлять анкеты можно только с состоянием <strong>'.mb_convert_case($resume::STATUS_SAVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!';
 			return $form;
 		}
 		/* send */
 		$resume->id = $form['id'];
 		$resume->status = $resume::STATUS_SENDED;
 		$resume->changeStatus();
-		$form['status'] = $resume::STATUS_SENDED;
+		$form['status'] = $resume->status;
 		$form['success_msg'] = 'Анкета успешно отправлена.';
 		$form['error_msg'] = null;
 		return $form;

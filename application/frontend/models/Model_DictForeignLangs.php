@@ -26,11 +26,11 @@ class Model_DictForeignLangs extends Model
 	public function getForeignLangsJSON() : string
 	{
 		$lang = $this->lang->getAll();
-			foreach ($lang as $value) {
-				$lang_json[] = ['code' => $value['code'],
-								'description' => $value['description']];
-			}
-			return json_encode($lang_json);
+		foreach ($lang as $value) {
+			$lang_json[] = ['code' => $value['code'],
+							'description' => $value['description']];
+		}
+		return json_encode($lang_json);
 	}
 
 	/**
@@ -41,10 +41,10 @@ class Model_DictForeignLangs extends Model
 	public function getForeignLangsBsuJSON() : string
 	{
 		$lang = $this->lang->getBsu();
-			foreach ($lang as $value) {
-				$lang_json[] = ['code' => $value['code'],
-								'description' => $value['description']];
-			}
-			return json_encode($lang_json);
+		foreach ($lang as $value) {
+			$lang_json[] = ['code' => $value['code'],
+							'description' => $value['description']];
+		}
+		return json_encode($lang_json);
 	}
 }

@@ -82,7 +82,7 @@ class Model_EgeDisciplines extends Model
 		$egedsp->id_discipline = $row_dsp['id'];
 		// check discipline
 		if ($egedsp->existsDiscipline()) {
-			$form['error_msg'] = 'Такая дисциплина ЕГЭ уже есть!';
+			$_SESSION[APP_CODE]['error_msg'] = 'Такая дисциплина ЕГЭ уже есть!';
 			return $form;
 		}
 		$egedsp->points = $form['points'];

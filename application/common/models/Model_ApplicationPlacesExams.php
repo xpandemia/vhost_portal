@@ -88,6 +88,19 @@ class Model_ApplicationPlacesExams extends Db_Helper
 	}
 
 	/**
+     * Gets full exams by place.
+     *
+     * @return array
+     */
+	public function getExamsByPlaceFull()
+	{
+		return $this->rowSelectAll('*',
+									self::TABLE_NAME,
+									'pid = :pid',
+									[':pid' => $this->pid]);
+	}
+
+	/**
      * Gets exams by application.
      *
      * @return array

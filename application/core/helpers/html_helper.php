@@ -142,7 +142,7 @@ class HTML_Helper
 	public static function setGridDB($rules)
 	{
 		if (isset($rules) && is_array($rules)) {
-			$result = HTML_Helper::setHrefButtonIcon($rules['controller'], $rules['action_add'], 'font-weight-bold', 'far fa-file fa-2x', 'Создать запись');
+			$result = HTML_Helper::setHrefButtonIcon($rules['controller'], $rules['action_add'], 'font-weight-bold', 'far fa-file fa-2x', 'Создать');
 			$result .= '<table class="table table-bordered">';
 			// using model
 			$model = new $rules['model_class'];
@@ -152,7 +152,7 @@ class HTML_Helper
 			$result .= '<tr class="font-italic">';
 			$grid = $rules['grid'];
 			foreach ($model->$grid() as $key => $value) {
-				$result .= '<td>'.$value['name'].'</td>';
+				$result .= '<td><strong>'.$value['name'].'</strong></td>';
 			}
 			$result .= '</tr>';
 			/* data */
@@ -182,11 +182,11 @@ class HTML_Helper
 						$result .= '<td>';
 						// action edit
 						if (isset($rules['action_edit'])) {
-							$result .= HTML_Helper::setHrefButtonIcon($rules['controller'], $rules['action_edit'].'/?id='.$table_row['id'].((isset($table_row['pid'])) ? '&pid='.$table_row['pid'] : ''), 'font-weight-bold', 'far fa-edit fa-2x', 'Редактировать запись');
+							$result .= HTML_Helper::setHrefButtonIcon($rules['controller'], $rules['action_edit'].'/?id='.$table_row['id'].((isset($table_row['pid'])) ? '&pid='.$table_row['pid'] : ''), 'font-weight-bold', 'far fa-edit fa-2x', 'Редактировать');
 						}
 						// action delete
 						if (isset($rules['action_delete'])) {
-							$result .= HTML_Helper::setHrefButtonIcon($rules['controller'], $rules['action_delete'].'/?id='.$table_row['id'].((isset($table_row['pid'])) ? '&pid='.$table_row['pid'] : '').'&hdr='.$rules['home_hdr'].'&ctr='.$rules['controller'], 'text-danger font-weight-bold', 'fas fa-times fa-2x', 'Удалить запись');
+							$result .= HTML_Helper::setHrefButtonIcon($rules['controller'], $rules['action_delete'].'/?id='.$table_row['id'].((isset($table_row['pid'])) ? '&pid='.$table_row['pid'] : '').'&hdr='.$rules['home_hdr'].'&ctr='.$rules['controller'], 'text-danger font-weight-bold', 'fas fa-times fa-2x', 'Удалить');
 						}
 						$result .= '</td>';
 					}

@@ -3,6 +3,10 @@
 use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 use tinyframe\core\helpers\Form_Helper as Form_Helper;
 
+	// check data
+	if (!isset($data)) {
+		Basic_Helper::redirect(APP_NAME, 204, 'Main', 'Index', null, nl2br("Ошибка добавления результатов ЕГЭ!\nСвяжитесь с администратором."));
+	}
 ?>
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
 	<?php

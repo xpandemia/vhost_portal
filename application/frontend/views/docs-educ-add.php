@@ -3,6 +3,10 @@
 use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 use tinyframe\core\helpers\Form_Helper as Form_Helper;
 
+	// check data
+	if (!isset($data)) {
+		Basic_Helper::redirect(APP_NAME, 204, 'Main', 'Index', null, nl2br("Ошибка добавления документа об образовании!\nСвяжитесь с администратором."));
+	}
 ?>
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
 	<?php
@@ -238,13 +242,15 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 	      success: function(result) {
 	        $(select).empty();
             $(select).append('<option></option>');
-	        $.each(result, function(key, value){
-	            if (value_test == value.code) {
-					$(select).append('<option value="' + value.code + '" selected>' + value.description + '</option>');
-				} else {
-					$(select).append('<option value="' + value.code + '">' + value.description + '</option>');
-				}
-	        });
+	        if (!jQuery.isEmptyObject(result)) {
+				$.each(result, function(key, value){
+		            if (value_test == value.code) {
+						$(select).append('<option value="' + value.code + '" selected>' + value.description + '</option>');
+					} else {
+						$(select).append('<option value="' + value.code + '">' + value.description + '</option>');
+					}
+		        });
+			}
 	      },
 	      error: function(xhr, status, error) {
 		      console.log('Request Failed: ' + status + ' ' + error + ' ' + xhr.status + ' ' + xhr.statusText);

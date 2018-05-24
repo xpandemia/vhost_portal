@@ -25,12 +25,16 @@ class Model_AdmissionCampaign extends Model
      */
 	public function getByUniversityJSON($university) : string
 	{
-		$this->adm->university = $university;
-		$adm = $this->adm->getByUniversity();
+		if (!empty($university)) {
+			$this->adm->university = $university;
+			$adm = $this->adm->getByUniversity();
 			foreach ($adm as $value) {
 				$adm_json[] = ['code' => $value['code'],
 								'description' => $value['description']];
 			}
 			return json_encode($adm_json);
+		} else {
+			return json_encode(null);
+		}
 	}
 }

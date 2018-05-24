@@ -16,10 +16,15 @@ class Model_Resume extends Db_Helper
 	const TABLE_NAME = 'resume';
 
 	const STATUS_CREATED = 0;
+	const STATUS_CREATED_NAME = 'Создана';
 	const STATUS_SAVED = 1;
+	const STATUS_SAVED_NAME = 'Сохранена';
     const STATUS_SENDED = 2;
+    const STATUS_SENDED_NAME = 'Отправлена';
     const STATUS_APPROVED = 3;
+    const STATUS_APPROVED_NAME = 'Принята';
     const STATUS_REJECTED = 4;
+    const STATUS_REJECTED_NAME = 'Отклонена';
 
 	public $id;
 	public $id_user;
@@ -223,6 +228,7 @@ class Model_Resume extends Db_Helper
 	public function save()
 	{
 		$this->status = self::STATUS_CREATED;
+		$this->app = 1;
 		$this->dt_created = date('Y-m-d H:i:s');
 		$this->dt_updated = null;
 		$prepare = $this->prepareInsert(self::TABLE_NAME, $this->rules());

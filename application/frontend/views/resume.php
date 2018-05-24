@@ -10,10 +10,9 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 
 	// check resume
 	if ((!isset($data['id']) || empty($data['id'])) && (!isset($data['status']) || empty($data['status']))) {
-		$data['error_msg'] = 'Ошибка открытия анкеты! Свяжитесь с администратором.';
-		Basic_Helper::redirect(APP_NAME, 401, 'Main', 'Index', $data);
+		Basic_Helper::redirect(APP_NAME, 204, 'Main', 'Index', null, nl2br("Ошибка анкеты!\nСвяжитесь с администратором."));
 	} else {
-		if ($data['status'] === 0) {
+		if ($data['status'] == 0) {
 			$data['personal_vis'] = true;
 		} else {
 			$data['personal_vis'] = false;
@@ -349,7 +348,6 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 												'ext' => FILES_EXT_SCANS]);
 			?>
 		</div>
-
 		<?php
 		/* addresses */
 		echo Form_Helper::setFormHeaderSub('Адреса');
@@ -474,7 +472,6 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 													);
 			?>
 		</div>
-
 		<div class="form-check">
 			<div class="col">
 				<input type="checkbox" class="form-check-input" id="kladr_reg_not" name="kladr_reg_not"><b>Не нашёл адрес регистрации в КЛАДРе</b>
@@ -501,13 +498,11 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 
 		/* residential address */
 		echo HTML_Helper::setLabel('font-weight-bold font-italic', '', 'Проживания'); ?>
-
-		<div class="form-group" id="address_reg_clone">
-			<div class="form-group">
+		<div class="form-check">
+			<div class="col">
 				<input type="checkbox" class="form-check-input" id="address_reg_clone_flag" name="address_reg_clone_flag"><b>Адрес проживания совпадает с адресом регистрации</b>
 			</div>
-		</div>
-
+		</div><br>
 		<?php
 		// country (residential)
 		echo Form_Helper::setFormSelectListDB(['label' => 'Страна',
@@ -522,7 +517,6 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 												'value' => $data['country_res'],
 												'success' => $data['country_res_scs'],
 												'error' => $data['country_res_err']]); ?>
-
 		<div class="form-group" id="kladr_res">
 			<?php
 				// region (residential)
@@ -533,10 +527,7 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 															'model_method' => 'getRegionAll',
 															'value' => $data['region_res']]);
 				} else {
-					echo '<div class="form-group">'.
-							'<label class="font-weight-bold" for="region_res">Регион</label>'.
-							'<select class="form-control" id="region_res" name="region_res"></select>'.
-						'</div>';
+					echo Form_Helper::setFormSelectListBlank(['label' => 'Регион', 'control' => 'region_res']);
 				}
 				// area (residential)
 				if (isset($data['area_res']) && !empty($data['area_res'])) {
@@ -632,7 +623,6 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 													);
 			?>
 		</div>
-
 		<div class="form-check">
 			<div class="col">
 				<input type="checkbox" class="form-check-input" id="kladr_res_not" name="kladr_reg_not"><b>Не нашёл адрес проживания в КЛАДРе</b>
@@ -707,6 +697,7 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 											'ext' => FILES_EXT_SCANS]);
 		// personal
 		if ($data['personal_vis'] == true) {
+			echo Form_Helper::setFormHeaderSub('Согласие');
 			echo Form_Helper::setFormCheckbox(['label' => 'Я даю согласие на обработку своих персональных данных в соответствии с Федеральным законом РФ от 27 июля 2006 г. №152-ФЗ "О персональных данных"',
 												'control' => 'personal',
 												'class' => $data['personal_cls'],
@@ -715,6 +706,7 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 												'error' => $data['personal_err']]);
 		} ?>
 		<!-- controls -->
+		<br>
 		<div class="form-group">
 			<div class="col">
 				<?php
@@ -725,7 +717,6 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 				?>
 			</div>
 		</div>
-
 	<?php
 		echo Form_Helper::setFormEnd();
 	?>
@@ -740,7 +731,8 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 
 <script>
 	// form init
-	function formInit() {
+	function formInit()
+	{
 		// agreement
 		if (getAge($('#birth_dt').val()) < 18) {
 			$('#agreement_div').show();
@@ -816,18 +808,40 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 		}
 		// address registration clone
 		if ($('#address_reg').val() != '' && $('#address_reg').val() == $('#address_res').val()) {
-			$('#address_reg_clone').show();
 			$('#address_reg_clone_flag').prop('checked', true);
 		} else {
-			$('#address_reg_clone').hide();
 			$('#address_reg_clone_flag').prop('checked', false);
+		}
+		// KLADR res
+		if ($('#address_reg').val() != '' && $('#address_res').val() == '' && !$('#address_reg_clone_flag').prop('checked')) {
+			// country
+			getKladrAJAX('/frontend/Kladr/RegionAllJSON', null, '#region_res');
+			// region
+			var region_reg = $('#region_reg').val();
+			getKladrAJAX('/frontend/Kladr/AreaByRegionJSON', region_reg, '#area_res');
+		    getKladrAJAX('/frontend/Kladr/CityByRegionJSON', region_reg, '#city_res');
+		    // area
+		    var area_reg = $('#area_reg').val();
+		    if (area_reg != '') {
+				getKladrAJAX('/frontend/Kladr/LocationByAreaJSON', area_reg, '#location_res');
+			}
+		    // city
+		    var city_reg = $('#city_reg').val();
+		    if (city_reg != '') {
+				getKladrAJAX('/frontend/Kladr/LocationByCityJSON', city_reg, '#location_res');
+				getKladrAJAX('/frontend/Kladr/StreetByCityJSON', city_reg, '#street_res');
+			}
+			// location
+			var location_reg = $('#location_reg').val();
+			getKladrAJAX('/frontend/Kladr/StreetByLocationJSON', location_reg, '#street_res');
 		}
 	}
 </script>
 
 <script>
 	// form events
-	function formEvents() {
+	function formEvents()
+	{
 		// agreement
 		$('#birth_dt').change(function() {
 			if (getAge($('#birth_dt').val()) < 18) {
@@ -1880,11 +1894,13 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 		  dataType: 'json',
 		  data: {code: code},
 	      success: function(result) {
-	        $(select).empty();
+			$(select).empty();
             $(select).append('<option></option>');
-	        $.each(result, function(key, value){
-	            $(select).append('<option value="' + value.kladr_code + '">' + value.kladr_name + ' ' + value.kladr_abbr + '</option>');
-	        });
+			if (!jQuery.isEmptyObject(result)) {
+				$.each(result, function(key, value){
+		            $(select).append('<option value="' + value.kladr_code + '">' + value.kladr_name + ' ' + value.kladr_abbr + '</option>');
+		        });
+			}
 	      },
 	      error: function(xhr, status, error) {
 		      console.log('Request Failed: ' + status + ' ' + error + ' ' + xhr.status + ' ' + xhr.statusText);

@@ -10,21 +10,23 @@ use frontend\models\Model_Application as Model_Application;
 
 	// check data
 	if (!isset($data)) {
-		Basic_Helper::alertGlobal('Ошибка направлений подготовки! Свяжитесь с администратором.');
+		Basic_Helper::redirect(APP_NAME, 204, 'Main', 'Index', null, nl2br("Ошибка направлений подготовки!\nСвяжитесь с администратором."));
 	}
 ?>
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
-	<h2>Заявление</h2>
+	<h2>Заявление № <?php echo $data['numb']; ?></h2>
 	<?php
 		echo HTML_Helper::setAlert($_SESSION[APP_CODE]['success_msg'], 'alert-success');
 		echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
 		echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
+		/* type */
+		echo Model_Application::showType($data['type']);
 		/* status */
 		echo Model_Application::showStatus($data['status']);
 	?>
 	<hr><h5>Направления подготовки</h5><br>
 	<?php
-		echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nЧтобы добавить/изменить направления подготовки, нажмите \"Создать запись\"."), 'alert-warning');
+		echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nЧтобы добавить/изменить <strong>направления подготовки</strong>, нажмите <strong>\"Создать\"</strong>."), 'alert-warning');
 		echo HTML_Helper::setGridDB(['model_class' => 'common\\models\\Model_ApplicationPlaces',
 									'model_method' => 'getGrid',
 									'model_filter' => 'pid',
@@ -37,7 +39,9 @@ use frontend\models\Model_Application as Model_Application;
 	<form enctype="multipart/form-data" action="<?php echo Basic_Helper::appUrl('ApplicationSpec', 'Save'); ?>" method="post" id="form_app_spec" novalidate>
 		<div class="form-group">
 			<input type="hidden" id="id" name="id" value="<?php echo $data['id']; ?>"/>
+			<input type="hidden" id="type" name="type" value="<?php echo $data['type']; ?>"/>
 			<input type="hidden" id="status" name="status" value="<?php echo $data['status']; ?>"/>
+			<input type="hidden" id="numb" name="numb" value="<?php echo $data['numb']; ?>"/>
 		</div>
 		<div class="form-group">
 			<h5>Вступительные испытания</h5><br>
@@ -101,19 +105,6 @@ use frontend\models\Model_Application as Model_Application;
 			?>
 			</table><br>
 			<?php
-				// docs shipment
-				echo Form_Helper::setFormSelectListDB(['label' => 'Тип возврата документов',
-														'control' => 'docs_ship',
-														'class' => $data['docs_ship_cls'],
-														'required' => 'yes',
-														'required_style' => 'StarUp',
-														'model_class' => 'common\\models\\Model_DictDocships',
-														'model_method' => 'getAll',
-														'model_field' => 'code',
-														'model_field_name' => 'description',
-														'value' => $data['docs_ship'],
-														'success' => $data['docs_ship_scs'],
-														'error' => $data['docs_ship_err']]);
 				/* additional info */
 				echo Form_Helper::setFormHeaderSub('Дополнительная информация');
 				// campus
@@ -162,7 +153,10 @@ use frontend\models\Model_Application as Model_Application;
 		<div class="form-group">
 			<div class="col">
 				<?php
-					echo HTML_Helper::setSubmit('btn btn-success', 'btn_save', 'Сохранить');
+					echo HTML_Helper::setSubmit('btn btn-info', 'btn_save', 'Сохранить');
+					echo HTML_Helper::setHrefButton('ApplicationSpec', 'Send/?id='.$data['id'], 'btn btn-success', 'Отправить');
+					echo HTML_Helper::setHrefButton('ApplicationSpec', 'Change/?id='.$data['id'], 'btn btn-primary', 'Изменить');
+					echo HTML_Helper::setHrefButton('ApplicationSpec', 'Recall/?id='.$data['id'], 'btn btn-danger', 'Отозвать');
 					echo HTML_Helper::setHrefButton('ApplicationSpec', 'Cancel', 'btn btn-warning', 'Отмена');
 				?>
 			</div>

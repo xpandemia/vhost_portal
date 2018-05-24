@@ -39,8 +39,9 @@ class Model_Kladr extends Db_Helper
 		} else {
 			$kladr = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
 											'kladr',
-											'kladr.level = :level',
-											[':level' => $level],
+											'kladr.level = :level AND relevance = :relevance',
+											[':level' => $level,
+											':relevance' => '0'],
 											'kladr_name');
 		}
 			foreach ($kladr as $value) {
@@ -58,21 +59,27 @@ class Model_Kladr extends Db_Helper
      */
 	public function getAreaByRegionJSON($region) : string
 	{
-		// get kladr
-		$kladr = $this->kladr->getByCode($region);
-		$code_region = $kladr['code_region'];
-		// get areas by region
-		$area = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
-										'kladr',
-										'level = :level AND code_region = :code_region',
-										[':level' => self::AREA, ':code_region' => $code_region],
-										'kladr_name');
-		foreach ($area as $value) {
-			$area_json[] = ['kladr_code' => $value['kladr_code'],
-							'kladr_name' => $value['kladr_name'],
-							'kladr_abbr' => $value['kladr_abbr']];
+		if (!empty($region)) {
+			// get kladr
+			$kladr = $this->kladr->getByCode($region);
+			$code_region = $kladr['code_region'];
+			// get areas by region
+			$area = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
+											'kladr',
+											'level = :level AND code_region = :code_region AND relevance = :relevance',
+											[':level' => self::AREA,
+											':code_region' => $code_region,
+											':relevance' => '0'],
+											'kladr_name');
+			foreach ($area as $value) {
+				$area_json[] = ['kladr_code' => $value['kladr_code'],
+								'kladr_name' => $value['kladr_name'],
+								'kladr_abbr' => $value['kladr_abbr']];
+			}
+			return json_encode($area_json);
+		} else {
+			return json_encode(null);
 		}
-		return json_encode($area_json);
 	}
 
 	/**
@@ -82,21 +89,27 @@ class Model_Kladr extends Db_Helper
      */
 	public function getCityByRegionJSON($region) : string
 	{
-		// get kladr
-		$kladr = $this->kladr->getByCode($region);
-		$code_region = $kladr['code_region'];
-		// get cities by region
-		$city = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
-										'kladr',
-										'level = :level AND code_region = :code_region',
-										[':level' => self::CITY, ':code_region' => $code_region],
-										'kladr_name');
-		foreach ($city as $value) {
-			$city_json[] = ['kladr_code' => $value['kladr_code'],
-							'kladr_name' => $value['kladr_name'],
-							'kladr_abbr' => $value['kladr_abbr']];
+		if (!empty($region)) {
+			// get kladr
+			$kladr = $this->kladr->getByCode($region);
+			$code_region = $kladr['code_region'];
+			// get cities by region
+			$city = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
+											'kladr',
+											'level = :level AND code_region = :code_region AND relevance = :relevance',
+											[':level' => self::CITY,
+											':code_region' => $code_region,
+											':relevance' => '0'],
+											'kladr_name');
+			foreach ($city as $value) {
+				$city_json[] = ['kladr_code' => $value['kladr_code'],
+								'kladr_name' => $value['kladr_name'],
+								'kladr_abbr' => $value['kladr_abbr']];
+			}
+			return json_encode($city_json);
+		} else {
+			return json_encode(null);
 		}
-		return json_encode($city_json);
 	}
 
 	/**
@@ -106,26 +119,31 @@ class Model_Kladr extends Db_Helper
      */
 	public function getLocationByCityJSON($city) : string
 	{
-		// get kladr
-		$kladr = $this->kladr->getByCode($city);
-		$code_region = $kladr['code_region'];
-		$code_area = $kladr['code_area'];
-		$code_city = $kladr['code_city'];
-		// get locations by area
-		$location = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
-											'kladr',
-											'level = :level AND code_region = :code_region AND code_area = :code_area AND code_city = :code_city',
-											[':level' => self::LOCATION,
-											':code_region' => $code_region,
-											':code_area' => $code_area,
-											':code_city' => $code_city],
-											'kladr_name');
-		foreach ($location as $value) {
-			$location_json[] = ['kladr_code' => $value['kladr_code'],
-								'kladr_name' => $value['kladr_name'],
-								'kladr_abbr' => $value['kladr_abbr']];
+		if (!empty($city)) {
+			// get kladr
+			$kladr = $this->kladr->getByCode($city);
+			$code_region = $kladr['code_region'];
+			$code_area = $kladr['code_area'];
+			$code_city = $kladr['code_city'];
+			// get locations by area
+			$location = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
+												'kladr',
+												'level = :level AND code_region = :code_region AND code_area = :code_area AND code_city = :code_city AND relevance = :relevance',
+												[':level' => self::LOCATION,
+												':code_region' => $code_region,
+												':code_area' => $code_area,
+												':code_city' => $code_city,
+												':relevance' => '0'],
+												'kladr_name');
+			foreach ($location as $value) {
+				$location_json[] = ['kladr_code' => $value['kladr_code'],
+									'kladr_name' => $value['kladr_name'],
+									'kladr_abbr' => $value['kladr_abbr']];
+			}
+			return json_encode($location_json);
+		} else {
+			return json_encode(null);
 		}
-		return json_encode($location_json);
 	}
 
 	/**
@@ -135,24 +153,29 @@ class Model_Kladr extends Db_Helper
      */
 	public function getLocationByAreaJSON($area) : string
 	{
-		// get kladr
-		$kladr = $this->kladr->getByCode($area);
-		$code_region = $kladr['code_region'];
-		$code_area = $kladr['code_area'];
-		// get locations by area
-		$location = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
-											'kladr',
-											'level = :level AND code_region = :code_region AND code_area = :code_area',
-											[':level' => self::LOCATION,
-											':code_region' => $code_region,
-											':code_area' => $code_area],
-											'kladr_name');
-		foreach ($location as $value) {
-			$location_json[] = ['kladr_code' => $value['kladr_code'],
-								'kladr_name' => $value['kladr_name'],
-								'kladr_abbr' => $value['kladr_abbr']];
+		if (!empty($area)) {
+			// get kladr
+			$kladr = $this->kladr->getByCode($area);
+			$code_region = $kladr['code_region'];
+			$code_area = $kladr['code_area'];
+			// get locations by area
+			$location = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
+												'kladr',
+												'level = :level AND code_region = :code_region AND code_area = :code_area AND relevance = :relevance',
+												[':level' => self::LOCATION,
+												':code_region' => $code_region,
+												':code_area' => $code_area,
+												':relevance' => '0'],
+												'kladr_name');
+			foreach ($location as $value) {
+				$location_json[] = ['kladr_code' => $value['kladr_code'],
+									'kladr_name' => $value['kladr_name'],
+									'kladr_abbr' => $value['kladr_abbr']];
+			}
+			return json_encode($location_json);
+		} else {
+			return json_encode(null);
 		}
-		return json_encode($location_json);
 	}
 
 	/**
@@ -162,24 +185,29 @@ class Model_Kladr extends Db_Helper
      */
 	public function getStreetByCityJSON($city) : string
 	{
-		// get kladr
-		$kladr = $this->kladr->getByCode($city);
-		$code_region = $kladr['code_region'];
-		$code_city = $kladr['code_city'];
-		// get streets by city
-		$street = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
-										'kladr',
-										'level = :level AND code_region = :code_region AND code_city = :code_city',
-										[':level' => self::STREET,
-										':code_region' => $code_region,
-										':code_city' => $code_city],
-										'kladr_name');
-		foreach ($street as $value) {
-			$street_json[] = ['kladr_code' => $value['kladr_code'],
-								'kladr_name' => $value['kladr_name'],
-								'kladr_abbr' => $value['kladr_abbr']];
+		if (!empty($city)) {
+			// get kladr
+			$kladr = $this->kladr->getByCode($city);
+			$code_region = $kladr['code_region'];
+			$code_city = $kladr['code_city'];
+			// get streets by city
+			$street = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
+											'kladr',
+											'level = :level AND code_region = :code_region AND code_city = :code_city AND relevance = :relevance',
+											[':level' => self::STREET,
+											':code_region' => $code_region,
+											':code_city' => $code_city,
+											':relevance' => '0'],
+											'kladr_name');
+			foreach ($street as $value) {
+				$street_json[] = ['kladr_code' => $value['kladr_code'],
+									'kladr_name' => $value['kladr_name'],
+									'kladr_abbr' => $value['kladr_abbr']];
+			}
+			return json_encode($street_json);
+		} else {
+			return json_encode(null);
 		}
-		return json_encode($street_json);
 	}
 
 	/**
@@ -189,25 +217,30 @@ class Model_Kladr extends Db_Helper
      */
 	public function getStreetByLocationJSON($location) : string
 	{
-		// get kladr
-		$kladr = $this->kladr->getByCode($location);
-		$code_region = $kladr['code_region'];
-		$code_area = $kladr['code_area'];
-		$code_location = $kladr['code_location'];
-		// get streets by location
-		$street = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
-										'kladr',
-										'level = :level AND code_region = :code_region AND code_area = :code_area AND code_location = :code_location',
-										[':level' => self::STREET,
-										':code_region' => $code_region,
-										':code_area' => $code_area,
-										':code_location' => $code_location],
-										'kladr_name');
-		foreach ($street as $value) {
-			$street_json[] = ['kladr_code' => $value['kladr_code'],
-								'kladr_name' => $value['kladr_name'],
-								'kladr_abbr' => $value['kladr_abbr']];
+		if (!empty($location)) {
+			// get kladr
+			$kladr = $this->kladr->getByCode($location);
+			$code_region = $kladr['code_region'];
+			$code_area = $kladr['code_area'];
+			$code_location = $kladr['code_location'];
+			// get streets by location
+			$street = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
+											'kladr',
+											'level = :level AND code_region = :code_region AND code_area = :code_area AND code_location = :code_location AND relevance = :relevance',
+											[':level' => self::STREET,
+											':code_region' => $code_region,
+											':code_area' => $code_area,
+											':code_location' => $code_location,
+											':relevance' => '0'],
+											'kladr_name');
+			foreach ($street as $value) {
+				$street_json[] = ['kladr_code' => $value['kladr_code'],
+									'kladr_name' => $value['kladr_name'],
+									'kladr_abbr' => $value['kladr_abbr']];
+			}
+			return json_encode($street_json);
+		} else {
+			return json_encode(null);
 		}
-		return json_encode($street_json);
 	}
 }

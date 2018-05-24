@@ -3,6 +3,11 @@
 namespace common\models;
 
 use tinyframe\core\helpers\Db_Helper as Db_Helper;
+use common\models\Model_ApplicationStatus as ApplicationStatus;
+use common\models\Model_ApplicationPlaces as ApplicationPlaces;
+use common\models\Model_ApplicationPlacesExams as ApplicationPlacesExams;
+use common\models\Model_ApplicationAchievs as ApplicationAchievs;
+use common\models\Model_Scans as Scans;
 
 class Model_Application extends Db_Helper
 {
@@ -13,15 +18,26 @@ class Model_Application extends Db_Helper
 	const TABLE_NAME = 'application';
 
 	const TYPE_NEW = 1;
+	const TYPE_NEW_NAME = 'Заявление на приём документов';
 	const TYPE_CHANGE = 2;
+	const TYPE_CHANGE_NAME = 'Заявление на изменение документов';
 	const TYPE_RECALL = 3;
+	const TYPE_RECALL_NAME = 'Заявление на отзыв документов';
 
 	const STATUS_CREATED = 0;
+	const STATUS_CREATED_NAME = 'Создано';
     const STATUS_SENDED = 1;
+    const STATUS_SENDED_NAME = 'Отправлено';
     const STATUS_APPROVED = 2;
+    const STATUS_APPROVED_NAME = 'Принято';
     const STATUS_REJECTED = 3;
-    const STATUS_RECALLED = 4;
+    const STATUS_REJECTED_NAME = 'Отклонено';
+    const STATUS_SAVED = 4;
+    const STATUS_SAVED_NAME = 'Сохранено';
     const STATUS_CHANGED = 5;
+    const STATUS_CHANGED_NAME = 'Изменено';
+    const STATUS_RECALLED = 6;
+    const STATUS_RECALLED_NAME = 'Отозвано';
 
 	public $id;
 	public $id_user;
@@ -35,7 +51,9 @@ class Model_Application extends Db_Helper
 	public $numb;
 	public $numb1s;
 	public $campus;
+	public $conds;
 	public $remote;
+	public $active;
 	public $dt_created;
 
 	public $db;
@@ -137,6 +155,12 @@ class Model_Application extends Db_Helper
 							'update' => 1,
 							'value' => $this->remote
 							],
+				'active' => [
+							'required' => 1,
+							'insert' => 1,
+							'update' => 1,
+							'value' => $this->active
+							],
 				'dt_created' => [
 								'required' => 1,
 								'insert' => 1,
@@ -218,8 +242,9 @@ class Model_Application extends Db_Helper
 									' INNER JOIN docs_educ ON application.id_docseduc = docs_educ.id'.
 									' INNER JOIN dict_doctypes ON docs_educ.id_doctype = dict_doctypes.id'.
 									' LEFT OUTER JOIN application reason ON application.id_app = reason.id',
-									'application.id_user = :id_user',
-									[':id_user' => $this->id_user]);
+									'application.id_user = :id_user AND application.active = :active',
+									[':id_user' => $this->id_user,
+									':active' => 1]);
 	}
 
 	/**
@@ -279,9 +304,16 @@ class Model_Application extends Db_Helper
 	public function save()
 	{
 		$this->status = self::STATUS_CREATED;
+		$this->active = 1;
 		$this->dt_created = date('Y-m-d H:i:s');
 		$prepare = $this->prepareInsert(self::TABLE_NAME, $this->rules());
-		return $this->rowInsert($prepare['fields'], self::TABLE_NAME, $prepare['conds'], $prepare['params']);
+		$id = $this->rowInsert($prepare['fields'], self::TABLE_NAME, $prepare['conds'], $prepare['params']);
+		if ($id > 0) {
+			$this->id = $id;
+			$this->numb = $this->generateNumb();
+			$this->changeNumb();
+		}
+		return $id;
 	}
 
 	/**
@@ -312,6 +344,45 @@ class Model_Application extends Db_Helper
 	}
 
 	/**
+     * Changes application type.
+     *
+     * @return boolean
+     */
+	public function changeType()
+	{
+		return $this->rowUpdate(self::TABLE_NAME,
+								'type = :type',
+								[':type' => $this->type],
+								['id' => $this->id]);
+	}
+
+	/**
+     * Changes application status.
+     *
+     * @return boolean
+     */
+	public function changeStatus()
+	{
+		return $this->rowUpdate(self::TABLE_NAME,
+								'status = :status',
+								[':status' => $this->status],
+								['id' => $this->id]);
+	}
+
+	/**
+     * Changes application activity.
+     *
+     * @return boolean
+     */
+	public function changeActive()
+	{
+		return $this->rowUpdate(self::TABLE_NAME,
+								'active = :active',
+								[':active' => $this->active],
+								['id' => $this->id]);
+	}
+
+	/**
      * Removes application.
      *
      * @return integer
@@ -322,6 +393,96 @@ class Model_Application extends Db_Helper
 		$scans->id_row = $this->id;
 		$scans->clearbyDoc('application');
 		return $this->rowDelete(self::TABLE_NAME, 'id = :id', [':id' => $this->id]);
+	}
+
+	/**
+     * Copies application.
+     *
+     * @return integer
+     */
+	public function copy($type = null)
+	{
+		$app_old = $this->get();
+		$this->active = 0;
+		$this->changeActive();
+		// application
+		$this->id_user = $app_old['id_user'];
+		$this->id_university = $app_old['id_university'];
+		$this->id_campaign = $app_old['id_campaign'];
+		$this->id_docseduc = $app_old['id_docseduc'];
+		$this->id_docship = $app_old['id_docship'];
+		$this->id_app = $app_old['id'];
+		if (empty($type)) {
+			$this->type = self::TYPE_NEW;
+		} else {
+			$this->type = $type;
+		}
+		$this->campus = $app_old['campus'];
+		$this->conds = $app_old['conds'];
+		$this->remote = $app_old['remote'];
+		$id_old = $this->id;
+		$this->save();
+		if ($this->id > 0) {
+			// log
+			$applog = new ApplicationStatus();
+			$applog->id_application = $this->id;
+			$applog->create();
+			// places
+			$places = new ApplicationPlaces();
+			$places->pid = $id_old;
+			$places_arr = $places->getSpecsByApp();
+			if ($places_arr) {
+				foreach ($places_arr as $places_row) {
+					$places->pid = $this->id;
+					$places->id_user = $places_row['id_user'];
+					$places->id_spec = $places_row['id_spec'];
+					$place = $places->save();
+					// exams
+					$exams = new ApplicationPlacesExams();
+					$exams->pid = $places_row['id'];
+					$exams_arr = $exams->getExamsByPlaceFull();
+					if ($exams_arr) {
+						foreach ($exams_arr as $exams_row) {
+							$exams->pid = $place;
+							$exams->id_user = $exams_row['id_user'];
+							$exams->id_test = $exams_row['id_test'];
+							$exams->id_discipline = $exams_row['id_discipline'];
+							$exams->save();
+						}
+					}
+				}
+			}
+			// achievs
+			$ia = new ApplicationAchievs();
+			$ia->pid = $id_old;
+			$ia_arr = $ia->getByApp();
+			if ($ia_arr) {
+				foreach ($ia_arr as $ia_row) {
+					$ia->pid = $this->id;
+					$ia->id_user = $ia_row['id_user'];
+					$ia->id_achiev = $ia_row['id_achiev'];
+					$ia->save();
+				}
+			}
+			// scans
+			$scans = new Scans();
+			$scans->id_row = $id_old;
+			$scans_arr = $scans->getByDocrow('application');
+			if ($scans_arr) {
+				foreach ($scans_arr as $scans_row) {
+					$scans->id_user = $scans_row['id_user'];
+					$scans->id_doc = $scans_row['id_doc'];
+					$scans->id_row = $this->id;
+					$scans->id_scans = $scans_row['id_scans'];
+					$scans->file_data = $scans_row['file_data'];
+					$scans->file_name = $scans_row['file_name'];
+					$scans->file_type = $scans_row['file_type'];
+					$scans->file_size = $scans_row['file_size'];
+					$scans->save();
+				}
+			}
+		}
+		return $this->id;
 	}
 
 	/**

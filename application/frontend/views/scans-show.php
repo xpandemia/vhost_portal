@@ -6,8 +6,7 @@ use tinyframe\core\helpers\Files_Helper as Files_Helper;
 
 	// check data
 	if (!isset($data)) {
-		$data['error_msg'] = 'Ошибка просмотра скан-копии! Свяжитесь с администратором.';
-		Basic_Helper::redirect(APP_NAME, 401, 'Main', 'Index', $data);
+		Basic_Helper::redirect(APP_NAME, 204, 'Main', 'Index', null, nl2br("Ошибка просмотра скан-копии!\nСвяжитесь с администратором."));
 	}
 ?>
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">

@@ -44,12 +44,6 @@ class Model_Application extends Model
                                 'required' => ['default' => '', 'msg' => 'Документ об образовании обязателен для заполнения!'],
 								'success' => 'Документ об образовании заполнен верно.'
                                ],
-                'docs_ship' => [
-								'type' => 'selectlist',
-                                'class' => 'form-control',
-                                'required' => ['default' => '', 'msg' => 'Тип возврата документов обязателен для заполнения!'],
-								'success' => 'Тип возврата документов заполнен верно.'
-                               ],
                 'campus' => [
 							'type' => 'checkbox',
                             'class' => 'form-check-input',
@@ -69,6 +63,25 @@ class Model_Application extends Model
 	}
 
 	/**
+     * Shows type.
+     *
+     * @return string
+     */
+	public static function showType($type)
+	{
+		switch ($type) {
+			case Application::TYPE_NEW:
+				return '<div class="alert alert-info">Тип: <strong>'.mb_convert_case(Application::TYPE_NEW_NAME, MB_CASE_UPPER, 'UTF-8').'</strong></div>';
+			case Application::TYPE_CHANGE:
+				return '<div class="alert alert-info">Тип: <strong>'.mb_convert_case(Application::TYPE_CHANGE_NAME, MB_CASE_UPPER, 'UTF-8').'</strong></div>';
+			case Application::TYPE_RECALL:
+				return '<div class="alert alert-info">Тип: <strong>'.mb_convert_case(Application::TYPE_RECALL_NAME, MB_CASE_UPPER, 'UTF-8').'</strong></div>';
+			default:
+				return '<div class="alert alert-info">Тип: <strong>НЕИЗВЕСТНО</strong></div>';
+		}
+	}
+
+	/**
      * Shows status.
      *
      * @return string
@@ -77,19 +90,21 @@ class Model_Application extends Model
 	{
 		switch ($status) {
 			case Application::STATUS_CREATED:
-				return '<div class="alert alert-info">Состояние заявления: СОЗДАНО</div>';
+				return '<div class="alert alert-info">Состояние: <strong>'.mb_convert_case(Application::STATUS_CREATED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong></div>';
+			case Application::STATUS_SAVED:
+				return '<div class="alert alert-info">Состояние: <strong>'.mb_convert_case(Application::STATUS_SAVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong></div>';
 			case Application::STATUS_SENDED:
-				return '<div class="alert alert-primary">Состояние заявления: ОТПРАВЛЕНО</div>';
+				return '<div class="alert alert-primary">Состояние: <strong>'.mb_convert_case(Application::STATUS_SENDED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong></div>';
 			case Application::STATUS_APPROVED:
-				return '<div class="alert alert-success">Состояние заявления: ОДОБРЕНО</div>';
+				return '<div class="alert alert-success">Состояние: <strong>'.mb_convert_case(Application::STATUS_APPROVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong></div>';
 			case Application::STATUS_REJECTED:
-				return '<div class="alert alert-danger">Состояние заявления: ОТКЛОНЕНО</div>';
-			case Application::STATUS_RECALLED:
-				return '<div class="alert alert-danger">Состояние заявления: ОТОЗВАНО</div>';
+				return '<div class="alert alert-danger">Состояние: <strong>'.mb_convert_case(Application::STATUS_REJECTED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong></div>';
 			case Application::STATUS_CHANGED:
-				return '<div class="alert alert-warning">Состояние заявления: ИЗМЕНЕНО</div>';
+				return '<div class="alert alert-warning">Состояние: <strong>'.mb_convert_case(Application::STATUS_CHANGED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong></div>';
+			case Application::STATUS_RECALLED:
+				return '<div class="alert alert-danger">Состояние: <strong>'.mb_convert_case(Application::STATUS_RECALLED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong></div>';
 			default:
-				return '<div class="alert alert-warning">Состояние заявления: НЕИЗВЕСТНО</div>';
+				return '<div class="alert alert-warning">Состояние: <strong>НЕИЗВЕСТНО</strong></div>';
 		}
 	}
 
@@ -120,30 +135,26 @@ class Model_Application extends Model
 		$app->id_user = $_SESSION[APP_CODE]['user_id'];
 			$university = new Model_DictUniversity();
 			$university->code = $form['university'];
-			$row_university = $university->getByCode();
-		$app->id_university = $row_university['id'];
+			$university_row = $university->getByCode();
+		$app->id_university = $university_row['id'];
 			$campaign = new Model_AdmissionCampaign();
 			$campaign->code = $form['campaign'];
-			$row_campaign = $campaign->getByCode();
-		$app->id_campaign = $row_campaign['id'];
+			$campaign_row = $campaign->getByCode();
+		$app->id_campaign = $campaign_row['id'];
 		$app->id_docseduc = $form['docs_educ'];
 			$docship = new Model_DictDocships();
-			$docship->code = $form['docs_ship'];
-			$row_docship = $docship->getByCode();
-		$app->id_docship = $row_docship['id'];
+			$docship->code = '000000001';
+			$docship_row = $docship->getByCode();
+		$app->id_docship = $docship_row['id'];
 		$app->type = $app::TYPE_NEW;
 		$app->campus = (($form['campus'] == 'checked') ? 1 : 0);
 		$app->conds = (($form['conds'] == 'checked') ? 1 : 0);
 		$app->remote = (($form['remote'] == 'checked') ? 1 : 0);
 		$app->id = $app->save();
 		if ($app->id > 0) {
-			$app->numb = $app->generateNumb();
-			$app->changeNumb();
-				$applog = new ApplicationStatus();
-				$applog->id_application = $app->id;
-				$applog->numb = $app->numb;
-				$applog->status = $app::STATUS_CREATED;
-				$applog->save();
+			$applog = new ApplicationStatus();
+			$applog->id_application = $app->id;
+			$applog->create();
 			// set individual achievments
 			$ia = new Model_IndAchievs();
 			$ia->id_user = $_SESSION[APP_CODE]['user_id'];

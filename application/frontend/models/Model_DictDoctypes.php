@@ -26,11 +26,11 @@ class Model_DictDoctypes extends Model
 	public function getPassportsJSON() : string
 	{
 		$doc = $this->doc->getPassports();
-			foreach ($doc as $value) {
-				$doc_json[] = ['code' => $value['code'],
-								'description' => $value['description']];
-			}
-			return json_encode($doc_json);
+		foreach ($doc as $value) {
+			$doc_json[] = ['code' => $value['code'],
+							'description' => $value['description']];
+		}
+		return json_encode($doc_json);
 	}
 
 	/**
@@ -41,11 +41,11 @@ class Model_DictDoctypes extends Model
 	public function getPassportsRussianJSON() : string
 	{
 		$doc = $this->doc->getPassportsRussia();
-			foreach ($doc as $value) {
-				$doc_json[] = ['code' => $value['code'],
-								'description' => $value['description']];
-			}
-			return json_encode($doc_json);
+		foreach ($doc as $value) {
+			$doc_json[] = ['code' => $value['code'],
+							'description' => $value['description']];
+		}
+		return json_encode($doc_json);
 	}
 
 	/**
@@ -56,11 +56,11 @@ class Model_DictDoctypes extends Model
 	public function getPassportsForeignJSON() : string
 	{
 		$doc = $this->doc->getPassportsForeign();
-			foreach ($doc as $value) {
-				$doc_json[] = ['code' => $value['code'],
-								'description' => $value['description']];
-			}
-			return json_encode($doc_json);
+		foreach ($doc as $value) {
+			$doc_json[] = ['code' => $value['code'],
+							'description' => $value['description']];
+		}
+		return json_encode($doc_json);
 	}
 
 	/**
@@ -70,12 +70,16 @@ class Model_DictDoctypes extends Model
      */
 	public function getDiplomasByEducCodeJSON($code_educ) : string
 	{
-		$this->doc->code_educ = $code_educ;
-		$doc = $this->doc->getDiplomasByEducCode();
+		if (!empty($code_educ)) {
+			$this->doc->code_educ = $code_educ;
+			$doc = $this->doc->getDiplomasByEducCode();
 			foreach ($doc as $value) {
 				$doc_json[] = ['code' => $value['code'],
 								'description' => $value['description']];
 			}
 			return json_encode($doc_json);
+		} else {
+			return json_encode(null);
+		}
 	}
 }

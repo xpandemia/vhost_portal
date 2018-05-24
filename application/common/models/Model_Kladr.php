@@ -51,8 +51,9 @@ class Model_Kladr extends Db_Helper
 	{
 		$region = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
 										'kladr',
-										'level = :level',
-										[':level' => self::REGION],
+										'level = :level AND relevance = :relevance',
+										[':level' => self::REGION,
+										':relevance' => '0'],
 										'kladr_name');
 		return $region;
 	}
@@ -70,8 +71,10 @@ class Model_Kladr extends Db_Helper
 		// get area by region
 		$area = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
 										'kladr',
-										'level = :level AND code_region = :code_region',
-										[':level' => self::AREA, ':code_region' => $code_region],
+										'level = :level AND code_region = :code_region AND relevance = :relevance',
+										[':level' => self::AREA,
+										':code_region' => $code_region,
+										':relevance' => '0'],
 										'kladr_name');
 		return $area;
 	}
@@ -89,8 +92,10 @@ class Model_Kladr extends Db_Helper
 		// get city by region
 		$city = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
 										'kladr',
-										'level = :level AND code_region = :code_region',
-										[':level' => self::CITY, ':code_region' => $code_region],
+										'level = :level AND code_region = :code_region AND relevance = :relevance',
+										[':level' => self::CITY,
+										':code_region' => $code_region,
+										':relevance' => '0'],
 										'kladr_name');
 		return $city;
 	}
@@ -109,10 +114,11 @@ class Model_Kladr extends Db_Helper
 		// get location by area
 		$location = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
 											'kladr',
-											'level = :level AND code_region = :code_region AND code_area = :code_area',
+											'level = :level AND code_region = :code_region AND code_area = :code_area AND relevance = :relevance',
 											[':level' => self::LOCATION,
 											':code_region' => $code_region,
-											':code_area' => $code_area],
+											':code_area' => $code_area,
+											':relevance' => '0'],
 											'kladr_name');
 		return $location;
 	}
@@ -132,11 +138,12 @@ class Model_Kladr extends Db_Helper
 		// get location by area
 		$location = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
 											'kladr',
-											'level = :level AND code_region = :code_region AND code_area = :code_area AND code_city = :code_city',
+											'level = :level AND code_region = :code_region AND code_area = :code_area AND code_city = :code_city AND relevance = :relevance',
 											[':level' => self::LOCATION,
 											':code_region' => $code_region,
 											':code_area' => $code_area,
-											':code_city' => $code_city],
+											':code_city' => $code_city,
+											':relevance' => '0'],
 											'kladr_name');
 		return $location;
 	}
@@ -155,10 +162,11 @@ class Model_Kladr extends Db_Helper
 		// get streets by city
 		$street = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
 										'kladr',
-										'level = :level AND code_region = :code_region AND code_city = :code_city',
+										'level = :level AND code_region = :code_region AND code_city = :code_city AND relevance = :relevance',
 										[':level' => self::STREET,
 										':code_region' => $code_region,
-										':code_city' => $code_city],
+										':code_city' => $code_city,
+										':relevance' => '0'],
 										'kladr_name');
 		return $street;
 	}
@@ -178,11 +186,12 @@ class Model_Kladr extends Db_Helper
 		// get streets by location
 		$street = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
 										'kladr',
-										'level = :level AND code_region = :code_region AND code_area = :code_area AND code_location = :code_location',
+										'level = :level AND code_region = :code_region AND code_area = :code_area AND code_location = :code_location AND relevance = :relevance',
 										[':level' => self::STREET,
 										':code_region' => $code_region,
 										':code_area' => $code_area,
-										':code_location' => $code_location],
+										':code_location' => $code_location,
+										':relevance' => '0'],
 										'kladr_name');
 		return $street;
 	}

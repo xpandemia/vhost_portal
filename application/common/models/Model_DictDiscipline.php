@@ -53,7 +53,7 @@ class Model_DictDiscipline extends Db_Helper
 									'value' => $this->discipline_name
 									],
 				'campaign_code' => [
-									'required' => 0,
+									'required' => 1,
 									'insert' => 1,
 									'update' => 1,
 									'value' => $this->campaign_code
@@ -122,21 +122,6 @@ class Model_DictDiscipline extends Db_Helper
 	}
 
 	/**
-     * Changes all discipline data.
-     *
-     * @return boolean
-     */
-	public function changeAll()
-	{
-		$prepare = $this->prepareUpdate(self::TABLE_NAME, $this->rules());
-		return $this->rowUpdate(self::TABLE_NAME,
-								$prepare['fields'],
-								$prepare['params'],
-								['code' => $this->code,
-								'campaign_code' => $this->campaign_code]);
-	}
-
-	/**
      * Removes all disciplines.
      *
      * @return integer
@@ -201,19 +186,6 @@ class Model_DictDiscipline extends Db_Helper
 					$rows_ins++;
 				} else {
 					$result['error_msg'] = 'Ошибка при сохранении дисциплины с кодом " '.$this->code.'" для приемной кампании "'.$this->campaign_code.'"!';
-					return $result;
-				}
-			} else {
-				// update
-				$upd = 0;
-				if ($this->changeAll()) {
-					$log->msg = 'Изменена дисциплина с кодом "'.$this->code.'" для приемной кампании "'.$this->campaign_code.'".';
-					$log->value_old = null;
-					$log->value_new = null;
-					$log->save();
-					$upd = 1;
-				} else {
-					$result['error_msg'] = 'Ошибка при изменении дисциплины с кодом "'.$this->code.'" для приемной кампании "'.$this->campaign_code.'"!';
 					return $result;
 				}
 			}

@@ -71,7 +71,9 @@ class Controller_Application extends Controller
 			$spec_row = $spec->get($id);
 			$this->form = $this->model->setForm($spec->rules(), $spec_row);
 			$this->form['id'] = $id;
+			$this->form['type'] = $spec_row['type'];
 			$this->form['status'] = $spec_row['status'];
+			$this->form['numb'] = $spec_row['numb'];
 			return $this->view->generate('application-edit.php', 'main.php', 'Заявление', $this->form);
 		} else {
 			exit("<p><strong>Ошибка!</strong> Отсутствует идент-р заявления!</p>");

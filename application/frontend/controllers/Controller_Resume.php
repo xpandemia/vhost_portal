@@ -108,10 +108,9 @@ class Controller_Resume extends Controller
 				$this->form['id'] = $row['id'];
 				$this->form['status'] = $row['status'];
 			} else {
-				$this->form['error_msg'] = 'Ошибка при создании анкеты!';
-				Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Index', $this->form);
+				Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Index', null, 'Ошибка при получении анкеты!');
 			}
-			($this->form['status'] === $this->resume::STATUS_CREATED) ? $this->form['personal_vis'] = true : $this->form['personal_vis'] = false;
+			($this->form['status'] == $this->resume::STATUS_CREATED) ? $this->form['personal_vis'] = true : $this->form['personal_vis'] = false;
 		$this->form = $this->model->validateForm($this->form, $this->model->rules());
 		$this->form = $this->model->validateFormAdvanced($this->form);
 		$this->form = $this->model->validateAgreement($this->form);
@@ -123,8 +122,10 @@ class Controller_Resume extends Controller
 				$this->form['success_msg'] = 'Анкета успешно сохранена.';
 			}
 		} else {
-			$this->form = $this->model->setAddressReg($this->form);
-			$this->form = $this->model->setAddressRes($this->form);
+			if ($this->form['status'] != $this->resume::STATUS_CREATED) {
+				$this->form = $this->model->setAddressReg($this->form);
+				$this->form = $this->model->setAddressRes($this->form);
+			}
 			$this->form = $this->model->unsetScans($this->form);
 		}
 		$this->form = $this->model->setForeignLangs($this->form);
@@ -138,19 +139,20 @@ class Controller_Resume extends Controller
      */
 	public function actionSend()
 	{
-		$this->form = $this->model->getForm($this->model->rules(), $_POST, $_FILES);
-		$this->form = $this->model->getAddressReg($this->form);
-		$this->form = $this->model->getAddressRes($this->form);
-		$this->form = $this->model->getForeignLangs($this->form);
-			$row = $this->resume->getByUser();
-			if ($row) {
-				$this->form['id'] = $row['id'];
-				$this->form['status'] = $row['status'];
-			} else {
-				$this->form['error_msg'] = 'Ошибка при создании анкеты!';
-				Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Index', $this->form);
+		$row = $this->resume->getByUser();
+		if ($row) {
+			$this->form = $this->model->setForm($this->model->rules(), $row);
+			$this->form['id'] = $row['id'];
+			$this->form['status'] = $row['status'];
+			if (!empty($this->form['passport_type_old'])) {
+				$this->form['passport_old_yes'] = 'checked';
 			}
-			($this->form['status'] === $this->resume::STATUS_CREATED) ? $this->form['personal_vis'] = true : $this->form['personal_vis'] = false;
+			$this->form = $this->model->setAddressReg($this->form);
+			$this->form = $this->model->setAddressRes($this->form);
+			$this->form = $this->model->setForeignLangs($this->form);
+		} else {
+			Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Index', null, 'Ошибка при получении анкеты!');
+		}
 		$this->form = $this->model->send($this->form);
 		return $this->view->generate('resume.php', 'form.php', RESUME['hdr'], $this->form);
 	}

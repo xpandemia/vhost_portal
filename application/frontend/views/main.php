@@ -34,17 +34,17 @@ use common\models\Model_Application as Application;
 	echo HTML_Helper::setAlert($_SESSION[APP_CODE]['error_msg'], 'alert-danger');
 ?>
 <div class="row">
-	<div class="col text-center">
-		<h3>Схема работы</h3>
+	<div class="col text-center text-primary">
+		<h3>Схема работы (* - обязательные шаги)</h3>
 	</div>
 </div>
 <div class="row">
-	<div class="col col-sm-6 text-right text-primary"><h4>Шаг 1*: Заполните анкету <i class="fas fa-id-card"></i></h4></div>
+	<div class="col col-sm-5 text-right text-primary"><h4>Шаг 1*: Заполните анкету <i class="fas fa-id-card"></i></h4></div>
 	<?php
 		$resume = new Resume();
 		$resume->id_user = $_SESSION[APP_CODE]['user_id'];
 		$resume_row = $resume->checkByUser();
-		if ($resume_row) {
+		if ($resume_row && $resume_row['status'] != $resume::STATUS_CREATED) {
 			stepSuccess();
 		} else {
 			stepError();
@@ -52,7 +52,7 @@ use common\models\Model_Application as Application;
 	?>
 </div>
 <div class="row">
-	<div class="col col-sm-6 text-right text-primary"><h4>Шаг 2*: Документы об образовании <i class="fas fa-graduation-cap"></i></h4></div>
+	<div class="col col-sm-5 text-right text-primary"><h4>Шаг 2*: Документы об образовании <i class="fas fa-graduation-cap"></i></h4></div>
 	<?php
 		$docs = new DocsEduc();
 		$docs->id_user = $_SESSION[APP_CODE]['user_id'];
@@ -65,7 +65,7 @@ use common\models\Model_Application as Application;
 	?>
 </div>
 <div class="row">
-	<div class="col text-right text-primary"><h4>Шаг 3: Результаты ЕГЭ <i class="fas fa-table"></i></h4></div>
+	<div class="col col-sm-5 text-right text-primary"><h4>Шаг 3: Результаты ЕГЭ <i class="fas fa-table"></i></h4></div>
 	<?php
 		$ege = new Ege();
 		$ege->id_user = $_SESSION[APP_CODE]['user_id'];
@@ -78,7 +78,7 @@ use common\models\Model_Application as Application;
 	?>
 </div>
 <div class="row">
-	<div class="col text-right text-primary"><h4>Шаг 4: Индивидуальные достижения <i class="fas fa-trophy"></i></h4></div>
+	<div class="col col-sm-5 text-right text-primary"><h4>Шаг 4: Индивидуальные достижения <i class="fas fa-trophy"></i></h4></div>
 	<?php
 		$ia = new IndAchievs();
 		$ia->id_user = $_SESSION[APP_CODE]['user_id'];
@@ -92,7 +92,7 @@ use common\models\Model_Application as Application;
 </div>
 <div class="row">
 	<?php
-		if ($resume_row && $resume_row['app'] == 1) {
+		if ($resume_row && $resume_row['app'] == 1 && $resume_row['status'] != $resume::STATUS_CREATED && $resume_row['status'] != $resume::STATUS_REJECTED && $docs_arr) {
 			echo '<div class="col col-sm-1"></div>';
 			echo '<div class="col col-sm-10 text-center alert alert-success"><h5>Подача заявлений разрешена</h5></div>';
 			echo '<div class="col col-sm-1"></div>';
@@ -104,7 +104,7 @@ use common\models\Model_Application as Application;
 	?>
 </div>
 <div class="row">
-	<div class="col text-right text-primary"><h4>Шаг 5*: Заявления <i class="fas fa-file-alt"></i></h4></div>
+	<div class="col col-sm-5 text-right text-primary"><h4>Шаг 5*: Заявления <i class="fas fa-file-alt"></i></h4></div>
 	<?php
 		$app = new Application();
 		$app->id_user = $_SESSION[APP_CODE]['user_id'];
@@ -119,7 +119,7 @@ use common\models\Model_Application as Application;
 <?php
 	function stepSuccess($count_msg = null, $count = null)
 	{
-		echo '<div class="col col-sm-2 alert alert-success"><h5>Состояние шага - пройден</h5></div>';
+		echo '<div class="col col-sm-3 alert alert-success"><h5>Состояние шага - пройден</h5></div>';
 		if (empty($count_msg) || empty($count)) {
 			echo '<div class="col col-sm-3"></div>';
 			echo '<div class="col col-sm-1"></div>';
@@ -130,7 +130,7 @@ use common\models\Model_Application as Application;
 	}
 	function stepError()
 	{
-		echo '<div class="col col-sm-2 alert alert-danger"><h5>Состояние шага - не пройден</h5></div>';
+		echo '<div class="col col-sm-3 alert alert-danger"><h5>Состояние шага - не пройден</h5></div>';
 		echo '<div class="col col-sm-3"></div>';
 		echo '<div class="col col-sm-1"></div>';
 	}

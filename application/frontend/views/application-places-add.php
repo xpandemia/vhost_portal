@@ -8,8 +8,24 @@ use common\models\Model_ApplicationPlaces as ApplicationPlaces;
 
 	// check data
 	if (!isset($data)) {
-		Basic_Helper::alertGlobal('Ошибка выбора направлений подготовки! Свяжитесь с администратором.');
+		Basic_Helper::redirect(APP_NAME, 204, 'Main', 'Index', null, nl2br("Ошибка выбора направлений подготовки!\nСвяжитесь с администратором."));
 	}
+	$app = new Application();
+	$app->id = $data['pid'];
+	$app_row = $app->get();
+	// check type
+	if ($app_row['type'] == $app::TYPE_RECALL) {
+		Basic_Helper::redirect(APP_NAME, 202, APP['ctr'], 'Index', null, 'Нельзя изменять направления подготовки в заявлениях с типом <strong>'.mb_convert_case($app::TYPE_RECALL_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!');
+	}
+	// check status
+	if ($app_row['status'] != $app::STATUS_CREATED && $app_row['status'] != $app::STATUS_SAVED && $app_row['status'] != $app::STATUS_CHANGED) {
+		Basic_Helper::redirect(APP_NAME, 202, APP['ctr'], 'Index', null, 'Изменять направления подготовки можно только в заявлениях с состоянием: <strong>'.mb_convert_case($app::STATUS_CREATED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_SAVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_CHANGED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!');
+	}
+	$specs = new ApplicationPlaces();
+	$specs->pid = $data['pid'];
+	$docs = new DocsEduc();
+	$docs->id = $app_row['id_docseduc'];
+	$docs_row = $docs->get();
 ?>
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
 	<form enctype="multipart/form-data" action="<?php echo Basic_Helper::appUrl('ApplicationSpec', 'SavePlaces'); ?>" method="post" id="form_app_places" novalidate>
@@ -18,33 +34,122 @@ use common\models\Model_ApplicationPlaces as ApplicationPlaces;
 			<?php
 				echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
 				echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
-				echo HTML_Helper::setSubmit('btn btn-success', 'btn_save', 'Выбрать');
-				echo HTML_Helper::setHrefButton('Application', 'Edit/?id='.$data['pid'], 'btn btn-warning', 'Отмена');
 			?>
+			<div class="col">
+				<?php
+					echo HTML_Helper::setButton('btn btn-success', 'btn_filter_apply', 'Применить фильтр');
+					echo HTML_Helper::setButton('btn btn-warning', 'btn_filter_cancel', 'Отменить фильтр');
+				?>
+			</div>
+			<div class="col">
+				<p></p>
+			</div>
+			<div class="form-group row">
+				<?php
+					// filter_speciality
+					if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
+						$speciality_arr = $specs->getSpecialityFirstForApp();
+					} else {
+						$speciality_arr = $specs->getSpecialitySecondForApp();
+					}
+					if ($speciality_arr) {
+						echo '<div class="col col-sm-3">';
+						echo '<label class="font-weight-bold small" for="filter_speciality">Специальность/профиль</label>';
+						echo '</div>';
+						echo '<div class="col col-sm-9">';
+						echo '<select class="form-control" id="filter_speciality" name="filter_speciality">';
+						echo '<option value="" selected></option>';
+						foreach ($speciality_arr as $speciality_row) {
+							echo '<option value="'.$speciality_row['speciality_name'].'">'.$speciality_row['speciality_name'].'</option>';
+						}
+						echo '</select>';
+						echo '</div>';
+					}
+				?>
+			</div>
+			<div class="form-group row">
+				<?php
+					// filter_finance
+					if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
+						$finance_arr = $specs->getFinanceFirstForApp();
+					} else {
+						$finance_arr = $specs->getFinanceSecondForApp();
+					}
+					if ($finance_arr) {
+						echo '<div class="col col-sm-1">';
+						echo '<label class="font-weight-bold small" for="filter_finance">Тип оплаты</label>';
+						echo '</div>';
+						echo '<div class="col col-sm-3">';
+						echo '<select class="form-control" id="filter_finance" name="filter_finance">';
+						echo '<option value="" selected></option>';
+						foreach ($finance_arr as $finance_row) {
+							echo '<option value="'.$finance_row['finance_name'].'">'.$finance_row['finance_name'].'</option>';
+						}
+						echo '</select>';
+						echo '</div>';
+					}
+					// filter_eduform
+					if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
+						$eduform_arr = $specs->getEduformFirstForApp();
+					} else {
+						$eduform_arr = $specs->getEduformSecondForApp();
+					}
+					if ($eduform_arr) {
+						echo '<div class="col col-sm-1">';
+						echo '<label class="font-weight-bold small" for="filter_eduform">Форма обучения</label>';
+						echo '</div>';
+						echo '<div class="col col-sm-2">';
+						echo '<select class="form-control" id="filter_eduform" name="filter_eduform">';
+						echo '<option value="" selected></option>';
+						foreach ($eduform_arr as $eduform_row) {
+							echo '<option value="'.$eduform_row['eduform_name'].'">'.$eduform_row['eduform_name'].'</option>';
+						}
+						echo '</select>';
+						echo '</div>';
+					}
+					// filter_edulevel
+					if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
+						$edulevel_arr = $specs->getEdulevelFirstForApp();
+					} else {
+						$edulevel_arr = $specs->getEdulevelSecondForApp();
+					}
+					if ($edulevel_arr) {
+						echo '<div class="col col-sm-2">';
+						echo '<label class="font-weight-bold small" for="filter_edulevel">Уровень обучения</label>';
+						echo '</div>';
+						echo '<div class="col col-sm-3">';
+						echo '<select class="form-control" id="filter_edulevel" name="filter_edulevel">';
+						echo '<option value="" selected></option>';
+						foreach ($edulevel_arr as $edulevel_row) {
+							echo '<option value="'.$edulevel_row['edulevel_name'].'">'.$edulevel_row['edulevel_name'].'</option>';
+						}
+						echo '</select>';
+						echo '</div>';
+					}
+				?>
+			</div>
+			<div class="col">
+				<?php
+					echo HTML_Helper::setSubmit('btn btn-success', 'btn_save', 'Выбрать');
+					echo HTML_Helper::setHrefButton('Application', 'Edit/?id='.$data['pid'], 'btn btn-warning', 'Отмена');
+				?>
+			</div>
 		</div>
 		<div class="form-group">
 			<input type="hidden" id="pid" name="pid" value="<?php echo $data['pid']; ?>"/>
 		</div>
 		<div class="form-group">
-			<table class="table table-bordered table-hover">
+			<table class="table table-bordered table-hover" id="table_specs" name="table_specs">
 				<thead class="thead-dark">
 					<tr>
-						<th></th>
-						<th>Специальность</th>
+						<th valign="top"></th>
+						<th valign="top">Специальность/профиль</th>
 						<th>Тип оплаты</th>
 						<th>Форма обучения</th>
 						<th>Уровень обучения</th>
 					</tr>
 			    </thead>
 			<?php
-				$app = new Application();
-				$app->id = $data['pid'];
-				$app_row = $app->get();
-				$specs = new ApplicationPlaces();
-				$specs->pid = $data['pid'];
-				$docs = new DocsEduc();
-				$docs->id = $app_row['id_docseduc'];
-				$docs_row = $docs->get();
 				if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
 					$specs_arr = $specs->getSpecsFirstForApp();
 				} else {
@@ -66,3 +171,58 @@ use common\models\Model_ApplicationPlaces as ApplicationPlaces;
 		</div>
 	</form>
 </div>
+
+<script>
+	$(document).ready(function(){
+		formEvents();
+	});
+</script>
+
+<script>
+	// form events
+	function formEvents()
+	{
+		// filter apply click
+		$('#btn_filter_apply').click(function() {
+			var filter_speciality, filter_finance, filter_eduform, filter_edulevel, table, tr, td, finance, eduform, edulevel, i;
+			filter_speciality = $('#filter_speciality').val().toUpperCase();
+			filter_finance = $('#filter_finance').val().toUpperCase();
+			filter_eduform = $('#filter_eduform').val().toUpperCase();
+			filter_edulevel = $('#filter_edulevel').val().toUpperCase();
+			table = document.getElementById('table_specs');
+			tr = table.getElementsByTagName("tr");
+			for (i = 0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[0];
+				speciality = tr[i].getElementsByTagName("td")[1];
+				finance = tr[i].getElementsByTagName("td")[2];
+				eduform = tr[i].getElementsByTagName("td")[3];
+				edulevel = tr[i].getElementsByTagName("td")[4];
+				if (td) {
+					// use filters
+					if (filter_speciality != '' || filter_finance != '' || filter_eduform != '' || filter_edulevel != '') {
+						if (speciality.textContent.toUpperCase().indexOf(filter_speciality) == 0 && finance.textContent.toUpperCase().indexOf(filter_finance) == 0 && eduform.textContent.toUpperCase().indexOf(filter_eduform) == 0 && edulevel.textContent.toUpperCase().indexOf(filter_edulevel) == 0) {
+							tr[i].style.display = "";
+					    } else {
+							tr[i].style.display = "none";
+					    }
+					} else {
+						tr[i].style.display = "";
+					}
+				}
+			}
+		});
+		// filter cancel click
+		$('#btn_filter_cancel').click(function() {
+			$('#filter_speciality').val('');
+			$('#filter_finance').val('');
+			$('#filter_eduform').val('');
+			$('#filter_edulevel').val('');
+			var table, tr, i;
+			table = document.getElementById('table_specs');
+			tr = table.getElementsByTagName("tr");
+			for (i = 0; i < tr.length; i++) {
+				tr[i].style.display = "";
+			}
+		});
+	}
+</script>

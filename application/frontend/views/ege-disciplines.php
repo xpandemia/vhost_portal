@@ -5,7 +5,7 @@ use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 
 	// check data
 	if (!isset($data)) {
-		Basic_Helper::alertGlobal('Ошибка дисциплин ЕГЭ! Свяжитесь с администратором.');
+		Basic_Helper::redirect(APP_NAME, 204, 'Main', 'Index', null, nl2br("Ошибка дисциплин ЕГЭ!\nСвяжитесь с администратором."));
 	}
 ?>
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">

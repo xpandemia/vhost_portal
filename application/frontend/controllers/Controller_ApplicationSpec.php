@@ -73,13 +73,17 @@ class Controller_ApplicationSpec extends Controller
 	public function actionSave()
 	{
 		$id = htmlspecialchars($_POST['id']);
+		$type = htmlspecialchars($_POST['type']);
 		$status = htmlspecialchars($_POST['status']);
-		$this->form = $this->model->getForm($this->model->rules(), $_POST, $_FILES);
-		$this->form = $this->model->getExams($this->form);
-		$this->form = $this->model->validateForm($this->form, $this->model->rules());
-		$this->form = $this->model->validateFormAdvanced($this->form, $id);
+		$numb = htmlspecialchars($_POST['numb']);
+			$this->form = $this->model->getForm($this->model->rules(), $_POST, $_FILES);
+			$this->form = $this->model->getExams($this->form);
+				$this->form = $this->model->validateForm($this->form, $this->model->rules());
+				$this->form = $this->model->validateFormAdvanced($this->form, $id);
 		$this->form['id'] = $id;
+		$this->form['type'] = $type;
 		$this->form['status'] = $status;
+		$this->form['numb'] = $numb;
 		if ($this->form['validate']) {
 			$this->form = $this->model->check($this->form);
 			if (!$this->form['error_msg']) {
@@ -88,6 +92,7 @@ class Controller_ApplicationSpec extends Controller
 				$this->form = $this->model->setForm($this->model->rules(), $this->model->get($id));
 				$this->form['id'] = $id;
 				$this->form['status'] = $status;
+				Basic_Helper::msgReset();
 				$this->form['success_msg'] = 'Заявление успешно сохранено!';
 				return $this->view->generate('application-edit.php', 'main.php', 'Заявление', $this->form);
 			}
@@ -95,6 +100,72 @@ class Controller_ApplicationSpec extends Controller
 			$this->form = $this->model->unsetScans($this->form);
 		}
 		return $this->view->generate('application-edit.php', 'main.php', 'Заявление', $this->form);
+	}
+
+	/**
+     * Sends application.
+     *
+     * @return mixed
+     */
+	public function actionSend()
+	{
+		if (isset($_GET['id']) && !empty($_GET['id'])) {
+			$id = htmlspecialchars($_GET['id']);
+			$spec_row = $this->model->get($id);
+			$this->form = $this->model->setForm($this->model->rules(), $spec_row);
+			$this->form['id'] = $id;
+			$this->form['type'] = $spec_row['type'];
+			$this->form['status'] = $spec_row['status'];
+			$this->form['numb'] = $spec_row['numb'];
+			$this->form = $this->model->send($this->form);
+			return $this->view->generate('application-edit.php', 'main.php', 'Заявление', $this->form);
+		} else {
+			Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Index', null, 'Отсутствует идент-р заявления!');
+		}
+	}
+
+	/**
+     * Changes application.
+     *
+     * @return mixed
+     */
+	public function actionChange()
+	{
+		if (isset($_GET['id']) && !empty($_GET['id'])) {
+			$id = htmlspecialchars($_GET['id']);
+			$spec_row = $this->model->get($id);
+			$this->form = $this->model->setForm($this->model->rules(), $spec_row);
+			$this->form['id'] = $id;
+			$this->form['type'] = $spec_row['type'];
+			$this->form['status'] = $spec_row['status'];
+			$this->form['numb'] = $spec_row['numb'];
+			$this->form = $this->model->change($this->form);
+			return $this->view->generate('application-edit.php', 'main.php', 'Заявление', $this->form);
+		} else {
+			Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Index', null, 'Отсутствует идент-р заявления!');
+		}
+	}
+
+	/**
+     * Recalls application.
+     *
+     * @return mixed
+     */
+	public function actionRecall()
+	{
+		if (isset($_GET['id']) && !empty($_GET['id'])) {
+			$id = htmlspecialchars($_GET['id']);
+			$spec_row = $this->model->get($id);
+			$this->form = $this->model->setForm($this->model->rules(), $spec_row);
+			$this->form['id'] = $id;
+			$this->form['type'] = $spec_row['type'];
+			$this->form['status'] = $spec_row['status'];
+			$this->form['numb'] = $spec_row['numb'];
+			$this->form = $this->model->recall($this->form);
+			return $this->view->generate('application-edit.php', 'main.php', 'Заявление', $this->form);
+		} else {
+			Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Index', null, 'Отсутствует идент-р заявления!');
+		}
 	}
 
 	/**

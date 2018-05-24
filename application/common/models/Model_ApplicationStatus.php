@@ -3,6 +3,7 @@
 namespace common\models;
 
 use tinyframe\core\helpers\Db_Helper as Db_Helper;
+use common\models\Model_Application as Application;
 
 class Model_ApplicationStatus extends Db_Helper
 {
@@ -78,6 +79,26 @@ class Model_ApplicationStatus extends Db_Helper
 								'value' => $this->dt_created
 								]
 				];
+	}
+
+	/**
+     * Creates application status log data.
+     *
+     * @return integer
+     */
+	public function create()
+	{
+		$app = new Application();
+		$app->id = $this->id_application;
+		$app_row = $app->get();
+		if ($app_row) {
+			$this->numb = $app_row['numb'];
+			$this->numb1s = $app_row['numb1s'];
+			$this->status = $app_row['status'];
+			return $this->save();
+		} else {
+			return 0;
+		}
 	}
 
 	/**

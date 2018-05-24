@@ -107,6 +107,19 @@ class Model_ApplicationAchievs extends Db_Helper
 	}
 
 	/**
+     * Gets application achievments by application.
+     *
+     * @return array
+     */
+	public function getByApp()
+	{
+		return $this->rowSelectAll('*',
+									self::TABLE_NAME,
+									'pid = :pid',
+									[':pid' => $this->pid]);
+	}
+
+	/**
      * Saves application achievments data to database.
      *
      * @return integer

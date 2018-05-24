@@ -134,8 +134,8 @@ class Controller_EgeDisciplines extends Controller
 		$this->form = $this->model->validateForm($this->form, $this->model->rules());
 		if ($this->form['validate']) {
 			$this->form = $this->model->check($this->form);
-			if (!$this->form['error_msg']) {
-				return Basic_Helper::redirect('Дисциплины ЕГЭ', 200, EGE_DSP['ctr'], 'Index/?pid='.$this->form['pid']);
+			if (!$_SESSION[APP_CODE]['error_msg']) {
+				return Basic_Helper::redirect('Дисциплины ЕГЭ', 200, EGE_DSP['ctr'], 'Index/?pid='.$this->form['pid'], $_SESSION[APP_CODE]['success_msg'], $_SESSION[APP_CODE]['error_msg']);
 			}
 		}
 		return $this->view->generate('ege-disciplines-add.php', 'form.php', EGE_DSP['hdr'], $this->form);
