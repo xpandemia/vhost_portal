@@ -1,3 +1,71 @@
+0.2.5
+“лучшениЯ
+    - схема работы
+        - шаги как ссылки
+    - иностранные Языки
+        - кнопки уменьшены: "„обавить иностранный Язык" -> "„обавить", "“далить иностранный Язык" -> "“далить"
+    - заЯвлениЯ
+        - контроль флага "Џрошу разрешить сдачу вступительных испытаний с использованием дистанционных технологий (только длЯ поступающих на платную основу заочной формы обучениЯ)" (все выбранные направлениЯ подготовки должны пройти проверку)
+    - направлениЯ подготовки
+        - заполнЯетсЯ учебный план (поле curriculum - кодом учебного плана) - длЯ упрощениЯ считываниЯ в 1‘
+        - сортировка по наименованию фильтров и самого списка
+€справлениЯ
+    - система
+        - привратник выдает 404 на "{HOST}/frontend" - длЯ умников, которые любЯт вводить в адресную строку что-то свое
+        - привратник выдает 404 на "{HOST}/backend" - длЯ умников, которые любЯт вводить в адресную строку что-то свое
+        - при удалении записи название группы документов выводитсЯ на русском Языке
+    - анкета
+        - состоЯние "‘оздана" переименовано в "ЌоваЯ"
+    - заЯвлениЯ
+        - состоЯние "‘оздано" переименовано в "Ќовое"
+        - контроль заполнениЯ направлений подготовки при сохранении
+    - направлениЯ подготовки
+        - контроль вступительных испытаний
+            - бакалавриат/специалитет - только "…ѓќ" и "ќкзамен"
+            - все остальные - вообще нет вступительных испытаний
+        - контроль ‘ЏЋ
+            - программа обучениЯ (dict_speciality.eduprogram_name)
+                "среднее (основное,общее)" - на базе 9 классов (тип образованиЯ - "среднее (основное, общее)", вид документа - "Ђттестат об основном общем образовании")
+                "" - на базе 11 классов (тип образованиЯ - "‘реднее общее", вид документа - "Ђттестат")
+        - отсев льгот при создании списка (флаг "Џрием лиц, имеющих особое право" (dict_speciality.group_beneficiary))
+        - отсев целевиков при создании списка (основание поступлениЯ - "–елевой прием" (dict_speciality.finance_name))
+        - поЯснительное сообщение в заголовке
+        - кнопки "‚ыбрать", "Ћтменить" рЯдом с заголовком
+        - флаг "”ильтры" (показывает/скрывает фильтры)
+        - кнопка "Џрименить фильтр" переименована в "Џрименить фильтры" и размещена под фильтрами
+        - кнопка "Ћтменить фильтр" переименована в "Ћтменить фильтры" и размещена под фильтрами
+„анные
+    - изменена структура таблицы dict_speciality ("+" - новые полЯ)
+        `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'уникальный идент-р',
+        `campaign_code` varchar(9) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'код приемной кампании',
+        +`dt_begin` datetime NOT NULL COMMENT 'дата начала приема',
+        +`dt_end` datetime NOT NULL COMMENT 'дата окончаниЯ приема',
+        +`curriculum_code` varchar(9) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'код учебного плана',
+        +`curriculum_name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'наименование плана приема',
+        `faculty_code` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'код факультета',
+        `faculty_name` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'наименование факультета',
+        `speciality_code` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'код специальности',
+        `speciality_name` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'наименование специальности',
+        `speciality_human_code` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'код специальности (естественный)',
+        `profil_code` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'код профилЯ обучениЯ',
+        `profil_name` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'наименование профилЯ обучениЯ',
+        `edulevel_code` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'код уровнЯ обучениЯ',
+        `edulevel_name` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'наименование уровнЯ обучениЯ',
+        `eduform_code` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'код формы обучениЯ',
+        `eduform_name` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'наименование формы обучениЯ',
+        `eduprogram_code` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'код программы обучениЯ',
+        `eduprogram_name` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'наименование программы обучениЯ',
+        `finance_code` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'код типа оплаты',
+        `finance_name` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'наименование типа оплаты',
+        `group_code` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'код конкурсной группы',
+        `group_name` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'наименование конкурсной группы',
+        +`group_beneficiary` tinyint(1) DEFAULT NULL COMMENT 'льготники длЯ конкурсной группы (да/нет)',
+        `detail_group_code` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'код плана приема',
+        `detail_group_name` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'наименование плана приема',
+        `receipt_allowed` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'прием разрешЮн (да/нет)',
+        `archive` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'архив (да/нет)'
+    - поле active в таблице dictionary_manager (длЯ отключениЯ ненужных)
+
 0.2.4
 “лучшениЯ
     - система

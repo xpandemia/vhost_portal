@@ -15,7 +15,7 @@ use common\models\Model_Application as Application;
 ?>
 <div class="row">
 	<div class="col text-primary"><h3>Добро пожаловать, <?php echo $_SESSION[APP_CODE]['user_name']; ?>!</h3></div>
-	<div class="col text-right"><img src="/images/new-bsulogo.jpg" alt="Logo" style="width:60px;heigth:90px"></div>
+	<div class="col text-right"><img src="/images/bsulogo.jpg" alt="Logo" style="width:60px;heigth:90px"></div>
 </div>
 <div class="row">
 	<div class="col">
@@ -39,7 +39,9 @@ use common\models\Model_Application as Application;
 	</div>
 </div>
 <div class="row">
-	<div class="col col-sm-5 text-right text-primary"><h4>Шаг 1*: Заполните анкету <i class="fas fa-id-card"></i></h4></div>
+	<div class="col col-sm-5 text-right text-primary">
+		<h4><a href="<?php echo Basic_Helper::appUrl('Main', RESUME['ctr']); ?>">Шаг 1*: Заполните анкету <i class="fas fa-id-card"></i></a></h4>
+	</div>
 	<?php
 		$resume = new Resume();
 		$resume->id_user = $_SESSION[APP_CODE]['user_id'];
@@ -52,7 +54,9 @@ use common\models\Model_Application as Application;
 	?>
 </div>
 <div class="row">
-	<div class="col col-sm-5 text-right text-primary"><h4>Шаг 2*: Документы об образовании <i class="fas fa-graduation-cap"></i></h4></div>
+	<div class="col col-sm-5 text-right text-primary">
+		<h4><a href="<?php echo Basic_Helper::appUrl('Main', DOCS_EDUC['ctr']); ?>">Шаг 2*: Документы об образовании <i class="fas fa-graduation-cap"></i></a></h4>
+	</div>
 	<?php
 		$docs = new DocsEduc();
 		$docs->id_user = $_SESSION[APP_CODE]['user_id'];
@@ -65,7 +69,9 @@ use common\models\Model_Application as Application;
 	?>
 </div>
 <div class="row">
-	<div class="col col-sm-5 text-right text-primary"><h4>Шаг 3: Результаты ЕГЭ <i class="fas fa-table"></i></h4></div>
+	<div class="col col-sm-5 text-right text-primary">
+		<h4><a href="<?php echo Basic_Helper::appUrl('Main', EGE['ctr']); ?>">Шаг 3: Результаты ЕГЭ <i class="fas fa-table"></i></a></h4>
+	</div>
 	<?php
 		$ege = new Ege();
 		$ege->id_user = $_SESSION[APP_CODE]['user_id'];
@@ -78,7 +84,9 @@ use common\models\Model_Application as Application;
 	?>
 </div>
 <div class="row">
-	<div class="col col-sm-5 text-right text-primary"><h4>Шаг 4: Индивидуальные достижения <i class="fas fa-trophy"></i></h4></div>
+	<div class="col col-sm-5 text-right text-primary">
+		<h4><a href="<?php echo Basic_Helper::appUrl('Main', IND_ACHIEVS['ctr']); ?>">Шаг 4: Индивидуальные достижения <i class="fas fa-trophy"></i></a></h4>
+	</div>
 	<?php
 		$ia = new IndAchievs();
 		$ia->id_user = $_SESSION[APP_CODE]['user_id'];
@@ -104,7 +112,9 @@ use common\models\Model_Application as Application;
 	?>
 </div>
 <div class="row">
-	<div class="col col-sm-5 text-right text-primary"><h4>Шаг 5*: Заявления <i class="fas fa-file-alt"></i></h4></div>
+	<div class="col col-sm-5 text-right text-primary">
+		<h4><a href="<?php echo Basic_Helper::appUrl('Main', APP['ctr']); ?>">Шаг 5*: Заявления <i class="fas fa-file-alt"></i></a></h4>
+	</div>
 	<?php
 		$app = new Application();
 		$app->id_user = $_SESSION[APP_CODE]['user_id'];

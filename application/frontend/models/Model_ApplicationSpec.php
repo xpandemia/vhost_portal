@@ -185,7 +185,7 @@ class Model_ApplicationSpec extends Model
 					$spec_row = $spec->getById();
 					if ($spec_row) {
 						$place = $spec_row['speciality_code'].((!empty($spec_row['profil_code'])) ? $spec_row['profil_code'] : '');
-						array_push($spec_arr, [$spec_row['id'], $spec_row['campaign_code'], $spec_row['group_code']]);
+						array_push($spec_arr, [$spec_row['id'], $spec_row['campaign_code'], $spec_row['curriculum_code'], $spec_row['group_code'], $spec_row['edulevel_code']]);
 						if (array_search($place, $spec_unique_arr) === false) {
 							array_push($spec_unique_arr, $place);
 						}
@@ -204,43 +204,47 @@ class Model_ApplicationSpec extends Model
 				// set specs
 				foreach ($spec_arr as $spec_row) {
 					$places->id_spec = $spec_row[0];
+					$places->curriculum = $spec_row[2];
 					$id = $places->save();
 					if ($id > 0) {
 						// get entrance exams
-						$exams = new Model_DictEntranceExams();
-						$exams->campaign_code = $spec_row[1];
-						$exams->group_code = $spec_row[2];
-						$exams_arr = $exams->getByCampaignGroup();
-						if ($exams_arr) {
-							// set entrance exams
-							$enter = new ApplicationPlacesExams();
-							$enter->pid = $id;
-							foreach ($exams_arr as $exams_row) {
-								$disc = new Model_DictDiscipline();
-								$disc->code = $exams_row['exam_code'];
-								$disc->campaign_code = $spec_row[1];
-								$disc_row = $disc->getOne();
-									$enter->id_discipline = $disc_row['id'];
-								$ege = new Model_EgeDisciplines();
-								$ege->code_discipline = $exams_row['exam_code'];
-								$ege_row = $ege->checkDiscipline();
-									$test = new Model_DictTestingScopes();
-								if ($ege_row) {
-									// ege
-									$test_row = $test->getEge();
-								} else {
-									// exam
-									$test_row = $test->getExam();
+						// bachelor and specialist only
+						if ($spec_row[4] == '000000001' || $spec_row[4] == '000000002') {
+							$exams = new Model_DictEntranceExams();
+							$exams->campaign_code = $spec_row[1];
+							$exams->group_code = $spec_row[3];
+							$exams_arr = $exams->getByCampaignGroup();
+							if ($exams_arr) {
+								// set entrance exams
+								$enter = new ApplicationPlacesExams();
+								$enter->pid = $id;
+								foreach ($exams_arr as $exams_row) {
+									$disc = new Model_DictDiscipline();
+									$disc->code = $exams_row['exam_code'];
+									$disc->campaign_code = $spec_row[1];
+									$disc_row = $disc->getOne();
+										$enter->id_discipline = $disc_row['id'];
+									$ege = new Model_EgeDisciplines();
+									$ege->code_discipline = $exams_row['exam_code'];
+									$ege_row = $ege->checkDiscipline();
+										$test = new Model_DictTestingScopes();
+									if ($ege_row) {
+										// ege
+										$test_row = $test->getEge();
+									} else {
+										// exam
+										$test_row = $test->getExam();
+									}
+									$enter->id_test = $test_row['id'];
+									if ($enter->save() == 0) {
+										$form['error_msg'] = 'Ошибка сохранения вступительного испытания с ID '.$enter->id_discipline.' для направления подготовки с ID '.$id.'!';
+										return $form;
+									}
 								}
-								$enter->id_test = $test_row['id'];
-								if ($enter->save() == 0) {
-									$form['error_msg'] = 'Ошибка сохранения вступительного испытания с ID '.$enter->id_discipline.' для направления подготовки с ID '.$id.'!';
-									return $form;
-								}
+							} else {
+								$form['error_msg'] = 'Ошибка при получении вступительных испытаний направления подготовки с ID '.$value.'!';
+								return $form;
 							}
-						} else {
-							$form['error_msg'] = 'Ошибка при получении вступительных испытаний направления подготовки с ID '.$value.'!';
-							return $form;
 						}
 					} else {
 						$form['error_msg'] = 'Ошибка при сохранении направления подготовки с ID '.$spec_row[0].'!';
@@ -301,6 +305,9 @@ class Model_ApplicationSpec extends Model
 					}
 				}
 			}
+		} else {
+			$form['error_msg'] = 'Сохранение невозможно - направления подготовки не выбраны!';
+			return $form;
 		}
 		/* application */
 		$app->id = $form['id'];
@@ -313,7 +320,7 @@ class Model_ApplicationSpec extends Model
 		$app->campus = (($form['campus'] == 'checked') ? 1 : 0);
 		$app->conds = (($form['conds'] == 'checked') ? 1 : 0);
 		// check remote
-		if ($places->getByAppForPayedOnline()) {
+		if (count($places->getByAppForPayedOnline()) == 0 || count($places->getByAppForPayedOnline()) == count($places->getSpecsByApp())) {
 			$app->remote = (($form['remote'] == 'checked') ? 1 : 0);
 		} else {
 			$app->remote = 0;

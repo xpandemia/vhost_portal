@@ -26,6 +26,8 @@ class Model_DocsEduc extends Db_Helper
 	public $dt_created;
 	public $dt_updated;
 
+	const CLASSES_9 = ['000000088'];
+	const CLASSES_11 = ['000000026'];
 	const HIGH_BEFORE = ['000000026', '000000046', '000000048', '000000088'];
 	const HIGH_AFTER = ['000000022', '000000023', '000000024', '000000025'];
 

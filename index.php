@@ -2,7 +2,7 @@
 
 define('APP_NAME', 'Портал абитуриента');
 define('APP_CODE', 'portalbsu'); // MUST BE UNIQUE
-define('APP_VERSION', '0.2.4');
+define('APP_VERSION', '0.2.5');
 
 # Портал абитуриента
 # Build with curiosity by Fiben on Tinyframe 0.2.0
@@ -119,7 +119,15 @@ switch ($_SERVER['REQUEST_URI']) {
 		$behavior = 'frontend';
 		require_once ROOT_DIR.'/application/frontend/web/index.php';
 		break;
+	case '/frontend':
+		$behavior = 'frontend';
+		require_once ROOT_DIR.'/application/frontend/web/index.php';
+		break;
 	case '/admin':
+		$behavior = 'backend';
+		require_once ROOT_DIR.'/application/backend/web/index.php';
+		break;
+	case '/backend':
 		$behavior = 'backend';
 		require_once ROOT_DIR.'/application/backend/web/index.php';
 		break;

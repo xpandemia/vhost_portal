@@ -648,7 +648,7 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 										'help' => ADRRES['help']]);
 		/* foreign languages */
 		echo Form_Helper::setFormHeaderSub('Знание иностранных языков');
-		echo HTML_Helper::setButton('btn btn-success', 'btn_lang_add', 'Добавить иностранный язык');
+		echo HTML_Helper::setButton('btn btn-success', 'btn_lang_add', 'Добавить');
 		echo '<p></p>';
 		$i = 1;
 		foreach (array_filter($data, function ($var)
@@ -679,7 +679,7 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 			}
 			$i++;
 		}
-		echo HTML_Helper::setButton('btn btn-danger', 'btn_lang_remove', 'Удалить иностранный язык');
+		echo HTML_Helper::setButton('btn btn-danger', 'btn_lang_remove', 'Удалить');
 		/* scans */
 		echo Form_Helper::setFormHeaderSub('Скан-копии');
 		echo Form_Helper::setFormFileListDB(['required' => 'required',

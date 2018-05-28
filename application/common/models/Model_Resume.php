@@ -16,7 +16,7 @@ class Model_Resume extends Db_Helper
 	const TABLE_NAME = 'resume';
 
 	const STATUS_CREATED = 0;
-	const STATUS_CREATED_NAME = 'Создана';
+	const STATUS_CREATED_NAME = 'Новая';
 	const STATUS_SAVED = 1;
 	const STATUS_SAVED_NAME = 'Сохранена';
     const STATUS_SENDED = 2;

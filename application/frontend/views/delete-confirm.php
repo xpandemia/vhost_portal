@@ -11,7 +11,7 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 ?>
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
 	<form action="<?php echo Basic_Helper::appUrl($data['ctr'], 'Delete'); ?>" method="post" id="form_del_confirm" novalidate>
-		<legend class="font-weight-bold" align="center">Вы действительно хотите удалить запись <?php echo $data['ctr']; ?> № <?php echo $data['id']; ?> ?</legend>
+		<legend class="font-weight-bold" align="center">Вы действительно хотите удалить запись "<?php echo $data['hdr']; ?>" № <?php echo $data['id']; ?> ?</legend>
 		<div class="form-group">
 			<input type="hidden" id="id" name="id" value="<?php echo $data['id']; ?>"/>
 			<input type="hidden" id="pid" name="pid" value="<?php echo $data['pid']; ?>"/>

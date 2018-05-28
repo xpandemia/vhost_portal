@@ -76,7 +76,7 @@ class Controller_Application extends Controller
 			$this->form['numb'] = $spec_row['numb'];
 			return $this->view->generate('application-edit.php', 'main.php', 'Заявление', $this->form);
 		} else {
-			exit("<p><strong>Ошибка!</strong> Отсутствует идент-р заявления!</p>");
+			return Basic_Helper::redirect(APP_NAME, 202, APP['ctr'], 'Index', null, 'Отсутствует идент-р заявления!');
 		}
 	}
 

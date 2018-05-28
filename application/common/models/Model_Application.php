@@ -25,7 +25,7 @@ class Model_Application extends Db_Helper
 	const TYPE_RECALL_NAME = 'Заявление на отзыв документов';
 
 	const STATUS_CREATED = 0;
-	const STATUS_CREATED_NAME = 'Создано';
+	const STATUS_CREATED_NAME = 'Новое';
     const STATUS_SENDED = 1;
     const STATUS_SENDED_NAME = 'Отправлено';
     const STATUS_APPROVED = 2;
