@@ -76,7 +76,11 @@ class Model_Kladr extends Db_Helper
 								'kladr_name' => $value['kladr_name'],
 								'kladr_abbr' => $value['kladr_abbr']];
 			}
-			return json_encode($area_json);
+			if (!empty($area_json)) {
+				return json_encode($area_json);
+			} else {
+				return json_encode(null);
+			}
 		} else {
 			return json_encode(null);
 		}
@@ -106,7 +110,47 @@ class Model_Kladr extends Db_Helper
 								'kladr_name' => $value['kladr_name'],
 								'kladr_abbr' => $value['kladr_abbr']];
 			}
-			return json_encode($city_json);
+			if (!empty($city_json)) {
+				return json_encode($city_json);
+			} else {
+				return json_encode(null);
+			}
+		} else {
+			return json_encode(null);
+		}
+	}
+
+	/**
+     * Gets locations by region JSON.
+     *
+     * @return JSON
+     */
+	public function getLocationByRegionJSON($region) : string
+	{
+		if (!empty($region)) {
+			// get kladr
+			$kladr = $this->kladr->getByCode($region);
+			$code_region = $kladr['code_region'];
+			// get cities by region
+			$city = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
+											'kladr',
+											'level = :level AND code_region = :code_region AND code_area = :code_area AND code_city = :code_city AND relevance = :relevance',
+											[':level' => self::LOCATION,
+											':code_region' => $code_region,
+											':code_area' => '0',
+											':code_city' => '0',
+											':relevance' => '0'],
+											'kladr_name');
+			foreach ($city as $value) {
+				$city_json[] = ['kladr_code' => $value['kladr_code'],
+								'kladr_name' => $value['kladr_name'],
+								'kladr_abbr' => $value['kladr_abbr']];
+			}
+			if (!empty($city_json)) {
+				return json_encode($city_json);
+			} else {
+				return json_encode(null);
+			}
 		} else {
 			return json_encode(null);
 		}
@@ -140,7 +184,11 @@ class Model_Kladr extends Db_Helper
 									'kladr_name' => $value['kladr_name'],
 									'kladr_abbr' => $value['kladr_abbr']];
 			}
-			return json_encode($location_json);
+			if (!empty($location_json)) {
+				return json_encode($location_json);
+			} else {
+				return json_encode(null);
+			}
 		} else {
 			return json_encode(null);
 		}
@@ -172,7 +220,48 @@ class Model_Kladr extends Db_Helper
 									'kladr_name' => $value['kladr_name'],
 									'kladr_abbr' => $value['kladr_abbr']];
 			}
-			return json_encode($location_json);
+			if (!empty($location_json)) {
+				return json_encode($location_json);
+			} else {
+				return json_encode(null);
+			}
+		} else {
+			return json_encode(null);
+		}
+	}
+
+	/**
+     * Gets streets by region JSON.
+     *
+     * @return JSON
+     */
+	public function getStreetByRegionJSON($region) : string
+	{
+		if (!empty($region)) {
+			// get kladr
+			$kladr = $this->kladr->getByCode($region);
+			$code_region = $kladr['code_region'];
+			// get streets by city
+			$street = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
+											'kladr',
+											'level = :level AND code_region = :code_region AND code_area = :code_area AND code_city = :code_city AND code_location = :code_location AND relevance = :relevance',
+											[':level' => self::STREET,
+											':code_region' => $code_region,
+											':code_area' => '0',
+											':code_city' => '0',
+											':code_location' => '0',
+											':relevance' => '0'],
+											'kladr_name');
+			foreach ($street as $value) {
+				$street_json[] = ['kladr_code' => $value['kladr_code'],
+									'kladr_name' => $value['kladr_name'],
+									'kladr_abbr' => $value['kladr_abbr']];
+			}
+			if (!empty($street_json)) {
+				return json_encode($street_json);
+			} else {
+				return json_encode(null);
+			}
 		} else {
 			return json_encode(null);
 		}
@@ -204,7 +293,11 @@ class Model_Kladr extends Db_Helper
 									'kladr_name' => $value['kladr_name'],
 									'kladr_abbr' => $value['kladr_abbr']];
 			}
-			return json_encode($street_json);
+			if (!empty($street_json)) {
+				return json_encode($street_json);
+			} else {
+				return json_encode(null);
+			}
 		} else {
 			return json_encode(null);
 		}
@@ -238,7 +331,11 @@ class Model_Kladr extends Db_Helper
 									'kladr_name' => $value['kladr_name'],
 									'kladr_abbr' => $value['kladr_abbr']];
 			}
-			return json_encode($street_json);
+			if (!empty($street_json)) {
+				return json_encode($street_json);
+			} else {
+				return json_encode(null);
+			}
 		} else {
 			return json_encode(null);
 		}

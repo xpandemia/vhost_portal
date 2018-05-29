@@ -215,10 +215,13 @@ class Form_Helper
      *
      * @return string
      */
-	public static function setFormBegin($controller, $action, $id, $legend)
+	public static function setFormBegin($controller, $action, $id, $legend, $home = 0)
 	{
-		return '<form enctype="multipart/form-data" action="'.Basic_Helper::appUrl($controller, $action).'" method="post" id="'.$id.'" novalidate>
-					<legend class="font-weight-bold">'.$legend.'</legend>';
+		return '<form enctype="multipart/form-data" action="'.Basic_Helper::appUrl($controller, $action).'" method="post" id="'.$id.'" novalidate>'.
+					'<div class="form-group row">'.
+					'<div class="col'.(($home == 1) ? 'text-right' : '').'"><legend class="font-weight-bold">'.$legend.'</legend></div>'.
+					(($home == 1) ? '<div class="col text-left">'.HTML_Helper::setHrefButton('Main', 'Index', 'btn btn-primary', 'На главную').'</div>' : '').
+					'</div>';
 	}
 
 	/**

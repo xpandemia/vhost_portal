@@ -101,6 +101,29 @@ class Model_Kladr extends Db_Helper
 	}
 
 	/**
+     * Gets locations by region.
+     *
+     * @return array
+     */
+	public function getLocationByRegion() : array
+	{
+		// get kladr
+		$kladr = $this->getByCode($this->region);
+		$code_region = $kladr['code_region'];
+		// get location by area
+		$location = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
+											'kladr',
+											'level = :level AND code_region = :code_region AND code_area = :code_area AND code_city = :code_city AND relevance = :relevance',
+											[':level' => self::LOCATION,
+											':code_region' => $code_region,
+											':code_area' => '0',
+											':code_city' => '0',
+											':relevance' => '0'],
+											'kladr_name');
+		return $location;
+	}
+
+	/**
      * Gets locations by area.
      *
      * @return array
@@ -146,6 +169,30 @@ class Model_Kladr extends Db_Helper
 											':relevance' => '0'],
 											'kladr_name');
 		return $location;
+	}
+
+	/**
+     * Gets streets by region.
+     *
+     * @return array
+     */
+	public function getStreetByRegion() : array
+	{
+		// get kladr
+		$kladr = $this->getByCode($this->region);
+		$code_region = $kladr['code_region'];
+		// get streets by city
+		$street = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
+										'kladr',
+										'level = :level AND code_region = :code_region AND code_area = :code_area AND code_city = :code_city AND code_location = :code_location AND relevance = :relevance',
+										[':level' => self::STREET,
+										':code_region' => $code_region,
+										':code_area' => '0',
+										':code_city' => '0',
+										':code_location' => '0',
+										':relevance' => '0'],
+										'kladr_name');
+		return $street;
 	}
 
 	/**

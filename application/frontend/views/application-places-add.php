@@ -52,7 +52,8 @@ use common\models\Model_DocsEduc as DocsEduc;
 				</div>
 			</div>
 			<div class="form-group row">
-				<div class="col col-sm-5 font-weight-bold">Выбор направлений подготовки</div>
+				<div class="col col-sm-4 font-weight-bold">Направления подготовки</div>
+				<div class="col col-sm-3 font-weight-bold">разрешено выбрать: <?php echo $camp_row['max_spec']; ?></div>
 				<div class="col">
 					<?php
 						echo HTML_Helper::setSubmit('btn btn-success', 'btn_save', 'Выбрать');

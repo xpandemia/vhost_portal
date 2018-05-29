@@ -30,16 +30,23 @@ class Model_Address extends Db_Helper
 	public $id_country;
 	public $type;
 	public $kladr;
+	public $region_code;
 	public $region;
+	public $area_code;
 	public $area;
+	public $city_code;
 	public $city;
+	public $location_code;
 	public $location;
+	public $street_code;
 	public $street;
 	public $house;
 	public $building;
 	public $flat;
 	public $postcode;
 	public $adr;
+	public $dt_created;
+	public $dt_updated;
 
 	public $db;
 
@@ -92,29 +99,59 @@ class Model_Address extends Db_Helper
 							'update' => 0,
 							'value' => $this->kladr
 							],
+				'region_code' => [
+								'required' => 0,
+								'insert' => 1,
+								'update' => 1,
+								'value' => $this->region_code
+								],
 				'region' => [
 							'required' => 0,
 							'insert' => 1,
 							'update' => 1,
 							'value' => $this->region
 							],
+				'area_code' => [
+								'required' => 0,
+								'insert' => 1,
+								'update' => 1,
+								'value' => $this->area_code
+								],
 				'area' => [
 							'required' => 0,
 							'insert' => 1,
 							'update' => 1,
 							'value' => $this->area
 							],
+				'city_code' => [
+								'required' => 0,
+								'insert' => 1,
+								'update' => 1,
+								'value' => $this->city_code
+								],
 				'city' => [
 							'required' => 0,
 							'insert' => 1,
 							'update' => 1,
 							'value' => $this->city
 							],
+				'location_code' => [
+									'required' => 0,
+									'insert' => 1,
+									'update' => 1,
+									'value' => $this->location_code
+									],
 				'location' => [
 								'required' => 0,
 								'insert' => 1,
 								'update' => 1,
 								'value' => $this->location
+								],
+				'street_code' => [
+								'required' => 0,
+								'insert' => 1,
+								'update' => 1,
+								'value' => $this->street_code
 								],
 				'street' => [
 							'required' => 0,

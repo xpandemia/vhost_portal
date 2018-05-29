@@ -11,6 +11,7 @@ use common\models\Model_Personal as Model_Personal;
 use common\models\Model_Contacts as Model_Contacts;
 use common\models\Model_Passport as Model_Passport;
 use common\models\Model_DictDoctypes as Model_DictDoctypes;
+use common\models\Model_Kladr as Kladr;
 use common\models\Model_Address as Model_Address;
 use common\models\Model_DictCountries as Model_DictCountries;
 use common\models\Model_DictScans as Model_DictScans;
@@ -485,11 +486,11 @@ class Model_Resume extends Model
 		$address->type = $address::TYPE_REG;
 		$row = $address->getByResumeType();
 		if ($row) {
-			$form['region_reg'] = $row['region'];
-			$form['area_reg'] = $row['area'];
-			$form['city_reg'] = $row['city'];
-			$form['location_reg'] = $row['location'];
-			$form['street_reg'] = $row['street'];
+			$form['region_reg'] = $row['region_code'];
+			$form['area_reg'] = $row['area_code'];
+			$form['city_reg'] = $row['city_code'];
+			$form['location_reg'] = $row['location_code'];
+			$form['street_reg'] = $row['street_code'];
 			$form['house_reg'] = $row['house'];
 			$form['building_reg'] = $row['building'];
 			$form['flat_reg'] = $row['flat'];
@@ -520,11 +521,11 @@ class Model_Resume extends Model
 		$address->type = $address::TYPE_RES;
 		$row = $address->getByResumeType();
 		if ($row) {
-			$form['region_res'] = $row['region'];
-			$form['area_res'] = $row['area'];
-			$form['city_res'] = $row['city'];
-			$form['location_res'] = $row['location'];
-			$form['street_res'] = $row['street'];
+			$form['region_res'] = $row['region_code'];
+			$form['area_res'] = $row['area_code'];
+			$form['city_res'] = $row['city_code'];
+			$form['location_res'] = $row['location_code'];
+			$form['street_res'] = $row['street_code'];
 			$form['house_res'] = $row['house'];
 			$form['building_res'] = $row['building'];
 			$form['flat_res'] = $row['flat'];
@@ -1050,6 +1051,7 @@ class Model_Resume extends Model
 				}
 		}
 		/* addresses */
+		$kladr = new Kladr();
 		// address registration
 		$address_reg = new Model_Address();
 		$address_reg->id_user = $_SESSION[APP_CODE]['user_id'];
@@ -1060,11 +1062,41 @@ class Model_Resume extends Model
 		$address_reg->id_country = $row_country_reg['id'];
 		$address_reg->type = $address_reg::TYPE_REG;
 		$address_reg->kladr = $form['kladr_reg'];
-		$address_reg->region = (empty($form['region_reg'])) ? null : $form['region_reg'];
-		$address_reg->area = (empty($form['area_reg'])) ? null : $form['area_reg'];
-		$address_reg->city = (empty($form['city_reg'])) ? null : $form['city_reg'];
-		$address_reg->location = (empty($form['location_reg'])) ? null : $form['location_reg'];
-		$address_reg->street = (empty($form['street_reg'])) ? null : $form['street_reg'];
+		$address_reg->region_code = (empty($form['region_reg'])) ? null : $form['region_reg'];
+			if (!empty($form['region_reg'])) {
+				$kladr_row = $kladr->getByCode($form['region_reg']);
+				$address_reg->region = $kladr_row['kladr_name'].' '.$kladr_row['kladr_abbr'];
+			} else {
+				$address_reg->region = null;
+			}
+		$address_reg->area_code = (empty($form['area_reg'])) ? null : $form['area_reg'];
+			if (!empty($form['area_reg'])) {
+				$kladr_row = $kladr->getByCode($form['area_reg']);
+				$address_reg->area = $kladr_row['kladr_name'].' '.$kladr_row['kladr_abbr'];
+			} else {
+				$address_reg->area = null;
+			}
+		$address_reg->city_code = (empty($form['city_reg'])) ? null : $form['city_reg'];
+			if (!empty($form['city_reg'])) {
+				$kladr_row = $kladr->getByCode($form['city_reg']);
+				$address_reg->city = $kladr_row['kladr_name'].' '.$kladr_row['kladr_abbr'];
+			} else {
+				$address_reg->city = null;
+			}
+		$address_reg->location_code = (empty($form['location_reg'])) ? null : $form['location_reg'];
+			if (!empty($form['location_reg'])) {
+				$kladr_row = $kladr->getByCode($form['location_reg']);
+				$address_reg->location = $kladr_row['kladr_name'].' '.$kladr_row['kladr_abbr'];
+			} else {
+				$address_reg->location = null;
+			}
+		$address_reg->street_code = (empty($form['street_reg'])) ? null : $form['street_reg'];
+			if (!empty($form['street_reg'])) {
+				$kladr_row = $kladr->getByCode($form['street_reg']);
+				$address_reg->street = $kladr_row['kladr_name'].' '.$kladr_row['kladr_abbr'];
+			} else {
+				$address_reg->street = null;
+			}
 		$address_reg->house = (empty($form['house_reg'])) ? null : $form['house_reg'];
 		$address_reg->building = (empty($form['building_reg'])) ? null : $form['building_reg'];
 		$address_reg->flat = (empty($form['flat_reg'])) ? null : $form['flat_reg'];
@@ -1095,11 +1127,41 @@ class Model_Resume extends Model
 		$address_res->id_country = $row_country_res['id'];
 		$address_res->type = $address_res::TYPE_RES;
 		$address_res->kladr = $form['kladr_res'];
-		$address_res->region = (empty($form['region_res'])) ? null : $form['region_res'];
-		$address_res->area = (empty($form['area_res'])) ? null : $form['area_res'];
-		$address_res->city = (empty($form['city_res'])) ? null : $form['city_res'];
-		$address_res->location = (empty($form['location_res'])) ? null : $form['location_res'];
-		$address_res->street = (empty($form['street_res'])) ? null : $form['street_res'];
+		$address_res->region_code = (empty($form['region_res'])) ? null : $form['region_res'];
+			if (!empty($form['region_res'])) {
+				$kladr_row = $kladr->getByCode($form['region_res']);
+				$address_res->region = $kladr_row['kladr_name'].' '.$kladr_row['kladr_abbr'];
+			} else {
+				$address_res->region = null;
+			}
+		$address_res->area_code = (empty($form['area_res'])) ? null : $form['area_res'];
+			if (!empty($form['area_res'])) {
+				$kladr_row = $kladr->getByCode($form['area_res']);
+				$address_res->area = $kladr_row['kladr_name'].' '.$kladr_row['kladr_abbr'];
+			} else {
+				$address_res->area = null;
+			}
+		$address_res->city_code = (empty($form['city_res'])) ? null : $form['city_res'];
+			if (!empty($form['city_res'])) {
+				$kladr_row = $kladr->getByCode($form['city_res']);
+				$address_res->city = $kladr_row['kladr_name'].' '.$kladr_row['kladr_abbr'];
+			} else {
+				$address_res->city = null;
+			}
+		$address_res->location_code = (empty($form['location_res'])) ? null : $form['location_res'];
+			if (!empty($form['location_res'])) {
+				$kladr_row = $kladr->getByCode($form['location_res']);
+				$address_res->location = $kladr_row['kladr_name'].' '.$kladr_row['kladr_abbr'];
+			} else {
+				$address_res->location = null;
+			}
+		$address_res->street_code = (empty($form['street_res'])) ? null : $form['street_res'];
+			if (!empty($form['street_res'])) {
+				$kladr_row = $kladr->getByCode($form['street_res']);
+				$address_res->street = $kladr_row['kladr_name'].' '.$kladr_row['kladr_abbr'];
+			} else {
+				$address_res->street = null;
+			}
 		$address_res->house = (empty($form['house_res'])) ? null : $form['house_res'];
 		$address_res->building = (empty($form['building_res'])) ? null : $form['building_res'];
 		$address_res->flat = (empty($form['flat_res'])) ? null : $form['flat_res'];

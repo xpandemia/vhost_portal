@@ -123,11 +123,12 @@ class Model_ApplicationPlaces extends Db_Helper
 		return $this->rowSelectAll('dict_speciality.id, speciality_name, profil_name, finance_name, eduform_name, edulevel_name',
 									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
 									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
-									'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND eduprogram_name = :eduprogram_name',
+									'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND eduprogram_name = :eduprogram_name AND (stage_numb = :stage_numb OR stage_numb is null)',
 									[':pid' => $this->pid,
 									':group_beneficiary' => 0,
 									':finance_name' => 'Целевой прием',
-									':eduprogram_name' => 'среднее (основное,общее)'],
+									':eduprogram_name' => 'среднее (основное,общее)',
+									':stage_numb' => 1],
 									'speciality_name, profil_name');
 	}
 
@@ -141,11 +142,12 @@ class Model_ApplicationPlaces extends Db_Helper
 		return $this->rowSelectAll('DISTINCT speciality_code, speciality_name, profil_code, profil_name',
 									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
 									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
-									'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND eduprogram_name = :eduprogram_name',
+									'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND eduprogram_name = :eduprogram_name AND (stage_numb = :stage_numb OR stage_numb is null)',
 									[':pid' => $this->pid,
 									':group_beneficiary' => 0,
 									':finance_name' => 'Целевой прием',
-									':eduprogram_name' => 'среднее (основное,общее)'],
+									':eduprogram_name' => 'среднее (основное,общее)',
+									':stage_numb' => 1],
 									'speciality_name');
 	}
 
@@ -159,11 +161,12 @@ class Model_ApplicationPlaces extends Db_Helper
 		return $this->rowSelectAll('DISTINCT finance_code, finance_name',
 									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
 									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
-									'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND eduprogram_name = :eduprogram_name',
+									'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND eduprogram_name = :eduprogram_name AND (stage_numb = :stage_numb OR stage_numb is null)',
 									[':pid' => $this->pid,
 									':group_beneficiary' => 0,
 									':finance_name' => 'Целевой прием',
-									':eduprogram_name' => 'среднее (основное,общее)'],
+									':eduprogram_name' => 'среднее (основное,общее)',
+									':stage_numb' => 1],
 									'speciality_name');
 	}
 
@@ -177,11 +180,12 @@ class Model_ApplicationPlaces extends Db_Helper
 		return $this->rowSelectAll('DISTINCT eduform_code, eduform_name',
 									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
 									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
-									'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND eduprogram_name = :eduprogram_name',
+									'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND eduprogram_name = :eduprogram_name AND (stage_numb = :stage_numb OR stage_numb is null)',
 									[':pid' => $this->pid,
 									':group_beneficiary' => 0,
 									':finance_name' => 'Целевой прием',
-									':eduprogram_name' => 'среднее (основное,общее)'],
+									':eduprogram_name' => 'среднее (основное,общее)',
+									':stage_numb' => 1],
 									'speciality_name');
 	}
 
@@ -195,11 +199,12 @@ class Model_ApplicationPlaces extends Db_Helper
 		return $this->rowSelectAll('DISTINCT edulevel_code, edulevel_name',
 									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
 									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
-									'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND eduprogram_name = :eduprogram_name',
+									'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND eduprogram_name = :eduprogram_name AND (stage_numb = :stage_numb OR stage_numb is null)',
 									[':pid' => $this->pid,
 									':group_beneficiary' => 0,
 									':finance_name' => 'Целевой прием',
-									':eduprogram_name' => 'среднее (основное,общее)'],
+									':eduprogram_name' => 'среднее (основное,общее)',
+									':stage_numb' => 1],
 									'speciality_name');
 	}
 
@@ -213,10 +218,11 @@ class Model_ApplicationPlaces extends Db_Helper
 		return $this->rowSelectAll('dict_speciality.id, speciality_name, profil_name, finance_name, eduform_name, edulevel_name',
 									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
 									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
-									'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND dict_speciality.eduprogram_name is null',
+									'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND dict_speciality.eduprogram_name is null AND (stage_numb = :stage_numb OR stage_numb is null)',
 									[':pid' => $this->pid,
 									':group_beneficiary' => 0,
-									':finance_name' => 'Целевой прием'],
+									':finance_name' => 'Целевой прием',
+									':stage_numb' => 1],
 									'speciality_name, profil_name');
 	}
 
@@ -230,10 +236,11 @@ class Model_ApplicationPlaces extends Db_Helper
 		return $this->rowSelectAll('DISTINCT speciality_code, speciality_name, profil_code, profil_name',
 									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
 									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
-									'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND dict_speciality.eduprogram_name is null',
+									'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND dict_speciality.eduprogram_name is null AND (stage_numb = :stage_numb OR stage_numb is null)',
 									[':pid' => $this->pid,
 									':group_beneficiary' => 0,
-									':finance_name' => 'Целевой прием'],
+									':finance_name' => 'Целевой прием',
+									':stage_numb' => 1],
 									'speciality_name');
 	}
 
@@ -247,10 +254,11 @@ class Model_ApplicationPlaces extends Db_Helper
 		return $this->rowSelectAll('DISTINCT finance_code, finance_name',
 									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
 									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
-									'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND dict_speciality.eduprogram_name is null',
+									'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND dict_speciality.eduprogram_name is null AND (stage_numb = :stage_numb OR stage_numb is null)',
 									[':pid' => $this->pid,
 									':group_beneficiary' => 0,
-									':finance_name' => 'Целевой прием'],
+									':finance_name' => 'Целевой прием',
+									':stage_numb' => 1],
 									'finance_name');
 	}
 
@@ -264,10 +272,11 @@ class Model_ApplicationPlaces extends Db_Helper
 		return $this->rowSelectAll('DISTINCT eduform_code, eduform_name',
 									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
 									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
-									'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND dict_speciality.eduprogram_name is null',
+									'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND dict_speciality.eduprogram_name is null AND (stage_numb = :stage_numb OR stage_numb is null)',
 									[':pid' => $this->pid,
 									':group_beneficiary' => 0,
-									':finance_name' => 'Целевой прием'],
+									':finance_name' => 'Целевой прием',
+									':stage_numb' => 1],
 									'eduform_name');
 	}
 
@@ -281,10 +290,11 @@ class Model_ApplicationPlaces extends Db_Helper
 		return $this->rowSelectAll('DISTINCT edulevel_code, edulevel_name',
 									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
 									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
-									'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND dict_speciality.eduprogram_name is null',
+									'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND dict_speciality.eduprogram_name is null AND (stage_numb = :stage_numb OR stage_numb is null)',
 									[':pid' => $this->pid,
 									':group_beneficiary' => 0,
-									':finance_name' => 'Целевой прием'],
+									':finance_name' => 'Целевой прием',
+									':stage_numb' => 1],
 									'edulevel_name');
 	}
 
@@ -298,11 +308,12 @@ class Model_ApplicationPlaces extends Db_Helper
 		return $this->rowSelectAll('dict_speciality.id, speciality_name, profil_name, finance_name, eduform_name, edulevel_name',
 									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
 									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
-									'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND dict_speciality.eduprogram_name = :eduprogram_name',
+									'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND dict_speciality.eduprogram_name = :eduprogram_name AND (stage_numb = :stage_numb OR stage_numb is null)',
 									[':pid' => $this->pid,
 									':group_beneficiary' => 0,
 									':finance_name' => 'Целевой прием',
-									':eduprogram_name' => 'Высшее'],
+									':eduprogram_name' => 'Высшее',
+									':stage_numb' => 1],
 									'speciality_name, profil_name');
 	}
 
@@ -316,11 +327,12 @@ class Model_ApplicationPlaces extends Db_Helper
 		return $this->rowSelectAll('DISTINCT speciality_code, speciality_name, profil_code, profil_name',
 									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
 									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
-									'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND dict_speciality.eduprogram_name = :eduprogram_name',
+									'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND dict_speciality.eduprogram_name = :eduprogram_name AND (stage_numb = :stage_numb OR stage_numb is null)',
 									[':pid' => $this->pid,
 									':finance_name' => 'Целевой прием',
 									':group_beneficiary' => 0,
-									':eduprogram_name' => 'Высшее'],
+									':eduprogram_name' => 'Высшее',
+									':stage_numb' => 1],
 									'speciality_name');
 	}
 
@@ -334,11 +346,12 @@ class Model_ApplicationPlaces extends Db_Helper
 		return $this->rowSelectAll('DISTINCT finance_code, finance_name',
 									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
 									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
-									'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND dict_speciality.eduprogram_name = :eduprogram_name',
+									'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND dict_speciality.eduprogram_name = :eduprogram_name AND (stage_numb = :stage_numb OR stage_numb is null)',
 									[':pid' => $this->pid,
 									':group_beneficiary' => 0,
 									':finance_name' => 'Целевой прием',
-									':eduprogram_name' => 'Высшее'],
+									':eduprogram_name' => 'Высшее',
+									':stage_numb' => 1],
 									'finance_name');
 	}
 
@@ -352,11 +365,12 @@ class Model_ApplicationPlaces extends Db_Helper
 		return $this->rowSelectAll('DISTINCT eduform_code, eduform_name',
 									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
 									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
-									'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND dict_speciality.eduprogram_name = :eduprogram_name',
+									'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND dict_speciality.eduprogram_name = :eduprogram_name AND (stage_numb = :stage_numb OR stage_numb is null)',
 									[':pid' => $this->pid,
 									':group_beneficiary' => 0,
 									':finance_name' => 'Целевой прием',
-									':eduprogram_name' => 'Высшее'],
+									':eduprogram_name' => 'Высшее',
+									':stage_numb' => 1],
 									'eduform_name');
 	}
 
@@ -370,11 +384,12 @@ class Model_ApplicationPlaces extends Db_Helper
 		return $this->rowSelectAll('DISTINCT edulevel_code, edulevel_name',
 									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
 									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
-									'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_speciality.eduprogram_name = :eduprogram_name',
+									'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_speciality.eduprogram_name = :eduprogram_name AND (stage_numb = :stage_numb OR stage_numb is null)',
 									[':pid' => $this->pid,
 									':group_beneficiary' => 0,
 									':finance_name' => 'Целевой прием',
-									':eduprogram_name' => 'Высшее'],
+									':eduprogram_name' => 'Высшее',
+									':stage_numb' => 1],
 									'edulevel_name');
 	}
 

@@ -67,13 +67,13 @@ class Controller_Kladr extends Controller
 	}
 
 	/**
-     * Prints locations by city JSON.
+     * Prints locations by region JSON.
      *
      * @return void
      */
-	public function actionLocationByCityJSON()
+	public function actionLocationByRegionJSON()
 	{
-		echo $this->model->getLocationByCityJSON($this->code);
+		echo $this->model->getLocationByRegionJSON($this->code);
 	}
 
 	/**
@@ -84,6 +84,26 @@ class Controller_Kladr extends Controller
 	public function actionLocationByAreaJSON()
 	{
 		echo $this->model->getLocationByAreaJSON($this->code);
+	}
+
+	/**
+     * Prints locations by city JSON.
+     *
+     * @return void
+     */
+	public function actionLocationByCityJSON()
+	{
+		echo $this->model->getLocationByCityJSON($this->code);
+	}
+
+	/**
+     * Prints streets by region JSON.
+     *
+     * @return void
+     */
+	public function actionStreetByRegionJSON()
+	{
+		echo $this->model->getStreetByRegionJSON($this->code);
 	}
 
 	/**
