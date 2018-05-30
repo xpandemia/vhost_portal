@@ -72,8 +72,12 @@ use common\models\Model_DocsEduc as DocsEduc;
 				<div class="form-group row">
 					<?php
 						// filter_speciality
-						if ($special == 1 && in_array($docs_row['doc_type'], $docs::CLASSES_9)) {
-							$speciality_arr = $specs->getSpecialitySpecial9ForApp();
+						if ($special == 1) {
+							if (in_array($docs_row['doc_type'], $docs::CLASSES_9)) {
+								$speciality_arr = $specs->getSpecialitySpecial9ForApp();
+							} else {
+								$speciality_arr = $specs->getSpecialityFirstForApp();
+							}
 						} else {
 							if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
 								$speciality_arr = $specs->getSpecialityFirstForApp();
@@ -99,8 +103,12 @@ use common\models\Model_DocsEduc as DocsEduc;
 				<div class="form-group row">
 					<?php
 						// filter_finance
-						if ($special == 1 && in_array($docs_row['doc_type'], $docs::CLASSES_9)) {
-							$finance_arr = $specs->getFinanceSpecial9ForApp();
+						if ($special == 1) {
+							if (in_array($docs_row['doc_type'], $docs::CLASSES_9)) {
+								$finance_arr = $specs->getFinanceSpecial9ForApp();
+							} else {
+								$finance_arr = $specs->getFinanceFirstForApp();
+							}
 						} else {
 							if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
 								$finance_arr = $specs->getFinanceFirstForApp();
@@ -122,8 +130,12 @@ use common\models\Model_DocsEduc as DocsEduc;
 							echo '</div>';
 						}
 						// filter_eduform
-						if ($special == 1 && in_array($docs_row['doc_type'], $docs::CLASSES_9)) {
-							$eduform_arr = $specs->getEduformSpecial9ForApp();
+						if ($special == 1) {
+							if (in_array($docs_row['doc_type'], $docs::CLASSES_9)) {
+								$eduform_arr = $specs->getEduformSpecial9ForApp();
+							} else {
+								$eduform_arr = $specs->getEduformFirstForApp();
+							}
 						} else {
 							if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
 								$eduform_arr = $specs->getEduformFirstForApp();
@@ -145,8 +157,12 @@ use common\models\Model_DocsEduc as DocsEduc;
 							echo '</div>';
 						}
 						// filter_edulevel
-						if ($special == 1 && in_array($docs_row['doc_type'], $docs::CLASSES_9)) {
-							$edulevel_arr = $specs->getEdulevelSpecial9ForApp();
+						if ($special == 1) {
+							if (in_array($docs_row['doc_type'], $docs::CLASSES_9)) {
+								$edulevel_arr = $specs->getEdulevelSpecial9ForApp();
+							} else {
+								$edulevel_arr = $specs->getEdulevelFirstForApp();
+							}
 						} else {
 							if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
 								$edulevel_arr = $specs->getEdulevelFirstForApp();
@@ -171,8 +187,8 @@ use common\models\Model_DocsEduc as DocsEduc;
 				</div>
 				<div class="col">
 					<?php
-						echo HTML_Helper::setButton('btn btn-success', 'btn_filter_apply', 'Применить фильтр');
-						echo HTML_Helper::setButton('btn btn-warning', 'btn_filter_cancel', 'Отменить фильтр');
+						echo HTML_Helper::setButton('btn btn-success', 'btn_filter_apply', 'Применить фильтры');
+						echo HTML_Helper::setButton('btn btn-warning', 'btn_filter_cancel', 'Отменить фильтры');
 					?>
 				</div>
 			</div>
@@ -192,8 +208,12 @@ use common\models\Model_DocsEduc as DocsEduc;
 					</tr>
 			    </thead>
 			<?php
-				if ($special == 1 && in_array($docs_row['doc_type'], $docs::CLASSES_9)) {
-					$specs_arr = $specs->getSpecsSpecial9ForApp();
+				if ($special == 1) {
+					if (in_array($docs_row['doc_type'], $docs::CLASSES_9)) {
+						$specs_arr = $specs->getSpecsSpecial9ForApp();
+					} else {
+						$specs_arr = $specs->getSpecsFirstForApp();
+					}
 				} else {
 					if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
 						$specs_arr = $specs->getSpecsFirstForApp();
@@ -246,7 +266,7 @@ use common\models\Model_DocsEduc as DocsEduc;
 		});
 		// filter apply click
 		$('#btn_filter_apply').click(function() {
-			var filter_speciality, filter_finance, filter_eduform, filter_edulevel, table, tr, td, finance, eduform, edulevel, i;
+			var filter_speciality, filter_finance, filter_eduform, filter_edulevel, table, tr, td, finance, eduform, edulevel, i, checkbox;
 			filter_speciality = $('#filter_speciality').val().toUpperCase();
 			filter_finance = $('#filter_finance').val().toUpperCase();
 			filter_eduform = $('#filter_eduform').val().toUpperCase();
@@ -259,6 +279,8 @@ use common\models\Model_DocsEduc as DocsEduc;
 				finance = tr[i].getElementsByTagName("td")[2];
 				eduform = tr[i].getElementsByTagName("td")[3];
 				edulevel = tr[i].getElementsByTagName("td")[4];
+				checkbox  = $(td).find(":checkbox");
+				$(checkbox).prop('checked', false);
 				if (td) {
 					// use filters
 					if (filter_speciality != '' || filter_finance != '' || filter_eduform != '' || filter_edulevel != '') {

@@ -113,15 +113,23 @@ class Model_Application extends Model
 	/**
      * Deletes application from database.
      *
-     * @return boolean
+     * @return array
      */
 	public function delete($form)
 	{
 		$app = new Application();
 		$app->id = $form['id'];
-		if ($app->clear() > 0) {
-			return true;
+		$app_row = $app->get();
+		if ($app_row['status'] == $app::STATUS_CREATED || $app_row['status'] == $app::STATUS_SAVED) {
+			if ($app->clear() > 0) {
+				$_SESSION[APP_CODE]['success_msg'] = 'Заявление № '.$form['id'].' успешно удалёно.';
+				return true;
+			} else {
+				$_SESSION[APP_CODE]['error_msg'] = 'Ошибка удаления заявления! Свяжитесь с администратором.';
+				return false;
+			}
 		} else {
+			$_SESSION[APP_CODE]['error_msg'] = 'Удалять заявления можно только с состоянием: <strong>'.mb_convert_case($app::STATUS_CREATED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_SAVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!';
 			return false;
 		}
 	}
@@ -142,6 +150,11 @@ class Model_Application extends Model
 			$campaign->code = $form['campaign'];
 			$campaign_row = $campaign->getByCode();
 		$app->id_campaign = $campaign_row['id'];
+			// check campaign
+			if ($app->existsUserCampaign()) {
+				$form['error_msg'] = 'Заявление на данную приёмную кампанию уже есть!';
+				return $form;
+			}
 		$app->id_docseduc = $form['docs_educ'];
 			$docship = new Model_DictDocships();
 			$docship->code = '000000001';

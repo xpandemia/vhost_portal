@@ -26,7 +26,7 @@ use frontend\models\Model_Application as Model_Application;
 	?>
 	<hr><h5>Направления подготовки</h5><br>
 	<?php
-		echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nЧтобы добавить/изменить <strong>направления подготовки</strong>, нажмите <strong>\"Создать\"</strong>."), 'alert-warning');
+		echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nЧтобы добавить/изменить <strong>направления подготовки</strong>, нажмите <i class=\"far fa-file\"></i>."), 'alert-warning');
 		echo HTML_Helper::setGridDB(['model_class' => 'common\\models\\Model_ApplicationPlaces',
 									'model_method' => 'getGrid',
 									'model_filter' => 'pid',

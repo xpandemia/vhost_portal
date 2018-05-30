@@ -187,6 +187,8 @@ class Model_DocsEduc extends Model
      */
 	public function check($form)
 	{
+		$form['success_msg'] = null;
+		$form['error_msg'] = null;
 		$docs = new DocsEduc();
 		$docs->id_user = $_SESSION[APP_CODE]['user_id'];
 			$eductype = new Model_DictEductypes();
@@ -211,24 +213,28 @@ class Model_DocsEduc extends Model
 		$docs->speciality = (empty($form['speciality'])) ? null : $form['speciality'];
 		$row_docs = $docs->getByNumb();
 		if ($row_docs) {
-			$docs->id = $row_docs['id'];
-			if ($docs->changeAll()) {
-				$form['error_msg'] = null;
-				$form['success_msg'] = 'Изменен документ об образовании № '.$row_docs['id'].'.';
-				$form['id'] = $row_docs['id'];
-			} else {
-				$form['error_msg'] = 'Ошибка при изменении документа об образовании!';
-				return $form;
-			}
+			$form['error_msg'] = 'Документ об образовании с серией/номером '.((!empty($docs->series)) ? $docs->series : '').'/'.$docs->numb.' уже есть!';
+			return $form;
 		} else {
-			$form['id'] = $docs->save();
-			if ($form['id'] > 0) {
-				$form['error_msg'] = null;
-				$form['success_msg'] = 'Создан новый документ об образовании.';
+			if (isset($form['id']) && !empty($form['id'])) {
+				// update
+				$docs->id = $form['id'];
+				if ($docs->changeAll()) {
+					$form['success_msg'] = 'Изменен документ об образовании № '.$form['id'].'.';
+				} else {
+					$form['error_msg'] = 'Ошибка при изменении документа об образовании № '.$form['id'].'!';
+					return $form;
+				}
 			} else {
-				unset($form['id']);
-				$form['error_msg'] = 'Ошибка при создании документа об образовании!';
-				return $form;
+				// insert
+				$form['id'] = $docs->save();
+				if ($form['id'] > 0) {
+					$form['success_msg'] = 'Создан новый документ об образовании № '.$form['id'].'.';
+				} else {
+					unset($form['id']);
+					$form['error_msg'] = 'Ошибка при создании документа об образовании!';
+					return $form;
+				}
 			}
 		}
 		/* change_name */

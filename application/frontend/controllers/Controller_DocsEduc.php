@@ -111,6 +111,7 @@ class Controller_DocsEduc extends Controller
 	public function actionSave()
 	{
 		$this->form = $this->model->getForm($this->model->rules(), $_POST, $_FILES);
+		$this->form['id'] = $id = htmlspecialchars($_POST['id']);
 		$this->form = $this->model->validateForm($this->form, $this->model->rules());
 		$this->form = $this->model->validateFormAdvanced($this->form);
 		if ($this->form['validate']) {

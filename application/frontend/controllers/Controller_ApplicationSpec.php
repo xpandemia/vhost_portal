@@ -111,8 +111,6 @@ class Controller_ApplicationSpec extends Controller
 				$this->form['type'] = $type;
 				$this->form['status'] = $status;
 				$this->form['numb'] = $numb;
-				Basic_Helper::msgReset();
-				$this->form['success_msg'] = 'Заявление успешно сохранено!';
 				return $this->view->generate('application-edit.php', 'main.php', 'Заявление', $this->form);
 			}
 		} else {

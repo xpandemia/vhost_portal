@@ -239,7 +239,7 @@ class Model_Application extends Db_Helper
 		return $this->rowSelectAll("application.id,".
 									" dict_university.code as university,".
 									" admission_campaign.description as campaign,".
-									" concat(dict_doctypes.description, ' № ', docs_educ.series, '-', docs_educ.numb, ' от ', date_format(dt_issue, '%d.%m.%Y')) as docs_educ,".
+									" concat(dict_doctypes.description, ' № ', ifnull(concat(docs_educ.series, '-'), ''), docs_educ.numb, ' от ', date_format(dt_issue, '%d.%m.%Y')) as docs_educ,".
 									" reason.numb as reason,".
 									" getAppTypeName(application.type) as type,".
 									" getAppStatusName(application.status) as status,".
@@ -301,6 +301,46 @@ class Model_Application extends Db_Helper
 			$result = array_merge($app, $docs_ship, $scan_arr);
 		}
 		return $result;
+	}
+
+	/**
+     * Checks if campaign exists for user.
+     *
+     * @return boolean
+     */
+	public function existsUserCampaign()
+	{
+		$app = $this->rowSelectOne('*',
+									self::TABLE_NAME,
+									'id_user = :id_user AND id_campaign = :id_campaign AND active = :active',
+									[':id_user' => $_SESSION[APP_CODE]['user_id'],
+									':id_campaign' => $this->id_campaign,
+									':active' => 1]);
+		if ($app) {
+			switch ($app['type']) {
+				case self::TYPE_NEW:
+					if ($app['status'] == self::STATUS_REJECTED) {
+						return false;
+					} else {
+						return true;
+					}
+					break;
+				case self:TYPE_CHANGE:
+					return true;
+					break;
+				case self:TYPE_RECALL:
+					if ($app['status'] == self::STATUS_APPROVED) {
+						return false;
+					} else {
+						return true;
+					}
+					break;
+				default:
+					return true;
+			}
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -398,10 +438,20 @@ class Model_Application extends Db_Helper
      */
 	public function clear()
 	{
+		// clear scans
 		$scans = new Model_Scans();
 		$scans->id_row = $this->id;
 		$scans->clearbyDoc('application');
-		return $this->rowDelete(self::TABLE_NAME, 'id = :id', [':id' => $this->id]);
+		// activate previous app
+		/*$id = $this->id;
+		$app_row = $this->get();
+		if (!empty($app_row['id_app'])) {
+			$this->id = $app_row['id_app'];
+			$this->active = 1;
+			$this->changeActive();
+		}*/
+		// clear app
+		return $this->rowDelete(self::TABLE_NAME, 'id = :id', [':id' => $id]);
 	}
 
 	/**
@@ -505,7 +555,7 @@ class Model_Application extends Db_Helper
 									[':id' => $this->id,
 									':description' => 'Магистратура',
 									':doc_type1' => '000000022',
-									':doc_type1' => '000000025']);
+									':doc_type2' => '000000025']);
 		if (!empty($row)) {
 			return true;
 		} else {
@@ -522,7 +572,7 @@ class Model_Application extends Db_Helper
 	{
 		$row = $this->rowSelectOne('application.*',
 									'application INNER JOIN admission_campaign ON application.id_campaign = admission_campaign.id',
-									'application.id = :id AND (left(admission_campaign.description1, 10) = :description OR left(admission_campaign.description, 11) = :description2)',
+									'application.id = :id AND (left(admission_campaign.description, 10) = :description1 OR left(admission_campaign.description, 11) = :description2)',
 									[':id' => $this->id,
 									':description1' => 'Ординатура',
 									':description2' => 'Аспирантура']);

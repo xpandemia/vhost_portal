@@ -101,10 +101,9 @@ class Controller_Application extends Controller
 		$this->form['hdr'] = htmlspecialchars($_POST['hdr']);
 		$this->form['ctr'] = htmlspecialchars($_POST['ctr']);
 		if ($this->model->delete($this->form)) {
-			Basic_Helper::redirect($this->form['hdr'], 200, $this->form['ctr'], 'Index');
+			Basic_Helper::redirect($this->form['hdr'], 200, $this->form['ctr'], 'Index', $_SESSION[APP_CODE]['success_msg']);
 		} else {
-			$this->form['error_msg'] = 'Ошибка удаления документа '.$this->form['ctr'].'! Свяжитесь с администратором.';
-			return $this->view->generate('delete-confirm.php', 'form.php', 'Удаление документа '.$this->form['ctr'], $this->form);
+			Basic_Helper::redirect($this->form['hdr'], 200, $this->form['ctr'], 'Index', null, $_SESSION[APP_CODE]['error_msg']);
 		}
 	}
 

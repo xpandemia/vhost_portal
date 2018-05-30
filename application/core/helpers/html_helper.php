@@ -142,6 +142,7 @@ class HTML_Helper
 	public static function setGridDB($rules)
 	{
 		if (isset($rules) && is_array($rules)) {
+			// action create
 			$result = HTML_Helper::setHrefButtonIcon($rules['controller'], $rules['action_add'], 'font-weight-bold', 'far fa-file fa-2x', 'Создать');
 			$result .= '<table class="table table-bordered table-hover">';
 			// using model

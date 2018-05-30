@@ -169,9 +169,13 @@ class Model_ApplicationSpec extends Model
 		$form['pid'] = htmlspecialchars($post['pid']);
 		$form['error_msg'] = null;
 		$form['success_msg'] = null;
+		// get app
+		$app = new Application();
+		$app->id = $form['pid'];
+		$app_row = $app->get();
 		// get max_spec
 		$adm = new Model_AdmissionCampaign();
-		$adm->id = $form['pid'];
+		$adm->id = $app_row['id_campaign'];
 		$adm_row = $adm->getById();
 		if ($adm_row) {
 			// get specs
@@ -345,6 +349,9 @@ class Model_ApplicationSpec extends Model
 				}
 			}
 		}
+		Basic_Helper::msgReset();
+		$this->form['success_msg'] = 'Заявление успешно сохранено.';
+		$form['error_msg'] = null;
 		return $form;
 	}
 
@@ -363,16 +370,18 @@ class Model_ApplicationSpec extends Model
 			$form['error_msg'] = 'Отправлять можно только заявления с состоянием <strong>'.mb_convert_case($app::STATUS_SAVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!';
 			return $form;
 		}
+		if ($form['status'] == $app::STATUS_SENDED) {
+			$form['error_msg'] = 'Заявление уже отправлено!';
+			return $form;
+		}
 		/* send */
 		$app->id = $form['id'];
 		$app->status = $app::STATUS_SENDED;
 		$app->changeStatus();
 		$form['status'] = $app->status;
-			if ($app_row['status'] != $app::STATUS_SENDED) {
-				$applog = new ApplicationStatus();
-				$applog->id_application = $app->id;
-				$applog->create();
-			}
+			$applog = new ApplicationStatus();
+			$applog->id_application = $app->id;
+			$applog->create();
 		Basic_Helper::msgReset();
 		$form['success_msg'] = 'Заявление успешно отправлено.';
 		$form['error_msg'] = null;
@@ -403,11 +412,9 @@ class Model_ApplicationSpec extends Model
 		$app->id = $form['id'];
 		$app->status = $app::STATUS_CHANGED;
 		$app->changeStatus();
-			if ($form['status'] != $app::STATUS_CHANGED) {
-				$applog = new ApplicationStatus();
-				$applog->id_application = $app->id;
-				$applog->create();
-			}
+			$applog = new ApplicationStatus();
+			$applog->id_application = $app->id;
+			$applog->create();
 		$form['status'] = $app->status;
 		$id = $app->copy($app::TYPE_CHANGE);
 		if ($id > 0) {
@@ -451,11 +458,9 @@ class Model_ApplicationSpec extends Model
 		$app->id = $form['id'];
 		$app->status = $app::STATUS_RECALLED;
 		$app->changeStatus();
-			if ($form['status'] != $app::STATUS_RECALLED) {
-				$applog = new ApplicationStatus();
-				$applog->id_application = $app->id;
-				$applog->create();
-			}
+			$applog = new ApplicationStatus();
+			$applog->id_application = $app->id;
+			$applog->create();
 		$form['status'] = $app->status;
 		$id = $app->copy($app::TYPE_RECALL);
 		if ($id > 0) {

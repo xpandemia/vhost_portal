@@ -15,6 +15,7 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 		echo Form_Helper::setFormBegin(DOCS_EDUC['ctr'], DOCS_EDUC['act'], DOCS_EDUC['id'], DOCS_EDUC['hdr']);
 	?>
 	<div class="form-group">
+		<input type="hidden" id="id" name="id" value="<?php echo (isset($data['id'])) ? $data['id'] : null; ?>"/>
 		<input type="hidden" id="doc_type_hidden" name="doc_type_hidden" value="<?php echo $data['doc_type']; ?>"/>
 	</div>
 	<?php
