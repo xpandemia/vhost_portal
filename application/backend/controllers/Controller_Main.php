@@ -54,6 +54,26 @@ class Controller_Main extends Controller
 	}
 
 	/**
+     * Calls to educlevels doctypes.
+     *
+     * @return void
+     */
+	function actionEduclevelsDoctypes() : void
+	{
+		Basic_Helper::redirect(EDUCLEVELS_DOCTYPES['hdr'], 202, EDUCLEVELS_DOCTYPES['ctr'], 'Index');
+	}
+
+	/**
+     * Calls to eductypes doctypes.
+     *
+     * @return void
+     */
+	function actionEductypesDoctypes() : void
+	{
+		Basic_Helper::redirect(EDUCTYPES_DOCTYPES['hdr'], 202, EDUCTYPES_DOCTYPES['ctr'], 'Index');
+	}
+
+	/**
      * Logs user out.
      *
      * @return mixed

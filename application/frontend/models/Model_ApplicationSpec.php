@@ -39,17 +39,17 @@ class Model_ApplicationSpec extends Model
 				'campus' => [
 							'type' => 'checkbox',
 	                        'class' => 'form-check-input',
-	                        'success' => 'Получена потребность в общежитии.'
+	                        'success' => 'Получена информация о потребности в общежитии.'
 	                       ],
 	            'conds' => [
 							'type' => 'checkbox',
 	                        'class' => 'form-check-input',
-	                        'success' => 'Получена просьба о создании специальных условий.'
+	                        'success' => 'Получена информация о просьбе в создании специальных условий.'
 	                       ],
 	            'remote' => [
 							'type' => 'checkbox',
 	                        'class' => 'form-check-input',
-	                        'success' => 'Получена просьба о сдаче вступительных испытаний с использованием дистанционных технологий.'
+	                        'success' => 'Получена информация о просьбе в сдаче вступительных испытаний с использованием дистанционных технологий.'
 	                       ]
 				];
 		$scans = Model_Scans::createRules('application');
@@ -329,6 +329,7 @@ class Model_ApplicationSpec extends Model
 		} else {
 			$app->remote = 0;
 		}
+		$app->pay = $app_row['pay'];
 		$app->active = $app_row['active'];
 		$app->changeAll();
 		$form['status'] = $app->status;
@@ -350,7 +351,7 @@ class Model_ApplicationSpec extends Model
 			}
 		}
 		Basic_Helper::msgReset();
-		$this->form['success_msg'] = 'Заявление успешно сохранено.';
+		$form['success_msg'] = 'Заявление успешно сохранено.';
 		$form['error_msg'] = null;
 		return $form;
 	}
@@ -421,6 +422,7 @@ class Model_ApplicationSpec extends Model
 			$spec_row = $this->get($id);
 			$form = $this->setForm($this->rules(), $spec_row);
 			$form['id'] = $id;
+			$form['type'] = $spec_row['type'];
 			$form['status'] = $spec_row['status'];
 			$form['numb'] = $spec_row['numb'];
 			Basic_Helper::msgReset();
@@ -467,6 +469,7 @@ class Model_ApplicationSpec extends Model
 			$spec_row = $this->get($id);
 			$form = $this->setForm($this->rules(), $spec_row);
 			$form['id'] = $id;
+			$form['type'] = $spec_row['type'];
 			$form['status'] = $spec_row['status'];
 			$form['numb'] = $spec_row['numb'];
 			Basic_Helper::msgReset();

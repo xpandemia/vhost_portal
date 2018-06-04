@@ -6,6 +6,7 @@ use tinyframe\core\Model as Model;
 use tinyframe\core\helpers\Form_Helper as Form_Helper;
 use common\models\Model_Application as Application;
 use common\models\Model_ApplicationStatus as ApplicationStatus;
+use common\models\Model_EduclevelsDoctypes as EduclevelsDoctypes;
 use common\models\Model_DictUniversity as Model_DictUniversity;
 use common\models\Model_AdmissionCampaign as Model_AdmissionCampaign;
 use common\models\Model_DictDocships as Model_DictDocships;
@@ -49,17 +50,17 @@ class Model_Application extends Model
                 'campus' => [
 							'type' => 'checkbox',
                             'class' => 'form-check-input',
-                            'success' => 'Получена потребность в общежитии.'
+                            'success' => 'Получена информация о потребности в общежитии.'
                            ],
                 'conds' => [
 							'type' => 'checkbox',
 	                        'class' => 'form-check-input',
-	                        'success' => 'Получена просьба о создании специальных условий.'
+	                        'success' => 'Получена информация о просьбе в создании специальных условий.'
 	                       ],
 	            'remote' => [
 							'type' => 'checkbox',
 	                        'class' => 'form-check-input',
-	                        'success' => 'Получена просьба о сдаче вступительных испытаний с использованием дистанционных технологий.'
+	                        'success' => 'Получена информация о просьбе в сдаче вступительных испытаний с использованием дистанционных технологий.'
 	                       ]
 	            ];
 	}
@@ -122,7 +123,7 @@ class Model_Application extends Model
 		$app_row = $app->get();
 		if ($app_row['status'] == $app::STATUS_CREATED || $app_row['status'] == $app::STATUS_SAVED) {
 			if ($app->clear() > 0) {
-				$_SESSION[APP_CODE]['success_msg'] = 'Заявление № '.$form['id'].' успешно удалёно.';
+				$_SESSION[APP_CODE]['success_msg'] = 'Заявление № '.$form['id'].' успешно удалено.';
 				return true;
 			} else {
 				$_SESSION[APP_CODE]['error_msg'] = 'Ошибка удаления заявления! Свяжитесь с администратором.';
@@ -187,6 +188,14 @@ class Model_Application extends Model
 		$app->campus = (($form['campus'] == 'checked') ? 1 : 0);
 		$app->conds = (($form['conds'] == 'checked') ? 1 : 0);
 		$app->remote = (($form['remote'] == 'checked') ? 1 : 0);
+			$ed = new EduclevelsDoctypes();
+			$ed_row = $ed->getPayByDocCampaign($app->id_campaign, $app->id_docseduc);
+			if ($ed_row) {
+				$app->pay = $ed_row['pay'];
+			} else {
+				$form['error_msg'] = 'Ошибка при получении отметки о возможности поступления на бесплатную форму обучения!';
+				return $form;
+			}
 		$app->id = $app->save();
 		if ($app->id > 0) {
 			$applog = new ApplicationStatus();

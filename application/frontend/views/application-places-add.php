@@ -54,13 +54,7 @@ use common\models\Model_DocsEduc as DocsEduc;
 			<div class="form-group row">
 				<div class="col col-sm-4 font-weight-bold">Направления подготовки</div>
 				<div class="col col-sm-3 font-weight-bold">разрешено выбрать: <?php echo $camp_row['max_spec']; ?></div>
-				<div class="col">
-					<?php
-						echo HTML_Helper::setSubmit('btn btn-success', 'btn_save', 'Выбрать');
-						echo HTML_Helper::setHrefButton('ApplicationSpec', 'CancelPlaces/?id='.$data['pid'], 'btn btn-warning', 'Отмена');
-					?>
-				</div>
-				<div class="col">
+				<div class="col text-center">
 					<input type="checkbox" class="form-check-input" id="filters_flag" name="filters_flag"><b>Фильтры</b>
 				</div>
 			</div>
@@ -74,15 +68,15 @@ use common\models\Model_DocsEduc as DocsEduc;
 						// filter_speciality
 						if ($special == 1) {
 							if (in_array($docs_row['doc_type'], $docs::CLASSES_9)) {
-								$speciality_arr = $specs->getSpecialitySpecial9ForApp();
+								$speciality_arr = $specs->getSpecialitySpecial9ForApp($app_row['pay']);
 							} else {
-								$speciality_arr = $specs->getSpecialityFirstForApp();
+								$speciality_arr = $specs->getSpecialityFirstForApp($app_row['pay']);
 							}
 						} else {
 							if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
-								$speciality_arr = $specs->getSpecialityFirstForApp();
+								$speciality_arr = $specs->getSpecialityFirstForApp($app_row['pay']);
 							} else {
-								$speciality_arr = $specs->getSpecialitySecondForApp();
+								$speciality_arr = $specs->getSpecialitySecondForApp($app_row['pay']);
 							}
 						}
 						if ($speciality_arr) {
@@ -105,15 +99,15 @@ use common\models\Model_DocsEduc as DocsEduc;
 						// filter_finance
 						if ($special == 1) {
 							if (in_array($docs_row['doc_type'], $docs::CLASSES_9)) {
-								$finance_arr = $specs->getFinanceSpecial9ForApp();
+								$finance_arr = $specs->getFinanceSpecial9ForApp($app_row['pay']);
 							} else {
-								$finance_arr = $specs->getFinanceFirstForApp();
+								$finance_arr = $specs->getFinanceFirstForApp($app_row['pay']);
 							}
 						} else {
 							if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
-								$finance_arr = $specs->getFinanceFirstForApp();
+								$finance_arr = $specs->getFinanceFirstForApp($app_row['pay']);
 							} else {
-								$finance_arr = $specs->getFinanceSecondForApp();
+								$finance_arr = $specs->getFinanceSecondForApp($app_row['pay']);
 							}
 						}
 						if ($finance_arr) {
@@ -132,15 +126,15 @@ use common\models\Model_DocsEduc as DocsEduc;
 						// filter_eduform
 						if ($special == 1) {
 							if (in_array($docs_row['doc_type'], $docs::CLASSES_9)) {
-								$eduform_arr = $specs->getEduformSpecial9ForApp();
+								$eduform_arr = $specs->getEduformSpecial9ForApp($app_row['pay']);
 							} else {
-								$eduform_arr = $specs->getEduformFirstForApp();
+								$eduform_arr = $specs->getEduformFirstForApp($app_row['pay']);
 							}
 						} else {
 							if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
-								$eduform_arr = $specs->getEduformFirstForApp();
+								$eduform_arr = $specs->getEduformFirstForApp($app_row['pay']);
 							} else {
-								$eduform_arr = $specs->getEduformSecondForApp();
+								$eduform_arr = $specs->getEduformSecondForApp($app_row['pay']);
 							}
 						}
 						if ($eduform_arr) {
@@ -159,15 +153,15 @@ use common\models\Model_DocsEduc as DocsEduc;
 						// filter_edulevel
 						if ($special == 1) {
 							if (in_array($docs_row['doc_type'], $docs::CLASSES_9)) {
-								$edulevel_arr = $specs->getEdulevelSpecial9ForApp();
+								$edulevel_arr = $specs->getEdulevelSpecial9ForApp($app_row['pay']);
 							} else {
-								$edulevel_arr = $specs->getEdulevelFirstForApp();
+								$edulevel_arr = $specs->getEdulevelFirstForApp($app_row['pay']);
 							}
 						} else {
 							if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
-								$edulevel_arr = $specs->getEdulevelFirstForApp();
+								$edulevel_arr = $specs->getEdulevelFirstForApp($app_row['pay']);
 							} else {
-								$edulevel_arr = $specs->getEdulevelSecondForApp();
+								$edulevel_arr = $specs->getEdulevelSecondForApp($app_row['pay']);
 							}
 						}
 						if ($edulevel_arr) {
@@ -210,15 +204,15 @@ use common\models\Model_DocsEduc as DocsEduc;
 			<?php
 				if ($special == 1) {
 					if (in_array($docs_row['doc_type'], $docs::CLASSES_9)) {
-						$specs_arr = $specs->getSpecsSpecial9ForApp();
+						$specs_arr = $specs->getSpecsSpecial9ForApp($app_row['pay']);
 					} else {
-						$specs_arr = $specs->getSpecsFirstForApp();
+						$specs_arr = $specs->getSpecsFirstForApp($app_row['pay']);
 					}
 				} else {
 					if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
-						$specs_arr = $specs->getSpecsFirstForApp();
+						$specs_arr = $specs->getSpecsFirstForApp($app_row['pay']);
 					} else {
-						$specs_arr = $specs->getSpecsSecondForApp();
+						$specs_arr = $specs->getSpecsSecondForApp($app_row['pay']);
 					}
 				}
 				if ($specs_arr) {
@@ -234,6 +228,16 @@ use common\models\Model_DocsEduc as DocsEduc;
 				}
 			?>
 			</table>
+		</div>
+		<div class="form-group fixed-bottom bg-primary text-center">
+			<div class="col">
+				<p></p>
+				<?php
+					echo HTML_Helper::setSubmit('btn btn-success', 'btn_save', 'Выбрать');
+					echo HTML_Helper::setHrefButton('ApplicationSpec', 'CancelPlaces/?id='.$data['pid'], 'btn btn-warning', 'Отмена');
+				?>
+				<p></p>
+			</div>
 		</div>
 	</form>
 </div>

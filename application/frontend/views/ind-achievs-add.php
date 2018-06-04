@@ -13,6 +13,11 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 		echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
 		echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
 		echo Form_Helper::setFormBegin(IND_ACHIEVS['ctr'], IND_ACHIEVS['act'], IND_ACHIEVS['id'], IND_ACHIEVS['hdr']);
+	?>
+	<div class="form-group">
+		<input type="hidden" id="id" name="id" value="<?php echo (isset($data['id'])) ? $data['id'] : null; ?>"/>
+	</div>
+	<?php
 		// achiev type
 		echo Form_Helper::setFormSelectListDB(['label' => 'Вид индивидуального достижения',
 												'control' => 'achiev_type',

@@ -103,7 +103,8 @@ class Model_IndAchievs extends Db_Helper
      */
 	public function grid()
 	{
-		return ['id' => [
+		return [
+				'id' => [
 						'name' => '№',
 						'type' => 'int'
 						],
@@ -217,6 +218,31 @@ class Model_IndAchievs extends Db_Helper
 									[':id_achiev' => $this->id_achiev,
 									':series' => $this->series,
 									':numb' => $this->numb]);
+		}
+	}
+
+	/**
+     * Gets individual achievment by achiev_type/series/numb except this ID.
+     *
+     * @return array
+     */
+	public function getByNumbExcept()
+	{
+		if (empty($this->series)) {
+			return $this->rowSelectOne('*',
+									self::TABLE_NAME,
+									'id_achiev = :id_achiev AND series is null AND numb = :numb AND id <> :id',
+									[':id_achiev' => $this->id_achiev,
+									':numb' => $this->numb,
+									':id' => $this->id]);
+		} else {
+			return $this->rowSelectOne('*',
+									self::TABLE_NAME,
+									'id_achiev = :id_achiev AND series = :series AND numb = :numb AND id <> :id',
+									[':id_achiev' => $this->id_achiev,
+									':series' => $this->series,
+									':numb' => $this->numb,
+									':id' => $this->id]);
 		}
 	}
 

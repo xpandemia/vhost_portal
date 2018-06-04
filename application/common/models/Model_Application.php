@@ -54,6 +54,7 @@ class Model_Application extends Db_Helper
 	public $campus;
 	public $conds;
 	public $remote;
+	public $pay;
 	public $active;
 	public $dt_created;
 
@@ -162,6 +163,12 @@ class Model_Application extends Db_Helper
 							'update' => 1,
 							'value' => $this->remote
 							],
+				'pay' => [
+						'required' => 1,
+						'insert' => 1,
+						'update' => 1,
+						'value' => $this->pay
+						],
 				'active' => [
 							'required' => 1,
 							'insert' => 1,
@@ -184,7 +191,8 @@ class Model_Application extends Db_Helper
      */
 	public function grid()
 	{
-		return ['numb' => [
+		return [
+				'numb' => [
 							'name' => 'Номер',
 							'type' => 'int'
 							],
@@ -438,20 +446,52 @@ class Model_Application extends Db_Helper
      */
 	public function clear()
 	{
-		// clear scans
-		$scans = new Model_Scans();
-		$scans->id_row = $this->id;
-		$scans->clearbyDoc('application');
-		// activate previous app
-		/*$id = $this->id;
+		// rollback previous app
+		$id = $this->id;
 		$app_row = $this->get();
 		if (!empty($app_row['id_app'])) {
 			$this->id = $app_row['id_app'];
-			$this->active = 1;
-			$this->changeActive();
-		}*/
+			if (!$this->rollback()) {
+				return 0;
+			}
+		}
+		// clear scans
+		$scans = new Model_Scans();
+		$scans->id_row = $id;
+		$scans->clearbyDoc('application');
 		// clear app
 		return $this->rowDelete(self::TABLE_NAME, 'id = :id', [':id' => $id]);
+	}
+
+	/**
+     * Roolbacks application.
+     *
+     * @return boolean
+     */
+	public function rollback()
+	{
+		$applog = new ApplicationStatus();
+		$applog->id_application = $this->id;
+		$applog_row = $applog->getLast();
+		if ($applog_row) {
+			$applog->id = $applog_row['id'];
+			if ($applog->clear() == 1) {
+				$applog_row = $applog->getLast();
+				if ($applog_row) {
+					$this->status = $applog_row['status'];
+					$this->changeStatus();
+					$this->active = 1;
+					$this->changeActive();
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -479,6 +519,7 @@ class Model_Application extends Db_Helper
 		$this->campus = $app_old['campus'];
 		$this->conds = $app_old['conds'];
 		$this->remote = $app_old['remote'];
+		$this->pay = $app_old['pay'];
 		$id_old = $this->id;
 		$this->save();
 		if ($this->id > 0) {
@@ -494,6 +535,7 @@ class Model_Application extends Db_Helper
 				foreach ($places_arr as $places_row) {
 					$places->pid = $this->id;
 					$places->id_spec = $places_row['id_spec'];
+					$places->curriculum = $places_row['curriculum'];
 					$place = $places->save();
 					// exams
 					$exams = new ApplicationPlacesExams();

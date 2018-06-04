@@ -13,7 +13,7 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 	<?php
 		echo HTML_Helper::setAlert($_SESSION[APP_CODE]['success_msg'], 'alert-success');
 		echo HTML_Helper::setAlert($_SESSION[APP_CODE]['error_msg'], 'alert-danger');
-		echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nЧтобы добавить <strong>заявление</strong>, нажмите <i class=\"far fa-file\"></i>.\nЧтобы добавить/изменить/удалить <strong>направления подготовки</strong>, нажмите <i class=\"far fa-edit\"></i> на нужном заявлении."), 'alert-warning');
+		echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nЧтобы добавить <strong>заявление</strong>, нажмите <i class=\"far fa-file\"></i>\nЧтобы добавить/изменить/удалить <strong>направления подготовки</strong>, нажмите <i class=\"far fa-edit\"></i> на нужном заявлении."), 'alert-warning');
 		echo HTML_Helper::setGridDB(['model_class' => 'common\\models\\Model_Application',
 									'model_method' => 'getByUserGrid',
 									'model_filter' => 'id_user',

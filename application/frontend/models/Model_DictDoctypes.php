@@ -30,7 +30,11 @@ class Model_DictDoctypes extends Model
 			$doc_json[] = ['code' => $value['code'],
 							'description' => $value['description']];
 		}
-		return json_encode($doc_json);
+		if (!empty($doc_json)) {
+			return json_encode($doc_json);
+		} else {
+			return json_encode(null);
+		}
 	}
 
 	/**
@@ -45,7 +49,11 @@ class Model_DictDoctypes extends Model
 			$doc_json[] = ['code' => $value['code'],
 							'description' => $value['description']];
 		}
-		return json_encode($doc_json);
+		if (!empty($doc_json)) {
+			return json_encode($doc_json);
+		} else {
+			return json_encode(null);
+		}
 	}
 
 	/**
@@ -60,7 +68,11 @@ class Model_DictDoctypes extends Model
 			$doc_json[] = ['code' => $value['code'],
 							'description' => $value['description']];
 		}
-		return json_encode($doc_json);
+		if (!empty($doc_json)) {
+			return json_encode($doc_json);
+		} else {
+			return json_encode(null);
+		}
 	}
 
 	/**
@@ -77,7 +89,11 @@ class Model_DictDoctypes extends Model
 				$doc_json[] = ['code' => $value['code'],
 								'description' => $value['description']];
 			}
-			return json_encode($doc_json);
+			if (!empty($doc_json)) {
+				return json_encode($doc_json);
+			} else {
+				return json_encode(null);
+			}
 		} else {
 			return json_encode(null);
 		}

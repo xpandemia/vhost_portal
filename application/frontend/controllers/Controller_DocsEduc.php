@@ -14,11 +14,19 @@ class Controller_DocsEduc extends Controller
 	*/
 
 	public $form;
+	public $code;
 
 	public function __construct()
 	{
 		$this->model = new Model_DocsEduc();
 		$this->view = new View();
+		// code
+		if (isset($_POST['code'])) {
+			$this->code = htmlspecialchars($_POST['code']);
+		}
+		else {
+			$this->code = null;
+		}
 	}
 
 	/**
@@ -122,6 +130,16 @@ class Controller_DocsEduc extends Controller
 		}
 		$this->form = $this->model->unsetScans($this->form);
 		return $this->view->generate('docs-educ-add.php', 'form.php', DOCS_EDUC['hdr'], $this->form);
+	}
+
+	/**
+     * Prints education documents by user campaign JSON.
+     *
+     * @return void
+     */
+	public function actionDiplomasByUserCampaignJSON()
+	{
+		echo $this->model->getDiplomasByUserCampaignJSON($this->code);
 	}
 
 	public function __destruct()

@@ -112,6 +112,8 @@ class Model_IndAchievs extends Model
      */
 	public function check($form)
 	{
+		$form['success_msg'] = null;
+		$form['error_msg'] = null;
 		$ia = new IndAchievs();
 		$ia->id_user = $_SESSION[APP_CODE]['user_id'];
 			$achievtype = new Model_DictIndAchievs();
@@ -122,26 +124,36 @@ class Model_IndAchievs extends Model
 		$ia->numb = $form['numb'];
 		$ia->company = $form['company'];
 		$ia->dt_issue = date('Y-m-d', strtotime($form['dt_issue']));
-		$ia_row = $ia->getByNumb();
-		if ($ia_row) {
-			$ia->id = $ia_row['id'];
-			if ($ia->changeAll()) {
-				$form['error_msg'] = null;
-				$form['success_msg'] = 'Изменено индивидуальное достижение № '.$ia_row['id'].'.';
-				$form['id'] = $ia_row['id'];
-			} else {
-				$form['error_msg'] = 'Ошибка при изменении индивидульного достижения!';
+		if (isset($form['id']) && !empty($form['id'])) {
+			// update
+			$ia->id = $form['id'];
+			$ia_row = $ia->getByNumbExcept();
+			if ($ia_row) {
+				$form['error_msg'] = 'Индивидуальное достижение "'.$row_achievtype['description'].'" с серией/номером '.((!empty($docs->series)) ? $docs->series : '').'/'.$docs->numb.' уже есть!';
 				return $form;
+			} else {
+				if ($ia->changeAll()) {
+					$form['success_msg'] = 'Изменено индивидуальное достижение № '.$form['id'].'.';
+				} else {
+					$form['error_msg'] = 'Ошибка при изменении индивидульного достижения!';
+					return $form;
+				}
 			}
 		} else {
-			$form['id'] = $ia->save();
-			if ($form['id'] > 0) {
-				$form['error_msg'] = null;
-				$form['success_msg'] = 'Создано новое индивидуальное достижение.';
-			} else {
-				unset($form['id']);
-				$form['error_msg'] = 'Ошибка при создании индивидуального достижения!';
+			// insert
+			$ia_row = $ia->getByNumb();
+			if ($ia_row) {
+				$form['error_msg'] = 'Индивидуальное достижение "'.$row_achievtype['description'].'" с серией/номером '.((!empty($docs->series)) ? $docs->series : '').'/'.$docs->numb.' уже есть!';
 				return $form;
+			} else {
+				$form['id'] = $ia->save();
+				if ($form['id'] > 0) {
+					$form['success_msg'] = 'Создано новое индивидуальное достижение № '.$form['id'].'.';
+				} else {
+					unset($form['id']);
+					$form['error_msg'] = 'Ошибка при создании индивидуального достижения!';
+					return $form;
+				}
 			}
 		}
 		/* scans */

@@ -82,6 +82,20 @@ class Model_ApplicationStatus extends Db_Helper
 	}
 
 	/**
+     * Gets the last application status log data.
+     *
+     * @return integer
+     */
+	public function getLast()
+	{
+		return $this->rowSelectAll('*',
+									self::TABLE_NAME,
+									'id_application = :id_application',
+									[':id_application' => $this->id_application],
+									'dt_created', 1, 1);
+	}
+
+	/**
      * Creates application status log data.
      *
      * @return integer
@@ -111,6 +125,16 @@ class Model_ApplicationStatus extends Db_Helper
 		$this->dt_created = date('Y-m-d H:i:s');
 		$prepare = $this->prepareInsert(self::TABLE_NAME, $this->rules());
 		return $this->rowInsert($prepare['fields'], self::TABLE_NAME, $prepare['conds'], $prepare['params']);
+	}
+
+	/**
+     * Removes application log.
+     *
+     * @return integer
+     */
+	public function clear()
+	{
+		return $this->rowDelete(self::TABLE_NAME, 'id = :id', [':id' => $this->id]);
 	}
 
 	public function __destruct()

@@ -10,17 +10,18 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 	<title><?php echo $title ?></title>
 
 	<!-- Bootstrap core CSS -->
-	<link rel="stylesheet" href="<?php echo Basic_Helper::baseUrl('/vendors/bootstrap/css/bootstrap.min.css'); ?>">
+	<link rel="stylesheet" href="/vendors/bootstrap/css/bootstrap.min.css">
 	<!-- jQuery -->
-	<script src="<?php echo Basic_Helper::baseUrl('/vendors/jquery/jquery.min.js'); ?>"></script>
+	<script src="/vendors/jquery/jquery.min.js"></script>
 	<!-- JQuery Masked Input -->
-	<script src="<?php echo Basic_Helper::baseUrl('/vendors/maskedinput/jquery.maskedinput.min.js'); ?>"></script>
+	<script src="/vendors/maskedinput/jquery.maskedinput.min.js"></script>
 	<!-- Popper JS -->
-	<script src="<?php echo Basic_Helper::baseUrl('/vendors/popper/popper.min.js'); ?>"></script>
+	<script src="/vendors/popper/popper.min.js"></script>
 	<!-- Bootstrap JS -->
-    <script src="<?php echo Basic_Helper::baseUrl('/vendors/bootstrap/js/bootstrap.min.js'); ?>"></script>
+    <script src="/vendors/bootstrap/js/bootstrap.min.js"></script>
 	<!-- Font Awesome -->
-	<script defer src="<?php echo Basic_Helper::baseUrl('/vendors/fontawesome/fontawesome-all.js'); ?>"></script>
+	<script defer src="/vendors/fontawesome/fontawesome-all.min.js"></script>
+	<link rel="stylesheet" href="/vendors/fontawesome/fontawesome-all.css">
 
 	<style>
 		#loadImg{position:absolute; z-index:1000; display:none}

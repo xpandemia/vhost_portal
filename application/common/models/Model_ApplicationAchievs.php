@@ -73,7 +73,8 @@ class Model_ApplicationAchievs extends Db_Helper
      */
 	public function grid()
 	{
-		return ['achiev' => [
+		return [
+				'achiev' => [
 							'name' => 'Индивидуальное достижение',
 							'type' => 'string'
 							],

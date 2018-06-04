@@ -3,6 +3,8 @@
 use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 use tinyframe\core\helpers\Form_Helper as Form_Helper;
+use common\models\Model_Application as Application;
+use common\models\Model_ApplicationPlaces as ApplicationPlaces;
 use common\models\Model_ApplicationPlacesExams as Model_ApplicationPlacesExams;
 use common\models\Model_DictTestingScopes as Model_DictTestingScopes;
 use common\models\Model_ApplicationAchievs as Model_ApplicationAchievs;
@@ -12,21 +14,46 @@ use frontend\models\Model_Application as Model_Application;
 	if (!isset($data)) {
 		Basic_Helper::redirect(APP_NAME, 204, 'Main', 'Index', null, nl2br("Ошибка направлений подготовки!\nСвяжитесь с администратором."));
 	}
+	// get app
+	$app = new Application();
+	$app->id = $data['id'];
+	$app_row = $app->get();
+	// manage scans
+	$place = new ApplicationPlaces();
+	$place->pid = $data['id'];
+	// photo3x4
+	if ($place->getByAppForBachelorSpec()) {
+		$data['photo3x4'] = 1;
+	} else {
+		$data['photo3x4'] = 0;
+	}
+	// medical certificate
+	if ($place->getByAppForMedicalA1() || $place->getByAppForMedicalA2() || $place->getByAppForMedicalB1() || $place->getByAppForMedicalC1()) {
+		$data['medical_certificate'] = 1;
+	} else {
+		$data['medical_certificate'] = 0;
+	}
 ?>
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
-	<h2>Заявление № <?php echo $data['numb']; ?></h2>
+	<h2>Заявление № <?php echo $app_row['numb']; ?></h2>
 	<?php
 		echo HTML_Helper::setAlert($_SESSION[APP_CODE]['success_msg'], 'alert-success');
 		echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
 		echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
 		/* type */
-		echo Model_Application::showType($data['type']);
+		echo Model_Application::showType($app_row['type']);
 		/* status */
-		echo Model_Application::showStatus($data['status']);
+		echo Model_Application::showStatus($app_row['status']);
 	?>
 	<hr><h5>Направления подготовки</h5><br>
 	<?php
-		echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nЧтобы добавить/изменить <strong>направления подготовки</strong>, нажмите <i class=\"far fa-file\"></i>."), 'alert-warning');
+		echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nЧтобы добавить/изменить <strong>направления подготовки</strong>, нажмите <i class=\"far fa-file\"></i>"), 'alert-warning');
+		if ($app_row['pay'] == 0) {
+			$pay = 'Вы можете поступать и на бесплатную, и на платную основу обучения.';
+		} else {
+			$pay = 'Вы можете поступать <strong>только на платную</strong> основу обучения!';
+		}
+		echo HTML_Helper::setAlert($pay, 'alert-info');
 		echo HTML_Helper::setGridDB(['model_class' => 'common\\models\\Model_ApplicationPlaces',
 									'model_method' => 'getGrid',
 									'model_filter' => 'pid',
@@ -39,9 +66,8 @@ use frontend\models\Model_Application as Model_Application;
 	<form enctype="multipart/form-data" action="<?php echo Basic_Helper::appUrl('ApplicationSpec', 'Save'); ?>" method="post" id="form_app_spec" novalidate>
 		<div class="form-group">
 			<input type="hidden" id="id" name="id" value="<?php echo $data['id']; ?>"/>
-			<input type="hidden" id="type" name="type" value="<?php echo $data['type']; ?>"/>
-			<input type="hidden" id="status" name="status" value="<?php echo $data['status']; ?>"/>
-			<input type="hidden" id="numb" name="numb" value="<?php echo $data['numb']; ?>"/>
+			<input type="hidden" id="photo3x4" name="photo3x4" value="<?php echo $data['photo3x4']; ?>"/>
+			<input type="hidden" id="medical_certificate" name="medical_certificate" value="<?php echo $data['medical_certificate']; ?>"/>
 		</div>
 		<div class="form-group">
 			<h5>Вступительные испытания</h5><br>
@@ -163,3 +189,30 @@ use frontend\models\Model_Application as Model_Application;
 		</div>
 	</form>
 </div>
+
+<script>
+	$(document).ready(function(){
+		formInit();
+	});
+</script>
+
+<script>
+	// form init
+	function formInit()
+	{
+		// photo3x4 required
+		if ($('#photo3x4').val() == 1) {
+			$("label[for='photo3x4']").html('Фотография 3х4*');
+		} else {
+			$("label[for='photo3x4']").html('Фотография 3х4');
+		}
+		// medical certificate required
+		if ($('#medical_certificate').val() == 1) {
+			$("label[for='medical_certificate_face']").html('Медицинская справка (лицевая сторона)*');
+			$("label[for='medical_certificate_back']").html('Медицинская справка (оборотная сторона)*');
+		} else {
+			$("label[for='medical_certificate_face']").html('Медицинская справка (лицевая сторона)');
+			$("label[for='medical_certificate_back']").html('Медицинская справка (оборотная сторона)');
+		}
+	}
+</script>

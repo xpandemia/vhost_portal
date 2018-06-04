@@ -621,6 +621,7 @@ class Form_Helper
 				}
 				// next input
 				if (isset($rules['data'][$field.'_id'])) {
+					// file exists
 					$result .= '<input type="hidden" id="'.$field.'_id" name="'.$field.'_id" value="'.$rules['data'][$field.'_id'].'"/>'.
 								'<span style="padding-left:10px;"> </span><img class="img-fluid" src="data:'.$rules['data'][$field.'_type'].';base64,'.base64_encode( $rules['data'][$field] ).'" width="80" height="100">'.
 								'<span style="padding-left:10px;"> </span>'.
@@ -628,6 +629,7 @@ class Form_Helper
 								'<span style="padding-left:10px;"> </span>'.
 								HTML_Helper::setHrefButtonIcon('Scans', 'DeleteConfirm/?id='.$rules['data'][$field.'_id'].((isset($rules['home_id']) && !empty($rules['home_id'])) ? '&pid='.$rules['home_id'] : '').'&hdr='.$rules['home_hdr'].'&ctr='.$rules['home_ctr'].'&act='.$rules['home_act'], 'text-danger font-weight-bold', 'fas fa-times fa-2x', 'Удалить файл').'</div>';
 				} else {
+					// file not exists
 					$result .= '<span style="padding-left:10px;"> </span><input type="file" id="'.$field.'" name="'.$field.'"/></div>';
 				}
 				// feedback

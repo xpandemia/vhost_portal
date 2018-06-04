@@ -89,7 +89,8 @@ class Model_EgeDisciplines extends Db_Helper
      */
 	public function grid()
 	{
-		return ['discipline' => [
+		return [
+				'discipline' => [
 								'name' => 'Предмет',
 								'type' => 'string'
 								],

@@ -122,6 +122,16 @@ use common\models\Model_DocsEduc as DocsEduc;
 				getCampaignAJAX('/frontend/AdmissionCampaign/AdmCampByUniversityJSON', university, '#campaign');
 			}
 		});
+		// campaign change
+		$('#campaign').change(function() {
+			var campaign = $('#campaign').val();
+			var campaign_name = $('#campaign :selected').text();
+			if (campaign == '') {
+				$('#docs_educ').empty();
+			} else {
+				getDocseducAJAX('/frontend/DocsEduc/DiplomasByUserCampaignJSON', campaign, '#docs_educ');
+			}
+		});
 	}
 
 	function getCampaignAJAX(url, code, select)
@@ -139,6 +149,32 @@ use common\models\Model_DocsEduc as DocsEduc;
 	        if (!jQuery.isEmptyObject(result)) {
 		        $.each(result, function(key, value){
 		            $(select).append('<option value="' + value.code + '">' + value.description + '</option>');
+		        });
+			}
+	      },
+	      error: function(xhr, status, error) {
+		      console.log('Request Failed: ' + status + ' ' + error + ' ' + xhr.status + ' ' + xhr.statusText);
+		  }
+	    });
+	    stopLoadingAnimation();
+	    $(select).val('');
+	}
+
+	function getDocseducAJAX(url, code, select)
+	{
+		startLoadingAnimation();
+		$.ajax({
+	      url: url,
+	      type: 'POST',
+	      data: {format: 'json'},
+		  dataType: 'json',
+		  data: {code: code},
+	      success: function(result) {
+	        $(select).empty();
+            $(select).append('<option></option>');
+	        if (!jQuery.isEmptyObject(result)) {
+		        $.each(result, function(key, value){
+		            $(select).append('<option value="' + value.id + '">' + value.description + '</option>');
 		        });
 			}
 	      },

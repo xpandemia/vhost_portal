@@ -15,7 +15,7 @@ class Model_DictionaryManager extends Model
 	*/
 
 	/**
-     * Login rules.
+     * Dictionary manager rules.
      *
      * @return array
      */
@@ -32,7 +32,7 @@ class Model_DictionaryManager extends Model
 	}
 
 	/**
-     * Checks login data.
+     * Renews dictionary manager data.
      *
      * @return array
      */

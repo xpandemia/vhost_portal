@@ -80,7 +80,8 @@ class Model_Ege extends Db_Helper
      */
 	public function grid()
 	{
-		return ['id' => [
+		return [
+				'id' => [
 						'name' => '№',
 						'type' => 'int'
 						],

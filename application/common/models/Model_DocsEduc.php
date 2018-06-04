@@ -134,7 +134,8 @@ class Model_DocsEduc extends Db_Helper
      */
 	public function grid()
 	{
-		return ['id' => [
+		return [
+				'id' => [
 						'name' => '№',
 						'type' => 'int'
 						],
@@ -233,7 +234,7 @@ class Model_DocsEduc extends Db_Helper
 	}
 
 	/**
-     * Gets education documents by user for Select List.
+     * Gets education documents by user for SelectList.
      *
      * @return array
      */
@@ -243,6 +244,29 @@ class Model_DocsEduc extends Db_Helper
 									'docs_educ INNER JOIN dict_doctypes ON docs_educ.id_doctype = dict_doctypes.id',
 									'docs_educ.id_user = :id_user',
 									[':id_user' => $_SESSION[APP_CODE]['user_id']]);
+	}
+
+	/**
+     * Gets campaign education documents by user for SelectList.
+     *
+     * @return array
+     */
+	public function getByUserSlCampaign($campaign_code)
+	{
+		if (!empty($campaign_code)) {
+			return $this->rowSelectAll("DISTINCT docs_educ.id, concat(dict_doctypes.description, ' № ', ifnull(concat(docs_educ.series, '-'), ''), docs_educ.numb, ' от ', date_format(dt_issue, '%d.%m.%Y')) as description",
+										'docs_educ'.
+										' INNER JOIN dict_doctypes ON docs_educ.id_doctype = dict_doctypes.id'.
+										' INNER JOIN educlevels_doctypes ON educlevels_doctypes.id_doctype = docs_educ.id_doctype'.
+										' INNER JOIN dict_educlevels ON educlevels_doctypes.id_educlevel = dict_educlevels.id'.
+										' INNER JOIN dict_speciality ON dict_educlevels.code = dict_speciality.edulevel_code',
+										'dict_speciality.campaign_code = :campaign_code and docs_educ.id_user = :id_user',
+										[':campaign_code' => $campaign_code,
+										':id_user' => $_SESSION[APP_CODE]['user_id']],
+										'dict_doctypes.description');
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -277,6 +301,29 @@ class Model_DocsEduc extends Db_Helper
 									'series = :series AND numb = :numb',
 									[':series' => $this->series,
 									':numb' => $this->numb]);
+		}
+	}
+
+	/**
+     * Gets education document by series/numb except this ID.
+     *
+     * @return array
+     */
+	public function getByNumbExcept()
+	{
+		if (empty($this->series)) {
+			return $this->rowSelectOne('*',
+									self::TABLE_NAME,
+									'series is null AND numb = :numb AND id <> :id',
+									[':numb' => $this->numb,
+									':id' => $this->id]);
+		} else {
+			return $this->rowSelectOne('*',
+									self::TABLE_NAME,
+									'series = :series AND numb = :numb AND id <> :id',
+									[':series' => $this->series,
+									':numb' => $this->numb,
+									':id' => $this->id]);
 		}
 	}
 

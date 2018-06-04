@@ -211,22 +211,28 @@ class Model_DocsEduc extends Model
 		$docs->dt_issue = date('Y-m-d', strtotime($form['dt_issue']));
 		$docs->end_year = $form['end_year'];
 		$docs->speciality = (empty($form['speciality'])) ? null : $form['speciality'];
-		$row_docs = $docs->getByNumb();
-		if ($row_docs) {
-			$form['error_msg'] = 'Документ об образовании с серией/номером '.((!empty($docs->series)) ? $docs->series : '').'/'.$docs->numb.' уже есть!';
-			return $form;
-		} else {
-			if (isset($form['id']) && !empty($form['id'])) {
-				// update
-				$docs->id = $form['id'];
+		if (isset($form['id']) && !empty($form['id'])) {
+			// update
+			$docs->id = $form['id'];
+			$row_docs = $docs->getByNumbExcept();
+			if ($row_docs) {
+				$form['error_msg'] = 'Документ об образовании с серией/номером '.((!empty($docs->series)) ? $docs->series : '').'/'.$docs->numb.' уже есть!';
+				return $form;
+			} else {
 				if ($docs->changeAll()) {
 					$form['success_msg'] = 'Изменен документ об образовании № '.$form['id'].'.';
 				} else {
 					$form['error_msg'] = 'Ошибка при изменении документа об образовании № '.$form['id'].'!';
 					return $form;
 				}
+			}
+		} else {
+			// insert
+			$row_docs = $docs->getByNumb();
+			if ($row_docs) {
+				$form['error_msg'] = 'Документ об образовании с серией/номером '.((!empty($docs->series)) ? $docs->series : '').'/'.$docs->numb.' уже есть!';
+				return $form;
 			} else {
-				// insert
 				$form['id'] = $docs->save();
 				if ($form['id'] > 0) {
 					$form['success_msg'] = 'Создан новый документ об образовании № '.$form['id'].'.';
@@ -254,5 +260,25 @@ class Model_DocsEduc extends Model
 			}
 		}
 		return $form;
+	}
+
+	/**
+     * Gets education documents by user campaign JSON.
+     *
+     * @return JSON
+     */
+	public function getDiplomasByUserCampaignJSON($campaign_code) : string
+	{
+		$docs = new DocsEduc();
+		$docs_arr = $docs->getByUserSlCampaign($campaign_code);
+		if ($docs_arr) {
+			foreach ($docs_arr as $docs_row) {
+				$docs_json[] = ['id' => $docs_row['id'],
+								'description' => $docs_row['description']];
+			}
+			return json_encode($docs_json);
+		} else {
+			return json_encode(null);
+		}
 	}
 }

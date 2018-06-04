@@ -80,3 +80,15 @@ define('DICT_MANAGER', array(
 							'hdr' => 'Управление справочниками',
 							'ctr' => 'DictionaryManager',
 							'act' => 'Renew'));
+// Educlevels doctypes form
+define('EDUCLEVELS_DOCTYPES', array(
+									'id' => 'form_educlevels_doctypes',
+									'hdr' => 'Связь документов с уровнями подготовки',
+									'ctr' => 'EduclevelsDoctypes',
+									'act' => 'Save'));
+// Eductypes doctypes form
+define('EDUCTYPES_DOCTYPES', array(
+									'id' => 'form_eductypes_doctypes',
+									'hdr' => 'Связь документов с видами образования',
+									'ctr' => 'EductypesDoctypes',
+									'act' => 'Save'));

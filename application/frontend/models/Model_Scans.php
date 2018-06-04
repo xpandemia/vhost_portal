@@ -3,6 +3,8 @@
 namespace frontend\models;
 
 use tinyframe\core\Model as Model;
+use tinyframe\core\helpers\Files_Helper as Files_Helper;
+use common\models\Model_Application as Application;
 use common\models\Model_DictScans as Model_DictScans;
 use common\models\Model_Docs as Model_Docs;
 use common\models\Model_Scans as Scans;
@@ -87,9 +89,7 @@ class Model_Scans extends Model
 					$scans->file_type = $form[$scan_code.'_type'];
 					$scans->file_size = (int) $form[$scan_code.'_size'];
 					// save
-					if ($scans->save() > 0) {
-						$form['error_msg'] = null;
-					} else {
+					if ($scans->save() == 0) {
 						$form['success_msg'] = null;
 						$form['error_msg'] = 'Ошибка при сохранении скан-копии "'.$dict_scans_row['scan_name'].'"!';
 						return $form;

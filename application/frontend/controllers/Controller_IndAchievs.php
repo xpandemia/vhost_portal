@@ -108,6 +108,7 @@ class Controller_IndAchievs extends Controller
 	public function actionSave()
 	{
 		$this->form = $this->model->getForm($this->model->rules(), $_POST, $_FILES);
+		$this->form['id'] = $id = htmlspecialchars($_POST['id']);
 		$this->form = $this->model->validateForm($this->form, $this->model->rules());
 		if ($this->form['validate']) {
 			$this->form = $this->model->check($this->form);

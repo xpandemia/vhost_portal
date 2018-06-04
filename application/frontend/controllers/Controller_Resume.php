@@ -122,6 +122,7 @@ class Controller_Resume extends Controller
 				$this->form['success_msg'] = 'Анкета успешно сохранена.';
 			}
 		} else {
+			$this->form['error_msg'] = '<strong>Ошибка при проверке данных анкеты!</strong> Пожалуйста, проверьте все поля ввода.';
 			if ($this->form['status'] != $this->resume::STATUS_CREATED) {
 				$this->form = $this->model->setAddressReg($this->form);
 				$this->form = $this->model->setAddressRes($this->form);

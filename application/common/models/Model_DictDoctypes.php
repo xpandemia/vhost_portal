@@ -151,7 +151,8 @@ class Model_DictDoctypes extends Db_Helper
 									'dict_doctypes d1 INNER JOIN dict_doctypes d2 ON d1.parent_key = d2.guid',
 									'd2.isfolder = :isfolder AND d2.description = :description',
 									[':isfolder' => 1,
-									':description' => 'Документы об образовании']);
+									':description' => 'Документы об образовании'],
+									'd1.description');
 	}
 
 	/**

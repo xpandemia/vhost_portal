@@ -1,8 +1,11 @@
 <?php
 
-define('APP_NAME', 'Портал абитуриента');
+define('APP_NAME', 'Личный кабинет абитуриента');
 define('APP_CODE', 'portalbsu'); // MUST BE UNIQUE
-define('APP_VERSION', '0.2.7');
+define('APP_VERSION', '0.2.8');
+define('APP_DEVELOPER', 'Никитин Олег Сергеевич');
+define('APP_DEVELOPER_PHONE', '8(903) 578-31-62');
+define('APP_DEVELOPER_EMAIL', 'nikitin_o@bsu.edu.ru');
 
 # Портал абитуриента
 # Build with curiosity by Fiben on Tinyframe 0.2.0

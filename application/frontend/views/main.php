@@ -14,7 +14,7 @@ use common\models\Model_Application as Application;
 	}
 ?>
 <div class="row">
-	<div class="col text-primary"><h3>Добро пожаловать, <?php echo $_SESSION[APP_CODE]['user_name']; ?>!</h3></div>
+	<div class="col text-primary"><h3>Добро пожаловать!</h3></div>
 	<div class="col text-right"><img src="/images/bsulogo.jpg" alt="Logo" style="width:60px;heigth:90px"></div>
 </div>
 <div class="row">
@@ -23,10 +23,6 @@ use common\models\Model_Application as Application;
 		E-mail: <a href="mailto:Exam@bsu.edu.ru"><strong>Exam@bsu.edu.ru</strong></a><br>
 		Тел: (4722) 30-18-80, 30-18-90<br>
 		Время работы: с 9.00 до 18.00, перерыв с 13.00 до 14.00
-	</div>
-	<div class="col text-right">
-		<a href="http://abitur.bsu.edu.ru/abitur/"><strong>Ваше будущее в ваших руках!</strong></a><br>
-		<a href="http://abitur.bsu.edu.ru/abitur/help/contacts/"><strong>Контакты Приёмной комиссии</strong></a>
 	</div>
 </div>
 <?php

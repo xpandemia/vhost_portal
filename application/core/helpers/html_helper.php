@@ -59,7 +59,7 @@ class HTML_Helper
      */
 	public static function setButton($class, $id, $text)
 	{
-		if (!empty($class) && !empty($id) && !empty($text)) {
+		if (!empty($id) && !empty($text)) {
 			return '<button type="button" class="'.$class.'" id="'.$id.'" name="'.$id.'">'.$text.'</button> ';
 		} else {
 			return '<p class="text-danger">HTML_Helper.setButton - На входе недостаточно данных!</p>';
