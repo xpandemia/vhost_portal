@@ -30,7 +30,11 @@ class Model_Main extends Model
 			$user->setUser();
 			return true;
 		} else {
-			$user->email = $_SESSION[APP_CODE]['user_name'].'@'.CAS_DOMAIN;
+			if (strripos($_SESSION[APP_CODE]['user_name'], '@')) {
+				$user->email = $_SESSION[APP_CODE]['user_name'];
+			} else {
+				$user->email = $_SESSION[APP_CODE]['user_name'].'@'.CAS_DOMAIN;
+			}
 			$user->role = $user::ROLE_GUEST;
 			$user->status = $user::STATUS_ACTIVE;
 			if ($user->save()) {

@@ -112,7 +112,7 @@ class Model_DictForeignLangs extends Db_Helper
 	{
 		return $this->rowSelectOne('*',
 								self::TABLE_NAME,
-								'code = :code)',
+								'code = :code',
 								[':code' => '000000007']);
 	}
 

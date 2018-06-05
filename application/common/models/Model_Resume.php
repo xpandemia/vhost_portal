@@ -181,6 +181,17 @@ class Model_Resume extends Db_Helper
 			if (!is_array($passport_old)) {
 				$passport_old = ['passport_type_old' => null, 'series_old' => null, 'numb_old' => null, 'dt_issue_old' => null, 'unit_name_old' => null, 'unit_code_old' => null, 'dt_end_old' => null];
 			}
+			$result = array_merge($resume, $personal, $agreement, $email, $phone_mobile, $phone_home, $phone_add, $passport, $passport_old);
+			$passport_old = $this->rowSelectOne('scans.id as passport_old_id, file_data as passport_old, file_type as passport_old_type',
+												'scans INNER JOIN docs ON scans.id_doc = docs.id'.
+												' INNER JOIN dict_scans ON scans.id_scans = dict_scans.id',
+												'id_row = :id_row AND doc_code = :doc_code AND scan_code = :scan_code',
+												[':id_row' => $resume['id'],
+												':doc_code' => 'resume',
+												':scan_code' => 'passport_old']);
+			if (!is_array($passport_old)) {
+				$passport_old = ['passport_old_id' => null, 'passport_old' => null, 'passport_old_type' => null];
+			}
 			$address_reg = $this->rowSelectOne('dict_countries.code as country_reg, adr as address_reg',
 												'address INNER JOIN dict_countries ON address.id_country = dict_countries.id',
 												'id_resume = :id_resume AND type = :type',
@@ -195,7 +206,7 @@ class Model_Resume extends Db_Helper
 			if (!is_array($address_res)) {
 				$address_res = ['country_res' => null, 'address_res' => null];
 			}
-			$result = array_merge($resume, $personal, $agreement, $email, $phone_mobile, $phone_home, $phone_add, $passport, $passport_old, $address_reg, $address_res);
+			$result = array_merge($result, $passport_old, $address_reg, $address_res);
 			// scans
 			$scans = new Model_DictScans();
 			$scans->doc_code = 'resume';
@@ -221,6 +232,19 @@ class Model_Resume extends Db_Helper
 		} else {
 			return null;
 		}
+	}
+
+	/**
+     * Gets status by user.
+     *
+     * @return array
+     */
+	public function getStatusByUser()
+	{
+		return $this->rowSelectOne('status',
+									self::TABLE_NAME,
+									'id_user = :id_user',
+									[':id_user' => $_SESSION[APP_CODE]['user_id']]);
 	}
 
 	/**

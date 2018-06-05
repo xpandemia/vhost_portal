@@ -42,6 +42,7 @@ use frontend\models\Model_Application as Model_Application;
 	<h2>Заявление № <?php echo $app_row['numb']; ?></h2>
 	<?php
 		echo HTML_Helper::setAlert($_SESSION[APP_CODE]['success_msg'], 'alert-success');
+		echo HTML_Helper::setAlert($_SESSION[APP_CODE]['error_msg'], 'alert-danger');
 		echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
 		echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
 		/* type */
@@ -51,7 +52,7 @@ use frontend\models\Model_Application as Model_Application;
 	?>
 	<hr><h5>Направления подготовки</h5><br>
 	<?php
-		echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nЧтобы добавить/изменить <strong>направления подготовки</strong>, нажмите <i class=\"far fa-file\"></i>"), 'alert-warning');
+		echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nЧтобы добавить/изменить <strong>направления подготовки</strong>, нажмите <i class=\"far fa-file\"></i>\n<strong>При изменении направлений подготовки загруженные до этого скан-копии удаляются!</strong>"), 'alert-warning');
 		if ($app_row['pay'] == 0) {
 			$pay = 'Вы можете поступать и на бесплатную, и на платную основу обучения.';
 		} else {

@@ -14,7 +14,7 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 		<legend class="font-weight-bold" align="center">Вы действительно хотите удалить запись "<?php echo $data['hdr']; ?>" № <?php echo $data['id']; ?> ?</legend>
 		<div class="form-group">
 			<input type="hidden" id="id" name="id" value="<?php echo $data['id']; ?>"/>
-			<input type="hidden" id="pid" name="pid" value="<?php echo $data['pid']; ?>"/>
+			<input type="hidden" id="pid" name="pid" value="<?php echo (isset($data['pid'])) ? $data['pid'] : null; ?>"/>
 			<input type="hidden" id="hdr" name="hdr" value="<?php echo $data['hdr']; ?>"/>
 			<input type="hidden" id="ctr" name="ctr" value="<?php echo $data['ctr']; ?>"/>
 		</div>

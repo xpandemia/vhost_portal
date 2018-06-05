@@ -276,6 +276,17 @@ class Model_ApplicationSpec extends Model
 		} else {
 			$form['error_msg'] = 'Ошибка при получении максимального числа направлений подготовки приёмной кампании с ID '.$form['pid'].'!';
 		}
+		if (!$form['error_msg']) {
+			$scans = new Scans();
+			$scans->id_row = $app->id;
+			$scans->clearbyDoc('application');
+				$app->status = $app::STATUS_CREATED;
+				$app->changeStatus();
+				$form['status'] = $app->status;
+					$applog = new ApplicationStatus();
+					$applog->id_application = $app->id;
+					$applog->create();
+		}
 		return $form;
 	}
 
@@ -506,30 +517,15 @@ class Model_ApplicationSpec extends Model
 		$app = new Application();
 		$app->id = $id;
 		$app_row = $app->get();
+		if ($app_row['status'] == $app::STATUS_CREATED) {
+			return Basic_Helper::redirect(APP['hdr'], 200, APP['ctr'], 'Edit/?id='.$id, null, 'Нельзя выводить на печать заявления с состоянием <strong>'.mb_convert_case($app::STATUS_CREATED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!');
+		}
 		$place = new ApplicationPlaces();
 		$place->pid = $id;
 		if ($place->getByAppForBachelorSpec()) {
-			$resume = new Resume();
-			$resume_row = $resume->getByUser();
-			$data = [
-	                'name_last' => $resume_row['name_last'],
-	                'name_first' => $resume_row['name_first'],
-	                'name_middle' => $resume_row['name_middle'],
-	                'birth_dt' => date('d.m.Y', strtotime($resume_row['birth_dt'])),
-	                'citizenship' => mb_convert_case(mb_convert_case($resume_row['citizenship_name'], MB_CASE_LOWER, 'UTF-8'), MB_CASE_TITLE, 'UTF-8'),
-	                'passport_type' => $resume_row['passport_type_name'],
-	                'series' => $resume_row['series'],
-	                'numb' => $resume_row['numb'],
-	                'unit_code' => $resume_row['unit_code'],
-	                'when_where' => $resume_row['unit_name'].' '.date('d.m.Y', strtotime($resume_row['dt_issue'])),
-	                'address_reg' => $resume_row['address_reg'],
-	                'phone_main' => ((!empty($resume_row['phone_mobile'])) ? $resume_row['phone_mobile'] : $resume_row['phone_home']),
-	                'phone_add' => $resume_row['phone_add'],
-	                'email' => $resume_row['email'],
-	                'address_res' => $resume_row['address_res'],
-	                'app_numb' => '№ '.$app_row['numb'],
-	                'campus_yes' => 'On'
-	                ];
+			$data = $this->getResumeForPdf();
+	        $data['app_numb'] = '№ '.$app_row['numb'];
+	        $data['campus_yes'] = 'On';
 			$pdf->create($data, 'application_2018', 'заявление'.$app_row['numb']);
 		} else {
 			$resume = new Resume();
@@ -545,5 +541,33 @@ class Model_ApplicationSpec extends Model
 			}
 			$pdf->create($data, 'application_sorry', 'application_sorry'.$app_row['numb']);
 		}
+	}
+
+	/**
+     * Saves application spec data as PDF.
+     *
+     * @return array
+     */
+	public function getResumeForPdf() : array
+	{
+		$resume = new Resume();
+		$resume_row = $resume->getByUser();
+		return [
+                'name_last' => $resume_row['name_last'],
+                'name_first' => $resume_row['name_first'],
+                'name_middle' => $resume_row['name_middle'],
+                'birth_dt' => date('d.m.Y', strtotime($resume_row['birth_dt'])),
+                'citizenship' => mb_convert_case(mb_convert_case($resume_row['citizenship_name'], MB_CASE_LOWER, 'UTF-8'), MB_CASE_TITLE, 'UTF-8'),
+                'passport_type' => $resume_row['passport_type_name'],
+                'series' => $resume_row['series'],
+                'numb' => $resume_row['numb'],
+                'unit_code' => $resume_row['unit_code'],
+                'when_where' => $resume_row['unit_name'].' '.date('d.m.Y', strtotime($resume_row['dt_issue'])),
+                'address_reg' => $resume_row['address_reg'],
+                'phone_main' => ((!empty($resume_row['phone_mobile'])) ? $resume_row['phone_mobile'] : $resume_row['phone_home']),
+                'phone_add' => $resume_row['phone_add'],
+                'email' => $resume_row['email'],
+                'address_res' => $resume_row['address_res']
+                ];
 	}
 }

@@ -89,14 +89,14 @@ class Controller_IndAchievs extends Controller
      */
 	public function actionDelete()
 	{
-		$this->form['id'] = htmlspecialchars($_POST['id']);
-		$this->form['hdr'] = htmlspecialchars($_POST['hdr']);
-		$this->form['ctr'] = htmlspecialchars($_POST['ctr']);
-		if ($this->model->delete($this->form)) {
-			Basic_Helper::redirect($this->form['hdr'], 200, $this->form['ctr'], 'Index');
+		if (isset($_POST['id']) && isset($_POST['hdr']) && isset($_POST['ctr'])) {
+			$this->form['id'] = htmlspecialchars($_POST['id']);
+			$this->form['hdr'] = htmlspecialchars($_POST['hdr']);
+			$this->form['ctr'] = htmlspecialchars($_POST['ctr']);
+			$this->model->delete($this->form);
+			return Basic_Helper::redirect($this->form['hdr'], 200, $this->form['ctr'], 'Index');
 		} else {
-			$this->form['error_msg'] = 'Ошибка удаления документа '.$this->form['ctr'].'! Свяжитесь с администратором.';
-			return $this->view->generate('delete-confirm.php', 'form.php', 'Удаление документа '.$this->form['ctr'], $this->form);
+			return Basic_Helper::redirect(IND_ACHIEVS['hdr'], 200, IND_ACHIEVS['ctr'], 'Index');
 		}
 	}
 
@@ -108,16 +108,26 @@ class Controller_IndAchievs extends Controller
 	public function actionSave()
 	{
 		$this->form = $this->model->getForm($this->model->rules(), $_POST, $_FILES);
-		$this->form['id'] = $id = htmlspecialchars($_POST['id']);
+		$this->form['id'] = htmlspecialchars($_POST['id']);
 		$this->form = $this->model->validateForm($this->form, $this->model->rules());
 		if ($this->form['validate']) {
 			$this->form = $this->model->check($this->form);
 			if (!$this->form['error_msg']) {
-				return $this->view->generate('ind-achievs.php', 'main.php', 'Индивидуальные достижения', $this->form);
+				return Basic_Helper::redirect(IND_ACHIEVS['hdr'], 200, IND_ACHIEVS['ctr'], 'Index', $this->form['success_msg']);
 			}
 		}
 		$this->form = $this->model->unsetScans($this->form);
 		return $this->view->generate('ind-achievs-add.php', 'form.php', IND_ACHIEVS['hdr'], $this->form);
+	}
+
+	/**
+     * Cancels individual achievment.
+     *
+     * @return mixed
+     */
+	public function actionCancel()
+	{
+		return Basic_Helper::redirect(IND_ACHIEVS['hdr'], 200, IND_ACHIEVS['ctr'], 'Index');
 	}
 
 	public function __destruct()

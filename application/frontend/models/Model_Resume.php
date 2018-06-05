@@ -1051,6 +1051,7 @@ class Model_Resume extends Model
 						return $form;
 					}
 				}
+			$form = Model_Scans::push('resume', 'passport_old', $form);
 		}
 		/* addresses */
 		$kladr = new Kladr();

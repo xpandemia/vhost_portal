@@ -46,7 +46,7 @@ class Controller_ApplicationSpec extends Controller
 			$this->form['success_msg'] = null;
 			return $this->view->generate('application-places-add.php', 'form.php', 'Выбор направлений подготовки', $this->form);
 		} else {
-			return Basic_Helper::redirect(APP_NAME, 202, APP['ctr'], 'Index', null, 'Отсутствует идент-р заявления!');
+			return Basic_Helper::redirect('Заявления', 202, APP['ctr'], 'Index', null, 'Отсутствует идент-р заявления!');
 		}
 	}
 
@@ -61,7 +61,7 @@ class Controller_ApplicationSpec extends Controller
 			$id = htmlspecialchars($_GET['id']);
 			return Basic_Helper::redirect('Заявления', 200, APP['ctr'], 'Edit/?id='.$id);
 		} else {
-			return Basic_Helper::redirect(APP_NAME, 202, APP['ctr'], 'Index', null, 'Отсутствует идент-р заявления!');
+			return Basic_Helper::redirect('Заявления', 202, APP['ctr'], 'Index', null, 'Отсутствует идент-р заявления!');
 		}
 	}
 
@@ -74,7 +74,7 @@ class Controller_ApplicationSpec extends Controller
 	{
 		$this->form = $this->model->checkPlaces($_POST);
 		if (!$this->form['error_msg']) {
-			return Basic_Helper::redirect('Заявление', 200, 'Application', 'Edit/?id='.$this->form['pid'], 'Направления подготовки выбраны.');
+			return Basic_Helper::redirect(APP['hdr'], 200, APP['ctr'], 'Edit/?id='.$this->form['pid'], 'Направления подготовки выбраны.');
 		} else {
 			return $this->view->generate('application-places-add.php', 'form.php', 'Выбор направлений подготовки', $this->form);
 		}
@@ -120,7 +120,7 @@ class Controller_ApplicationSpec extends Controller
 			$this->form = $this->model->send($this->form);
 			return $this->view->generate('application-edit.php', 'main.php', 'Заявление', $this->form);
 		} else {
-			return Basic_Helper::redirect(APP_NAME, 202, APP['ctr'], 'Index', null, 'Отсутствует идент-р заявления!');
+			return Basic_Helper::redirect('Заявления', 202, APP['ctr'], 'Index', null, 'Отсутствует идент-р заявления!');
 		}
 	}
 
@@ -139,7 +139,7 @@ class Controller_ApplicationSpec extends Controller
 			$this->form = $this->model->change($this->form);
 			return $this->view->generate('application-edit.php', 'main.php', 'Заявление', $this->form);
 		} else {
-			return Basic_Helper::redirect(APP_NAME, 202, APP['ctr'], 'Index', null, 'Отсутствует идент-р заявления!');
+			return Basic_Helper::redirect('Заявления', 202, APP['ctr'], 'Index', null, 'Отсутствует идент-р заявления!');
 		}
 	}
 
@@ -158,7 +158,7 @@ class Controller_ApplicationSpec extends Controller
 			$this->form = $this->model->recall($this->form);
 			return $this->view->generate('application-edit.php', 'main.php', 'Заявление', $this->form);
 		} else {
-			return Basic_Helper::redirect(APP_NAME, 202, APP['ctr'], 'Index', null, 'Отсутствует идент-р заявления!');
+			return Basic_Helper::redirect('Заявления', 202, APP['ctr'], 'Index', null, 'Отсутствует идент-р заявления!');
 		}
 	}
 
@@ -172,7 +172,7 @@ class Controller_ApplicationSpec extends Controller
 		if (isset($_GET['pid']) && !empty($_GET['pid'])) {
 			$this->model->savePdf(htmlspecialchars($_GET['pid']));
 		} else {
-			return Basic_Helper::redirect(APP_NAME, 202, APP['ctr'], 'Index', null, 'Отсутствует идент-р заявления!');
+			return Basic_Helper::redirect('Заявления', 202, APP['ctr'], 'Index', null, 'Отсутствует идент-р заявления!');
 		}
 	}
 

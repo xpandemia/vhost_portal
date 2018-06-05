@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use tinyframe\core\Controller as Controller;
 use tinyframe\core\View as View;
 use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
+use common\models\Model_Resume as Resume;
 use frontend\models\Model_DocsEduc as Model_DocsEduc;
 
 class Controller_DocsEduc extends Controller
@@ -26,6 +27,16 @@ class Controller_DocsEduc extends Controller
 		}
 		else {
 			$this->code = null;
+		}
+		// check resume
+		$resume = new Resume();
+		$resume_row = $resume->getStatusByUser();
+		if ($resume_row) {
+			if ($resume_row['status'] == $resume::STATUS_CREATED) {
+				return Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Home', null, 'Анкета в состоянии <strong>'.mb_convert_case($resume::STATUS_CREATED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!');
+			}
+		} else {
+			return Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Home', null, 'Анкета ещё не создана!');
 		}
 	}
 
@@ -119,7 +130,7 @@ class Controller_DocsEduc extends Controller
 	public function actionSave()
 	{
 		$this->form = $this->model->getForm($this->model->rules(), $_POST, $_FILES);
-		$this->form['id'] = $id = htmlspecialchars($_POST['id']);
+		$this->form['id'] = htmlspecialchars($_POST['id']);
 		$this->form = $this->model->validateForm($this->form, $this->model->rules());
 		$this->form = $this->model->validateFormAdvanced($this->form);
 		if ($this->form['validate']) {

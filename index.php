@@ -2,7 +2,7 @@
 
 define('APP_NAME', 'Личный кабинет абитуриента');
 define('APP_CODE', 'portalbsu'); // MUST BE UNIQUE
-define('APP_VERSION', '0.2.9a');
+define('APP_VERSION', '0.3.0');
 define('APP_DEVELOPER', 'Никитин Олег Сергеевич');
 define('APP_DEVELOPER_PHONE', '8(903) 578-31-62');
 define('APP_DEVELOPER_EMAIL', 'nikitin_o@bsu.edu.ru');
@@ -15,9 +15,10 @@ define('APP_DEVELOPER_EMAIL', 'nikitin_o@bsu.edu.ru');
 // Allowing us to verify the token
 header("Expires: Thu, 01 Jan 1970 00:00:01 GMT"); // Date in the past
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT"); // always modified
-header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
+header("Cache-Control: no-cache"); // HTTP/1.1
 header("Pragma: no-cache"); // HTTP/1.0
 
+session_cache_limiter('private_no_expire');
 session_start();
 ob_start(); // start output buffer
 

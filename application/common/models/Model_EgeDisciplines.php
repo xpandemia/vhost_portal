@@ -91,7 +91,7 @@ class Model_EgeDisciplines extends Db_Helper
 	{
 		return [
 				'discipline' => [
-								'name' => 'Предмет',
+								'name' => 'Дисциплина',
 								'type' => 'string'
 								],
 				'points' => [
@@ -141,12 +141,33 @@ class Model_EgeDisciplines extends Db_Helper
      *
      * @return boolean
      */
-	public function existsDiscipline()
+	public function exists()
 	{
 		$row = $this->rowSelectOne('id',
 									self::TABLE_NAME,
 									'pid = :pid AND id_discipline = :id_discipline',
-									[':pid' => $this->pid, ':id_discipline' => $this->id_discipline]);
+									[':pid' => $this->pid,
+									':id_discipline' => $this->id_discipline]);
+		if (!empty($row)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+     * Checks if discipline exists except this ID.
+     *
+     * @return boolean
+     */
+	public function existsExcept()
+	{
+		$row = $this->rowSelectOne('id',
+									self::TABLE_NAME,
+									'pid = :pid AND id_discipline = :id_discipline AND id <> :id',
+									[':pid' => $this->pid,
+									':id_discipline' => $this->id_discipline,
+									':id' => $this->id]);
 		if (!empty($row)) {
 			return true;
 		} else {

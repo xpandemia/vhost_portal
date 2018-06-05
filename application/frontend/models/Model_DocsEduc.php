@@ -88,7 +88,7 @@ class Model_DocsEduc extends Model
                             'type' => 'text',
                             'class' => 'form-control',
                             'pattern' => ['value' => PATTERN_SPEC_RUS, 'msg' => 'Для специальности по диплому можно использовать только русские буквы и тире!'],
-                            'width' => ['format' => 'string', 'min' => 1, 'max' => 100, 'msg' => 'Слишком длинная специальность по диплому!'],
+                            'width' => ['format' => 'string', 'min' => 1, 'max' => 150, 'msg' => 'Слишком длинная специальность по диплому!'],
                             'success' => 'Специальность по диплому заполнена верно.'
                            ],
 	            'change_name_flag' => [
@@ -115,6 +115,10 @@ class Model_DocsEduc extends Model
      */
 	public function validateFormAdvanced($form)
 	{
+		// change name
+		if ($form['change_name_flag'] == 'checked' && empty($form['change_name_name'])) {
+			$form = $this->setFormErrorFile($form, 'change_name', 'Скан-копия "Свидетельство о перемене имени" обязательна для заполнения!');
+		}
 		// educ type
 		if (!empty($form['educ_type']) && in_array($form['educ_type'], Model_DictEductypes::EDUCTYPES_DIPLOMA)) {
 			// educ form
@@ -126,10 +130,6 @@ class Model_DocsEduc extends Model
 				$form = $this->setFormErrorField($form, 'speciality', 'Специальность по диплому обязательна для заполнения!');
 				return $form;
 			}
-		}
-		// change name
-		if ($form['change_name_flag'] == 'checked' && empty($form['change_name_name'])) {
-			$form = $this->setFormErrorFile($form, 'change_name', 'Скан-копия "Свидетельство о перемене имени" обязательна для заполнения!');
 		}
 		return $form;
 	}

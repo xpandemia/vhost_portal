@@ -92,9 +92,10 @@ class Model_Kladr extends Db_Helper
 		// get city by region
 		$city = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
 										'kladr',
-										'level = :level AND code_region = :code_region AND relevance = :relevance',
+										'level = :level AND code_region = :code_region AND code_area = :code_area AND relevance = :relevance',
 										[':level' => self::CITY,
 										':code_region' => $code_region,
+										':code_area' => '0',
 										':relevance' => '0'],
 										'kladr_name');
 		return $city;

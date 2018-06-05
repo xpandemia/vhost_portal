@@ -93,7 +93,7 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 			<?php
 				echo HTML_Helper::setSubmit('btn btn-success', 'btn_save', 'Сохранить');
 				echo HTML_Helper::setHrefButton(IND_ACHIEVS['ctr'], 'Reset', 'btn btn-danger', 'Очистить');
-				echo HTML_Helper::setHrefButton(IND_ACHIEVS['ctr'], 'Index', 'btn btn-warning', 'Отмена');
+				echo HTML_Helper::setHrefButton(IND_ACHIEVS['ctr'], 'Cancel', 'btn btn-warning', 'Отмена');
 			?>
 		</div>
 	</div>

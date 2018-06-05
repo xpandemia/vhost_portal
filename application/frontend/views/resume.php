@@ -23,7 +23,7 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 	<?php
 		echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
 		echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
-		echo Form_Helper::setFormBegin(RESUME['ctr'], RESUME['act'], RESUME['id'], RESUME['hdr'], 1);
+		echo Form_Helper::setFormBegin(RESUME['ctr'], RESUME['act'], RESUME['id'], RESUME['hdr'], 1, '/images/logo_bsu.jpg');
 		/* status */
 		echo Model_Resume::showStatus($data['status']);
 		/* personal data */
@@ -2069,6 +2069,7 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 				$('#building_res').val($('#building_reg').val());
 				$('#flat_res').val($('#flat_reg').val());
 				$('#postcode_res').val($('#postcode_reg').val());
+				$('#kladr_res').hide();
 			} else {
 				$('#kladr_res').hide();
 				$('#address_res').prop('disabled', false);

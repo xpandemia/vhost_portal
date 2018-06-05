@@ -34,7 +34,7 @@ class Controller_EgeDisciplines extends Controller
 			$this->form['success_msg'] = null;
 			return $this->view->generate('ege-disciplines.php', 'main.php', 'Дисциплины ЕГЭ', $this->form);
 		} else {
-			exit("<p><strong>Ошибка!</strong> Отсутствует идент-р документа ЕГЭ!</p>");
+			return Basic_Helper::redirect(EGE['hdr'], 202, EGE['ctr'], 'Index', null, 'Отсутствует идент-р результатов ЕГЭ!');
 		}
 	}
 
@@ -50,7 +50,7 @@ class Controller_EgeDisciplines extends Controller
 			$this->form['pid'] = htmlspecialchars($_GET['pid']);
 			return $this->view->generate('ege-disciplines-add.php', 'form.php', EGE_DSP['hdr'], $this->form);
 		} else {
-			exit("<p><strong>Ошибка!</strong> Отсутствует идент-р документа ЕГЭ!</p>");
+			return Basic_Helper::redirect(EGE['hdr'], 202, EGE['ctr'], 'Index', null, 'Отсутствует идент-р результатов ЕГЭ!');
 		}
 	}
 
@@ -66,7 +66,7 @@ class Controller_EgeDisciplines extends Controller
 			$this->form['pid'] = htmlspecialchars($_GET['pid']);
 			return $this->view->generate('ege-disciplines-add.php', 'form.php', EGE_DSP['hdr'], $this->form);
 		} else {
-			exit("<p><strong>Ошибка!</strong> Отсутствует идент-р документа ЕГЭ!</p>");
+			return Basic_Helper::redirect(EGE['hdr'], 202, EGE['ctr'], 'Index', null, 'Отсутствует идент-р результатов ЕГЭ!');
 		}
 	}
 
@@ -80,12 +80,12 @@ class Controller_EgeDisciplines extends Controller
 		if (isset($_GET['id']) && !empty($_GET['id'])) {
 			$id = htmlspecialchars($_GET['id']);
 		} else {
-			exit("<p><strong>Ошибка!</strong> Отсутствует идент-р дисциплины ЕГЭ!</p>");
+			return Basic_Helper::redirect(EGE['hdr'], 202, EGE['ctr'], 'Index', null, 'Отсутствует идент-р дисциплины ЕГЭ!');
 		}
 		if (isset($_GET['pid']) && !empty($_GET['pid'])) {
 			$pid = htmlspecialchars($_GET['pid']);
 		} else {
-			exit("<p><strong>Ошибка!</strong> Отсутствует идент-р документа ЕГЭ!</p>");
+			return Basic_Helper::redirect(EGE['hdr'], 202, EGE['ctr'], 'Index', null, 'Отсутствует идент-р результатов ЕГЭ!');
 		}
 		$this->form = $this->model->setForm($this->model->rules(), $this->model->get($id));
 		$this->form['id'] = $id;
@@ -130,15 +130,35 @@ class Controller_EgeDisciplines extends Controller
 	public function actionSave()
 	{
 		$this->form = $this->model->getForm($this->model->rules(), $_POST);
+		$this->form['id'] = htmlspecialchars($_POST['id']);
 		$this->form['pid'] = htmlspecialchars($_POST['pid']);
 		$this->form = $this->model->validateForm($this->form, $this->model->rules());
 		if ($this->form['validate']) {
 			$this->form = $this->model->check($this->form);
-			if (!$_SESSION[APP_CODE]['error_msg']) {
-				return Basic_Helper::redirect('Дисциплины ЕГЭ', 200, EGE_DSP['ctr'], 'Index/?pid='.$this->form['pid'], $_SESSION[APP_CODE]['success_msg'], $_SESSION[APP_CODE]['error_msg']);
+			if (!$this->form['error_msg']) {
+				if (!$_SESSION[APP_CODE]['error_msg']) {
+					return Basic_Helper::redirect('Дисциплины ЕГЭ', 200, EGE_DSP['ctr'], 'Index/?pid='.$this->form['pid'], $_SESSION[APP_CODE]['success_msg']);
+				} else {
+					return Basic_Helper::redirect('Дисциплины ЕГЭ', 200, EGE_DSP['ctr'], 'Index/?pid='.$this->form['pid'], null, $_SESSION[APP_CODE]['error_msg']);
+				}
 			}
 		}
 		return $this->view->generate('ege-disciplines-add.php', 'form.php', EGE_DSP['hdr'], $this->form);
+	}
+
+	/**
+     * Cancels ege disciplines.
+     *
+     * @return mixed
+     */
+	public function actionCancel()
+	{
+		if (isset($_GET['pid']) && !empty($_GET['pid'])) {
+			$pid = htmlspecialchars($_GET['pid']);
+			return Basic_Helper::redirect('Дисциплины ЕГЭ', 200, EGE_DSP['ctr'], 'Index/?pid='.$pid);
+		} else {
+			return Basic_Helper::redirect(EGE['hdr'], 202, EGE['ctr'], 'Index', null, 'Отсутствует идент-р результатов ЕГЭ!');
+		}
 	}
 
 	public function __destruct()

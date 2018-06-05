@@ -15,7 +15,6 @@ use common\models\Model_Application as Application;
 ?>
 <div class="row">
 	<div class="col text-primary"><h3>Добро пожаловать!</h3></div>
-	<div class="col text-right"><img src="/images/bsulogo.jpg" alt="Logo" style="width:60px;heigth:90px"></div>
 </div>
 <div class="row">
 	<div class="col">
@@ -36,7 +35,7 @@ use common\models\Model_Application as Application;
 </div>
 <div class="row">
 	<div class="col col-sm-5 text-right text-primary">
-		<h4><a href="<?php echo Basic_Helper::appUrl('Main', RESUME['ctr']); ?>">Шаг 1*: Заполните анкету <i class="fas fa-id-card"></i></a></h4>
+		<h4><a href="<?php echo Basic_Helper::appUrl('Main', RESUME['ctr']); ?>">Шаг 1*: Анкета <i class="fas fa-id-card"></i></a></h4>
 	</div>
 	<?php
 		$resume = new Resume();
@@ -45,7 +44,7 @@ use common\models\Model_Application as Application;
 		if ($resume_row && $resume_row['status'] != $resume::STATUS_CREATED) {
 			stepSuccess();
 		} else {
-			stepError();
+			stepError(1);
 		}
 	?>
 </div>
@@ -60,7 +59,7 @@ use common\models\Model_Application as Application;
 		if ($docs_arr) {
 			stepSuccess('документов', count($docs_arr));
 		} else {
-			stepError();
+			stepError(1);
 		}
 	?>
 </div>
@@ -75,7 +74,7 @@ use common\models\Model_Application as Application;
 		if ($ege_arr) {
 			stepSuccess('результатов ЕГЭ', count($ege_arr));
 		} else {
-			stepError();
+			stepError(0);
 		}
 	?>
 </div>
@@ -90,7 +89,7 @@ use common\models\Model_Application as Application;
 		if ($ia_arr) {
 			stepSuccess('индивидуальных достижений', count($ia_arr));
 		} else {
-			stepError();
+			stepError(0);
 		}
 	?>
 </div>
@@ -118,7 +117,7 @@ use common\models\Model_Application as Application;
 		if ($app_arr) {
 			stepSuccess('заявлений', count($app_arr));
 		} else {
-			stepError();
+			stepError(1);
 		}
 	?>
 </div>
@@ -134,9 +133,9 @@ use common\models\Model_Application as Application;
 			echo '<div class="col col-sm-1"></div>';
 		}
 	}
-	function stepError()
+	function stepError($required = 0)
 	{
-		echo '<div class="col col-sm-3 alert alert-danger"><h5>Состояние шага - не пройден</h5></div>';
+		echo '<div class="col col-sm-3 alert alert-'.(($required == 1) ? 'danger' : 'warning').'"><h5>Состояние шага - не пройден</h5></div>';
 		echo '<div class="col col-sm-3"></div>';
 		echo '<div class="col col-sm-1"></div>';
 	}

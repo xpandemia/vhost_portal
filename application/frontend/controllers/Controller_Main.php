@@ -49,6 +49,29 @@ class Controller_Main extends Controller
 	}
 
 	/**
+     * Returns home.
+     *
+     * @return mixed
+     */
+	function actionHome()
+	{
+		if (isset($_SESSION[APP_CODE]['user_name'])) {
+			if (!isset($_SESSION[APP_CODE]['user_id'])) {
+				if ($this->model->checkUser()) {
+					Basic_Helper::msgReset();
+					return $this->view->generate('main.php', 'main.php', APP_NAME);
+				} else {
+					exit("<p><strong>Ошибка!</strong> Авторизация не выполнена.</p>");
+				}
+			} else {
+				return $this->view->generate('main.php', 'main.php', APP_NAME);
+			}
+		} else {
+			return Basic_Helper::redirectHome();
+		}
+	}
+
+	/**
      * Calls to resume.
      *
      * @return mixed

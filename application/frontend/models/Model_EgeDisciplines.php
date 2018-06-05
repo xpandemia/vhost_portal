@@ -74,23 +74,44 @@ class Model_EgeDisciplines extends Model
      */
 	public function check($form)
 	{
+		$form['success_msg'] = null;
+		$form['error_msg'] = null;
 		$egedsp = new EgeDisciplines();
 		$egedsp->pid = $form['pid'];
 			$dsp = new Model_DictEge();
 			$dsp->code = $form['discipline'];
 			$row_dsp =  $dsp->getByCode();
 		$egedsp->id_discipline = $row_dsp['id'];
-		// check discipline
-		if ($egedsp->existsDiscipline()) {
-			$_SESSION[APP_CODE]['error_msg'] = 'Такая дисциплина ЕГЭ уже есть!';
-			return $form;
-		}
 		$egedsp->points = $form['points'];
-		if ($egedsp->save() > 0) {
-			$_SESSION[APP_CODE]['error_msg'] = null;
-			$_SESSION[APP_CODE]['success_msg'] = 'Создана новая дисциплина ЕГЭ.';
+		if (isset($form['id']) && !empty($form['id'])) {
+			// update
+			$egedsp->id = $form['id'];
+			$egedsp_row = $egedsp->existsExcept();
+			if ($egedsp_row) {
+				$form['error_msg'] = 'Такая дисциплина ЕГЭ уже есть!';
+				return $form;
+			} else {
+				if ($egedsp->changeAll()) {
+					$_SESSION[APP_CODE]['success_msg'] = 'Изменена дисциплина ЕГЭ № '.$form['id'].'.';
+				} else {
+					$_SESSION[APP_CODE]['error_msg'] = 'Ошибка при изменении дисциплины ЕГЭ № '.$form['id'].'!';
+					return $form;
+				}
+			}
 		} else {
-			$_SESSION[APP_CODE]['error_msg'] = 'Ошибка при создании дисциплины ЕГЭ!';
+			// insert
+			if ($egedsp->exists()) {
+				$form['error_msg'] = 'Такая дисциплина ЕГЭ уже есть!';
+				return $form;
+			} else {
+				$form['id'] = $egedsp->save();
+				if ($form['id'] > 0) {
+					$_SESSION[APP_CODE]['error_msg'] = null;
+					$_SESSION[APP_CODE]['success_msg'] = 'Создана новая дисциплина ЕГЭ № '.$form['id'].'!';
+				} else {
+					$_SESSION[APP_CODE]['error_msg'] = 'Ошибка при создании дисциплины ЕГЭ!';
+				}
+			}
 		}
 		return $form;
 	}
