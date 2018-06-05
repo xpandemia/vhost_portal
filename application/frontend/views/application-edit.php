@@ -3,6 +3,7 @@
 use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 use tinyframe\core\helpers\Form_Helper as Form_Helper;
+use common\models\Model_Personal as Personal;
 use common\models\Model_Application as Application;
 use common\models\Model_ApplicationPlaces as ApplicationPlaces;
 use common\models\Model_ApplicationPlacesExams as Model_ApplicationPlacesExams;
@@ -18,6 +19,9 @@ use frontend\models\Model_Application as Model_Application;
 	$app = new Application();
 	$app->id = $data['id'];
 	$app_row = $app->get();
+	// get citizenship
+	$personal = new Personal();
+	$citizenship = $personal->getCitizenshipByUser();
 	// manage scans
 	$place = new ApplicationPlaces();
 	$place->pid = $data['id'];
@@ -86,18 +90,25 @@ use frontend\models\Model_Application as Model_Application;
 					foreach ($exams_arr as $exams_row) {
 						echo '<tr>';
 						echo '<td>'.$exams_row['discipline_name'].'</td>';
-							$test = new Model_DictTestingScopes();
-							$test_arr = $test->getEntranceExams();
-							if ($test_arr) {
-								echo '<td><select class="form-control" id="exam'.$exams_row['discipline_code'].'" name="exam'.$exams_row['discipline_code'].'">';
-								echo '<option value=""'.(empty($exams_row['code']) ? ' selected' : '').'></option>';
-								foreach ($test_arr as $test_row) {
-									echo '<option value="'.$test_row['code'].'"'.
-										(($exams_row['code'] === $test_row['code']) ? ' selected' : '').'>'.
-										$test_row['description'].
-										'</option>';
+							if ($citizenship['code'] != '643') {
+								echo '<td><input class="form-control" type="text" value="'.$exams_row['description'].'" disabled/></td>';
+							} else {
+								if ($citizenship['code'] == '643' && $app->checkCertificate()) {
+									echo '<td><input class="form-control" type="text" value="'.$exams_row['description'].'" disabled/></td>';
+								} else {
+									$test = new Model_DictTestingScopes();
+									$test_arr = $test->getEntranceExams();
+									if ($test_arr) {
+										echo '<td><select class="form-control" id="exam'.$exams_row['discipline_code'].'" name="exam'.$exams_row['discipline_code'].'">';
+										foreach ($test_arr as $test_row) {
+											echo '<option value="'.$test_row['code'].'"'.
+												(($exams_row['code'] === $test_row['code']) ? ' selected' : '').'>'.
+												$test_row['description'].
+												'</option>';
+										}
+										echo '</select></td>';
+									}
 								}
-								echo '</select></td>';
 							}
 						echo '</tr>';
 					}

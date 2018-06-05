@@ -28,13 +28,12 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 	</style>
 
 	<style>
-		div.sticky {
+		div.sticky_top {
 		    position: -webkit-sticky;
 		    position: sticky;
 		    top: 0;
-		    color: GhostWhite;
-		    background-color: DodgerBlue;
-		    padding: 25px;
+		    background-color: #007bff;
+		    padding: 15px;
 		    font-size: 20px;
 		}
 	</style>

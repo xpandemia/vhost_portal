@@ -124,7 +124,7 @@ class Model_Resume extends Model
 		        'phone_add' => [
 	                            'type' => 'text',
 	                            'class' => 'form-control',
-	                            'pattern' => ['value' => PATTERN_PHONE_ADD, 'msg' => 'Номер домашнего телефона должен содержать только цифры и тире!'],
+	                            'pattern' => ['value' => PATTERN_PHONE_ADD, 'msg' => 'Номер дополнительного телефона должен содержать только русские буквы, цифры, запятые и пробелы!'],
 	                            'success' => 'Номер дополнительного телефона заполнен верно.'
 	                           ],
                 'passport_type' => [
@@ -323,6 +323,8 @@ class Model_Resume extends Model
 		// phones
 		if (empty($form['phone_mobile']) && empty($form['phone_home'])) {
 			$form = $this->setFormError($form, 'Необходимо заполнить мобильный или домашний номер телефона в контактной информации!');
+			$form['phone_mobile_err'] = 'Ни мобильный, ни домашний номера телефонов не заполнены!';
+			$form['phone_home_err'] = 'Ни мобильный, ни домашний номера телефонов не заполнены!';
 			return $form;
 		}
 		return $form;

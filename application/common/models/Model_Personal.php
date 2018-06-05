@@ -166,6 +166,20 @@ class Model_Personal extends Db_Helper
 	}
 
 	/**
+     * Gets citizenship by user.
+     *
+     * @return array
+     */
+	public function getCitizenshipByUser()
+	{
+		return $this->rowSelectOne('dict_countries.code, dict_countries.description',
+								self::TABLE_NAME.' INNER JOIN resume ON '.self::TABLE_NAME.'.id_resume = resume.id'.
+								' INNER JOIN dict_countries ON '.self::TABLE_NAME.'.citizenship = dict_countries.id',
+								'resume.id_user = :id_user',
+								[':id_user' => $_SESSION[APP_CODE]['user_id']]);
+	}
+
+	/**
      * Saves personal data to database.
      *
      * @return integer

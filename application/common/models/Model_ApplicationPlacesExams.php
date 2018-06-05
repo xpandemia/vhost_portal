@@ -107,7 +107,7 @@ class Model_ApplicationPlacesExams extends Db_Helper
      */
 	public function getExamsByApplication()
 	{
-		return $this->rowSelectAll('DISTINCT dict_testing_scopes.code, dict_discipline.code as discipline_code, dict_discipline.discipline_name',
+		return $this->rowSelectAll('DISTINCT dict_testing_scopes.code, dict_testing_scopes.description, dict_discipline.code as discipline_code, dict_discipline.discipline_name',
 									'application_places_exams INNER JOIN application_places ON application_places_exams.pid = application_places.id'.
 									' INNER JOIN dict_testing_scopes ON application_places_exams.id_test = dict_testing_scopes.id'.
 									' INNER JOIN dict_discipline ON application_places_exams.id_discipline = dict_discipline.id',

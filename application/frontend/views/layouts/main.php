@@ -27,7 +27,7 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 </head>
 <body>
 	<nav class="navbar navbar-expand-md bg-primary navbar-dark fixed-top">
-		<div class="navbar-brand"><?php echo APP_NAME; ?></div>
+		<div class="navbar-brand font-weight-bold"><?php echo APP_NAME; ?></div>
 		<div class="collapse navbar-collapse" id="collapsibleNavbar">
 			<ul class="navbar-nav">
 				<li class="nav-item">
@@ -57,19 +57,21 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 		</div>
 	</nav>
 
-	<div class="container-fluid" style="margin-top:80px">
+	<div class="container-fluid" style="margin-top:80px; margin-bottom:80px">
 		<?php include ROOT_DIR.'/application/frontend/views/'.$content_view; ?>
 	</div>
-	<footer>
-		<div class="row fixed-bottom font-weight-bold">
-			<div class="col text-left">
-				<?php echo nl2br("Версия ".APP_VERSION."\nРазработчик: ".APP_DEVELOPER."\nТелефон: ".APP_DEVELOPER_PHONE.", эл. почта: <a href=\"mailto:".APP_DEVELOPER_EMAIL."\">".APP_DEVELOPER_EMAIL."</a>"); ?>
+
+	<div class="fixed-bottom bg-primary">
+		<div class="row font-weight-bold">
+			<div class="col text-left text-light">
+				<?php echo nl2br("Версия ".APP_VERSION."\nРазработчик: ".APP_DEVELOPER."\nТелефон: ".APP_DEVELOPER_PHONE."\nЭл. почта: <a class=\"text-dark\" href=\"mailto:".APP_DEVELOPER_EMAIL."\">".APP_DEVELOPER_EMAIL."</a>"); ?>
 			</div>
 			<div class="col text-right">
-				<a href="http://abitur.bsu.edu.ru/abitur/help/contacts/">Контакты Приёмной комиссии</a>
+				<a class="text-dark" href="http://abitur.bsu.edu.ru/abitur/help/contacts/">Контакты Приёмной комиссии</a>
 			</div>
 		</div>
-	</footer>
+    </div>
+
 	<script>
 		$(document).ready(function(){
 		    $('[data-toggle="tooltip"]').tooltip();

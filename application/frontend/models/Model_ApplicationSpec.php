@@ -5,6 +5,7 @@ namespace frontend\models;
 use tinyframe\core\Model as Model;
 use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 use tinyframe\core\helpers\PDF_Helper as PDF_Helper;
+use common\models\Model_Personal as Personal;
 use common\models\Model_Application as Application;
 use common\models\Model_ApplicationStatus as ApplicationStatus;
 use common\models\Model_DictScans as Model_DictScans;
@@ -173,6 +174,9 @@ class Model_ApplicationSpec extends Model
 		$app = new Application();
 		$app->id = $form['pid'];
 		$app_row = $app->get();
+		// get citizenship
+		$personal = new Personal();
+		$citizenship = $personal->getCitizenshipByUser();
 		// get max_spec
 		$adm = new Model_AdmissionCampaign();
 		$adm->id = $app_row['id_campaign'];
@@ -228,16 +232,27 @@ class Model_ApplicationSpec extends Model
 									$disc->campaign_code = $spec_row[1];
 									$disc_row = $disc->getOne();
 										$enter->id_discipline = $disc_row['id'];
-									$ege = new Model_EgeDisciplines();
-									$ege->code_discipline = $exams_row['exam_code'];
-									$ege_row = $ege->checkDiscipline();
-										$test = new Model_DictTestingScopes();
-									if ($ege_row) {
-										// ege
-										$test_row = $test->getEge();
-									} else {
-										// exam
+									if ($citizenship['code'] != '643') {
+										// foreigners - exam only
 										$test_row = $test->getExam();
+									} else {
+										if ($citizenship['code'] == '643' && $app->checkCertificate()) {
+											// russia with certificate - ege only
+											$test_row = $test->getEge();
+										} else {
+											// russia without certificate - ege or exam
+											$ege = new Model_EgeDisciplines();
+											$ege->code_discipline = $exams_row['exam_code'];
+											$ege_row = $ege->checkDiscipline();
+												$test = new Model_DictTestingScopes();
+											if ($ege_row) {
+												// ege
+												$test_row = $test->getEge();
+											} else {
+												// exam
+												$test_row = $test->getExam();
+											}
+										}
 									}
 									$enter->id_test = $test_row['id'];
 									if ($enter->save() == 0) {

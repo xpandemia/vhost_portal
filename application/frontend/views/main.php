@@ -22,7 +22,7 @@ use common\models\Model_Application as Application;
 		<strong>Для получения дополнительной информации Вы можете обратиться в Приемную комиссию:</strong><br>
 		E-mail: <a href="mailto:Exam@bsu.edu.ru"><strong>Exam@bsu.edu.ru</strong></a><br>
 		Тел: (4722) 30-18-80, 30-18-90<br>
-		Время работы: с 9.00 до 18.00, перерыв с 13.00 до 14.00
+		Время работы: с 9:00 до 18:00, перерыв с 13:00 до 14:00
 	</div>
 </div>
 <?php

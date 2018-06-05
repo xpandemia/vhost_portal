@@ -25,7 +25,7 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 </head>
 <body class="bg-secondary">
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
-		<a class="navbar-brand" href="/<?php echo BEHAVIOR; ?>/Main/Index"><?php echo APP_NAME." ".APP_VERSION; ?></a>
+		<a class="navbar-brand" href="/<?php echo BEHAVIOR; ?>/Main/Index"><?php echo APP_NAME; ?></a>
 		<ul class="navbar-nav">
 		    <li class="nav-item">
 				<a class="nav-link" data-toggle="tooltip" title="<?php echo DICT_MANAGER['hdr']; ?>" href="<?php echo Basic_Helper::appUrl('Main', 'DictManager'); ?>"><i class="fas fa-database fa-2x"></i></a>
@@ -47,6 +47,14 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 	<div class="container-fluid" style="margin-top:80px">
 		<?php include ROOT_DIR.'/application/backend/views/'.$content_view; ?>
 	</div>
+
+	<div class="fixed-bottom bg-dark">
+		<div class="row font-weight-bold">
+			<div class="col text-left text-light">
+				<?php echo nl2br("Версия ".APP_VERSION."\nРазработчик: ".APP_DEVELOPER."\nТелефон: ".APP_DEVELOPER_PHONE."\nЭл. почта: <a class=\"text-light\" href=\"mailto:".APP_DEVELOPER_EMAIL."\">".APP_DEVELOPER_EMAIL."</a>"); ?>
+			</div>
+		</div>
+    </div>
 
 	<script>
 		$(document).ready(function(){

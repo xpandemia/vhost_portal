@@ -43,7 +43,7 @@ use common\models\Model_DocsEduc as DocsEduc;
 ?>
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
 	<form enctype="multipart/form-data" action="<?php echo Basic_Helper::appUrl('ApplicationSpec', 'SavePlaces'); ?>" method="post" id="form_app_places" novalidate>
-		<div class="sticky">
+		<div class="sticky_top">
 			<div class="form-group row">
 				<div class="col">
 					<?php
@@ -51,7 +51,7 @@ use common\models\Model_DocsEduc as DocsEduc;
 					?>
 				</div>
 			</div>
-			<div class="form-group row">
+			<div class="form-group row text-light">
 				<div class="col col-sm-4 font-weight-bold">Направления подготовки</div>
 				<div class="col col-sm-3 font-weight-bold">разрешено выбрать: <?php echo $camp_row['max_spec']; ?></div>
 				<div class="col text-center">
@@ -62,7 +62,7 @@ use common\models\Model_DocsEduc as DocsEduc;
 				echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
 				echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
 			?>
-			<div class="col" id="filters" name="filters">
+			<div class="col text-light" id="filters" name="filters">
 				<div class="form-group row">
 					<?php
 						// filter_speciality
@@ -229,7 +229,7 @@ use common\models\Model_DocsEduc as DocsEduc;
 			?>
 			</table>
 		</div>
-		<div class="form-group fixed-bottom bg-primary text-center">
+		<div class="fixed-bottom bg-primary text-center">
 			<div class="col">
 				<p></p>
 				<?php

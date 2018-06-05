@@ -625,6 +625,27 @@ class Model_Application extends Db_Helper
 		}
 	}
 
+	/**
+     * Checks certificate.
+     *
+     * @return boolean
+     */
+	public function checkCertificate()
+	{
+		$row = $this->rowSelectOne('application.*',
+									'application INNER JOIN docs_educ ON application.id_docseduc = docs_educ.id'.
+									' INNER JOIN dict_doctypes ON docs_educ.id_doctype = dict_doctypes.id',
+									'application.id = :id AND dict_doctypes.code in (:code1, :code2)',
+									[':id' => $this->id,
+									':code1' => '000000026',
+									':code2' => '000000088']);
+		if (!empty($row)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public function __destruct()
 	{
 		$this->db = null;
