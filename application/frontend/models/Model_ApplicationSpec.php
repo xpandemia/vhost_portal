@@ -236,6 +236,7 @@ class Model_ApplicationSpec extends Model
 										// foreigners - exam only
 										$test_row = $test->getExam();
 									} else {
+										$test = new Model_DictTestingScopes();
 										if ($citizenship['code'] == '643' && $app->checkCertificate()) {
 											// russia with certificate - ege only
 											$test_row = $test->getEge();
@@ -244,7 +245,6 @@ class Model_ApplicationSpec extends Model
 											$ege = new Model_EgeDisciplines();
 											$ege->code_discipline = $exams_row['exam_code'];
 											$ege_row = $ege->checkDiscipline();
-												$test = new Model_DictTestingScopes();
 											if ($ege_row) {
 												// ege
 												$test_row = $test->getEge();
@@ -289,13 +289,15 @@ class Model_ApplicationSpec extends Model
 		$form['success_msg'] = null;
 		$form['error_msg'] = null;
 		$app = new Application();
+		$app->id = $form['id'];
+		$app_row = $app->get();
 		/* check type */
-		if ($form['type'] == $app::TYPE_RECALL) {
+		if ($app_row['type'] == $app::TYPE_RECALL) {
 			$form['error_msg'] = 'Нельзя сохранять заявления с типом <strong>'.mb_convert_case($app::TYPE_RECALL_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!';
 			return $form;
 		}
 		/* check status */
-		if ($form['status'] != $app::STATUS_CREATED && $form['status'] != $app::STATUS_SAVED && $form['status'] != $app::STATUS_CHANGED) {
+		if ($app_row['status'] != $app::STATUS_CREATED && $app_row['status'] != $app::STATUS_SAVED && $app_row['status'] != $app::STATUS_CHANGED) {
 			$form['error_msg'] = 'Сохранять можно только заявления с состоянием: <strong>'.mb_convert_case($app::STATUS_CREATED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_SAVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_CHANGED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!';
 			return $form;
 		}
@@ -329,8 +331,6 @@ class Model_ApplicationSpec extends Model
 			return $form;
 		}
 		/* application */
-		$app->id = $form['id'];
-		$app_row = $app->get();
 		$app->id_docseduc = $app_row['id_docseduc'];
 		$app->id_docship = $app_row['id_docship'];
 		$app->id_lang = $app_row['id_lang'];
@@ -381,17 +381,18 @@ class Model_ApplicationSpec extends Model
 		$form['success_msg'] = null;
 		$form['error_msg'] = null;
 		$app = new Application();
+		$app->id = $form['id'];
+		$app_row = $app->get();
 		/* check status */
-		if ($form['status'] != $app::STATUS_SAVED) {
+		if ($app_row['status'] != $app::STATUS_SAVED) {
 			$form['error_msg'] = 'Отправлять можно только заявления с состоянием <strong>'.mb_convert_case($app::STATUS_SAVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!';
 			return $form;
 		}
-		if ($form['status'] == $app::STATUS_SENDED) {
+		if ($app_row['status'] == $app::STATUS_SENDED) {
 			$form['error_msg'] = 'Заявление уже отправлено!';
 			return $form;
 		}
 		/* send */
-		$app->id = $form['id'];
 		$app->status = $app::STATUS_SENDED;
 		$app->changeStatus();
 		$form['status'] = $app->status;
@@ -414,18 +415,19 @@ class Model_ApplicationSpec extends Model
 		$form['success_msg'] = null;
 		$form['error_msg'] = null;
 		$app = new Application();
+		$app->id = $form['id'];
+		$app_row = $app->get();
 		/* check type */
-		if ($form['type'] == $app::TYPE_RECALL) {
+		if ($app_row['type'] == $app::TYPE_RECALL) {
 			$form['error_msg'] = 'Нельзя изменять заявления с типом <strong>'.mb_convert_case($app::TYPE_RECALL_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!';
 			return $form;
 		}
 		/* check status */
-		if ($form['status'] != $app::STATUS_APPROVED && $form['status'] != $app::STATUS_REJECTED) {
+		if ($app_row['status'] != $app::STATUS_APPROVED && $app_row['status'] != $app::STATUS_REJECTED) {
 			$form['error_msg'] = 'Изменять можно только заявления с состоянием: <strong>'.mb_convert_case($app::STATUS_APPROVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_REJECTED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!';
 			return $form;
 		}
 		/* change */
-		$app->id = $form['id'];
 		$app->status = $app::STATUS_CHANGED;
 		$app->changeStatus();
 			$applog = new ApplicationStatus();
@@ -437,9 +439,6 @@ class Model_ApplicationSpec extends Model
 			$spec_row = $this->get($id);
 			$form = $this->setForm($this->rules(), $spec_row);
 			$form['id'] = $id;
-			$form['type'] = $spec_row['type'];
-			$form['status'] = $spec_row['status'];
-			$form['numb'] = $spec_row['numb'];
 			Basic_Helper::msgReset();
 			$form['success_msg'] = 'Заявление успешно изменено.';
 			$form['error_msg'] = null;
@@ -461,18 +460,19 @@ class Model_ApplicationSpec extends Model
 		$form['success_msg'] = null;
 		$form['error_msg'] = null;
 		$app = new Application();
+		$app->id = $form['id'];
+		$app_row = $app->get();
 		/* check type */
-		if ($form['type'] == $app::TYPE_RECALL) {
+		if ($app_row['type'] == $app::TYPE_RECALL) {
 			$form['error_msg'] = 'Нельзя отзывать заявления с типом <strong>'.mb_convert_case($app::TYPE_RECALL_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!';
 			return $form;
 		}
 		/* check status */
-		if ($form['status'] != $app::STATUS_APPROVED) {
+		if ($app_row['status'] != $app::STATUS_APPROVED) {
 			$form['error_msg'] = 'Изменять можно только заявления с состоянием <strong>'.mb_convert_case($app::STATUS_APPROVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!';
 			return $form;
 		}
 		/* recall */
-		$app->id = $form['id'];
 		$app->status = $app::STATUS_RECALLED;
 		$app->changeStatus();
 			$applog = new ApplicationStatus();
@@ -484,9 +484,6 @@ class Model_ApplicationSpec extends Model
 			$spec_row = $this->get($id);
 			$form = $this->setForm($this->rules(), $spec_row);
 			$form['id'] = $id;
-			$form['type'] = $spec_row['type'];
-			$form['status'] = $spec_row['status'];
-			$form['numb'] = $spec_row['numb'];
 			Basic_Helper::msgReset();
 			$form['success_msg'] = 'Заявление успешно отозвано.';
 			$form['error_msg'] = null;

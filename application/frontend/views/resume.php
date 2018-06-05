@@ -847,26 +847,6 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 		// KLADR res
 		if ($('#address_reg').val() != '' && $('#address_res').val() == '' && !$('#address_reg_clone_flag').prop('checked')) {
 			cloneAddressRegistration();
-			// country
-			/*getKladrAJAX('/frontend/Kladr/RegionAllJSON', null, '#region_res');
-			// region
-			var region_reg = $('#region_reg').val();
-			getKladrAJAX('/frontend/Kladr/AreaByRegionJSON', region_reg, '#area_res');
-		    getKladrAJAX('/frontend/Kladr/CityByRegionJSON', region_reg, '#city_res');
-		    // area
-		    var area_reg = $('#area_reg').val();
-		    if (area_reg != '') {
-				getKladrAJAX('/frontend/Kladr/LocationByAreaJSON', area_reg, '#location_res');
-			}
-		    // city
-		    var city_reg = $('#city_reg').val();
-		    if (city_reg != '') {
-				getKladrAJAX('/frontend/Kladr/LocationByCityJSON', city_reg, '#location_res');
-				getKladrAJAX('/frontend/Kladr/StreetByCityJSON', city_reg, '#street_res');
-			}
-			// location
-			var location_reg = $('#location_reg').val();
-			getKladrAJAX('/frontend/Kladr/StreetByLocationJSON', location_reg, '#street_res');*/
 		}
 	}
 </script>

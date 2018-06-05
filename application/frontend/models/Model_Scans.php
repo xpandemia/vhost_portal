@@ -51,7 +51,7 @@ class Model_Scans extends Model
 	}
 
 	/**
-     * Gets scan from database.
+     * Gets scans from database.
      *
      * @return boolean
      */
@@ -89,13 +89,21 @@ class Model_Scans extends Model
 					$scans->file_type = $form[$scan_code.'_type'];
 					$scans->file_size = (int) $form[$scan_code.'_size'];
 					// save
-					if ($scans->save() == 0) {
+					$id = $scans->save();
+					if ($id == 0) {
 						$form['success_msg'] = null;
-						$form['error_msg'] = 'Ошибка при сохранении скан-копии "'.$dict_scans_row['scan_name'].'"!';
+						$form['error_msg'] = 'Ошибка сохранения скан-копии "'.$dict_scans_row['scan_name'].'"!';
 						return $form;
 					}
 					fclose($scans->file_data);
 					unlink($form[$dict_scans_row['scan_code']]);
+						$scans->id = $id;
+						$scans_row = $scans->get();
+							$form[$scan_code.'_id'] = $scans_row['id'];
+							$form[$scan_code] = $scans_row['file_data'];
+							$form[$scan_code.'_name'] = $scans_row['file_name'];
+							$form[$scan_code.'_type'] = $scans_row['file_type'];
+							$form[$scan_code.'_size'] = $scans_row['file_size'];
 				} else {
 					$form['success_msg'] = null;
 					$form['error_msg'] = 'Не задан идент-р документа скан-копии "'.$dict_scans_row['scan_name'].'"!';
@@ -103,7 +111,7 @@ class Model_Scans extends Model
 			}
 		} else {
 			$form['success_msg'] = null;
-			$form['error_msg'] = 'Ошибка при сохранении скан-копии "'.$dict_scans_row['scan_name'].'"!';
+			$form['error_msg'] = 'Ошибка справочника при сохранении скан-копии "'.$dict_scans_row['scan_name'].'"!';
 		}
 		return $form;
 	}

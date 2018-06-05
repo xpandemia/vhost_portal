@@ -27,15 +27,15 @@ use frontend\models\Model_Application as Model_Application;
 	$place->pid = $data['id'];
 	// photo3x4
 	if ($place->getByAppForBachelorSpec()) {
-		$data['photo3x4'] = 1;
+		$photo3x4 = 1;
 	} else {
-		$data['photo3x4'] = 0;
+		$photo3x4 = 0;
 	}
 	// medical certificate
 	if ($place->getByAppForMedicalA1() || $place->getByAppForMedicalA2() || $place->getByAppForMedicalB1() || $place->getByAppForMedicalC1()) {
-		$data['medical_certificate'] = 1;
+		$medical_certificate = 1;
 	} else {
-		$data['medical_certificate'] = 0;
+		$medical_certificate = 0;
 	}
 ?>
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
@@ -70,8 +70,8 @@ use frontend\models\Model_Application as Model_Application;
 	<form enctype="multipart/form-data" action="<?php echo Basic_Helper::appUrl('ApplicationSpec', 'Save'); ?>" method="post" id="form_app_spec" novalidate>
 		<div class="form-group">
 			<input type="hidden" id="id" name="id" value="<?php echo $data['id']; ?>"/>
-			<input type="hidden" id="photo3x4" name="photo3x4" value="<?php echo $data['photo3x4']; ?>"/>
-			<input type="hidden" id="medical_certificate" name="medical_certificate" value="<?php echo $data['medical_certificate']; ?>"/>
+			<input type="hidden" id="photo3x4_required" name="photo3x4_required" value="<?php echo $photo3x4; ?>"/>
+			<input type="hidden" id="medical_certificate_required" name="medical_certificate_required" value="<?php echo $medical_certificate; ?>"/>
 		</div>
 		<div class="form-group">
 			<h5>Вступительные испытания</h5><br>
@@ -91,24 +91,25 @@ use frontend\models\Model_Application as Model_Application;
 						echo '<tr>';
 						echo '<td>'.$exams_row['discipline_name'].'</td>';
 							if ($citizenship['code'] != '643') {
-								echo '<td><input class="form-control" type="text" value="'.$exams_row['description'].'" disabled/></td>';
+								$disabled = 1;
 							} else {
 								if ($citizenship['code'] == '643' && $app->checkCertificate()) {
-									echo '<td><input class="form-control" type="text" value="'.$exams_row['description'].'" disabled/></td>';
+									$disabled = 1;
 								} else {
-									$test = new Model_DictTestingScopes();
-									$test_arr = $test->getEntranceExams();
-									if ($test_arr) {
-										echo '<td><select class="form-control" id="exam'.$exams_row['discipline_code'].'" name="exam'.$exams_row['discipline_code'].'">';
-										foreach ($test_arr as $test_row) {
-											echo '<option value="'.$test_row['code'].'"'.
-												(($exams_row['code'] === $test_row['code']) ? ' selected' : '').'>'.
-												$test_row['description'].
-												'</option>';
-										}
-										echo '</select></td>';
-									}
+									$disabled = 0;
 								}
+							}
+							$test = new Model_DictTestingScopes();
+							$test_arr = $test->getEntranceExams();
+							if ($test_arr) {
+								echo '<td><select class="form-control" id="exam'.$exams_row['discipline_code'].'" name="exam'.$exams_row['discipline_code'].'"'.(($disabled == 1) ? ' disabled' : '').'>';
+								foreach ($test_arr as $test_row) {
+									echo '<option value="'.$test_row['code'].'"'.
+										(($exams_row['code'] === $test_row['code']) ? ' selected' : '').'>'.
+										$test_row['description'].
+										'</option>';
+								}
+								echo '</select></td>';
 							}
 						echo '</tr>';
 					}
@@ -204,6 +205,7 @@ use frontend\models\Model_Application as Model_Application;
 <script>
 	$(document).ready(function(){
 		formInit();
+		formEvents();
 	});
 </script>
 
@@ -212,18 +214,29 @@ use frontend\models\Model_Application as Model_Application;
 	function formInit()
 	{
 		// photo3x4 required
-		if ($('#photo3x4').val() == 1) {
+		if ($('#photo3x4_required').val() == 1) {
 			$("label[for='photo3x4']").html('Фотография 3х4*');
 		} else {
 			$("label[for='photo3x4']").html('Фотография 3х4');
 		}
 		// medical certificate required
-		if ($('#medical_certificate').val() == 1) {
+		if ($('#medical_certificate_required').val() == 1) {
 			$("label[for='medical_certificate_face']").html('Медицинская справка (лицевая сторона)*');
 			$("label[for='medical_certificate_back']").html('Медицинская справка (оборотная сторона)*');
 		} else {
 			$("label[for='medical_certificate_face']").html('Медицинская справка (лицевая сторона)');
 			$("label[for='medical_certificate_back']").html('Медицинская справка (оборотная сторона)');
 		}
+	}
+</script>
+
+<script>
+	// form events
+	function formEvents()
+	{
+		// submit click
+		$('#btn_save').click(function() {
+			$("select[name^='exam']").prop('disabled', false);
+		});
 	}
 </script>
