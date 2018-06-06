@@ -35,11 +35,10 @@ class Model_Kladr extends Db_Helper
      */
 	public function getByCode($code) : array
 	{
-		$kladr = $this->db->rowSelectOne('*',
+		return $this->db->rowSelectOne('*',
 										'kladr',
 										'kladr_code = :kladr_code',
 										[':kladr_code' => $code]);
-		return $kladr;
 	}
 
 	/**
@@ -96,6 +95,29 @@ class Model_Kladr extends Db_Helper
 										[':level' => self::CITY,
 										':code_region' => $code_region,
 										':code_area' => '0',
+										':relevance' => '0'],
+										'kladr_name');
+		return $city;
+	}
+
+	/**
+     * Gets cities by area.
+     *
+     * @return array
+     */
+	public function getCityByArea() : array
+	{
+		// get kladr
+		$kladr = $this->getByCode($this->area);
+		$code_region = $kladr['code_region'];
+		$code_area = $kladr['code_area'];
+		// get city by area
+		$city = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
+										'kladr',
+										'level = :level AND code_region = :code_region AND code_area = :code_area AND relevance = :relevance',
+										[':level' => self::CITY,
+										':code_region' => $code_region,
+										':code_area' => $code_area,
 										':relevance' => '0'],
 										'kladr_name');
 		return $city;
@@ -206,14 +228,17 @@ class Model_Kladr extends Db_Helper
 		// get kladr
 		$kladr = $this->getByCode($this->city);
 		$code_region = $kladr['code_region'];
+		$code_area = $kladr['code_area'];
 		$code_city = $kladr['code_city'];
 		// get streets by city
 		$street = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
 										'kladr',
-										'level = :level AND code_region = :code_region AND code_city = :code_city AND relevance = :relevance',
+										'level = :level AND code_region = :code_region AND code_area = :code_area AND code_city = :code_city AND code_location = :code_location AND relevance = :relevance',
 										[':level' => self::STREET,
 										':code_region' => $code_region,
+										':code_area' => $code_area,
 										':code_city' => $code_city,
+										':code_location' => '0',
 										':relevance' => '0'],
 										'kladr_name');
 		return $street;

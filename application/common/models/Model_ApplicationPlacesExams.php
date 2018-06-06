@@ -112,7 +112,8 @@ class Model_ApplicationPlacesExams extends Db_Helper
 									' INNER JOIN dict_testing_scopes ON application_places_exams.id_test = dict_testing_scopes.id'.
 									' INNER JOIN dict_discipline ON application_places_exams.id_discipline = dict_discipline.id',
 									'application_places.pid = :pid',
-									[':pid' => $this->pid]);
+									[':pid' => $this->pid],
+									'dict_discipline.discipline_name');
 	}
 
 	/**

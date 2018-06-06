@@ -58,6 +58,7 @@ PORTALBSU
 |   |           Model_DictEductypes.php - модель DICT_EDUCTYPES (справочник видов образований)
 |   |           Model_DictEge.php - модель DICT_EGE (справочник ЕГЭ)
 |   |           Model_DictEntranceExams.php - модель DICT_ENTRANCE_EXAMS (справочник вступительных испытаний)
+|   |           Model_DictFinances.php - модель DICT_FINANCES (справочник оснований поступления)
 |   |           Model_DictForeignLangs.php - модель DICT_FOREIGN_LANGS (справочник иностранных языков)
 |   |           Model_DictIndAchievs.php - модель DICT_IND_ACHIEVS (справочник индивидуальных достижений)
 |   |           Model_DictIndAchievsAc.php - модель DICT_IND_ACHIEVS_AC (справочник индивидуальных достижений по приемным кампаниям)

@@ -12,9 +12,9 @@ class Model_ApplicationPlaces extends Db_Helper
 
 	const TABLE_NAME = 'application_places';
 
-	const FREE = 'Бюджетная основа';
-	const PAY = 'Полное возмещение затрат';
-	const PURPOSE = 'Целевой прием';
+	const FREE = 'Бесплатная';
+	const PAY = 'Платная';
+	const PURPOSE = 'Целевой';
 
 	public $id;
 	public $pid;
@@ -119,6 +119,20 @@ class Model_ApplicationPlaces extends Db_Helper
 	}
 
 	/**
+     * Gets specialities by application for PDF.
+     *
+     * @return array
+     */
+	public function getSpecsByAppPdf()
+	{
+		return $this->rowSelectAll('dict_speciality.speciality_name as place, dict_speciality.edulevel_name as edulevel, dict_speciality.eduform_name as eduform, dict_finances.abbr as finance',
+									self::TABLE_NAME.' INNER JOIN dict_speciality ON '.self::TABLE_NAME.'.id_spec = dict_speciality.id'.
+									' INNER JOIN dict_finances ON dict_speciality.finance_code = dict_finances.code',
+									'pid = :pid',
+									[':pid' => $this->pid]);
+	}
+
+	/**
      * Gets special specialities based on 9 classes for application.
      *
      * @return array
@@ -128,8 +142,7 @@ class Model_ApplicationPlaces extends Db_Helper
 		$conds = $this->CondsSpecial9Educ($pay);
 		$params = $this->ParamsSpecial9Educ($pay);
 		return $this->rowSelectAll('dict_speciality.id, speciality_name, profil_name, finance_name, eduform_name, edulevel_name',
-									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
-									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
+									$this->TablesSpecs(),
 									$conds,
 									$params,
 									'speciality_name, profil_name');
@@ -145,8 +158,7 @@ class Model_ApplicationPlaces extends Db_Helper
 		$conds = $this->CondsSpecial9Educ($pay);
 		$params = $this->ParamsSpecial9Educ($pay);
 		return $this->rowSelectAll('DISTINCT speciality_code, speciality_name, profil_code, profil_name',
-									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
-									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
+									$this->TablesSpecs(),
 									$conds,
 									$params,
 									'speciality_name');
@@ -162,8 +174,7 @@ class Model_ApplicationPlaces extends Db_Helper
 		$conds = $this->CondsSpecial9Educ($pay);
 		$params = $this->ParamsSpecial9Educ($pay);
 		return $this->rowSelectAll('DISTINCT finance_code, finance_name',
-									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
-									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
+									$this->TablesSpecs(),
 									$conds,
 									$params,
 									'speciality_name');
@@ -179,8 +190,7 @@ class Model_ApplicationPlaces extends Db_Helper
 		$conds = $this->CondsSpecial9Educ($pay);
 		$params = $this->ParamsSpecial9Educ($pay);
 		return $this->rowSelectAll('DISTINCT eduform_code, eduform_name',
-									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
-									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
+									$this->TablesSpecs(),
 									$conds,
 									$params,
 									'speciality_name');
@@ -196,8 +206,7 @@ class Model_ApplicationPlaces extends Db_Helper
 		$conds = $this->CondsSpecial9Educ($pay);
 		$params = $this->ParamsSpecial9Educ($pay);
 		return $this->rowSelectAll('DISTINCT edulevel_code, edulevel_name',
-									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
-									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
+									$this->TablesSpecs(),
 									$conds,
 									$params,
 									'speciality_name');
@@ -213,8 +222,7 @@ class Model_ApplicationPlaces extends Db_Helper
 		$conds = $this->CondsHighEducFirst($pay);
 		$params = $this->ParamsHighEducFirst($pay);
 		return $this->rowSelectAll('dict_speciality.id, speciality_name, profil_name, finance_name, eduform_name, edulevel_name',
-									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
-									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
+									$this->TablesSpecs(),
 									$conds,
 									$params,
 									'speciality_name, profil_name');
@@ -230,8 +238,7 @@ class Model_ApplicationPlaces extends Db_Helper
 		$conds = $this->CondsHighEducFirst($pay);
 		$params = $this->ParamsHighEducFirst($pay);
 		return $this->rowSelectAll('DISTINCT speciality_code, speciality_name, profil_code, profil_name',
-									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
-									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
+									$this->TablesSpecs(),
 									$conds,
 									$params,
 									'speciality_name');
@@ -247,8 +254,7 @@ class Model_ApplicationPlaces extends Db_Helper
 		$conds = $this->CondsHighEducFirst($pay);
 		$params = $this->ParamsHighEducFirst($pay);
 		return $this->rowSelectAll('DISTINCT finance_code, finance_name',
-									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
-									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
+									$this->TablesSpecs(),
 									$conds,
 									$params,
 									'finance_name');
@@ -264,8 +270,7 @@ class Model_ApplicationPlaces extends Db_Helper
 		$conds = $this->CondsHighEducFirst($pay);
 		$params = $this->ParamsHighEducFirst($pay);
 		return $this->rowSelectAll('DISTINCT eduform_code, eduform_name',
-									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
-									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
+									$this->TablesSpecs(),
 									$conds,
 									$params,
 									'eduform_name');
@@ -281,8 +286,7 @@ class Model_ApplicationPlaces extends Db_Helper
 		$conds = $this->CondsHighEducFirst($pay);
 		$params = $this->ParamsHighEducFirst($pay);
 		return $this->rowSelectAll('DISTINCT edulevel_code, edulevel_name',
-									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
-									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
+									$this->TablesSpecs(),
 									$conds,
 									$params,
 									'edulevel_name');
@@ -298,8 +302,7 @@ class Model_ApplicationPlaces extends Db_Helper
 		$conds = $this->CondsHighEducSecond($pay);
 		$params = $this->ParamsHighEducSecond($pay);
 		return $this->rowSelectAll('dict_speciality.id, speciality_name, profil_name, finance_name, eduform_name, edulevel_name',
-									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
-									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
+									$this->TablesSpecs(),
 									$conds,
 									$params,
 									'speciality_name, profil_name');
@@ -315,8 +318,7 @@ class Model_ApplicationPlaces extends Db_Helper
 		$conds = $this->CondsHighEducSecond($pay);
 		$params = $this->ParamsHighEducSecond($pay);
 		return $this->rowSelectAll('DISTINCT speciality_code, speciality_name, profil_code, profil_name',
-									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
-									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
+									$this->TablesSpecs(),
 									$conds,
 									$params,
 									'speciality_name');
@@ -332,8 +334,7 @@ class Model_ApplicationPlaces extends Db_Helper
 		$conds = $this->CondsHighEducSecond($pay);
 		$params = $this->ParamsHighEducSecond($pay);
 		return $this->rowSelectAll('DISTINCT finance_code, finance_name',
-									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
-									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
+									$this->TablesSpecs(),
 									$conds,
 									$params,
 									'finance_name');
@@ -349,8 +350,7 @@ class Model_ApplicationPlaces extends Db_Helper
 		$conds = $this->CondsHighEducSecond($pay);
 		$params = $this->ParamsHighEducSecond($pay);
 		return $this->rowSelectAll('DISTINCT eduform_code, eduform_name',
-									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
-									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
+									$this->TablesSpecs(),
 									$conds,
 									$params,
 									'eduform_name');
@@ -366,8 +366,7 @@ class Model_ApplicationPlaces extends Db_Helper
 		$conds = $this->CondsHighEducSecond($pay);
 		$params = $this->ParamsHighEducSecond($pay);
 		return $this->rowSelectAll('DISTINCT edulevel_code, edulevel_name',
-									'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
-									' INNER JOIN application ON admission_campaign.id = application.id_campaign',
+									$this->TablesSpecs(),
 									$conds,
 									$params,
 									'edulevel_name');
@@ -477,10 +476,11 @@ class Model_ApplicationPlaces extends Db_Helper
 	public function getByAppForPayedOnline()
 	{
 		return $this->rowSelectAll('application_places.*',
-									'application_places INNER JOIN dict_speciality ON application_places.id_spec = dict_speciality.id',
-									'pid = :pid AND finance_name = :finance_name AND eduform_name = :eduform_name',
+									'application_places INNER JOIN dict_speciality ON application_places.id_spec = dict_speciality.id'.
+									' INNER JOIN dict_finances ON dict_speciality.finance_code = dict_finances.code',
+									'pid = :pid AND dict_finances.abbr = :finance AND eduform_name = :eduform_name',
 									[':pid' => $this->pid,
-									':finance_name' => 'Полное возмещение затрат',
+									':finance' => self::PAY,
 									':eduform_name' => 'Заочная']);
 	}
 
@@ -524,6 +524,18 @@ class Model_ApplicationPlaces extends Db_Helper
 	}
 
 	/**
+     * Returns tables for specs.
+     *
+     * @return string
+     */
+	public function TablesSpecs() : string
+	{
+		return 'dict_speciality INNER JOIN admission_campaign ON dict_speciality.campaign_code = admission_campaign.code'.
+				' INNER JOIN application ON admission_campaign.id = application.id_campaign'.
+				' INNER JOIN dict_finances ON dict_speciality.finance_code = dict_finances.code';
+	}
+
+	/**
      * Returns conditions for special education based on 9 classes.
      *
      * @return string
@@ -531,9 +543,9 @@ class Model_ApplicationPlaces extends Db_Helper
 	public function CondsSpecial9Educ($pay) : string
 	{
 		if ($pay == 1) {
-			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name = :finance_name AND eduprogram_name = :eduprogram_name AND (stage_numb = :stage_numb OR stage_numb is null)';
+			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr = :finance AND eduprogram_name = :eduprogram_name AND (stage_numb = :stage_numb OR stage_numb is null)';
 		} else {
-			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND eduprogram_name = :eduprogram_name AND (stage_numb = :stage_numb OR stage_numb is null)';
+			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr <> :finance AND eduprogram_name = :eduprogram_name AND (stage_numb = :stage_numb OR stage_numb is null)';
 		}
 	}
 
@@ -545,9 +557,9 @@ class Model_ApplicationPlaces extends Db_Helper
 	public function CondsHighEducFirst($pay) : string
 	{
 		if ($pay == 1) {
-			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name = :finance_name AND dict_speciality.eduprogram_name is null AND (stage_numb = :stage_numb OR stage_numb is null)';
+			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr = :finance AND dict_speciality.eduprogram_name is null AND (stage_numb = :stage_numb OR stage_numb is null)';
 		} else {
-			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND dict_speciality.eduprogram_name is null AND (stage_numb = :stage_numb OR stage_numb is null)';
+			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr <> :finance AND dict_speciality.eduprogram_name is null AND (stage_numb = :stage_numb OR stage_numb is null)';
 		}
 	}
 
@@ -559,9 +571,9 @@ class Model_ApplicationPlaces extends Db_Helper
 	public function CondsHighEducSecond($pay) : string
 	{
 		if ($pay == 1) {
-			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name = :finance_name AND dict_speciality.eduprogram_name = :eduprogram_name AND (stage_numb = :stage_numb OR stage_numb is null)';
+			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr = :finance AND dict_speciality.eduprogram_name = :eduprogram_name AND (stage_numb = :stage_numb OR stage_numb is null)';
 		} else {
-			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND finance_name <> :finance_name AND dict_speciality.eduprogram_name = :eduprogram_name AND (stage_numb = :stage_numb OR stage_numb is null)';
+			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr <> :finance AND dict_speciality.eduprogram_name = :eduprogram_name AND (stage_numb = :stage_numb OR stage_numb is null)';
 		}
 	}
 
@@ -575,13 +587,13 @@ class Model_ApplicationPlaces extends Db_Helper
 		if ($pay == 1) {
 			return [':pid' => $this->pid,
 					':group_beneficiary' => 0,
-					':finance_name' => self::PAY,
+					':finance' => self::PAY,
 					':eduprogram_name' => 'среднее (основное,общее)',
 					':stage_numb' => 1];
 		} else {
 			return [':pid' => $this->pid,
 					':group_beneficiary' => 0,
-					':finance_name' => self::PURPOSE,
+					':finance' => self::PURPOSE,
 					':eduprogram_name' => 'среднее (основное,общее)',
 					':stage_numb' => 1];
 		}
@@ -597,12 +609,12 @@ class Model_ApplicationPlaces extends Db_Helper
 		if ($pay == 1) {
 			return [':pid' => $this->pid,
 					':group_beneficiary' => 0,
-					':finance_name' => self::PAY,
+					':finance' => self::PAY,
 					':stage_numb' => 1];
 		} else {
 			return [':pid' => $this->pid,
 					':group_beneficiary' => 0,
-					':finance_name' => self::PURPOSE,
+					':finance' => self::PURPOSE,
 					':stage_numb' => 1];
 		}
 	}
@@ -617,13 +629,13 @@ class Model_ApplicationPlaces extends Db_Helper
 		if ($pay == 1) {
 			return [':pid' => $this->pid,
 					':group_beneficiary' => 0,
-					':finance_name' => self::PAY,
+					':finance' => self::PAY,
 					':eduprogram_name' => 'Высшее',
 					':stage_numb' => 1];
 		} else {
 			return [':pid' => $this->pid,
 					':group_beneficiary' => 0,
-					':finance_name' => self::PURPOSE,
+					':finance' => self::PURPOSE,
 					':eduprogram_name' => 'Высшее',
 					':stage_numb' => 1];
 		}

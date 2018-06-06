@@ -34,6 +34,7 @@ define('DB_TABLES', array(
 						'dict_eductypes',
 						'dict_ege',
 						'dict_entrance_exams',
+						'dict_finances',
 						'dict_foreign_langs',
 						'dict_ind_achievs',
 						'dict_ind_achievs_ac',

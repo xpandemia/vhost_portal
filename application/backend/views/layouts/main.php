@@ -44,14 +44,18 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 		</ul>
 	</nav>
 
-	<div class="container-fluid" style="margin-top:80px">
+	<div class="container-fluid" style="margin-top:80px; margin-bottom:80px">
 		<?php include ROOT_DIR.'/application/backend/views/'.$content_view; ?>
 	</div>
 
-	<div class="fixed-bottom bg-dark">
-		<div class="row font-weight-bold">
-			<div class="col text-left text-light">
-				<?php echo nl2br("Версия ".APP_VERSION."\nРазработчик: ".APP_DEVELOPER."\nТелефон: ".APP_DEVELOPER_PHONE."\nЭл. почта: <a class=\"text-light\" href=\"mailto:".APP_DEVELOPER_EMAIL."\">".APP_DEVELOPER_EMAIL."</a>"); ?>
+	<div class="fixed-bottom" style="background:#d8d8d8">
+		<div class="row">
+			<div class="col text-center">
+				<p>
+					© <?php echo date('Y'); ?> <a href="https://www.bsu.edu.ru/" target="_blank">НИУ «БелГУ»</a>.<br>
+					По вопросам электронной подачи документов для поступления обращаться в <a href="http://abitur.bsu.edu.ru/abitur/help/contacts/" target="_blank">Приемную комиссию</a>. E-mail: <a href="mailto:Abitur@bsu.edu.ru">Abitur@bsu.edu.ru</a><br>
+					Разработка и техническая поддержка: <a href="https://www.bsu.edu.ru/bsu/structure/detail.php?ID=10247" target="_blank">управление информатизации НИУ «БелГУ»</a>. E-mail: <a href="mailto:WebmasterAbitur@bsu.edu.ru">WebmasterAbitur@bsu.edu.ru</a>
+				</p>
 			</div>
 		</div>
     </div>

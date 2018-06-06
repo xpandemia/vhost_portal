@@ -122,7 +122,8 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 												'error' => $data['citizenship_err']]); ?>
 		<div class="form-check">
 			<div class="col">
-				<input type="checkbox" class="form-check-input" id="citizenship_not" name="citizenship_not"><b>Не имею гражданства</b>
+				<input type="checkbox" class="form-check-input" id="citizenship_not" name="citizenship_not">
+				<label class="font-weight-bold" for="citizenship_not">Не имею гражданства</label>
 			</div>
 		</div><br>
 		<?php
@@ -392,13 +393,23 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 				}
 				// city (registration)
 				if (isset($data['city_reg']) && !empty($data['city_reg'])) {
-					echo Form_Helper::setFormSelectListKladr(['label' => 'Город',
-															'control' => 'city_reg',
-															'model_class' => 'common\\models\\Model_Kladr',
-															'model_method' => 'getCityByRegion',
-															'model_filter' => 'region',
-															'model_filter_val' => $data['region_reg'],
-															'value' => $data['city_reg']]);
+					if (isset($data['area_reg']) && !empty($data['area_reg'])) {
+						echo Form_Helper::setFormSelectListKladr(['label' => 'Город',
+																'control' => 'city_reg',
+																'model_class' => 'common\\models\\Model_Kladr',
+																'model_method' => 'getCityByArea',
+																'model_filter' => 'area',
+																'model_filter_val' => $data['area_reg'],
+																'value' => $data['city_reg']]);
+					} else {
+						echo Form_Helper::setFormSelectListKladr(['label' => 'Город',
+																'control' => 'city_reg',
+																'model_class' => 'common\\models\\Model_Kladr',
+																'model_method' => 'getCityByRegion',
+																'model_filter' => 'region',
+																'model_filter_val' => $data['region_reg'],
+																'value' => $data['city_reg']]);
+					}
 				} else {
 					echo Form_Helper::setFormSelectListBlank(['label' => 'Город', 'control' => 'city_reg']);
 				}
@@ -490,12 +501,14 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 		</div>
 		<div class="form-check">
 			<div class="col">
-				<input type="checkbox" class="form-check-input" id="kladr_reg_not" name="kladr_reg_not"><b>Не нашёл адрес регистрации в КЛАДРе</b>
+				<input type="checkbox" class="form-check-input" id="kladr_reg_not" name="kladr_reg_not">
+				<label class="font-weight-bold" for="kladr_reg_not">Не нашёл адрес регистрации в КЛАДРе</label>
 			</div>
 		</div><br>
 		<div class="form-check">
 			<div class="col">
-				<input type="checkbox" class="form-check-input" id="homeless_reg" name="homeless_reg"><b>Не имею адреса регистрации</b>
+				<input type="checkbox" class="form-check-input" id="homeless_reg" name="homeless_reg">
+				<label class="font-weight-bold" for="homeless_reg">Не имею адреса регистрации</label>
 			</div>
 		</div><br>
 		<?php
@@ -516,7 +529,8 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 		echo HTML_Helper::setLabel('font-weight-bold font-italic', '', 'Проживания'); ?>
 		<div class="form-check">
 			<div class="col">
-				<input type="checkbox" class="form-check-input" id="address_reg_clone_flag" name="address_reg_clone_flag"><b>Адрес проживания совпадает с адресом регистрации</b>
+				<input type="checkbox" class="form-check-input" id="address_reg_clone_flag" name="address_reg_clone_flag">
+				<label class="font-weight-bold" for="address_reg_clone_flag">Адрес проживания совпадает с адресом регистрации</label>
 			</div>
 		</div><br>
 		<?php
@@ -559,13 +573,23 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 				}
 				// city (residential)
 				if (isset($data['city_res']) && !empty($data['city_res'])) {
-					echo Form_Helper::setFormSelectListKladr(['label' => 'Город',
-															'control' => 'city_res',
-															'model_class' => 'common\\models\\Model_Kladr',
-															'model_method' => 'getCityByRegion',
-															'model_filter' => 'region',
-															'model_filter_val' => $data['region_res'],
-															'value' => $data['city_res']]);
+					if (isset($data['area_res']) && !empty($data['area_res'])) {
+						echo Form_Helper::setFormSelectListKladr(['label' => 'Город',
+																'control' => 'city_res',
+																'model_class' => 'common\\models\\Model_Kladr',
+																'model_method' => 'getCityByArea',
+																'model_filter' => 'area',
+																'model_filter_val' => $data['area_res'],
+																'value' => $data['city_res']]);
+					} else {
+						echo Form_Helper::setFormSelectListKladr(['label' => 'Город',
+																'control' => 'city_res',
+																'model_class' => 'common\\models\\Model_Kladr',
+																'model_method' => 'getCityByRegion',
+																'model_filter' => 'region',
+																'model_filter_val' => $data['region_res'],
+																'value' => $data['city_res']]);
+					}
 				} else {
 					echo Form_Helper::setFormSelectListBlank(['label' => 'Город', 'control' => 'city_res']);
 				}
@@ -657,12 +681,14 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 		</div>
 		<div class="form-check">
 			<div class="col">
-				<input type="checkbox" class="form-check-input" id="kladr_res_not" name="kladr_reg_not"><b>Не нашёл адрес проживания в КЛАДРе</b>
+				<input type="checkbox" class="form-check-input" id="kladr_res_not" name="kladr_reg_not">
+				<label class="font-weight-bold" for="kladr_res_not">Не нашёл адрес проживания в КЛАДРе</label>
 			</div>
 		</div><br>
 		<div class="form-check">
 			<div class="col">
-				<input type="checkbox" class="form-check-input" id="homeless_res" name="homeless_res"><b>Не имею адреса проживания</b>
+				<input type="checkbox" class="form-check-input" id="homeless_res" name="homeless_res">
+				<label class="font-weight-bold" for="homeless_res">Не имею адреса проживания</label>
 			</div>
 		</div><br>
 		<?php
@@ -841,8 +867,10 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 		// address registration clone
 		if ($('#address_reg').val() != '' && $('#address_reg').val() == $('#address_res').val()) {
 			$('#address_reg_clone_flag').prop('checked', true);
+			AddressResHide();
 		} else {
 			$('#address_reg_clone_flag').prop('checked', false);
+			AddressResShow();
 		}
 		// KLADR res
 		if ($('#address_reg').val() != '' && $('#address_res').val() == '' && !$('#address_reg_clone_flag').prop('checked')) {
@@ -973,6 +1001,7 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 		    $('#address_reg_clone').show();
 		    if ($('#address_res').val() != '') {
 				$('#address_reg_clone_flag').prop('checked', false);
+				AddressResShow();
 			}
 		    if ($('#address_reg_clone_flag').prop('checked')) {
 				cloneAddressRegistration();
@@ -986,8 +1015,7 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 			var area_reg_name = $('#area_reg :selected').text();
 			$('#address_reg').val(region_reg_name + ', ' + area_reg_name);
 
-			$('#city_reg').empty();
-
+			getKladrAJAX('/frontend/Kladr/CityByAreaJSON', area_reg, '#city_reg');
 			getKladrAJAX('/frontend/Kladr/LocationByAreaJSON', area_reg, '#location_reg');
 
 			$('#street_reg').empty();
@@ -1246,9 +1274,17 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 				cloneAddressRegistration();
 			} else {
 				// clear residential address
+				AddressResShow();
 				$('#country_res').val('');
-				$('#kladr_res').hide();
-				$('#region_res').val('');
+				$('#region_res').empty();
+				$('#area_res').empty();
+				$('#city_res').empty();
+				$('#location_res').empty();
+				$('#street_res').empty();
+				$('#house_res').val('');
+				$('#building_res').val('');
+				$('#flat_res').val('');
+				$('#postcode_res').val('');
 				$('#address_res').val('');
 				$('#address_res').prop('disabled', false);
 			}
@@ -1316,8 +1352,7 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 			var area_res_name = $('#area_res :selected').text();
 			$('#address_res').val(region_res_name + ', ' + area_res_name);
 
-			$('#city_res').empty();
-
+			getKladrAJAX('/frontend/Kladr/CityByAreaJSON', area_res, '#city_res');
 			getKladrAJAX('/frontend/Kladr/LocationByAreaJSON', area_res, '#location_res');
 
 			$('#street_res').empty();
@@ -2008,54 +2043,69 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 				var city_reg = $('#city_reg').val();
 				var location_reg = $('#location_reg').val();
 				var street_reg = $('#street_reg').val();
-				if (region_reg != '') {
+				if (region_reg != '' && !jQuery.isEmptyObject(region_reg)) {
 					getKladrAJAX('/frontend/Kladr/RegionAllJSON', null, '#region_res', region_reg);
 					// area
-					if (area_reg != '') {
+					if (area_reg != '' && !jQuery.isEmptyObject(area_reg)) {
 						getKladrAJAX('/frontend/Kladr/AreaByRegionJSON', region_reg, '#area_res', area_reg);
-						if (location_reg != '') {
-							getKladrAJAX('/frontend/Kladr/LocationByAreaJSON', area_reg, '#location_res', location_reg);
-							if (street_reg != '') {
-								getKladrAJAX('/frontend/Kladr/StreetByLocationJSON', location_reg, '#street_res', street_reg);
+						if (city_reg != '' && !jQuery.isEmptyObject(city_reg)) {
+							getKladrAJAX('/frontend/Kladr/CityByAreaJSON', area_reg, '#city_res', city_reg);
+							if (location_reg != '' && !jQuery.isEmptyObject(location_reg)) {
+								getKladrAJAX('/frontend/Kladr/LocationByCityJSON', city_reg, '#location_res', city_reg);
 							} else {
-								$('#street_res').empty();
+								$('#location_res').empty();
+								if (street_reg != '' && !jQuery.isEmptyObject(street_reg)) {
+									getKladrAJAX('/frontend/Kladr/StreetByCityJSON', city_reg, '#street_res', street_reg);
+								} else {
+									$('#street_res').empty();
+								}
 							}
 						} else {
-							$('#location_res').empty();
+							$('#city_res').empty();
+							if (location_reg != '' && !jQuery.isEmptyObject(location_reg)) {
+								getKladrAJAX('/frontend/Kladr/LocationByAreaJSON', area_reg, '#location_res', location_reg);
+								if (street_reg != '' && !jQuery.isEmptyObject(street_reg)) {
+									getKladrAJAX('/frontend/Kladr/StreetByLocationJSON', location_reg, '#street_res', street_reg);
+								} else {
+									$('#street_res').empty();
+								}
+							} else {
+								$('#location_res').empty();
+							}
 						}
 					} else {
 						$('#area_res').empty();
-					}
-					// city
-					if (city_reg != '') {
-						getKladrAJAX('/frontend/Kladr/CityByRegionJSON', region_reg, '#city_res', city_reg);
-						if (location_reg != '') {
-							getKladrAJAX('/frontend/Kladr/LocationByCityJSON', city_reg, '#location_res', city_reg);
+						// city
+						if (city_reg != '' && !jQuery.isEmptyObject(city_reg)) {
+							getKladrAJAX('/frontend/Kladr/CityByRegionJSON', region_reg, '#city_res', city_reg);
+							if (location_reg != '' && !jQuery.isEmptyObject(location_reg)) {
+								getKladrAJAX('/frontend/Kladr/LocationByCityJSON', city_reg, '#location_res', city_reg);
+							} else {
+								$('#location_res').empty();
+								if (street_reg != '' && !jQuery.isEmptyObject(street_reg)) {
+									getKladrAJAX('/frontend/Kladr/StreetByCityJSON', city_reg, '#street_res', street_reg);
+								} else {
+									$('#street_res').empty();
+								}
+							}
 						} else {
-							$('#location_res').empty();
-							if (street_reg != '') {
-								getKladrAJAX('/frontend/Kladr/StreetByCityJSON', city_reg, '#street_res', street_reg);
+							$('#city_res').empty();
+						}
+						// location
+						if (location_reg != '' && !jQuery.isEmptyObject(location_reg)) {
+							getKladrAJAX('/frontend/Kladr/LocationByRegionJSON', region_reg, '#location_res', location_reg);
+							if (street_reg != '' && !jQuery.isEmptyObject(street_reg)) {
+								getKladrAJAX('/frontend/Kladr/StreetByLocationJSON', street_reg, '#street_res', street_reg);
 							} else {
 								$('#street_res').empty();
 							}
-						}
-					} else {
-						$('#city_res').empty();
-					}
-					// location
-					if (location_reg != '') {
-						getKladrAJAX('/frontend/Kladr/LocationByRegionJSON', region_reg, '#location_res', location_reg);
-						if (street_reg != '') {
-							getKladrAJAX('/frontend/Kladr/StreetByLocationJSON', street_reg, '#street_res', street_reg);
 						} else {
-							$('#street_res').empty();
-						}
-					} else {
-						$('#location_res').empty();
-						if (street_reg != '') {
-							getKladrAJAX('/frontend/Kladr/StreetByRegionJSON', region_reg, '#street_res', street_reg);
-						} else {
-							$('#street_res').empty();
+							$('#location_res').empty();
+							if (street_reg != '' && !jQuery.isEmptyObject(street_reg)) {
+								getKladrAJAX('/frontend/Kladr/StreetByRegionJSON', region_reg, '#street_res', street_reg);
+							} else {
+								$('#street_res').empty();
+							}
 						}
 					}
 				} else {
@@ -2069,13 +2119,33 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 				$('#building_res').val($('#building_reg').val());
 				$('#flat_res').val($('#flat_reg').val());
 				$('#postcode_res').val($('#postcode_reg').val());
-				$('#kladr_res').hide();
+				AddressResHide();
 			} else {
 				$('#kladr_res').hide();
 				$('#address_res').prop('disabled', false);
 				$('#address_res').val(address_reg);
 			}
 		}
+	}
+
+	function AddressResShow() {
+		$("label[for='country_res']").show();
+		$('#country_res').show();
+		$('#kladr_res').show();
+		$('#kladr_res_not').show();
+		$("label[for='kladr_res_not']").show();
+		$('#homeless_res').show();
+		$("label[for='homeless_res']").show();
+	}
+
+	function AddressResHide() {
+		$("label[for='country_res']").hide();
+		$('#country_res').hide();
+		$('#kladr_res').hide();
+		$('#kladr_res_not').hide();
+		$("label[for='kladr_res_not']").hide();
+		$('#homeless_res').hide();
+		$("label[for='homeless_res']").hide();
 	}
 
 	function getAge(dateString) {

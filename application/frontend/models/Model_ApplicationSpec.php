@@ -7,15 +7,17 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 use tinyframe\core\helpers\PDF_Helper as PDF_Helper;
 use common\models\Model_Personal as Personal;
 use common\models\Model_Application as Application;
+use common\models\Model_ApplicationAchievs as ApplicationAchievs;
+use common\models\Model_ApplicationPlaces as ApplicationPlaces;
+use common\models\Model_ApplicationPlacesExams as ApplicationPlacesExams;
 use common\models\Model_ApplicationStatus as ApplicationStatus;
 use common\models\Model_DictScans as Model_DictScans;
 use common\models\Model_Scans as Scans;
 use common\models\Model_Docs as Model_Docs;
+use common\models\Model_DocsEduc as DocsEduc;
 use common\models\Model_AdmissionCampaign as Model_AdmissionCampaign;
 use common\models\Model_DictSpeciality as Model_DictSpeciality;
 use common\models\Model_DictEntranceExams as Model_DictEntranceExams;
-use common\models\Model_ApplicationPlaces as ApplicationPlaces;
-use common\models\Model_ApplicationPlacesExams as ApplicationPlacesExams;
 use common\models\Model_DictDiscipline as Model_DictDiscipline;
 use common\models\Model_EgeDisciplines as Model_EgeDisciplines;
 use common\models\Model_DictTestingScopes as Model_DictTestingScopes;
@@ -517,15 +519,20 @@ class Model_ApplicationSpec extends Model
 		$app = new Application();
 		$app->id = $id;
 		$app_row = $app->get();
-		if ($app_row['status'] == $app::STATUS_CREATED) {
-			return Basic_Helper::redirect(APP['hdr'], 200, APP['ctr'], 'Edit/?id='.$id, null, 'Нельзя выводить на печать заявления с состоянием <strong>'.mb_convert_case($app::STATUS_CREATED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!');
-		}
 		$place = new ApplicationPlaces();
 		$place->pid = $id;
+		$data = [];
 		if ($place->getByAppForBachelorSpec()) {
-			$data = $this->getResumeForPdf();
-	        $data['app_numb'] = '№ '.$app_row['numb'];
-	        $data['campus_yes'] = 'On';
+			$data = $this->setAppForPdf($data, $app_row);
+			$data = $this->setResumeForPdf($data);
+	        $data = $this->setPlacesForPdf($data, $id);
+	        $data = $this->setExamsForPdf($data, $id);
+	        $data = $this->setEducForPdf($data, $app_row['id_docseduc']);
+			$data['university5_yes'] = 'On';
+			$data['specs3_yes'] = 'On';
+	        $data = $this->setCampusForPdf($data, $app_row['campus']);
+			$data['docsship_personal'] = 'On';
+	        $data = $this->setIaForPdf($data, $id);
 			$pdf->create($data, 'application_2018', 'заявление'.$app_row['numb']);
 		} else {
 			$resume = new Resume();
@@ -544,30 +551,184 @@ class Model_ApplicationSpec extends Model
 	}
 
 	/**
-     * Saves application spec data as PDF.
+     * Sets application data for PDF.
      *
      * @return array
      */
-	public function getResumeForPdf() : array
+	public function setAppForPdf($data, $app_row) : array
+	{
+		$data['app_numb'] = '№ '.$app_row['numb'];
+		$data['app_dt'] = date('d.m.Y');
+		return $data;
+	}
+
+	/**
+     * Sets resume data for PDF.
+     *
+     * @return array
+     */
+	public function setResumeForPdf($data) : array
 	{
 		$resume = new Resume();
 		$resume_row = $resume->getByUser();
-		return [
-                'name_last' => $resume_row['name_last'],
-                'name_first' => $resume_row['name_first'],
-                'name_middle' => $resume_row['name_middle'],
-                'birth_dt' => date('d.m.Y', strtotime($resume_row['birth_dt'])),
-                'citizenship' => mb_convert_case(mb_convert_case($resume_row['citizenship_name'], MB_CASE_LOWER, 'UTF-8'), MB_CASE_TITLE, 'UTF-8'),
-                'passport_type' => $resume_row['passport_type_name'],
-                'series' => $resume_row['series'],
-                'numb' => $resume_row['numb'],
-                'unit_code' => $resume_row['unit_code'],
-                'when_where' => $resume_row['unit_name'].' '.date('d.m.Y', strtotime($resume_row['dt_issue'])),
-                'address_reg' => $resume_row['address_reg'],
-                'phone_main' => ((!empty($resume_row['phone_mobile'])) ? $resume_row['phone_mobile'] : $resume_row['phone_home']),
-                'phone_add' => $resume_row['phone_add'],
-                'email' => $resume_row['email'],
-                'address_res' => $resume_row['address_res']
-                ];
+		$resume_arr = [
+		                'name_last' => $resume_row['name_last'],
+		                'name_first' => $resume_row['name_first'],
+		                'name_middle' => $resume_row['name_middle'],
+		                'birth_dt' => date('d.m.Y', strtotime($resume_row['birth_dt'])),
+		                'citizenship' => mb_convert_case(mb_convert_case($resume_row['citizenship_name'], MB_CASE_LOWER, 'UTF-8'), MB_CASE_TITLE, 'UTF-8'),
+		                'passport_type' => $resume_row['passport_type_name'],
+		                'series' => $resume_row['series'],
+		                'numb' => $resume_row['numb'],
+		                'unit_code' => $resume_row['unit_code'],
+		                'when_where' => $resume_row['unit_name'].' '.date('d.m.Y', strtotime($resume_row['dt_issue'])),
+		                'address_reg' => $resume_row['address_reg'],
+		                'phone_main' => ((!empty($resume_row['phone_mobile'])) ? $resume_row['phone_mobile'] : $resume_row['phone_home']),
+		                'phone_add' => $resume_row['phone_add'],
+		                'email' => $resume_row['email'],
+		                'address_res' => $resume_row['address_res']
+		                ];
+		return array_merge($data, $resume_arr);
+	}
+
+	/**
+     * Sets places data for PDF.
+     *
+     * @return array
+     */
+	public function setPlacesForPdf($data, $app) : array
+	{
+		$places = new ApplicationPlaces();
+		$places->pid = $app;
+		$places_arr = $places->getSpecsByAppPdf();
+		$i = 1;
+		foreach ($places_arr as $places_row) {
+			if ($i <= 5) {
+				$spec_arr['place'.$i] = $places_row['place'].' ('.$places_row['edulevel'].')';
+				$spec_arr['eduform'.$i] = $places_row['eduform'];
+				$spec_arr['finance'.$i] = $places_row['finance'];
+				$i++;
+			} else {
+				break;
+			}
+		}
+		return array_merge($data, $spec_arr);
+	}
+
+	/**
+     * Sets exams data for PDF.
+     *
+     * @return array
+     */
+	public function setExamsForPdf($data, $app) : array
+	{
+		$exams = new ApplicationPlacesExams();
+		$exams->pid = $app;
+		$exams_arr = $exams->getExamsByApplication();
+		if ($exams_arr) {
+			$data['exams_yes'] = 'On';
+			$exams_disciplines = '';
+			foreach ($exams_arr as $exams_row) {
+				switch ($exams_row['description']) {
+					case 'ЕГЭ':
+						$data['exams_ege'] = 'On';
+						break;
+					case 'Экзамен':
+						$data['exams_university'] = 'On';
+						$exams_disciplines .= ' '.$exams_row['discipline_name'];
+						break;
+				}
+			}
+			$data['exams_disciplines'] = $exams_disciplines;
+			// exams reason
+			if (isset($data['exams_university'])) {
+				$personal = new Personal();
+				$citizenship = $personal->getCitizenshipByUser();
+				if ($citizenship['code'] != '643') {
+					$data['exams_reason'] = 'иностранные граждане';
+				} else {
+					$data['exams_reason'] = 'лица, прошедшие государственную итоговую аттестацию по образовательным программам среднего общего образования не в форме ЕГЭ';
+				}
+			}
+		}
+		return $data;
+	}
+
+	/**
+     * Sets education data for PDF.
+     *
+     * @return array
+     */
+	public function setEducForPdf($data, $id_docseduc) : array
+	{
+		$docs = new DocsEduc();
+		$docs->id = $id_docseduc;
+		$docs_row = $docs->getForPdf();
+		$data['educ_type'] = $docs_row['educ_type'];
+		$data['school'] = $docs_row['school'];
+			if (in_array($docs_row['doc_type'], $docs::CERTIFICATES)) {
+				$data['certificate'] = 'On';
+			} elseif (in_array($docs_row['doc_type'], $docs::DIPLOMAS)) {
+				$data['diploma'] = 'On';
+			}
+		$data['docseduc_series'] = $docs_row['series'];
+		$data['docseduc_numb'] = $docs_row['numb'];
+		$data['docseduc_dt'] = date('d.m.Y', strtotime($docs_row['dt_issue']));
+		return $data;
+	}
+
+	/**
+     * Sets campus data for PDF.
+     *
+     * @return array
+     */
+	public function setCampusForPdf($data, $campus) : array
+	{
+		if ($campus == 0) {
+			$data['campus_no'] = 'On';
+		} else {
+			$data['campus_yes'] = 'On';
+		}
+		return $data;
+	}
+
+	/**
+     * Sets individual achievments data for PDF.
+     *
+     * @return array
+     */
+	public function setIaForPdf($data, $app) : array
+	{
+		$ia = new ApplicationAchievs();
+		$ia->pid = $app;
+		$ia_arr = $ia->getByAppForPdf();
+		if ($ia_arr) {
+			$data['ia_yes'] = 'On';
+			foreach ($ia_arr as $ia_row) {
+				switch ($ia_row['code']) {
+					case $ia::IA_GTO:
+						$data['ia_gto'] = 'On';
+						break;
+					case $ia::IA_MEDAL_CERTIFICATE:
+						$data['ia_medal_certificate'] = 'On';
+						break;
+					case $ia::IA_MEDAL_DIPLOMA:
+						$data['ia_medal_diploma'] = 'On';
+						break;
+					case $ia::IA_CONTEST_RUS:
+						$data['ia_contest_rus'] = 'On';
+						break;
+					case $ia::IA_CONTEST_BSU:
+						$data['ia_contest_bsu'] = 'On';
+						break;
+					case $ia::IA_SPORTMASTER:
+						$data['ia_sportmaster'] = 'On';
+						break;
+				}
+			}
+		} else {
+			$data['ia_no'] = 'On';
+		}
+		return $data;
 	}
 }

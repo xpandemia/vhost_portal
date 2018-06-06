@@ -18,6 +18,13 @@ class Model_ApplicationAchievs extends Db_Helper
 	public $id_achiev;
 	public $dt_created;
 
+	const IA_GTO = '000000004';
+	const IA_MEDAL_CERTIFICATE = '000000003';
+	const IA_MEDAL_DIPLOMA = '000000022';
+	const IA_CONTEST_RUS = '000000005';
+	const IA_CONTEST_BSU = '000000002';
+	const IA_SPORTMASTER = '000000023';
+
 	public $db;
 
 	public function __construct()
@@ -116,6 +123,20 @@ class Model_ApplicationAchievs extends Db_Helper
 	{
 		return $this->rowSelectAll('*',
 									self::TABLE_NAME,
+									'pid = :pid',
+									[':pid' => $this->pid]);
+	}
+
+	/**
+     * Gets application achievments by application for PDF.
+     *
+     * @return array
+     */
+	public function getByAppForPdf()
+	{
+		return $this->rowSelectAll('dict_ind_achievs.code',
+									self::TABLE_NAME.' INNER JOIN ind_achievs ON '.self::TABLE_NAME.'.id_achiev = ind_achievs.id'.
+									' INNER JOIN dict_ind_achievs ON ind_achievs.id_achiev = dict_ind_achievs.id',
 									'pid = :pid',
 									[':pid' => $this->pid]);
 	}

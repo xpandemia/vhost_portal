@@ -4,19 +4,20 @@ namespace common\models;
 
 use tinyframe\core\helpers\Db_Helper as Db_Helper;
 
-class Model_DictDoctypes extends Db_Helper
+class Model_DictFinances extends Db_Helper
 {
 	/*
-		Dictionary document types processing
+		Dictionary finances processing
 	*/
 
-	const TABLE_NAME = 'dict_doctypes';
+	const TABLE_NAME = 'dict_finances';
 
 	public $id;
 	public $isfolder;
 	public $parent_key;
 	public $code;
 	public $description;
+	public $abbr;
 	public $guid;
 
 	public $db;
@@ -27,7 +28,7 @@ class Model_DictDoctypes extends Db_Helper
 	}
 
 	/**
-     * Document types rules.
+     * Finances rules.
      *
      * @return array
      */
@@ -41,11 +42,11 @@ class Model_DictDoctypes extends Db_Helper
 						'value' => $this->id
 						],
 				'isfolder' => [
-							'required' => 1,
-							'insert' => 1,
-							'update' => 1,
-							'value' => $this->isfolder
-							],
+								'required' => 1,
+								'insert' => 1,
+								'update' => 1,
+								'value' => $this->isfolder
+								],
 				'parent_key' => [
 								'required' => 1,
 								'insert' => 1,
@@ -64,6 +65,12 @@ class Model_DictDoctypes extends Db_Helper
 								'update' => 1,
 								'value' => $this->description
 								],
+				'abbr' => [
+							'required' => 0,
+							'insert' => 1,
+							'update' => 1,
+							'value' => $this->abbr
+							],
 				'guid' => [
 							'required' => 1,
 							'insert' => 1,
@@ -74,101 +81,47 @@ class Model_DictDoctypes extends Db_Helper
 	}
 
 	/**
-     * Gets all document types.
+     * Gets all finances.
      *
      * @return array
      */
 	public function getAll()
 	{
-		return $this->rowSelectAll('*', self::TABLE_NAME, 'isfolder = :isfolder', [':isfolder' => 0]);
+		return $this->rowSelectAll('*',
+									self::TABLE_NAME,
+									null,
+									null,
+									'description');
 	}
 
 	/**
-     * Gets document type by code.
+     * Gets finance by GUID.
+     *
+     * @return array
+     */
+	public function getByGuid()
+	{
+		return $this->rowSelectOne('*',
+									self::TABLE_NAME,
+									'guid = :guid',
+									[':guid' => $this->guid]);
+	}
+
+	/**
+     * Gets finance by code.
      *
      * @return array
      */
 	public function getByCode()
 	{
-		return $this->rowSelectOne('*', self::TABLE_NAME, 'code = :code', [':code' => $this->code]);
+		return $this->rowSelectOne('*',
+									self::TABLE_NAME,
+									'code = :code',
+									[':code' => $this->code]);
 	}
 
 	/**
-     * Gets passports.
-     *
-     * @return array
-     */
-	public function getPassports()
-	{
-		return $this->rowSelectAll('d1.*',
-									'dict_doctypes d1 INNER JOIN dict_doctypes d2 ON d1.parent_key = d2.guid',
-									'd2.isfolder = :isfolder AND d2.description = :description',
-									[':isfolder' => 1,
-									':description' => 'Паспорта']);
-	}
-
-	/**
-     * Gets russian passports.
-     *
-     * @return array
-     */
-	public function getPassportsRussia()
-	{
-		return $this->rowSelectAll('*',
-									'dict_doctypes',
-									'code in (:code1, :code2)',
-									[':code1' => '000000047',
-									':code2' => '000000202']);
-	}
-
-	/**
-     * Gets foreign passports.
-     *
-     * @return array
-     */
-	public function getPassportsForeign()
-	{
-		return $this->rowSelectAll('*',
-									'dict_doctypes',
-									'code in (:code1, :code2, :code3, :code4, :code5)',
-									[':code1' => '000000049',
-									':code2' => '000000075',
-									':code3' => '000000087',
-									':code4' => '000000223',
-									':code5' => '000000226']);
-	}
-
-	/**
-     * Gets education documents.
-     *
-     * @return array
-     */
-	public function getDiplomas()
-	{
-		return $this->rowSelectAll('d1.*',
-									'dict_doctypes d1 INNER JOIN dict_doctypes d2 ON d1.parent_key = d2.guid',
-									'd2.isfolder = :isfolder AND d2.description = :description',
-									[':isfolder' => 1,
-									':description' => 'Документы об образовании'],
-									'd1.description');
-	}
-
-	/**
-     * Gets education documents by education type code.
-     *
-     * @return array
-     */
-	public function getDiplomasByEducCode()
-	{
-		return $this->rowSelectAll('dict_doctypes.*',
-									'dict_doctypes INNER JOIN eductypes_doctypes ON dict_doctypes.id = eductypes_doctypes.id_doctype'.
-									' INNER JOIN dict_eductypes ON eductypes_doctypes.id_eductype = dict_eductypes.id',
-									'dict_eductypes.code = :code',
-									[':code' => $this->code_educ]);
-	}
-
-	/**
-     * Saves document type data to database.
+     * Saves finance data to database.
      *
      * @return integer
      */
@@ -179,7 +132,7 @@ class Model_DictDoctypes extends Db_Helper
 	}
 
 	/**
-     * Changes document type isfolder.
+     * Changes finance isfolder.
      *
      * @return boolean
      */
@@ -191,7 +144,7 @@ class Model_DictDoctypes extends Db_Helper
 	}
 
 	/**
-     * Changes document type parent.
+     * Changes finance parent.
      *
      * @return boolean
      */
@@ -203,7 +156,7 @@ class Model_DictDoctypes extends Db_Helper
 	}
 
 	/**
-     * Changes document type code.
+     * Changes finance code.
      *
      * @return boolean
      */
@@ -215,7 +168,7 @@ class Model_DictDoctypes extends Db_Helper
 	}
 
 	/**
-     * Changes document type description.
+     * Changes finance description.
      *
      * @return boolean
      */
@@ -227,7 +180,19 @@ class Model_DictDoctypes extends Db_Helper
 	}
 
 	/**
-     * Removes all document types.
+     * Changes finance abbr.
+     *
+     * @return boolean
+     */
+	public function changeAbbr()
+	{
+		return $this->rowUpdate(self::TABLE_NAME,
+								'abbr = :abbr',
+								[':abbr' => $this->abbr]);
+	}
+
+	/**
+     * Removes all finances.
      *
      * @return integer
      */
@@ -237,7 +202,7 @@ class Model_DictDoctypes extends Db_Helper
 	}
 
 	/**
-     * Loads document types.
+     * Loads finances.
      *
      * @return array
      */
@@ -251,7 +216,7 @@ class Model_DictDoctypes extends Db_Helper
 			if ($clear_load == 1) {
 				// clear
 				$rows_del = $this->$clear_load();
-				$log->msg = 'Удалено типов документов - '.$rows_del.'.';
+				$log->msg = 'Удалено оснований поступления - '.$rows_del.'.';
 				$log->value_old = null;
 				$log->value_new = null;
 				$log->save();
@@ -265,78 +230,92 @@ class Model_DictDoctypes extends Db_Helper
 		$rows_ins = 0;
 		$rows_upd = 0;
 		foreach($properties as $property) {
-			$this->code = (string)$property->Code;
-			$doctype = $this->getByCode();
+			$this->guid = (string)$property->Ref_Key;
+			$finance = $this->getByGuid();
 
             if($property->DeletionMark == 'false') {
 				$this->isfolder = ((string)$property->IsFolder == 'false') ? 0 : 1;
 				$this->parent_key = (string)$property->Parent_Key;
+				$this->code = (string)$property->Code;
 				$this->description = (string)$property->Description;
-				$this->guid = (string)$property->Ref_Key;
-					if ($doctype == null) {
+				$this->abbr = (string)$property->СокращенноеНаименование;
+					if ($finance == null) {
 						// insert
 						if ($this->save()) {
-							$log->msg = 'Создан новый тип документа с GUID ['.$this->guid.'].';
+							$log->msg = 'Создано новое основание поступления с GUID ['.$this->guid.'].';
 							$log->value_old = null;
 							$log->value_new = null;
 							$log->save();
 							$rows_ins++;
 						} else {
-							$result['error_msg'] = 'Ошибка при сохранении типа документа с GUID ['.$this->guid.']!';
+							$result['error_msg'] = 'Ошибка при создании основание поступления с GUID ['.$this->guid.']!';
 							return $result;
 						}
 					} else {
 						// update
 						$upd = 0;
 						// isfolder
-						if ($doctype['isfolder'] != $this->isfolder) {
+						if ($finance['isfolder'] != $this->isfolder) {
 							if ($this->changeIsfolder()) {
-								$log->msg = 'Изменён признак каталога типа документа с GUID ['.$this->guid.'].';
-								$log->value_old = $doctype['isfolder'];
+								$log->msg = 'Изменён признак каталога основания поступления с GUID ['.$this->guid.'].';
+								$log->value_old = $finance['isfolder'];
 								$log->value_new = $this->isfolder;
 								$log->save();
 								$upd = 1;
 							} else {
-								$result['error_msg'] = 'Ошибка при изменении признака каталога типа документа с GUID ['.$this->guid.']!';
+								$result['error_msg'] = 'Ошибка при изменении признака каталога основания поступления с GUID ['.$this->guid.']!';
 								return $result;
 							}
 						}
 						// parent_key
-						if ($doctype['parent_key'] != $this->parent_key) {
+						if ($finance['parent_key'] != $this->parent_key) {
 							if ($this->changeParent()) {
-								$log->msg = 'Изменён родитель типа документа с GUID ['.$this->guid.'].';
-								$log->value_old = $doctype['parent_key'];
+								$log->msg = 'Изменён родитель основания поступления с GUID ['.$this->guid.'].';
+								$log->value_old = $finance['parent_key'];
 								$log->value_new = $this->parent_key;
 								$log->save();
 								$upd = 1;
 							} else {
-								$result['error_msg'] = 'Ошибка при изменении родителя типа документа с GUID ['.$this->guid.']!';
+								$result['error_msg'] = 'Ошибка при изменении родителя основания поступления с GUID ['.$this->guid.']!';
 								return $result;
 							}
 						}
 						// code
-						if ($doctype['code'] != $this->code) {
+						if ($finance['code'] != $this->code) {
 							if ($this->changeCode()) {
-								$log->msg = 'Изменён код типа документа с GUID ['.$this->guid.'].';
-								$log->value_old = $doctype['code'];
+								$log->msg = 'Изменён код основания поступления с GUID ['.$this->guid.'].';
+								$log->value_old = $finance['code'];
 								$log->value_new = $this->code;
 								$log->save();
 								$upd = 1;
 							} else {
-								$result['error_msg'] = 'Ошибка при изменении кода типа документа с GUID ['.$this->guid.']!';
+								$result['error_msg'] = 'Ошибка при изменении кода основания поступления с GUID ['.$this->guid.']!';
 								return $result;
 							}
 						}
 						// description
-						if ($doctype['description'] != $this->description) {
+						if ($finance['description'] != $this->description) {
 							if ($this->changeDescription()) {
-								$log->msg = 'Изменено наименование типа документа с GUID ['.$this->guid.'].';
-								$log->value_old = $doctype['description'];
+								$log->msg = 'Изменено наименование основания поступления с GUID ['.$this->guid.'].';
+								$log->value_old = $finance['description'];
 								$log->value_new = $this->description;
 								$log->save();
 								$upd = 1;
 							} else {
-								$result['error_msg'] = 'Ошибка при изменении наименования типа документа с GUID ['.$this->guid.']!';
+								$result['error_msg'] = 'Ошибка при изменении наименования основания поступления с GUID ['.$this->guid.']!';
+								return $result;
+							}
+						}
+						// abbr
+						if ($finance['abbr'] != $this->abbr) {
+							if ($this->changeAbbr()) {
+								$log->msg = 'Изменено сокращённое наименование основания поступления с GUID ['.$this->guid.'].';
+								$log->value_old = $finance['abbr'];
+								$log->value_new = $this->abbr;
+								$log->save();
+								$upd = 1;
+							} else {
+								$result['error_msg'] = 'Ошибка при изменении сокращённого наименования основания поступления с GUID ['.$this->guid.']!';
 								return $result;
 							}
 						}

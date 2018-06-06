@@ -26,6 +26,8 @@ class Model_DocsEduc extends Db_Helper
 	public $dt_created;
 	public $dt_updated;
 
+	const CERTIFICATES = ['000000026', '000000088'];
+	const DIPLOMAS = ['000000022', '000000023', '000000024', '000000025', '000000046', '000000048', '000000054', '000000153'];
 	const CLASSES_9 = ['000000088'];
 	const CLASSES_11 = ['000000026'];
 	const HIGH_BEFORE = ['000000026', '000000046', '000000048', '000000088'];
@@ -215,6 +217,42 @@ class Model_DocsEduc extends Db_Helper
 			$scan_arr = $scan->getByDocrowFull('docs_educ', $doc_educ['id']);
 			$result = array_merge($result, $scan_arr);
 			return $result;
+		} else {
+			return null;
+		}
+	}
+
+	/**
+     * Gets education document by ID for PDF.
+     *
+     * @return array
+     */
+	public function getForPdf()
+	{
+		$doc_educ = $this->rowSelectOne('*', self::TABLE_NAME, 'id = :id', [':id' => $this->id]);
+		if ($doc_educ) {
+			$educ_type = $this->rowSelectOne('description as educ_type',
+											'dict_eductypes',
+											'id = :id',
+											[':id' => $doc_educ['id_eductype']]);
+			if (!is_array($educ_type)) {
+				$educ_type = ['educ_type' => null];
+			}
+			$doc_type = $this->rowSelectOne('code as doc_type',
+											'dict_doctypes',
+											'id = :id',
+											[':id' => $doc_educ['id_doctype']]);
+			if (!is_array($doc_type)) {
+				$doc_type = ['doc_type' => null];
+			}
+			$educ_form = $this->rowSelectOne('description as educ_form',
+											'dict_educforms',
+											'id = :id',
+											[':id' => $doc_educ['id_educform']]);
+			if (!is_array($educ_form)) {
+				$educ_form = ['educ_form' => null];
+			}
+			return $result = array_merge($doc_educ, $educ_type, $doc_type, $educ_form);;
 		} else {
 			return null;
 		}
