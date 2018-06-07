@@ -23,7 +23,7 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 	<?php
 		echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
 		echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
-		echo Form_Helper::setFormBegin(RESUME['ctr'], RESUME['act'], RESUME['id'], RESUME['hdr'], 1, '/images/logo_bsu.jpg');
+		echo Form_Helper::setFormBegin(RESUME['ctr'], RESUME['act'], RESUME['id'], RESUME['hdr'], 1, '/images/logo_bsu_transparent.gif');
 		/* status */
 		echo Model_Resume::showStatus($data['status']);
 		/* personal data */

@@ -117,6 +117,26 @@ class Model_ApplicationPlacesExams extends Db_Helper
 	}
 
 	/**
+     * Checks if exams exists.
+     *
+     * @return boolean
+     */
+	public function existsExams()
+	{
+		$arr = $this->rowSelectAll('application_places_exams.*',
+									'application_places_exams INNER JOIN application_places ON application_places_exams.pid = application_places.id'.
+									' INNER JOIN dict_testing_scopes ON application_places_exams.id_test = dict_testing_scopes.id',
+									'application_places.pid = :pid AND dict_testing_scopes.description = :description',
+									[':pid' => $this->pid,
+									':description' => 'Экзамен']);
+		if (!empty($arr)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
      * Saves application places exams data to database.
      *
      * @return integer

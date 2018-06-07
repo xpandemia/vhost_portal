@@ -6,6 +6,7 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 use common\models\Model_Personal as Personal;
 use common\models\Model_Application as Application;
 use common\models\Model_ApplicationPlaces as ApplicationPlaces;
+use common\models\Model_ApplicationPlacesExams as ApplicationPlacesExams;
 use common\models\Model_ApplicationPlacesExams as Model_ApplicationPlacesExams;
 use common\models\Model_DictTestingScopes as Model_DictTestingScopes;
 use common\models\Model_ApplicationAchievs as Model_ApplicationAchievs;
@@ -25,8 +26,10 @@ use frontend\models\Model_Application as Model_Application;
 	// manage scans
 	$place = new ApplicationPlaces();
 	$place->pid = $data['id'];
+	$exam = new ApplicationPlacesExams();
+	$exam->pid = $data['id'];
 	// photo3x4
-	if ($place->getByAppForBachelorSpec()) {
+	if ($place->getByAppForBachelorSpec() && $exam->existsExams()) {
 		$photo3x4 = 1;
 	} else {
 		$photo3x4 = 0;

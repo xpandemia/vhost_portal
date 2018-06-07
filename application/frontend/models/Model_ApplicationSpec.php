@@ -22,6 +22,7 @@ use common\models\Model_DictDiscipline as Model_DictDiscipline;
 use common\models\Model_EgeDisciplines as Model_EgeDisciplines;
 use common\models\Model_DictTestingScopes as Model_DictTestingScopes;
 use common\models\Model_Resume as Resume;
+use common\models\Model_DictForeignLangs as DictForeignLangs;
 
 include ROOT_DIR.'/application/frontend/models/Model_Scans.php';
 
@@ -68,8 +69,10 @@ class Model_ApplicationSpec extends Model
 	{
 		$place = new ApplicationPlaces();
 		$place->pid = $id;
+		$exam = new ApplicationPlacesExams();
+		$exam->pid = $id;
 		// photo3x4
-		if ($place->getByAppForBachelorSpec()) {
+		if ($place->getByAppForBachelorSpec() && $exam->existsExams()) {
 			if (empty($form['photo3x4_name'])) {
 				$form = $this->setFormErrorFile($form, 'photo3x4', 'Скан-копия "Фотография 3х4" обязательна для заполнения!');
 			}
@@ -122,6 +125,8 @@ class Model_ApplicationSpec extends Model
 	{
 		$place = new ApplicationPlaces();
 		$place->pid = $form['id'];
+		$exam = new ApplicationPlacesExams();
+		$exam->pid = $form['id'];
 		$dict_scans = new Model_DictScans();
 		$dict_scans->doc_code = 'application';
 		$dict_scans_arr = $dict_scans->getByDocument();
@@ -135,7 +140,7 @@ class Model_ApplicationSpec extends Model
 				$unset = 0;
 				if ($dict_scans_row['required'] == 1) {
 					$unset = 1;
-				} elseif ($dict_scans_row['scan_code'] == 'photo3x4' && $place->getByAppForBachelorSpec()) {
+				} elseif ($dict_scans_row['scan_code'] == 'photo3x4' && $place->getByAppForBachelorSpec() && $exam->existsExams()) {
 					$unset = 1;
 				} elseif ($dict_scans_row['scan_code'] == 'medical_certificate_face' && ($place->getByAppForMedicalA1() || $place->getByAppForMedicalA2() || $place->getByAppForMedicalB1() || $place->getByAppForMedicalC1())) {
 					$unset = 1;
@@ -234,11 +239,11 @@ class Model_ApplicationSpec extends Model
 									$disc->campaign_code = $spec_row[1];
 									$disc_row = $disc->getOne();
 										$enter->id_discipline = $disc_row['id'];
+									$test = new Model_DictTestingScopes();
 									if ($citizenship['code'] != '643') {
 										// foreigners - exam only
 										$test_row = $test->getExam();
 									} else {
-										$test = new Model_DictTestingScopes();
 										if ($citizenship['code'] == '643' && $app->checkCertificate()) {
 											// russia with certificate - ege only
 											$test_row = $test->getEge();
@@ -523,17 +528,31 @@ class Model_ApplicationSpec extends Model
 		$place->pid = $id;
 		$data = [];
 		if ($place->getByAppForBachelorSpec()) {
+			// bachelors and specialists
 			$data = $this->setAppForPdf($data, $app_row);
 			$data = $this->setResumeForPdf($data);
-	        $data = $this->setPlacesForPdf($data, $id);
+	        $data = $this->setPlacesForPdf($data, $id, 5);
 	        $data = $this->setExamsForPdf($data, $id);
-	        $data = $this->setEducForPdf($data, $app_row['id_docseduc']);
+	        $data = $this->setEducForPdf($data, $app_row['id_docseduc'], 'bachelor');
+	        $data = $this->setForeignLangForPdf($data, $app_row['id_lang']);
 			$data['university5_yes'] = 'On';
 			$data['specs3_yes'] = 'On';
 	        $data = $this->setCampusForPdf($data, $app_row['campus']);
 			$data['docsship_personal'] = 'On';
 	        $data = $this->setIaForPdf($data, $id);
 			$pdf->create($data, 'application_2018', 'заявление'.$app_row['numb']);
+		} elseif ($place->getByAppForMagister()) {
+			// magisters
+			$data = $this->setAppForPdf($data, $app_row);
+			$data = $this->setResumeForPdf($data);
+			$data = $this->setPlacesForPdf($data, $id, 2);
+			$data = $this->setEducForPdf($data, $app_row['id_docseduc'], 'magister');
+			$data = $this->setForeignLangForPdf($data, $app_row['id_lang']);
+			$data['specs2_yes'] = 'On';
+			$data = $this->setCampusForPdf($data, $app_row['campus']);
+			$data['docsship_personal'] = 'On';
+			$data = $this->setIaForPdf($data, $id);
+			$pdf->create($data, 'application_magistrature_2018', 'заявление'.$app_row['numb']);
 		} else {
 			$resume = new Resume();
 			$resume_row = $resume->getByUser();
@@ -557,7 +576,7 @@ class Model_ApplicationSpec extends Model
      */
 	public function setAppForPdf($data, $app_row) : array
 	{
-		$data['app_numb'] = '№ '.$app_row['numb'];
+		$data['app_numb'] = $app_row['numb'];
 		$data['app_dt'] = date('d.m.Y');
 		return $data;
 	}
@@ -596,14 +615,14 @@ class Model_ApplicationSpec extends Model
      *
      * @return array
      */
-	public function setPlacesForPdf($data, $app) : array
+	public function setPlacesForPdf($data, $app, $limit) : array
 	{
 		$places = new ApplicationPlaces();
 		$places->pid = $app;
 		$places_arr = $places->getSpecsByAppPdf();
 		$i = 1;
 		foreach ($places_arr as $places_row) {
-			if ($i <= 5) {
+			if ($i <= $limit) {
 				$spec_arr['place'.$i] = $places_row['place'].' ('.$places_row['edulevel'].')';
 				$spec_arr['eduform'.$i] = $places_row['eduform'];
 				$spec_arr['finance'.$i] = $places_row['finance'];
@@ -659,21 +678,54 @@ class Model_ApplicationSpec extends Model
      *
      * @return array
      */
-	public function setEducForPdf($data, $id_docseduc) : array
+	public function setEducForPdf($data, $id_docseduc, $edulevel) : array
 	{
 		$docs = new DocsEduc();
 		$docs->id = $id_docseduc;
 		$docs_row = $docs->getForPdf();
 		$data['educ_type'] = $docs_row['educ_type'];
 		$data['school'] = $docs_row['school'];
-			if (in_array($docs_row['doc_type'], $docs::CERTIFICATES)) {
-				$data['certificate'] = 'On';
-			} elseif (in_array($docs_row['doc_type'], $docs::DIPLOMAS)) {
-				$data['diploma'] = 'On';
+			switch ($edulevel) {
+				case 'bachelor':
+					if (in_array($docs_row['doc_type'], $docs::CERTIFICATES)) {
+						$data['certificate'] = 'On';
+					} elseif (in_array($docs_row['doc_type'], $docs::DIPLOMAS)) {
+						$data['diploma'] = 'On';
+					}
+					break;
+				case 'magister':
+					switch ($docs_row['doc_type']) {
+						case $docs::DIPLOMA_BACHELOR:
+							$data['bachelor'] = 'On';
+							break;
+						case $docs::DIPLOMA_SPECIALIST:
+							$data['specialist'] = 'On';
+							break;
+						case $docs::DIPLOMA_SPECIALIST_DIPLOMA:
+							$data['specialist_diploma'] = 'On';
+							break;
+						case $docs::DIPLOMA_MAGISTER:
+							$data['magister'] = 'On';
+							break;
+					}
 			}
 		$data['docseduc_series'] = $docs_row['series'];
 		$data['docseduc_numb'] = $docs_row['numb'];
 		$data['docseduc_dt'] = date('d.m.Y', strtotime($docs_row['dt_issue']));
+		return $data;
+	}
+
+	/**
+     * Sets foreign language for PDF.
+     *
+     * @return array
+     */
+	public function setForeignLangForPdf($data, $id_lang) : array
+	{
+		$lang = new DictForeignLangs();
+		$lang->id = $id_lang;
+		$lang_row = $lang->get();
+		$data['foreign_lang'] = $lang_row['description'];
 		return $data;
 	}
 

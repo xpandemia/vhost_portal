@@ -388,6 +388,62 @@ class Model_ApplicationPlaces extends Db_Helper
 	}
 
 	/**
+     * Gets specialities for magister.
+     *
+     * @return array
+     */
+	public function getByAppForMagister()
+	{
+		return $this->rowSelectAll('application_places.*',
+									'application_places INNER JOIN dict_speciality ON application_places.id_spec = dict_speciality.id',
+									'pid = :pid AND edulevel_name = :edulevel_name',
+									[':pid' => $this->pid,
+									':edulevel_name' => 'Магистр']);
+	}
+
+	/**
+     * Gets specialities for special.
+     *
+     * @return array
+     */
+	public function getByAppForSpecial()
+	{
+		return $this->rowSelectAll('application_places.*',
+									'application_places INNER JOIN dict_speciality ON application_places.id_spec = dict_speciality.id',
+									'pid = :pid AND edulevel_name = :edulevel_name',
+									[':pid' => $this->pid,
+									':edulevel_name' => 'СПО']);
+	}
+
+	/**
+     * Gets specialities for clinical.
+     *
+     * @return array
+     */
+	public function getByAppForClinical()
+	{
+		return $this->rowSelectAll('application_places.*',
+									'application_places INNER JOIN dict_speciality ON application_places.id_spec = dict_speciality.id',
+									'pid = :pid AND edulevel_name = :edulevel_name',
+									[':pid' => $this->pid,
+									':edulevel_name' => 'Ординатура']);
+	}
+
+	/**
+     * Gets specialities for traineeship.
+     *
+     * @return array
+     */
+	public function getByAppForTraineeship()
+	{
+		return $this->rowSelectAll('application_places.*',
+									'application_places INNER JOIN dict_speciality ON application_places.id_spec = dict_speciality.id',
+									'pid = :pid AND edulevel_name = :edulevel_name',
+									[':pid' => $this->pid,
+									':edulevel_name' => 'Аспирантура']);
+	}
+
+	/**
      * Gets specialities for medical certificate (A1 group).
      *
      * @return array

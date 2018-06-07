@@ -29,14 +29,14 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col col-sm-2 text-left">
-				<img src="/images/logo_abitur.jpg" alt="Logo" style="width:100px;heigth:100px">
+				<a data-toggle="tooltip" title="Приёмная комиссия: абитуриент" href="http://abitur.bsu.edu.ru/"><img src="/images/logo_abitur.jpg" alt="LogoAbitur" style="width:100px;heigth:100px"></a>
 			</div>
 			<div class="col col-sm-8 text-center">
 				<p class="font-weight-bold">Белгородский государственный национальный исследовательский университет</p>
 				<h1><?php echo APP_NAME; ?></h1>
 			</div>
 			<div class="col col-sm-2 text-right">
-				<img src="/images/logo_bsu.jpg" alt="Logo" style="width:60px;heigth:90px">
+				<a data-toggle="tooltip" title="НИУ БелГУ" href="https://www.bsu.edu.ru/"><img src="/images/logo_bsu.jpg" alt="LogoBsu" style="width:60px;heigth:90px"></a>
 			</div>
 		</div>
 	</div>

@@ -221,7 +221,7 @@ class Form_Helper
 					'<div class="form-group row">'.
 					'<div class="col'.(($home == 1) ? 'text-right' : '').'"><legend class="font-weight-bold">'.$legend.'</legend></div>'.
 					(($home == 1) ? '<div class="col text-left">'.HTML_Helper::setHrefButton('Main', 'Index', 'btn btn-primary', 'На главную').'</div>' : '').
-					((!empty($logo)) ? '<div class="col text-right"><img src="'.$logo.'" alt="Logo" style="width:60px;heigth:90px"></div>' : '').
+					((!empty($logo)) ? '<div class="col text-right"><img src="'.$logo.'" alt="Logo" style="width:25%;heigth:25%"></div>' : '').
 					'</div>';
 	}
 
@@ -525,10 +525,14 @@ class Form_Helper
 			$label = self::setFormLabelStyle($rules['required'], (isset($rules['required_style'])) ? $rules['required_style'] : null, $rules['label']);
 			$result .= '<div class="col">'.
 						HTML_Helper::setLabel($label['class'], $field, $label['value']).'</div>';
-			// set help
+			// set limits
 			$result .= '<div class="col">'.
 							'<p class="font-weight-bold font-italic">Допустимый размер файла: '.FILES_SIZE['value'].' '.FILES_SIZE['size'].'</p>'.
 							'<p class="font-weight-bold font-italic">Допустимые расширения файла: '.strtoupper(implode(', ', array_keys($rules['ext']))).'</p>'.
+						'</div>';
+			// set help
+			$result .= '<div class="col">'.
+							'<div class="alert alert-info">'.nl2br("Чтобы <strong>отменить загрузку файла</strong>, нажмите <strong>\"Выберите файл\"</strong>, затем <strong>\"Отмена\"</strong> в открывшемся диалоге выбора файла.\nЧтобы <strong>удалить загруженный файл</strong>, нажмите <i class=\"fas fas fa-times\"></i>.").'</div>'.
 						'</div>';
 			// sample
 			if (isset($rules['sample'])) {
@@ -589,10 +593,14 @@ class Form_Helper
 			} else {
 				$result = '<div class="form-group">';
 			}
-			// set help
+			// set limits
 			$result .= '<div class="col">'.
 							'<p class="font-weight-bold font-italic">Допустимый размер файлов: '.FILES_SIZE['value'].' '.FILES_SIZE['size'].'</p>'.
 							'<p class="font-weight-bold font-italic">Допустимые расширения файлов: '.strtoupper(implode(', ', array_keys($rules['ext']))).'</p>'.
+						'</div>';
+			// set help
+			$result .= '<div class="col">'.
+							'<div class="alert alert-info">'.nl2br("Чтобы <strong>отменить загрузку файла</strong>, нажмите <strong>\"Выберите файл\"</strong>, затем <strong>\"Отмена\"</strong> в открывшемся диалоге выбора файла.\nЧтобы <strong>удалить загруженный файл</strong>, нажмите <i class=\"fas fas fa-times\"></i>.").'</div>'.
 						'</div>';
 			// using model
 			$model = new $rules['model_class'];
