@@ -284,15 +284,19 @@ class Model_ApplicationSpec extends Model
 			$form['error_msg'] = 'Ошибка при получении максимального числа направлений подготовки приёмной кампании с ID '.$form['pid'].'!';
 		}
 		if (!$form['error_msg']) {
+			// clear scans
 			$scans = new Scans();
 			$scans->id_row = $app->id;
 			$scans->clearbyDoc('application');
+			// change status
+			if ($app->status != $app::STATUS_CREATED) {
 				$app->status = $app::STATUS_CREATED;
 				$app->changeStatus();
 				$form['status'] = $app->status;
 					$applog = new ApplicationStatus();
 					$applog->id_application = $app->id;
 					$applog->create();
+			}
 		}
 		return $form;
 	}
@@ -446,12 +450,6 @@ class Model_ApplicationSpec extends Model
 			return $form;
 		}
 		/* change */
-		$app->status = $app::STATUS_CHANGED;
-		$app->changeStatus();
-			$applog = new ApplicationStatus();
-			$applog->id_application = $app->id;
-			$applog->create();
-		$form['status'] = $app->status;
 		$id = $app->copy($app::TYPE_CHANGE);
 		if ($id > 0) {
 			$spec_row = $this->get($id);
@@ -491,12 +489,6 @@ class Model_ApplicationSpec extends Model
 			return $form;
 		}
 		/* recall */
-		$app->status = $app::STATUS_RECALLED;
-		$app->changeStatus();
-			$applog = new ApplicationStatus();
-			$applog->id_application = $app->id;
-			$applog->create();
-		$form['status'] = $app->status;
 		$id = $app->copy($app::TYPE_RECALL);
 		if ($id > 0) {
 			$spec_row = $this->get($id);
@@ -553,6 +545,37 @@ class Model_ApplicationSpec extends Model
 			$data['docsship_personal'] = 'On';
 			$data = $this->setIaForPdf($data, $id);
 			$pdf->create($data, 'application_magistrature_2018', 'заявление'.$app_row['numb']);
+		} elseif ($place->getByAppForSpecial()) {
+			// specialists
+			$data = $this->setAppForPdf($data, $app_row);
+			$data = $this->setResumeForPdf($data);
+			$data['exams'] = 'On';
+			$data = $this->setPlacesForPdf($data, $id, 3);
+			$data = $this->setEducForPdf($data, $app_row['id_docseduc'], 'specialist');
+			if ($app_row['pay'] == 0) {
+				$data['special_first_yes'] = 'On';
+			} else {
+				$data['special_first_no'] = 'On';
+			}
+			$data = $this->setCampusForPdf($data, $app_row['campus']);
+			$pdf->create($data, 'application_special_2018', 'заявление'.$app_row['numb']);
+		} elseif ($place->getByAppForClinical()) {
+			// attending physicians
+			$data = $this->setAppForPdf($data, $app_row);
+			$data = $this->setResumeForPdf($data);
+			$data = $this->setPlacesForPdf($data, $id, 4);
+			$data = $this->setEducForPdf($data, $app_row['id_docseduc'], 'attending_physician');
+			$data = $this->setCampusForPdf($data, $app_row['campus']);
+			$data['docsship_personal'] = 'On';
+			$data = $this->setIaForPdf($data, $id);
+			$pdf->create($data, 'application_clinical_2018', 'заявление'.$app_row['numb']);
+		} elseif ($place->getByAppForTraineeship()) {
+			// trainees
+			$data = $this->setAppForPdf($data, $app_row);
+			$data = $this->setResumeForPdf($data);
+			$data = $this->setPlacesForPdf($data, $id, 4);
+			$data = $this->setEducForPdf($data, $app_row['id_docseduc'], 'trainee');
+			$pdf->create($data, 'application_traineeship_2018', 'заявление'.$app_row['numb']);
 		} else {
 			$resume = new Resume();
 			$resume_row = $resume->getByUser();
@@ -687,6 +710,7 @@ class Model_ApplicationSpec extends Model
 		$data['school'] = $docs_row['school'];
 			switch ($edulevel) {
 				case 'bachelor':
+				case 'specialist':
 					if (in_array($docs_row['doc_type'], $docs::CERTIFICATES)) {
 						$data['certificate'] = 'On';
 					} elseif (in_array($docs_row['doc_type'], $docs::DIPLOMAS)) {
@@ -694,6 +718,7 @@ class Model_ApplicationSpec extends Model
 					}
 					break;
 				case 'magister':
+				case 'trainee':
 					switch ($docs_row['doc_type']) {
 						case $docs::DIPLOMA_BACHELOR:
 							$data['bachelor'] = 'On';
@@ -775,6 +800,28 @@ class Model_ApplicationSpec extends Model
 						break;
 					case $ia::IA_SPORTMASTER:
 						$data['ia_sportmaster'] = 'On';
+						break;
+					case $ia::IA_GRANTS_PRESIDENT:
+						$data['ia_grants_president'] = 'On';
+						break;
+					case $ia::IA_GRANTS_NAMED:
+						$data['ia_grants_named'] = 'On';
+						break;
+					case $ia::IA_DOCSEDUC_MEDAL:
+						$data['ia_docseduc_medal'] = 'On';
+						break;
+					case $ia::IA_MEDIC_LOCATIONS:
+						$data['ia_medic_locations'] = 'On';
+						break;
+					case $ia::IA_ARTICLES_WORLD:
+					case $ia::IA_ARTICLES_RUS:
+						$data['ia_articles'] = 'On';
+						break;
+					case $ia::IA_ARTICLES_VAK_NO:
+						$data['ia_articles_vak_no'] = 'On';
+						break;
+					case $ia::IA_ARTICLES_VAK_YES:
+						$data['ia_articles_vak_yes'] = 'On';
 						break;
 				}
 			}

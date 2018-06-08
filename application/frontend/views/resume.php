@@ -1699,7 +1699,7 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 					$("label[for='numb']").html('Номер*');
 					$('#numb').unmask();
 					$("label[for='dt_issue']").html('Дата выдачи*');
-					$("label[for='unit_name']").html('Наименование подразделения');
+					$("label[for='unit_name']").html('Наименование подразделения*');
 					$("label[for='unit_code']").html('Код подразделения');
 					$('#unit_code').unmask();
 					$("label[for='dt_end']").html('Дата окончания действия*');

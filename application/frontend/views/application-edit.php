@@ -5,6 +5,7 @@ use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 use tinyframe\core\helpers\Form_Helper as Form_Helper;
 use common\models\Model_Personal as Personal;
 use common\models\Model_Application as Application;
+use common\models\Model_ApplicationStatus as ApplicationStatus;
 use common\models\Model_ApplicationPlaces as ApplicationPlaces;
 use common\models\Model_ApplicationPlacesExams as ApplicationPlacesExams;
 use common\models\Model_ApplicationPlacesExams as Model_ApplicationPlacesExams;
@@ -52,6 +53,13 @@ use frontend\models\Model_Application as Model_Application;
 		echo Model_Application::showType($app_row['type']);
 		/* status */
 		echo Model_Application::showStatus($app_row['status']);
+		/* comment */
+		if ($app_row['status'] == $app::STATUS_REJECTED) {
+			$applog = new ApplicationStatus();
+			$applog->id_application = $app_row['id'];
+			$applog_row = $applog->getLast();
+			echo HTML_Helper::setAlert('Причина отклонения: <strong>'.$applog_row['comment'].'</strong>', 'alert-danger');
+		}
 	?>
 	<hr><h5>Направления подготовки</h5><br>
 	<?php

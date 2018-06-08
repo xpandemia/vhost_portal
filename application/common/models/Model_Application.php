@@ -446,52 +446,12 @@ class Model_Application extends Db_Helper
      */
 	public function clear()
 	{
-		// rollback previous app
-		$id = $this->id;
-		$app_row = $this->get();
-		if (!empty($app_row['id_app'])) {
-			$this->id = $app_row['id_app'];
-			if (!$this->rollback()) {
-				return 0;
-			}
-		}
 		// clear scans
 		$scans = new Model_Scans();
-		$scans->id_row = $id;
+		$scans->id_row = $this->id;
 		$scans->clearbyDoc('application');
 		// clear app
-		return $this->rowDelete(self::TABLE_NAME, 'id = :id', [':id' => $id]);
-	}
-
-	/**
-     * Roolbacks application.
-     *
-     * @return boolean
-     */
-	public function rollback()
-	{
-		$applog = new ApplicationStatus();
-		$applog->id_application = $this->id;
-		$applog_row = $applog->getLast();
-		if ($applog_row) {
-			$applog->id = $applog_row['id'];
-			if ($applog->clear() == 1) {
-				$applog_row = $applog->getLast();
-				if ($applog_row) {
-					$this->status = $applog_row['status'];
-					$this->changeStatus();
-					$this->active = 1;
-					$this->changeActive();
-					return true;
-				} else {
-					return false;
-				}
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
+		return $this->rowDelete(self::TABLE_NAME, 'id = :id', [':id' => $this->id]);
 	}
 
 	/**
