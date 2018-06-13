@@ -135,22 +135,22 @@ class Model_AdmissionCampaign extends Db_Helper
 			case 'БелГУ':
 				return $this->rowSelectAll('code, description',
 											self::TABLE_NAME,
-											'description not like :code AND right(description, 4) = :year AND receipt_allowed = :receipt_allowed',
+											'description not like :code AND left(code, 2) = :year AND receipt_allowed = :receipt_allowed',
 											[':code' => '%СОФ%',
-											':year' => date('Y'),
+											':year' => substr(date('Y'), 2, 2),
 											':receipt_allowed' => 1]);
 			case 'СОФ':
 				return $this->rowSelectAll('code, description',
 											self::TABLE_NAME,
-											'description like :code AND right(description, 4) = :year AND receipt_allowed = :receipt_allowed',
+											'description like :code AND left(code, 2) = :year AND receipt_allowed = :receipt_allowed',
 											[':code' => '%СОФ%',
-											':year' => date('Y'),
+											':year' => substr(date('Y'), 2, 2),
 											':receipt_allowed' => 1]);
 			default:
 				return $this->rowSelectAll('code, description',
 											self::TABLE_NAME,
-											'right(description, 4) = :year AND receipt_allowed = :receipt_allowed',
-											[':year' => date('Y'),
+											'left(code, 2) = :year AND receipt_allowed = :receipt_allowed',
+											[':year' => substr(date('Y'), 2, 2),
 											':receipt_allowed' => 1]);
 		}
 	}
@@ -167,17 +167,15 @@ class Model_AdmissionCampaign extends Db_Helper
 	}
 
 	/**
-     * Changes all admission campaign data.
+     * Changes admission campaign description.
      *
      * @return boolean
      */
-	public function changeAll()
+	public function changeDescription()
 	{
-		$prepare = $this->prepareUpdate(self::TABLE_NAME, $this->rules());
 		return $this->rowUpdate(self::TABLE_NAME,
-								$prepare['fields'],
-								$prepare['params'],
-								['code' => $this->code]);
+								'description = :description',
+								[':description' => $this->description]);
 	}
 
 	/**
@@ -251,15 +249,22 @@ class Model_AdmissionCampaign extends Db_Helper
 			} else {
 				// update
 				$upd = 0;
-				if ($this->changeAll()) {
-					$log->msg = 'Изменена приёмная кампания с кодом "'.$this->code.'".';
-					$log->value_old = null;
-					$log->value_new = null;
-					$log->save();
-					$upd = 1;
-				} else {
-					$result['error_msg'] = 'Ошибка при изменении приёмной кампании с кодом "'.$this->code.'"!';
-					return $result;
+				// description
+				if ($pk['description'] != $this->description) {
+					if ($this->changeDescription()) {
+						$log->msg = 'Изменёно наименование приёмной кампании с кодом ['.$this->code.'].';
+						$log->value_old = $pk['description'];
+						$log->value_new = $this->description;
+						$log->save();
+						$upd = 1;
+					} else {
+						$result['error_msg'] = 'Ошибка при изменении наименование приёмной кампании с кодом ['.$this->code.']!';
+						return $result;
+					}
+				}
+				// counter
+				if ($upd == 1) {
+					$rows_upd++;
 				}
 			}
         }

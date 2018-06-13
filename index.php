@@ -2,7 +2,8 @@
 
 define('APP_NAME', 'Личный кабинет абитуриента');
 define('APP_CODE', 'portalbsu'); // MUST BE UNIQUE
-define('APP_VERSION', '0.3.2');
+define('APP_VERSION', '0.3.4');
+define('APP_DATA', 'local');
 
 # Портал абитуриента
 # Build with curiosity by Fiben on Tinyframe 0.2.0

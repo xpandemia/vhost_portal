@@ -6,19 +6,19 @@ namespace tinyframe\core\helpers;
 define('PATTERN_NUMB', '/^[0-9]*$/u'); // numbers only
 define('PATTERN_ALPHA', '/^[a-zA-Z]*$/u'); // letters ENG only
 define('PATTERN_ALPHA_RUS', '/^[ёЁа-яА-Я]*$/u'); // letters RUS only
-define('PATTERN_TEXT', '/^[a-zA-Z-\.\,\s""]*$/u'); // letters ENG, "-", ".", ",", " ", quotes
-define('PATTERN_TEXT_RUS', '/^[ёЁа-яА-Я-.,\s""]*$/u'); // letters RUS, "-", ".", ",", " ", quotes
-define('PATTERN_INFO', '/^[a-zA-Z0-9-\.\,\#\/\s""]*$/u'); // letters ENG, numbers, "-", ".", ",", "#", " ", quotes
-define('PATTERN_INFO_RUS', '/^[ёЁа-яА-Я0-9-.,№\/\s""]*$/u'); // letters RUS, numbers, "-", ".", ",", "№", " ", quotes
+define('PATTERN_TEXT', '/^[a-zA-Z-\.\,\s"]*$/u'); // letters ENG, "-", ".", ",", spaces, quotes
+define('PATTERN_TEXT_RUS', '/^[ёЁа-яА-Я-.,\s"]*$/u'); // letters RUS, "-", ".", ",", spaces, quotes
+define('PATTERN_INFO', '/^[a-zA-Z0-9-\.\,\#\/\s"]*$/u'); // letters ENG, numbers, "-", ".", ",", "#", spaces, quotes
+define('PATTERN_INFO_RUS', '/^[ёЁа-яА-Я0-9-.,№\/\s"]*$/u'); // letters RUS, numbers, "-", ".", ",", "№", spaces, quotes
 define('PATTERN_ALPHA_NUMB', '/^[a-zA-Z0-9]*$/u'); // letters and numbers ENG
 define('PATTERN_ALPHA_NUMB_RUS', '/^[ёЁа-яА-Я0-9]*$/u'); // letters and numbers RUS
 define('PATTERN_ALPHA_NUMB_ALL', '/^[a-zA-ZёЁа-яА-Я0-9]*$/u'); // letters and numbers
-define('PATTERN_SPEC', '/^[a-zA-Z0-9-\s]*$/u'); // letters ENG, numbers, "-", " "
-define('PATTERN_SPEC_RUS', '/^[ёЁа-яА-Я0-9-\s]*$/u'); // letters RUS, numbers, "-", " "
+define('PATTERN_SPEC', '/^[a-zA-Z0-9-\s]*$/u'); // letters ENG, numbers, "-", spaces
+define('PATTERN_SPEC_RUS', '/^[ёЁа-яА-Я0-9-\s]*$/u'); // letters RUS, numbers, "-", spaces
 define('PATTERN_EMAIL_LIGHT', '/^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9_\-.]+$/'); // email light
 define('PATTERN_EMAIL_STRONG', '/^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9_\-]+\.[a-zA-Z0-9_\-]+$/'); // email strong
 define('PATTERN_PHONE_HOME', '/^[0-9-()]*$/u'); // numbers, "(", ")"
-define('PATTERN_PHONE_ADD', '/^[ёЁа-яА-Я0-9,\s]*$/u'); // letters RUS, numbers, ",", " "
+define('PATTERN_PHONE_ADD', '/^[ёЁа-яА-Я0-9,\s]*$/u'); // letters RUS, numbers, ",", spaces
 define('PATTERN_DATE_LIGHT', '/^(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}$/'); // date DD.MM.YYYY light
 define('PATTERN_DATE_STRONG', '/^(?:(?:0[1-9]|1[0-9]|2[0-9]).(?:0[1-9]|1[0-2])|(?:(?:30).(?!02)(?:0[1-9]|1[0-2]))|(?:31.(?:0[13578]|1[02]))).(?:19|20)[0-9]{2}$/'); // date DD.MM.YYYY strong
 
@@ -212,15 +212,29 @@ class Form_Helper
 
 	/**
      * Creates form begin.
+     * $home: 0 - no, 1 - setHrefButton, 2 - setHrefButtonIcon
      *
      * @return string
      */
 	public static function setFormBegin($controller, $action, $id, $legend, $home = 0, $logo = null)
 	{
+		switch ($home) {
+			case 1:
+				$header = '<div class=""><legend class="font-weight-bold">'.$legend.'</legend></div>';
+				$home_button = '<div class="col text-left">'.HTML_Helper::setHrefButton('Main', 'Index', 'btn btn-primary', 'На главную').'</div>';
+				break;
+			case 2:
+				$header = '<div class=""><legend class="font-weight-bold">'.$legend.'</legend></div>';
+				$home_button = '<div class="col">'.HTML_Helper::setHrefButtonIcon('Main', 'Index', 'btn btn-primary', 'fas fa-home', 'На главную').'</div>';
+				break;
+			default:
+				$header = '<div class="col text-left"><legend class="font-weight-bold">'.$legend.'</legend></div>';
+				$home_button = '';
+		}
 		return '<form enctype="multipart/form-data" action="'.Basic_Helper::appUrl($controller, $action).'" method="post" id="'.$id.'" novalidate>'.
 					'<div class="form-group row">'.
-					'<div class="col'.(($home == 1) ? 'text-right' : '').'"><legend class="font-weight-bold">'.$legend.'</legend></div>'.
-					(($home == 1) ? '<div class="col text-left">'.HTML_Helper::setHrefButton('Main', 'Index', 'btn btn-primary', 'На главную').'</div>' : '').
+					$header.
+					$home_button.
 					((!empty($logo)) ? '<div class="col text-right"><img src="'.$logo.'" alt="Logo" style="width:25%;heigth:25%"></div>' : '').
 					'</div>';
 	}

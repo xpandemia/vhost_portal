@@ -109,6 +109,19 @@ class Model_Resume extends Db_Helper
 	}
 
 	/**
+     * Gets resume by ID.
+     *
+     * @return array
+     */
+	public function get()
+	{
+		return $this->rowSelectOne('*',
+									self::TABLE_NAME,
+									'id = :id',
+									[':id' => $this->id]);
+	}
+
+	/**
      * Gets resume by user.
      *
      * @return array

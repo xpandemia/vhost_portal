@@ -112,6 +112,19 @@ class Model_Scans extends Db_Helper
 	}
 
 	/**
+     * Gets scan details by ID.
+     *
+     * @return array
+     */
+	public function getDetails()
+	{
+		return $this->rowSelectOne('scans.id, scans.id_user, docs.doc_code, scans.id_row',
+									'scans INNER JOIN docs ON scans.id_doc = docs.id',
+									'scans.id = :id',
+									[':id' => $this->id]);
+	}
+
+	/**
      * Gets scan by document.
      *
      * @return array

@@ -24,9 +24,9 @@ class XML_Helper
 	        )
 	    );
 	    if (empty($filter)) {
-			$uri = 'http://'.$server.'/'.urlencode($file);
+			$uri = $server.'/'.urlencode($file);
 		} else {
-			$uri = 'http://'.$server.'/'.urlencode($file).'?$filter='.$filter;
+			$uri = $server.'/'.urlencode($file).'?$filter='.$filter;
 		}
 	    $data = file_get_contents($uri, false, $context);
 	    // get xml

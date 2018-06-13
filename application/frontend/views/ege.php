@@ -8,7 +8,14 @@ use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 	}
 ?>
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
-	<h2>Результаты ЕГЭ</h2>
+	<div class="row">
+		<div class="">
+			<h2>Результаты ЕГЭ</h2>
+		</div>
+		<div class="col text-left">
+			<?php echo HTML_Helper::setHrefButtonIcon('Main', 'Index', 'btn btn-primary', 'fas fa-home', 'На главную'); ?>
+		</div>
+	</div>
 	<?php
 		echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
 		echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');

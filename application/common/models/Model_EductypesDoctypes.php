@@ -38,7 +38,7 @@ class Model_EductypesDoctypes extends Db_Helper
 						'update' => 0,
 						'value' => $this->id
 						],
-				'id_eductypes' => [
+				'id_eductype' => [
 									'required' => 1,
 									'insert' => 1,
 									'update' => 1,

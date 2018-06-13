@@ -39,7 +39,10 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 	</style>
 </head>
 <body class="bg-primary">
-	<?php include ROOT_DIR.'/application/frontend/views/'.$content_view; ?>
+
+	<div class="container-fluid" style="margin-bottom:80px">
+		<?php include ROOT_DIR.'/application/frontend/views/'.$content_view; ?>
+	</div>
 
 	<img id="loadImg" src="/images/big_roller.gif"/>
 

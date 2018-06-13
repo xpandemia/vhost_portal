@@ -24,6 +24,9 @@ class Model_Application extends Db_Helper
 	const TYPE_RECALL = 3;
 	const TYPE_RECALL_NAME = 'Заявление на отзыв документов';
 
+	/*
+		"GO" - sended, approved, rejected
+	*/
 	const STATUS_CREATED = 0;
 	const STATUS_CREATED_NAME = 'Новое';
     const STATUS_SENDED = 1;
@@ -269,7 +272,10 @@ class Model_Application extends Db_Helper
      */
 	public function get()
 	{
-		return $this->rowSelectOne('*', self::TABLE_NAME, 'id = :id', [':id' => $this->id]);
+		return $this->rowSelectOne('*',
+									self::TABLE_NAME,
+									'id = :id',
+									[':id' => $this->id]);
 	}
 
 	/**

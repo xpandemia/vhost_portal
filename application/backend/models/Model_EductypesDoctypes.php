@@ -78,7 +78,7 @@ class Model_EductypesDoctypes extends Model
 	{
 		$ed = new EductypesDoctypes();
 			$types = new DictEductypes();
-			$types->code = $form['educ_types'];
+			$types->code = $form['educ_type'];
 			$types_row = $types->getByCode();
 		$ed->id_eductype = $types_row['id'];
 			$doctype = new DictDoctypes();

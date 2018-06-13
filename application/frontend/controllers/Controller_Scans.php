@@ -95,14 +95,14 @@ class Controller_Scans extends Controller
 		$this->form['hdr'] = htmlspecialchars($_POST['hdr']);
 		$this->form['ctr'] = htmlspecialchars($_POST['ctr']);
 		$this->form['act'] = htmlspecialchars($_POST['act']);
-		if ($this->model->delete($this->form)) {
+		$this->form = $this->model->delete($this->form);
+		if (!$this->form['error_msg']) {
 			if (empty($this->form['pid'])) {
 				Basic_Helper::redirect($this->form['hdr'], 200, $this->form['ctr'], $this->form['act']);
 			} else {
 				Basic_Helper::redirect($this->form['hdr'], 200, $this->form['ctr'], $this->form['act'].'/?id='.$this->form['pid']);
 			}
 		} else {
-			$this->form['error_msg'] = 'Ошибка удаления скан-копии! Свяжитесь с администратором.';
 			return $this->view->generate('scans-delete.php', 'form.php', 'Удаление скан-копии', $this->form);
 		}
 	}

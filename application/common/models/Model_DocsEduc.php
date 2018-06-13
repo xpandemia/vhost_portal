@@ -3,6 +3,7 @@
 namespace common\models;
 
 use tinyframe\core\helpers\Db_Helper as Db_Helper;
+use common\models\Model_Application as Application;
 
 class Model_DocsEduc extends Db_Helper
 {
@@ -263,6 +264,19 @@ class Model_DocsEduc extends Db_Helper
 	}
 
 	/**
+     * Gets education documents by ID for single field.
+     *
+     * @return array
+     */
+	public function getForField()
+	{
+		return $this->rowSelectOne("concat(dict_doctypes.description, ' № ', ifnull(concat(docs_educ.series, '-'), ''), docs_educ.numb, ' от ', date_format(dt_issue, '%d.%m.%Y')) as docs_educ",
+									'docs_educ INNER JOIN dict_doctypes ON docs_educ.id_doctype = dict_doctypes.id',
+									'docs_educ.id = :id',
+									[':id' => $this->id]);
+	}
+
+	/**
      * Gets education documents by user.
      *
      * @return array
@@ -366,6 +380,27 @@ class Model_DocsEduc extends Db_Helper
 									[':series' => $this->series,
 									':numb' => $this->numb,
 									':id' => $this->id]);
+		}
+	}
+
+	/**
+     * Checks if education document used in applications "GO".
+     *
+     * @return boolean
+     */
+	public function existsAppGo() : bool
+	{
+		$app_arr = $this->rowSelectAll('application.id',
+										'application INNER JOIN docs_educ ON application.id_docseduc = docs_educ.id',
+										'docs_educ.id = :id AND application.status in (:status1, :status2, :status3)',
+										[':id' => $this->id,
+										':status1' => Application::STATUS_SENDED,
+										':status2' => Application::STATUS_APPROVED,
+										':status3' => Application::STATUS_REJECTED]);
+		if ($app_arr) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 

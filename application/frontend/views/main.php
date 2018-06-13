@@ -35,7 +35,10 @@ use common\models\Model_Application as Application;
 </div>
 <div class="row">
 	<div class="col col-sm-5 text-right text-primary">
-		<h4><a href="<?php echo Basic_Helper::appUrl('Main', RESUME['ctr']); ?>">Шаг 1*: Анкета <i class="fas fa-id-card"></i></a></h4>
+		<h4>
+			<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#helpResume">Инструкция</button>
+			<a href="<?php echo Basic_Helper::appUrl('Main', RESUME['ctr']); ?>">Шаг 1*: Анкета <i class="fas fa-id-card"></i></a>
+		</h4>
 	</div>
 	<?php
 		$resume = new Resume();
@@ -50,7 +53,10 @@ use common\models\Model_Application as Application;
 </div>
 <div class="row">
 	<div class="col col-sm-5 text-right text-primary">
-		<h4><a href="<?php echo Basic_Helper::appUrl('Main', DOCS_EDUC['ctr']); ?>">Шаг 2*: Документы об образовании <i class="fas fa-graduation-cap"></i></a></h4>
+		<h4>
+			<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#helpDocsEduc">Инструкция</button>
+			<a href="<?php echo Basic_Helper::appUrl('Main', DOCS_EDUC['ctr']); ?>">Шаг 2*: Документы об образовании <i class="fas fa-graduation-cap"></i></a>
+		</h4>
 	</div>
 	<?php
 		$docs = new DocsEduc();
@@ -65,7 +71,10 @@ use common\models\Model_Application as Application;
 </div>
 <div class="row">
 	<div class="col col-sm-5 text-right text-primary">
-		<h4><a href="<?php echo Basic_Helper::appUrl('Main', EGE['ctr']); ?>">Шаг 3: Результаты ЕГЭ <i class="fas fa-table"></i></a></h4>
+		<h4>
+			<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#helpEge">Инструкция</button>
+			<a href="<?php echo Basic_Helper::appUrl('Main', EGE['ctr']); ?>">Шаг 3: Результаты ЕГЭ <i class="fas fa-table"></i></a>
+		</h4>
 	</div>
 	<?php
 		$ege = new Ege();
@@ -80,7 +89,10 @@ use common\models\Model_Application as Application;
 </div>
 <div class="row">
 	<div class="col col-sm-5 text-right text-primary">
-		<h4><a href="<?php echo Basic_Helper::appUrl('Main', IND_ACHIEVS['ctr']); ?>">Шаг 4: Индивидуальные достижения <i class="fas fa-trophy"></i></a></h4>
+		<h4>
+			<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#helpIndAchievs">Инструкция</button>
+			<a href="<?php echo Basic_Helper::appUrl('Main', IND_ACHIEVS['ctr']); ?>">Шаг 4: Индивидуальные достижения <i class="fas fa-trophy"></i></a>
+		</h4>
 	</div>
 	<?php
 		$ia = new IndAchievs();
@@ -108,7 +120,10 @@ use common\models\Model_Application as Application;
 </div>
 <div class="row">
 	<div class="col col-sm-5 text-right text-primary">
-		<h4><a href="<?php echo Basic_Helper::appUrl('Main', APP['ctr']); ?>">Шаг 5*: Заявления <i class="fas fa-file-alt"></i></a></h4>
+		<h4>
+			<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#helpApp">Инструкция</button>
+			<a href="<?php echo Basic_Helper::appUrl('Main', APP['ctr']); ?>">Шаг 5*: Заявления <i class="fas fa-file-alt"></i></a>
+		</h4>
 	</div>
 	<?php
 		$app = new Application();
@@ -121,6 +136,95 @@ use common\models\Model_Application as Application;
 		}
 	?>
 </div>
+
+<div class="modal fade" id="helpResume" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Анкета (инструкция)</h4>
+			</div>
+			<div class="modal-body text-justify">
+				<p>
+					<strong>Уважаемый абитуриент!</strong><br><br>
+					Когда Вы видите свою анкету впервые, она пуста и имеет состояние <strong>"<?php echo $resume::STATUS_CREATED_NAME; ?>"</strong>. Это означает, что она готова для заполнения. Пожалуйста, аккуратно заполните нужные поля <strong>(* - означает, что поле обязательно для заполнения)</strong> и нажмите кнопку <strong>"Сохранить"</strong>. После этого система проверит введенные Вами данные и<br>
+					<u>- если ошибок нет</u>, сохранит их для дальнейшего использования, анкета получит состояние <strong>"<?php echo $resume::STATUS_SAVED_NAME; ?>"</strong> и Вы увидите выделенное зелёным цветом сообщение "Анкета успешно сохранена."<br>
+					<u>- если ошибки есть</u>, они отобразятся красным цветом, а состояние анкеты не изменится. Исправьте ошибки и снова нажмите <strong>"Сохранить"</strong>. Повторяйте до тех пор, пока не увидите выделенное зелёным цветом сообщение "Анкета успешно сохранена."<br><br>
+					Анкету в состоянии <strong>"<?php echo $resume::STATUS_SAVED_NAME; ?>"</strong> можно исправлять без каких бы то ни было ограничений, но на её основании нельзя формировать заявления на поступление. Чтобы получить такую возможность, необходимо перевести анкету в состояние <strong>"<?php echo $resume::STATUS_SENDED_NAME; ?>"</strong>. Для этого нажмите кнопку <strong>"Отправить"</strong>, когда будете готовы двигаться дальше.<br><br>
+					Анкеты в состояние <strong>"<?php echo $resume::STATUS_SENDED_NAME; ?>"</strong> исправлять уже нельзя, так как они попали на обработку к модератору. Если по каким-либо причинам исправления всё-таки надо внести, пожалуйста, свяжитесь с приёмной комиссией лично.<br><br>
+					Кнопка <strong>"Очистить"</strong> используется лишь для обнуления данных анкеты, <strong>сохранения при этом не происходит!</strong> То есть, когда Вам, например, надо внести значительные изменения в анкету, целесообразно нажать кнопку <strong>"Очистить"</strong>, поработать с анкетой, как с чистым листом, и потом сохранить её.
+				</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="helpDocsEduc" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Документы об образовании (инструкция)</h4>
+			</div>
+			<div class="modal-body">
+				<p>Находится в разработке, приносим свои извинения.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="helpEge" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Результаты ЕГЭ (инструкция)</h4>
+			</div>
+			<div class="modal-body">
+				<p>Находится в разработке, приносим свои извинения.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="helpIndAchievs" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Индивидуальные достижения (инструкция)</h4>
+			</div>
+			<div class="modal-body">
+				<p>Находится в разработке, приносим свои извинения.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="helpApp" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Заявления (инструкция)</h4>
+			</div>
+			<div class="modal-body">
+				<p>Находится в разработке, приносим свои извинения.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <?php
 	function stepSuccess($count_msg = null, $count = null)
 	{

@@ -41,30 +41,30 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 		</div>
 	</div>
 
-	<nav class="navbar navbar-expand-md bg-primary navbar-dark sticky-top">
+	<nav class="navbar navbar-expand-md bg-primary sticky-top">
 		<div class="collapse navbar-collapse" id="collapsibleNavbar">
 			<ul class="navbar-nav">
 				<li class="nav-item">
-					<a class="nav-link text-dark" data-toggle="tooltip" title="На главную" href="<?php echo Basic_Helper::appUrl('Main', 'Index'); ?>"><i class="fas fa-home fa-2x"></i></a>
+					<a class="nav-link text-white" data-toggle="tooltip" title="На главную" href="<?php echo Basic_Helper::appUrl('Main', 'Index'); ?>"><i class="fas fa-home fa-2x"></i></a>
 			    </li>
 			    <li class="nav-item">
-					<a class="nav-link text-dark" data-toggle="tooltip" title="<?php echo RESUME['hdr']; ?>" href="<?php echo Basic_Helper::appUrl('Main', RESUME['ctr']); ?>"><i class="fas fa-id-card fa-2x"></i></a>
+					<a class="nav-link text-white" data-toggle="tooltip" title="<?php echo RESUME['hdr']; ?>" href="<?php echo Basic_Helper::appUrl('Main', RESUME['ctr']); ?>"><i class="fas fa-id-card fa-2x"></i></a>
 			    </li>
 			    <li class="nav-item">
-					<a class="nav-link text-dark" data-toggle="tooltip" title="Документы об образовании" href="<?php echo Basic_Helper::appUrl('Main', DOCS_EDUC['ctr']); ?>"><i class="fas fa-graduation-cap fa-2x"></i></a>
+					<a class="nav-link text-white" data-toggle="tooltip" title="Документы об образовании" href="<?php echo Basic_Helper::appUrl('Main', DOCS_EDUC['ctr']); ?>"><i class="fas fa-graduation-cap fa-2x"></i></a>
 			    </li>
 			    <li class="nav-item">
-					<a class="nav-link text-dark" data-toggle="tooltip" title="<?php echo EGE['hdr']; ?>" href="<?php echo Basic_Helper::appUrl('Main', EGE['ctr']); ?>"><i class="fas fa-table fa-2x"></i></a>
+					<a class="nav-link text-white" data-toggle="tooltip" title="<?php echo EGE['hdr']; ?>" href="<?php echo Basic_Helper::appUrl('Main', EGE['ctr']); ?>"><i class="fas fa-table fa-2x"></i></a>
 			    </li>
 			    <li class="nav-item">
-					<a class="nav-link text-dark" data-toggle="tooltip" title="Индивидуальные достижения" href="<?php echo Basic_Helper::appUrl('Main', IND_ACHIEVS['ctr']); ?>"><i class="fas fa-trophy fa-2x"></i></a>
+					<a class="nav-link text-white" data-toggle="tooltip" title="Индивидуальные достижения" href="<?php echo Basic_Helper::appUrl('Main', IND_ACHIEVS['ctr']); ?>"><i class="fas fa-trophy fa-2x"></i></a>
 			    </li>
 			    <li class="nav-item">
-					<a class="nav-link text-dark" data-toggle="tooltip" title="Заявления" href="<?php echo Basic_Helper::appUrl('Main', APP['ctr']); ?>"><i class="fas fa-file-alt fa-2x"></i></a>
+					<a class="nav-link text-white" data-toggle="tooltip" title="Заявления" href="<?php echo Basic_Helper::appUrl('Main', APP['ctr']); ?>"><i class="fas fa-file-alt fa-2x"></i></a>
 			    </li>
 				<?php if (isset($_SESSION[APP_CODE]['user_name'])) { ?>
 			    <li class="nav-item">
-					<a class="nav-link text-dark" data-toggle="tooltip" title="Выход" href="<?php echo Basic_Helper::appUrl('Main', 'Logout'); ?>"><i class="fas fa-sign-out-alt fa-2x"></i></a>
+					<a class="nav-link text-white" data-toggle="tooltip" title="Выход" href="<?php echo Basic_Helper::appUrl('Main', 'Logout'); ?>"><i class="fas fa-sign-out-alt fa-2x"></i></a>
 			    </li>
 				<?php } ?>
 			</ul>

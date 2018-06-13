@@ -125,7 +125,7 @@ class Model_ApplicationPlaces extends Db_Helper
      */
 	public function getSpecsByAppPdf()
 	{
-		return $this->rowSelectAll('dict_speciality.speciality_name as place, dict_speciality.edulevel_name as edulevel, dict_speciality.eduform_name as eduform, dict_finances.abbr as finance',
+		return $this->rowSelectAll("concat(dict_speciality.speciality_name, ' ', ifnull(dict_speciality.profil_name, '')) as place, dict_speciality.edulevel_name as edulevel, dict_speciality.eduform_name as eduform, dict_finances.abbr as finance",
 									self::TABLE_NAME.' INNER JOIN dict_speciality ON '.self::TABLE_NAME.'.id_spec = dict_speciality.id'.
 									' INNER JOIN dict_finances ON dict_speciality.finance_code = dict_finances.code',
 									'pid = :pid',
@@ -599,9 +599,9 @@ class Model_ApplicationPlaces extends Db_Helper
 	public function CondsSpecial9Educ($pay) : string
 	{
 		if ($pay == 1) {
-			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr = :finance AND eduprogram_name = :eduprogram_name AND (stage_numb = :stage_numb OR stage_numb is null)';
+			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr = :finance AND eduprogram_name = :eduprogram_name AND (stage_numb = :stage_numb OR stage_numb is null) AND group_name not like (:group_name)';
 		} else {
-			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr <> :finance AND eduprogram_name = :eduprogram_name AND (stage_numb = :stage_numb OR stage_numb is null)';
+			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr <> :finance AND eduprogram_name = :eduprogram_name AND (stage_numb = :stage_numb OR stage_numb is null) AND group_name not like (:group_name)';
 		}
 	}
 
@@ -613,9 +613,9 @@ class Model_ApplicationPlaces extends Db_Helper
 	public function CondsHighEducFirst($pay) : string
 	{
 		if ($pay == 1) {
-			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr = :finance AND dict_speciality.eduprogram_name is null AND (stage_numb = :stage_numb OR stage_numb is null)';
+			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr = :finance AND dict_speciality.eduprogram_name is null AND (stage_numb = :stage_numb OR stage_numb is null) AND group_name not like (:group_name)';
 		} else {
-			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr <> :finance AND dict_speciality.eduprogram_name is null AND (stage_numb = :stage_numb OR stage_numb is null)';
+			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr <> :finance AND dict_speciality.eduprogram_name is null AND (stage_numb = :stage_numb OR stage_numb is null) AND group_name not like (:group_name)';
 		}
 	}
 
@@ -627,9 +627,9 @@ class Model_ApplicationPlaces extends Db_Helper
 	public function CondsHighEducSecond($pay) : string
 	{
 		if ($pay == 1) {
-			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr = :finance AND dict_speciality.eduprogram_name = :eduprogram_name AND (stage_numb = :stage_numb OR stage_numb is null)';
+			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr = :finance AND dict_speciality.eduprogram_name = :eduprogram_name AND (stage_numb = :stage_numb OR stage_numb is null) AND group_name not like (:group_name)';
 		} else {
-			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr <> :finance AND dict_speciality.eduprogram_name = :eduprogram_name AND (stage_numb = :stage_numb OR stage_numb is null)';
+			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr <> :finance AND dict_speciality.eduprogram_name = :eduprogram_name AND (stage_numb = :stage_numb OR stage_numb is null) AND group_name not like (:group_name)';
 		}
 	}
 
@@ -645,13 +645,15 @@ class Model_ApplicationPlaces extends Db_Helper
 					':group_beneficiary' => 0,
 					':finance' => self::PAY,
 					':eduprogram_name' => 'среднее (основное,общее)',
-					':stage_numb' => 1];
+					':stage_numb' => 1,
+					':group_name' => '%(англ)'];
 		} else {
 			return [':pid' => $this->pid,
 					':group_beneficiary' => 0,
 					':finance' => self::PURPOSE,
 					':eduprogram_name' => 'среднее (основное,общее)',
-					':stage_numb' => 1];
+					':stage_numb' => 1,
+					':group_name' => '%(англ)'];
 		}
 	}
 
@@ -666,12 +668,14 @@ class Model_ApplicationPlaces extends Db_Helper
 			return [':pid' => $this->pid,
 					':group_beneficiary' => 0,
 					':finance' => self::PAY,
-					':stage_numb' => 1];
+					':stage_numb' => 1,
+					':group_name' => '%(англ)'];
 		} else {
 			return [':pid' => $this->pid,
 					':group_beneficiary' => 0,
 					':finance' => self::PURPOSE,
-					':stage_numb' => 1];
+					':stage_numb' => 1,
+					':group_name' => '%(англ)'];
 		}
 	}
 
@@ -687,13 +691,15 @@ class Model_ApplicationPlaces extends Db_Helper
 					':group_beneficiary' => 0,
 					':finance' => self::PAY,
 					':eduprogram_name' => 'Высшее',
-					':stage_numb' => 1];
+					':stage_numb' => 1,
+					':group_name' => '%(англ)'];
 		} else {
 			return [':pid' => $this->pid,
 					':group_beneficiary' => 0,
 					':finance' => self::PURPOSE,
 					':eduprogram_name' => 'Высшее',
-					':stage_numb' => 1];
+					':stage_numb' => 1,
+					':group_name' => '%(англ)'];
 		}
 	}
 

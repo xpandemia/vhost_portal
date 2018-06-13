@@ -3,6 +3,7 @@
 use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 use tinyframe\core\helpers\Form_Helper as Form_Helper;
+use common\models\Model_DocsEduc as DocsEduc;
 use common\models\Model_Personal as Personal;
 use common\models\Model_Application as Application;
 use common\models\Model_ApplicationStatus as ApplicationStatus;
@@ -17,10 +18,14 @@ use frontend\models\Model_Application as Model_Application;
 	if (!isset($data)) {
 		Basic_Helper::redirect(APP_NAME, 204, 'Main', 'Index', null, nl2br("Ошибка направлений подготовки!\nСвяжитесь с администратором."));
 	}
-	// get app
+	// get application
 	$app = new Application();
 	$app->id = $data['id'];
 	$app_row = $app->get();
+	// get education document
+	$docs = new DocsEduc();
+	$docs->id = $app_row['id_docseduc'];
+	$docs_row = $docs->getForField();
 	// get citizenship
 	$personal = new Personal();
 	$citizenship = $personal->getCitizenshipByUser();
@@ -29,13 +34,19 @@ use frontend\models\Model_Application as Model_Application;
 	$place->pid = $data['id'];
 	$exam = new ApplicationPlacesExams();
 	$exam->pid = $data['id'];
+	// application_2
+	if ($place->getByAppForSpecial()) {
+		$application_2 = 0;
+	} else {
+		$application_2 = 1;
+	}
 	// photo3x4
 	if ($place->getByAppForBachelorSpec() && $exam->existsExams()) {
 		$photo3x4 = 1;
 	} else {
 		$photo3x4 = 0;
 	}
-	// medical certificate
+	// medical_certificate
 	if ($place->getByAppForMedicalA1() || $place->getByAppForMedicalA2() || $place->getByAppForMedicalB1() || $place->getByAppForMedicalC1()) {
 		$medical_certificate = 1;
 	} else {
@@ -53,6 +64,8 @@ use frontend\models\Model_Application as Model_Application;
 		echo Model_Application::showType($app_row['type']);
 		/* status */
 		echo Model_Application::showStatus($app_row['status']);
+		/* education document */
+		echo HTML_Helper::setAlert('Документ об образовании: <strong>'.$docs_row['docs_educ'].'</strong>', 'alert-info');
 		/* comment */
 		if ($app_row['status'] == $app::STATUS_REJECTED) {
 			$applog = new ApplicationStatus();
@@ -82,6 +95,7 @@ use frontend\models\Model_Application as Model_Application;
 	<form enctype="multipart/form-data" action="<?php echo Basic_Helper::appUrl('ApplicationSpec', 'Save'); ?>" method="post" id="form_app_spec" novalidate>
 		<div class="form-group">
 			<input type="hidden" id="id" name="id" value="<?php echo $data['id']; ?>"/>
+			<input type="hidden" id="application_2_required" name="application_2_required" value="<?php echo $application_2; ?>"/>
 			<input type="hidden" id="photo3x4_required" name="photo3x4_required" value="<?php echo $photo3x4; ?>"/>
 			<input type="hidden" id="medical_certificate_required" name="medical_certificate_required" value="<?php echo $medical_certificate; ?>"/>
 		</div>
@@ -225,13 +239,19 @@ use frontend\models\Model_Application as Model_Application;
 	// form init
 	function formInit()
 	{
+		// application_2 required
+		if ($('#application_2_required').val() == 1) {
+			$("label[for='application_2']").html('Заявление о приеме в БелГУ (второй лист)*');
+		} else {
+			$("label[for='application_2']").html('Заявление о приеме в БелГУ (второй лист)');
+		}
 		// photo3x4 required
 		if ($('#photo3x4_required').val() == 1) {
 			$("label[for='photo3x4']").html('Фотография 3х4*');
 		} else {
 			$("label[for='photo3x4']").html('Фотография 3х4');
 		}
-		// medical certificate required
+		// medical_certificate required
 		if ($('#medical_certificate_required').val() == 1) {
 			$("label[for='medical_certificate_face']").html('Медицинская справка (лицевая сторона)*');
 			$("label[for='medical_certificate_back']").html('Медицинская справка (оборотная сторона)*');

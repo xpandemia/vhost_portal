@@ -9,10 +9,31 @@ namespace tinyframe\core\config;
 # Set your database configuration here
 # NOTE: Leave them blank if you not use database
 
-define('DB_HOST', 'localhost'); // MySQL hostname
-define('DB_USER', 'root'); // MySQL database username
-define('DB_PASSWORD', ''); // MySQL database password
-define('DB_NAME', 'portalbsu'); // MySQL database name
+switch (APP_DATA) {
+	case 'local':
+		define('DB_HOST', 'localhost'); // MySQL hostname
+		define('DB_USER', 'root'); // MySQL database username
+		define('DB_PASSWORD', ''); // MySQL database password
+		define('DB_NAME', 'portalbsu'); // MySQL database name
+		break;
+	case 'test':
+		define('DB_HOST', 'bsu-web03'); // MySQL hostname
+		define('DB_USER', 'ac-admin'); // MySQL database username
+		define('DB_PASSWORD', 'PnKDmaDpqAUVCGagjMyA'); // MySQL database password
+		define('DB_NAME', 'portalbsu'); // MySQL database name
+		break;
+	case 'main':
+		define('DB_HOST', 'bsu-web03'); // MySQL hostname
+		define('DB_USER', 'ac-admin'); // MySQL database username
+		define('DB_PASSWORD', 'PnKDmaDpqAUVCGagjMyA'); // MySQL database password
+		define('DB_NAME', 'abitur-web'); // MySQL database name
+		break;
+	default:
+		define('DB_HOST', 'localhost'); // MySQL hostname
+		define('DB_USER', 'root'); // MySQL database username
+		define('DB_PASSWORD', ''); // MySQL database password
+		define('DB_NAME', 'portalbsu'); // MySQL database name
+}
 
 # Tables structure
 # NOTE: Add your tables here

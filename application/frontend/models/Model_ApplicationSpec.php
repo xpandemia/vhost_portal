@@ -71,6 +71,12 @@ class Model_ApplicationSpec extends Model
 		$place->pid = $id;
 		$exam = new ApplicationPlacesExams();
 		$exam->pid = $id;
+		// application_2
+		if (!$place->getByAppForSpecial()) {
+			if (empty($form['application_2_name'])) {
+				$form = $this->setFormErrorFile($form, 'application_2', 'Скан-копия "Заявление о приеме в БелГУ (второй лист)" обязательна для заполнения!');
+			}
+		}
 		// photo3x4
 		if ($place->getByAppForBachelorSpec() && $exam->existsExams()) {
 			if (empty($form['photo3x4_name'])) {
@@ -139,6 +145,8 @@ class Model_ApplicationSpec extends Model
 				// check
 				$unset = 0;
 				if ($dict_scans_row['required'] == 1) {
+					$unset = 1;
+				} elseif ($dict_scans_row['scan_code'] == 'application_2' && !$place->getByAppForSpecial()) {
 					$unset = 1;
 				} elseif ($dict_scans_row['scan_code'] == 'photo3x4' && $place->getByAppForBachelorSpec() && $exam->existsExams()) {
 					$unset = 1;
@@ -240,26 +248,30 @@ class Model_ApplicationSpec extends Model
 									$disc_row = $disc->getOne();
 										$enter->id_discipline = $disc_row['id'];
 									$test = new Model_DictTestingScopes();
-									if ($citizenship['code'] != '643') {
-										// foreigners - exam only
-										$test_row = $test->getExam();
-									} else {
-										if ($citizenship['code'] == '643' && $app->checkCertificate()) {
-											// russia with certificate - ege only
-											$test_row = $test->getEge();
+									if (strripos($exams_row['exam_name'], 'Профессиональное испытание') === false && strripos($exams_row['exam_name'], 'Творческое испытание') === false) {
+										if ($citizenship['code'] != '643') {
+											// foreigners - exam only
+											$test_row = $test->getExam();
 										} else {
-											// russia without certificate - ege or exam
-											$ege = new Model_EgeDisciplines();
-											$ege->code_discipline = $exams_row['exam_code'];
-											$ege_row = $ege->checkDiscipline();
-											if ($ege_row) {
-												// ege
+											if ($citizenship['code'] == '643' && $app->checkCertificate()) {
+												// russia with certificate - ege only
 												$test_row = $test->getEge();
 											} else {
-												// exam
-												$test_row = $test->getExam();
+												// russia without certificate - ege or exam
+												$ege = new Model_EgeDisciplines();
+												$ege->code_discipline = $exams_row['exam_code'];
+												$ege_row = $ege->checkDiscipline();
+												if ($ege_row) {
+													// ege
+													$test_row = $test->getEge();
+												} else {
+													// exam
+													$test_row = $test->getExam();
+												}
 											}
-										}
+										}	
+									} else {
+										$test_row = $test->getExam();
 									}
 									$enter->id_test = $test_row['id'];
 									if ($enter->save() == 0) {
@@ -289,7 +301,7 @@ class Model_ApplicationSpec extends Model
 			$scans->id_row = $app->id;
 			$scans->clearbyDoc('application');
 			// change status
-			if ($app->status != $app::STATUS_CREATED) {
+			if ($app_row['status'] != $app::STATUS_CREATED) {
 				$app->status = $app::STATUS_CREATED;
 				$app->changeStatus();
 				$form['status'] = $app->status;
@@ -361,10 +373,11 @@ class Model_ApplicationSpec extends Model
 		$app->campus = (($form['campus'] == 'checked') ? 1 : 0);
 		$app->conds = (($form['conds'] == 'checked') ? 1 : 0);
 		// check remote
-		if (count($places->getByAppForPayedOnline()) == 0 || count($places->getByAppForPayedOnline()) == count($places->getSpecsByApp())) {
+		if (count($places->getByAppForPayedOnline()) != 0 && count($places->getByAppForPayedOnline()) == count($places->getSpecsByApp())) {
 			$app->remote = (($form['remote'] == 'checked') ? 1 : 0);
 		} else {
 			$app->remote = 0;
+			$form['remote'] = null;
 		}
 		$app->pay = $app_row['pay'];
 		$app->active = $app_row['active'];
@@ -494,6 +507,13 @@ class Model_ApplicationSpec extends Model
 			$spec_row = $this->get($id);
 			$form = $this->setForm($this->rules(), $spec_row);
 			$form['id'] = $id;
+			/* save */
+			$app->status = $app::STATUS_SAVED;
+			$app->changeStatus();
+			$form['status'] = $app->status;
+				$applog = new ApplicationStatus();
+				$applog->id_application = $form['id'];
+				$applog->create();
 			Basic_Helper::msgReset();
 			$form['success_msg'] = 'Заявление успешно отозвано.';
 			$form['error_msg'] = null;
@@ -552,6 +572,7 @@ class Model_ApplicationSpec extends Model
 			$data['exams'] = 'On';
 			$data = $this->setPlacesForPdf($data, $id, 3);
 			$data = $this->setEducForPdf($data, $app_row['id_docseduc'], 'specialist');
+			$data = $this->setForeignLangForPdf($data, $app_row['id_lang']);
 			if ($app_row['pay'] == 0) {
 				$data['special_first_yes'] = 'On';
 			} else {
@@ -565,6 +586,7 @@ class Model_ApplicationSpec extends Model
 			$data = $this->setResumeForPdf($data);
 			$data = $this->setPlacesForPdf($data, $id, 4);
 			$data = $this->setEducForPdf($data, $app_row['id_docseduc'], 'attending_physician');
+			$data = $this->setForeignLangForPdf($data, $app_row['id_lang']);
 			$data = $this->setCampusForPdf($data, $app_row['campus']);
 			$data['docsship_personal'] = 'On';
 			$data = $this->setIaForPdf($data, $id);
@@ -575,6 +597,7 @@ class Model_ApplicationSpec extends Model
 			$data = $this->setResumeForPdf($data);
 			$data = $this->setPlacesForPdf($data, $id, 4);
 			$data = $this->setEducForPdf($data, $app_row['id_docseduc'], 'trainee');
+			$data = $this->setForeignLangForPdf($data, $app_row['id_lang']);
 			$pdf->create($data, 'application_traineeship_2018', 'заявление'.$app_row['numb']);
 		} else {
 			$resume = new Resume();
@@ -676,8 +699,10 @@ class Model_ApplicationSpec extends Model
 						$data['exams_ege'] = 'On';
 						break;
 					case 'Экзамен':
-						$data['exams_university'] = 'On';
-						$exams_disciplines .= ' '.$exams_row['discipline_name'];
+						if (strripos($exams_row['discipline_name'], 'Профессиональное испытание') === false && strripos($exams_row['discipline_name'], 'Творческое испытание') === false) {
+							$data['exams_university'] = 'On';
+							$exams_disciplines .= ' '.$exams_row['discipline_name'];
+						}
 						break;
 				}
 			}

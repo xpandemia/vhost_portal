@@ -43,10 +43,14 @@ class HTML_Helper
      *
      * @return string
      */
-	public static function setSubmit($class, $id, $text)
+	public static function setSubmit($class, $id, $text, $tooltip = null)
 	{
 		if (!empty($class) && !empty($id) && !empty($text)) {
-			return '<button type="submit" class="'.$class.'" id="'.$id.'" name="'.$id.'">'.$text.'</button> ';
+			if (empty($tooltip)) {
+				return '<button type="submit" class="'.$class.'" id="'.$id.'" name="'.$id.'">'.$text.'</button> ';
+			} else {
+				return '<button type="submit" class="'.$class.'" id="'.$id.'" name="'.$id.'" data-toggle="tooltip" title="'.$tooltip.'">'.$text.'</button> ';
+			}
 		} else {
 			return '<p class="text-danger">HTML_Helper.setSubmit - На входе недостаточно данных!</p>';
 		}
@@ -57,10 +61,14 @@ class HTML_Helper
      *
      * @return string
      */
-	public static function setButton($class, $id, $text)
+	public static function setButton($class, $id, $text, $tooltip = null)
 	{
 		if (!empty($id) && !empty($text)) {
-			return '<button type="button" class="'.$class.'" id="'.$id.'" name="'.$id.'">'.$text.'</button> ';
+			if (empty($tooltip)) {
+				return '<button type="button" class="'.$class.'" id="'.$id.'" name="'.$id.'">'.$text.'</button> ';
+			} else {
+				return '<button type="button" class="'.$class.'" id="'.$id.'" name="'.$id.'" data-toggle="tooltip" title="'.$tooltip.'">'.$text.'</button> ';
+			}
 		} else {
 			return '<p class="text-danger">HTML_Helper.setButton - На входе недостаточно данных!</p>';
 		}
@@ -71,10 +79,14 @@ class HTML_Helper
      *
      * @return string
      */
-	public static function setHrefText($controller, $action, $text)
+	public static function setHrefText($controller, $action, $text, $tooltip = null)
 	{
 		if (!empty($controller) && !empty($action) && !empty($text)) {
-			return '<p><a href="'.Basic_Helper::appUrl($controller, $action).'" class="font-weight-bold text-secondary">'.$text.'</a></p> ';
+			if (empty($tooltip)) {
+				return '<p><a href="'.Basic_Helper::appUrl($controller, $action).'" class="font-weight-bold text-secondary">'.$text.'</a></p> ';
+			} else {
+				return '<p><a data-toggle="tooltip" title="'.$tooltip.'" href="'.Basic_Helper::appUrl($controller, $action).'" class="font-weight-bold text-secondary">'.$text.'</a></p> ';
+			}
 		} else {
 			return '<p class="text-danger">HTML_Helper.setHrefText - На входе недостаточно данных!</p>';
 		}
@@ -85,10 +97,14 @@ class HTML_Helper
      *
      * @return string
      */
-	public static function setHrefButton($controller, $action, $class, $text)
+	public static function setHrefButton($controller, $action, $class, $text, $tooltip = null)
 	{
 		if (!empty($controller) && !empty($action) && !empty($class) && !empty($text)) {
-			return '<a href="'.Basic_Helper::appUrl($controller, $action).'" class="'.$class.'">'.$text.'</a> ';
+			if (empty($tooltip)) {
+				return '<a href="'.Basic_Helper::appUrl($controller, $action).'" class="'.$class.'">'.$text.'</a> ';
+			} else {
+				return '<a data-toggle="tooltip" title="'.$tooltip.'" href="'.Basic_Helper::appUrl($controller, $action).'" class="'.$class.'">'.$text.'</a> ';
+			}
 		} else {
 			return '<p class="text-danger">HTML_Helper.setHrefButton - На входе недостаточно данных!</p>';
 		}

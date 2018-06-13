@@ -3,6 +3,7 @@
 namespace common\models;
 
 use tinyframe\core\helpers\Db_Helper as Db_Helper;
+use common\models\Model_Application as Application;
 
 class Model_IndAchievs extends Db_Helper
 {
@@ -243,6 +244,28 @@ class Model_IndAchievs extends Db_Helper
 									':series' => $this->series,
 									':numb' => $this->numb,
 									':id' => $this->id]);
+		}
+	}
+
+	/**
+     * Checks if individual achievment used in applications "GO".
+     *
+     * @return boolean
+     */
+	public function existsAppGo() : bool
+	{
+		$app_arr = $this->rowSelectAll('application.id',
+										'application INNER JOIN application_achievs ON application_achievs.pid = application.id'.
+										' INNER JOIN ind_achievs ON application_achievs.id_achiev = ind_achievs.id',
+										'ind_achievs.id = :id AND application.status in (:status1, :status2, :status3)',
+										[':id' => $this->id,
+										':status1' => Application::STATUS_SENDED,
+										':status2' => Application::STATUS_APPROVED,
+										':status3' => Application::STATUS_REJECTED]);
+		if ($app_arr) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 
