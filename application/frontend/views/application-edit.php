@@ -143,8 +143,12 @@ use frontend\models\Model_Application as Model_Application;
 			?>
 			</table>
 			<div class="row">
-				<h5>Индивидуальные достижения</h5>
-				<?php echo HTML_Helper::setHrefButtonIcon('ApplicationSpec', 'SyncIa/?id='.$data['id'], 'btn btn-primary', 'fas fa-sync', 'Обновить индивидуальные достижения'); ?>
+				<div class="">
+					<h5>Индивидуальные достижения</h5>
+				</div>
+				<div class="col">
+					<?php echo HTML_Helper::setHrefButtonIcon('ApplicationSpec', 'SyncIa/?id='.$data['id'], 'btn btn-primary', 'fas fa-sync', 'Обновить индивидуальные достижения'); ?>
+				</div>
 			</div>
 			<br>
 			<table class="table table-bordered table-hover">

@@ -285,21 +285,28 @@ class Model_Resume extends Model
      *
      * @return string
      */
-	public static function showStatus($status)
+	public static function showStatus($status, $width = null)
 	{
+		// width
+		if (!empty($width) && $width > 0 && $width < 12) {
+			$div = '<div class="col col-sm-'.$width.' ';
+		} else {
+			$div = '<div class="';
+		}
+		// status
 		switch ($status) {
 			case Resume::STATUS_CREATED:
-				return '<div class="alert alert-info">Состояние: <strong>'.mb_convert_case(Resume::STATUS_CREATED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong></div>';
+				return $div.'alert alert-info">Состояние: <strong>'.mb_convert_case(Resume::STATUS_CREATED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong></div>';
 			case Resume::STATUS_SAVED:
-				return '<div class="alert alert-info">Состояние: <strong>'.mb_convert_case(Resume::STATUS_SAVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong></div>';
+				return $div.'alert alert-info">Состояние: <strong>'.mb_convert_case(Resume::STATUS_SAVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong></div>';
 			case Resume::STATUS_SENDED:
-				return '<div class="alert alert-primary">Состояние: <strong>'.mb_convert_case(Resume::STATUS_SENDED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong></div>';
+				return $div.'alert alert-primary">Состояние: <strong>'.mb_convert_case(Resume::STATUS_SENDED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong></div>';
 			case Resume::STATUS_APPROVED:
-				return '<div class="alert alert-success">Состояние: <strong>'.mb_convert_case(Resume::STATUS_APPROVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong></div>';
+				return $div.'alert alert-success">Состояние: <strong>'.mb_convert_case(Resume::STATUS_APPROVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong></div>';
 			case Resume::STATUS_REJECTED:
-				return '<div class="alert alert-danger">Состояние: <strong>'.mb_convert_case(Resume::STATUS_REJECTED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong></div>';
+				return $div.'alert alert-danger">Состояние: <strong>'.mb_convert_case(Resume::STATUS_REJECTED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong></div>';
 			default:
-				return '<div class="alert alert-warning">Состояние: <strong>НЕИЗВЕСТНО</strong></div>';
+				return $div.'alert alert-warning">Состояние: <strong>НЕИЗВЕСТНО</strong></div>';
 		}
 	}
 
@@ -337,7 +344,7 @@ class Model_Resume extends Model
      */
 	public function validateAgreement($form)
 	{
-		if (!empty($form['birth_dt']) && Calc_Helper::getAge($form['birth_dt'], 'd.m.Y') < 18 && empty($form['agreement_name'])) {
+		if (!empty($form['birth_dt']) && Calc_Helper::getAge($form['birth_dt'], 'd.m.Y') < 18 && empty($form['agreement'])) {
 			$form = $this->setFormErrorFile($form, 'agreement', 'Скан-копия "Согласие родителей/опекунов" обязательна для заполнения!');
 		}
 		return $form;
@@ -711,21 +718,15 @@ class Model_Resume extends Model
 	{
 		// agreement
 		if (isset($form['birth_dt']) && Calc_Helper::getAge($form['birth_dt'], 'd.m.Y') < 18) {
-			if (empty($form['agreement_name'])) {
-				$form['agreement_err'] = 'Скан-копия "Согласие родителей/опекунов" обязательна для заполнения!';
-				$form['agreement_scs'] = null;
-			}
+			$form = $this->setFormErrorFile($form, 'agreement', 'Скан-копия "Согласие родителей/опекунов" обязательна для заполнения!');
 		}
 		// passport_old
 		if ($form['passport_old_yes'] == 'checked' && $form['passport_type_old'] == '000000047') {
-			if (empty($form['agreement_name'])) {
-				$form['passport_old_err'] = 'Скан-копия "Сведения о ранее выданных паспортах" обязательна для заполнения!';
-				$form['passport_old_scs'] = null;
-			}
+			$form = $this->setFormErrorFile($form, 'passport_old', 'Скан-копия "Сведения о ранее выданных паспортах" обязательна для заполнения!');
 		}
 		// main
-		Model_Scans::unsets('resume', $form);
-		// passport
+		$form = Model_Scans::unsets('resume', $form);
+		// passports
 		switch ($form['passport_type']) {
 			// Паспорт РФ
 			case '000000047':
@@ -763,13 +764,9 @@ class Model_Resume extends Model
 	public function checkPassportRussian($form)
 	{
 		// passport_face
-		if (empty($form['passport_face'])) {
-			$form = $this->setFormErrorFile($form, 'passport_face', 'Скан-копия "Первая страница паспорта" обязательна для заполнения!');
-		}
+		$form = $this->setFormErrorFile($form, 'passport_face', 'Скан-копия "Первая страница паспорта" обязательна для заполнения!');
 		// passport_reg
-		if (empty($form['passport_reg'])) {
-			$form = $this->setFormErrorFile($form, 'passport_reg', 'Скан-копия "Страница паспорта с регистрацией по месту жительства" обязательна для заполнения!');
-		}
+		$form = $this->setFormErrorFile($form, 'passport_reg', 'Скан-копия "Страница паспорта с регистрацией по месту жительства" обязательна для заполнения!');
 		return $form;
 	}
 
@@ -781,9 +778,7 @@ class Model_Resume extends Model
 	public function checkIdRussian($form)
 	{
 		// id_russian
-		if (empty($form['id_russian'])) {
-			$form = $this->setFormErrorFile($form, 'id_russian', 'Скан-копия "Временное удостоверение личности гражданина РФ" обязательна для заполнения!');
-		}
+		$form = $this->setFormErrorFile($form, 'id_russian', 'Скан-копия "Временное удостоверение личности гражданина РФ" обязательна для заполнения!');
 		return $form;
 	}
 
@@ -795,9 +790,7 @@ class Model_Resume extends Model
 	public function checkPassportForeign($form)
 	{
 		// passport_foreign_face
-		if (empty($form['passport_foreign_face'])) {
-			$form = $this->setFormErrorFile($form, 'passport_foreign_face', 'Скан-копия "Первая страница паспорта иностранного гражданина" обязательна для заполнения!');
-		}
+		$form = $this->setFormErrorFile($form, 'passport_foreign_face', 'Скан-копия "Первая страница паспорта иностранного гражданина" обязательна для заполнения!');
 		return $form;
 	}
 
@@ -809,13 +802,9 @@ class Model_Resume extends Model
 	public function checkIdForeign($form)
 	{
 		// id_foreign_face
-		if (empty($form['id_foreign_face'])) {
-			$form = $this->setFormErrorFile($form, 'id_foreign_face', 'Скан-копия "Лицевая сторона удостоверения личности иностранного гражданина" обязательна для заполнения!');
-		}
+		$form = $this->setFormErrorFile($form, 'id_foreign_face', 'Скан-копия "Лицевая сторона удостоверения личности иностранного гражданина" обязательна для заполнения!');
 		// id_foreign_back
-		if (empty($form['id_foreign_back'])) {
-			$form = $this->setFormErrorFile($form, 'id_foreign_back', 'Скан-копия "Оборотная сторона удостоверения личности иностранного гражданина" обязательна для заполнения!');
-		}
+		$form = $this->setFormErrorFile($form, 'id_foreign_back', 'Скан-копия "Оборотная сторона удостоверения личности иностранного гражданина" обязательна для заполнения!');
 		return $form;
 	}
 
@@ -827,13 +816,9 @@ class Model_Resume extends Model
 	public function checkResidencyForeign($form)
 	{
 		// residency_foreign_face
-		if (empty($form['residency_foreign_face'])) {
-			$form = $this->setFormErrorFile($form, 'residency_foreign_face', 'Скан-копия "Первая страница вида на жительство иностранного гражданина" обязательна для заполнения!');
-		}
+		$form = $this->setFormErrorFile($form, 'residency_foreign_face', 'Скан-копия "Первая страница вида на жительство иностранного гражданина" обязательна для заполнения!');
 		// residency_foreign_reg
-		if (empty($form['residency_foreign_reg'])) {
-			$form = $this->setFormErrorFile($form, 'residency_foreign_reg', 'Скан-копия "Страница с регистрацией по месту пребывания вида на жительство иностранного гражданина" обязательна для заполнения!');
-		}
+		$form = $this->setFormErrorFile($form, 'residency_foreign_reg', 'Скан-копия "Страница с регистрацией по месту пребывания вида на жительство иностранного гражданина" обязательна для заполнения!');
 		return $form;
 	}
 
@@ -845,9 +830,7 @@ class Model_Resume extends Model
 	public function checkCertificateBirth($form)
 	{
 		// certificate_birth
-		if (empty($form['certificate_birth'])) {
-			$form = $this->setFormErrorFile($form, 'certificate_birth', 'Скан-копия "Свидетельство о рождении" обязательна для заполнения!');
-		}
+		$form = $this->setFormErrorFile($form, 'certificate_birth', 'Скан-копия "Свидетельство о рождении" обязательна для заполнения!');
 		return $form;
 	}
 
@@ -1327,6 +1310,8 @@ class Model_Resume extends Model
 			$resume->app = 0;
 		}
 		$resume->changeApp();
+		$form['success_msg'] = 'Анкета сохранена.';
+		$form['error_msg'] = null;
 		return $form;
 	}
 
@@ -1350,7 +1335,7 @@ class Model_Resume extends Model
 		$resume->status = $resume::STATUS_SENDED;
 		$resume->changeStatus();
 		$form['status'] = $resume->status;
-		$form['success_msg'] = 'Анкета успешно отправлена.';
+		$form['success_msg'] = 'Анкета отправлена.';
 		$form['error_msg'] = null;
 		return $form;
 	}

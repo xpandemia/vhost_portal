@@ -26,22 +26,35 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 <body class="bg-secondary">
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
 		<a class="navbar-brand" href="/<?php echo BEHAVIOR; ?>/Main/Index"><?php echo APP_NAME; ?></a>
-		<ul class="navbar-nav">
-		    <li class="nav-item">
-				<a class="nav-link" data-toggle="tooltip" title="<?php echo DICT_MANAGER['hdr']; ?>" href="<?php echo Basic_Helper::appUrl('Main', 'DictManager'); ?>"><i class="fas fa-database fa-2x"></i></a>
-		    </li>
-		    <li class="nav-item">
-				<a class="nav-link" data-toggle="tooltip" title="Настройка связи уровней подготовки с типами документов" href="<?php echo Basic_Helper::appUrl('Main', EDUCLEVELS_DOCTYPES['ctr']); ?>"><i class="fas fa-graduation-cap fa-2x"></i></a>
-		    </li>
-		    <li class="nav-item">
-				<a class="nav-link" data-toggle="tooltip" title="Настройка связи видов образования с типами документов" href="<?php echo Basic_Helper::appUrl('Main', EDUCTYPES_DOCTYPES['ctr']); ?>"><i class="fas fa-school fa-2x"></i></a>
-		    </li>
-		    <?php if (isset($_SESSION[APP_CODE]['user_id'])) { ?>
-		    <li class="nav-item">
-				<a class="nav-link" data-toggle="tooltip" title="Выход" href="<?php echo Basic_Helper::appUrl('Main', 'Logout'); ?>"><i class="fas fa-sign-out-alt fa-2x"></i></a>
-		    </li>
-		    <?php } ?>
-		</ul>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="mainNavbar">
+			<ul class="navbar-nav">
+			    <li class="nav-item">
+					<a class="nav-link" href="<?php echo Basic_Helper::appUrl('Main', 'DictManager'); ?>">
+						<span data-toggle="tooltip" data-placement="auto" title="<?php echo DICT_MANAGER['hdr']; ?>"><i class="fas fa-database fa-2x"></i></span>
+					</a>
+			    </li>
+			    <li class="nav-item">
+					<a class="nav-link" href="<?php echo Basic_Helper::appUrl('Main', EDUCLEVELS_DOCTYPES['ctr']); ?>">
+						<span data-toggle="tooltip" data-placement="auto" title="Настройка связи уровней подготовки с типами документов"><i class="fas fa-graduation-cap fa-2x"></i></span>
+					</a>
+			    </li>
+			    <li class="nav-item">
+					<a class="nav-link" href="<?php echo Basic_Helper::appUrl('Main', EDUCTYPES_DOCTYPES['ctr']); ?>">
+						<span data-toggle="tooltip" data-placement="auto" title="Настройка связи видов образования с типами документов"><i class="fas fa-school fa-2x"></i></span>
+					</a>
+			    </li>
+			    <?php if (isset($_SESSION[APP_CODE]['user_id'])) { ?>
+			    <li class="nav-item">
+					<a class="nav-link" data-toggle="tooltip" title="Выход" href="<?php echo Basic_Helper::appUrl('Main', 'Logout'); ?>">
+						<span data-toggle="tooltip" data-placement="auto" title="Выход"><i class="fas fa-sign-out-alt fa-2x"></i></span>
+					</a>
+			    </li>
+			    <?php } ?>
+			</ul>
+		</div>
 	</nav>
 
 	<div class="container-fluid" style="margin-top:80px; margin-bottom:80px">

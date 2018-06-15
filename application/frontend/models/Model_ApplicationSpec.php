@@ -74,24 +74,16 @@ class Model_ApplicationSpec extends Model
 		$exam->pid = $form['id'];
 		// application_2
 		if (!$place->getByAppForSpecial()) {
-			if (empty($form['application_2_name'])) {
-				$form = $this->setFormErrorFile($form, 'application_2', 'Скан-копия "Заявление о приеме в БелГУ (второй лист)" обязательна для заполнения!');
-			}
+			$form = $this->setFormErrorFile($form, 'application_2', 'Скан-копия "Заявление о приеме в БелГУ (второй лист)" обязательна для заполнения!');
 		}
 		// photo3x4
 		if ($place->getByAppForBachelorSpec() && $exam->existsExams()) {
-			if (empty($form['photo3x4_name'])) {
-				$form = $this->setFormErrorFile($form, 'photo3x4', 'Скан-копия "Фотография 3х4" обязательна для заполнения!');
-			}
+			$form = $this->setFormErrorFile($form, 'photo3x4', 'Скан-копия "Фотография 3х4" обязательна для заполнения!');
 		}
 		// medical_certificate
 		if ($place->getByAppForMedicalA1() || $place->getByAppForMedicalA2() || $place->getByAppForMedicalB1() || $place->getByAppForMedicalC1()) {
-			if (empty($form['medical_certificate_face_name'])) {
-				$form = $this->setFormErrorFile($form, 'medical_certificate_face', 'Скан-копия "Медицинская справка (лицевая сторона)" обязательна для заполнения!');
-			}
-			if (empty($form['medical_certificate_back_name'])) {
-				$form = $this->setFormErrorFile($form, 'medical_certificate_back', 'Скан-копия "Медицинская справка (оборотная сторона)" обязательна для заполнения!');
-			}
+			$form = $this->setFormErrorFile($form, 'medical_certificate_face', 'Скан-копия "Медицинская справка (лицевая сторона)" обязательна для заполнения!');
+			$form = $this->setFormErrorFile($form, 'medical_certificate_back', 'Скан-копия "Медицинская справка (оборотная сторона)" обязательна для заполнения!');
 		}
 		return $form;
 	}
@@ -170,44 +162,20 @@ class Model_ApplicationSpec extends Model
 		$place->pid = $form['id'];
 		$exam = new ApplicationPlacesExams();
 		$exam->pid = $form['id'];
-		$dict_scans = new Model_DictScans();
-		$dict_scans->doc_code = 'application';
-		$dict_scans_arr = $dict_scans->getByDocument();
-		if ($dict_scans_arr) {
-			$docs = new Model_Docs();
-			$docs->doc_code = 'application';
-			$docs_row = $docs->getByCode();
-			$scans = new Scans();
-			foreach ($dict_scans_arr as $dict_scans_row) {
-				// check
-				$unset = 0;
-				if ($dict_scans_row['required'] == 1) {
-					$unset = 1;
-				} elseif ($dict_scans_row['scan_code'] == 'application_2' && !$place->getByAppForSpecial()) {
-					$unset = 1;
-				} elseif ($dict_scans_row['scan_code'] == 'photo3x4' && $place->getByAppForBachelorSpec() && $exam->existsExams()) {
-					$unset = 1;
-				} elseif ($dict_scans_row['scan_code'] == 'medical_certificate_face' && ($place->getByAppForMedicalA1() || $place->getByAppForMedicalA2() || $place->getByAppForMedicalB1() || $place->getByAppForMedicalC1())) {
-					$unset = 1;
-				} elseif ($dict_scans_row['scan_code'] == 'medical_certificate_back' && ($place->getByAppForMedicalA1() || $place->getByAppForMedicalA2() || $place->getByAppForMedicalB1() || $place->getByAppForMedicalC1())) {
-					$unset = 1;
-				}
-				// unset
-				if ($unset == 1) {
-					$scans->id_doc = $docs_row['id'];
-					$scans->id_scans = $dict_scans_row['id'];
-					if (!$scans->getByDoc()) {
-						$form[$dict_scans_row['scan_code'].'_id'] = null;
-						$form[$dict_scans_row['scan_code']] = null;
-						$form[$dict_scans_row['scan_code'].'_id'] = null;
-						$form[$dict_scans_row['scan_code'].'_name'] = null;
-						$form[$dict_scans_row['scan_code'].'_type'] = null;
-						$form[$dict_scans_row['scan_code'].'_size'] = null;
-						$form[$dict_scans_row['scan_code'].'_scs'] = null;
-						$form[$dict_scans_row['scan_code'].'_err'] = 'Скан-копия "'.ucfirst($dict_scans_row['scan_name']).'" обязательна для заполнения!';
-					}
-				}
-			}
+		// main
+		$form = Model_Scans::unsets('application', $form);
+		// application_2
+		if (!$place->getByAppForSpecial()) {
+			$form = $this->setFormErrorFile($form, 'application_2', 'Скан-копия "Заявление о приеме в БелГУ (второй лист)" обязательна для заполнения!');
+		}
+		// photo3x4
+		if ($place->getByAppForBachelorSpec() && $exam->existsExams()) {
+			$form = $this->setFormErrorFile($form, 'photo3x4', 'Скан-копия "Фотография 3х4" обязательна для заполнения!');
+		}
+		// medical_certificate
+		if ($place->getByAppForMedicalA1() || $place->getByAppForMedicalA2() || $place->getByAppForMedicalB1() || $place->getByAppForMedicalC1()) {
+			$form = $this->setFormErrorFile($form, 'medical_certificate_face', 'Скан-копия "Медицинская справка (лицевая сторона)" обязательна для заполнения!');
+			$form = $this->setFormErrorFile($form, 'medical_certificate_back', 'Скан-копия "Медицинская справка (оборотная сторона)" обязательна для заполнения!');
 		}
 		return $form;
 	}
@@ -577,7 +545,7 @@ class Model_ApplicationSpec extends Model
 	/**
      * Saves application spec data as PDF.
      *
-     * @return array
+     * @return mixed
      */
 	public function savePdf($id)
 	{

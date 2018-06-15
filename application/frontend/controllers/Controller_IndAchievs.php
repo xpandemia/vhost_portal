@@ -93,10 +93,10 @@ class Controller_IndAchievs extends Controller
 			$this->form['id'] = htmlspecialchars($_POST['id']);
 			$this->form['hdr'] = htmlspecialchars($_POST['hdr']);
 			$this->form['ctr'] = htmlspecialchars($_POST['ctr']);
-			$this->model->delete($this->form);
-			return Basic_Helper::redirect($this->form['hdr'], 200, $this->form['ctr'], 'Index');
+			$this->form = $this->model->delete($this->form);
+			return Basic_Helper::redirect($this->form['hdr'], 200, $this->form['ctr'], 'Index', $this->form['success_msg'], $this->form['error_msg']);
 		} else {
-			return Basic_Helper::redirect(IND_ACHIEVS['hdr'], 200, IND_ACHIEVS['ctr'], 'Index');
+			return Basic_Helper::redirect(IND_ACHIEVS['hdr'], 200, IND_ACHIEVS['ctr'], 'Index', null, 'Ошибка удаления индивидуального достижения!');
 		}
 	}
 

@@ -207,7 +207,7 @@ class Model_Scans extends Model
 				$docs->id = $scans_row['id_row'];
 				if ($docs->existsAppGo()) {
 					$app = new Application();
-					$form['error_msg'] = 'Изменять скан-копии нельзя в документах об образовании, которые используются в заявлениях с состоянием: <strong>'.mb_convert_case($app::STATUS_SENDED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_APPROVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_REJECTED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!';
+					$form['error_msg'] = 'Изменять скан-копии нельзя в документах об образовании, которые используются в заявлениях с состоянием: <strong>'.mb_convert_case($app::STATUS_SENDED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_APPROVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!';
 					return $form;
 				}
 				break;
@@ -217,7 +217,7 @@ class Model_Scans extends Model
 				$ia->id = $scans_row['id_row'];
 				if ($ia->existsAppGo()) {
 					$app = new Application();
-					$form['error_msg'] = 'Изменять скан-копии нельзя в индивидуальных достижениях, которые используются в заявлениях с состоянием: <strong>'.mb_convert_case($app::STATUS_SENDED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_APPROVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_REJECTED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!';
+					$form['error_msg'] = 'Изменять скан-копии нельзя в индивидуальных достижениях, которые используются в заявлениях с состоянием: <strong>'.mb_convert_case($app::STATUS_SENDED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_APPROVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!';
 					return $form;
 				}
 				break;
@@ -226,8 +226,8 @@ class Model_Scans extends Model
 				$app = new Application();
 				$app->id = $scans_row['id_row'];
 				$app_row = $app->get();
-				if ($app_row['status'] == $app::STATUS_SENDED || $app_row['status'] == $app::STATUS_APPROVED || $app_row['status'] == $app::STATUS_REJECTED) {
-					$form['error_msg'] = 'Изменять скан-копии нельзя в заявлении с состоянием: <strong>'.mb_convert_case($app::STATUS_SENDED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_APPROVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_REJECTED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!';
+				if ($app_row['status'] == $app::STATUS_SENDED || $app_row['status'] == $app::STATUS_APPROVED) {
+					$form['error_msg'] = 'Изменять скан-копии нельзя в заявлении с состоянием: <strong>'.mb_convert_case($app::STATUS_SENDED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_APPROVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!';
 					return $form;
 				}
 				break;

@@ -2,11 +2,15 @@
 
 use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
+use common\models\Model_Personal as Personal;
 use common\models\Model_Resume as Resume;
 use common\models\Model_DocsEduc as DocsEduc;
 use common\models\Model_Ege as Ege;
 use common\models\Model_IndAchievs as IndAchievs;
 use common\models\Model_Application as Application;
+use frontend\models\Model_Resume as Model_Resume;
+
+include ROOT_DIR.'/application/frontend/models/Model_Resume.php';
 
 	// check login
 	if (!isset($_SESSION[APP_CODE]['user_name'])) {
@@ -14,14 +18,28 @@ use common\models\Model_Application as Application;
 	}
 ?>
 <div class="row">
-	<div class="col text-primary"><h3>Добро пожаловать!</h3></div>
+	<?php
+		$personal = new Personal();
+		$personal_row = $personal->getFioByUser();
+		if ($personal_row) {
+			$welcome = 'Добро пожаловать, '.$personal_row['name_last'].' '.$personal_row['name_first'].' '.$personal_row['name_middle'].'!';
+		} else {
+			$welcome = 'Добро пожаловать!';
+		}
+	?>
+	<div class="col text-primary"><h3><?php echo $welcome; ?></h3></div>
 </div>
+<?php
+	$personal_row = $personal->getCode1sByUser();
+	if (!empty($personal_row['code1s'])) {
+		echo '<div class="row">';
+		echo '<div class="col"><h5>Ваш идентификатор абитуриента <a href="http://abitur.bsu.edu.ru/abitur/exam/sched/" target="_blank">для просмотра расписания вступительных испытаний на сайте</a>: <strong>'.$personal_row['code1s'].'</strong></h5></div>';
+		echo '</div>';
+	}
+?>
 <div class="row">
 	<div class="col">
-		<strong>Для получения дополнительной информации Вы можете обратиться в Приемную комиссию:</strong><br>
-		E-mail: <a href="mailto:Exam@bsu.edu.ru"><strong>Exam@bsu.edu.ru</strong></a><br>
-		Тел: (4722) 30-18-80, 30-18-90<br>
-		Время работы: с 9:00 до 18:00, перерыв с 13:00 до 14:00
+		<strong>Для получения дополнительной информации Вы можете обратиться в <a href="http://abitur.bsu.edu.ru/abitur/help/contacts/" target="_blank">Приёмную комиссию</a></strong><br>
 	</div>
 </div>
 <?php
@@ -44,10 +62,18 @@ use common\models\Model_Application as Application;
 		$resume = new Resume();
 		$resume->id_user = $_SESSION[APP_CODE]['user_id'];
 		$resume_row = $resume->checkByUser();
-		if ($resume_row && $resume_row['status'] != $resume::STATUS_CREATED) {
-			stepSuccess();
+		if (!$resume_row) {
+			echo '<div class="col col-sm-3 alert alert-danger"><h5>Состояние шага - не пройден</h5></div>';
+			echo '<div class="col col-sm-3"></div>';
+			echo '<div class="col col-sm-1"></div>';
+		} elseif ($resume_row['status'] == $resume::STATUS_CREATED) {
+			echo '<div class="col col-sm-3 alert alert-danger"><h5>Состояние шага - не пройден</h5></div>';
+			echo Model_Resume::showStatus($resume_row['status'], 3);
+			echo '<div class="col col-sm-1"></div>';
 		} else {
-			stepError(1);
+			echo '<div class="col col-sm-3 alert alert-success"><h5>Состояние шага - пройден</h5></div>';
+			echo Model_Resume::showStatus($resume_row['status'], 3);
+			echo '<div class="col col-sm-1"></div>';
 		}
 	?>
 </div>
@@ -149,9 +175,10 @@ use common\models\Model_Application as Application;
 					Когда Вы видите свою анкету впервые, она пуста и имеет состояние <strong>"<?php echo $resume::STATUS_CREATED_NAME; ?>"</strong>. Это означает, что она готова для заполнения. Пожалуйста, аккуратно заполните нужные поля <strong>(* - означает, что поле обязательно для заполнения)</strong> и нажмите кнопку <strong>"Сохранить"</strong>. После этого система проверит введенные Вами данные и<br>
 					<u>- если ошибок нет</u>, сохранит их для дальнейшего использования, анкета получит состояние <strong>"<?php echo $resume::STATUS_SAVED_NAME; ?>"</strong> и Вы увидите выделенное зелёным цветом сообщение "Анкета успешно сохранена."<br>
 					<u>- если ошибки есть</u>, они отобразятся красным цветом, а состояние анкеты не изменится. Исправьте ошибки и снова нажмите <strong>"Сохранить"</strong>. Повторяйте до тех пор, пока не увидите выделенное зелёным цветом сообщение "Анкета успешно сохранена."<br><br>
-					Анкету в состоянии <strong>"<?php echo $resume::STATUS_SAVED_NAME; ?>"</strong> можно исправлять без каких бы то ни было ограничений, но на её основании нельзя формировать заявления на поступление. Чтобы получить такую возможность, необходимо перевести анкету в состояние <strong>"<?php echo $resume::STATUS_SENDED_NAME; ?>"</strong>. Для этого нажмите кнопку <strong>"Отправить"</strong>, когда будете готовы двигаться дальше.<br><br>
-					Анкеты в состояние <strong>"<?php echo $resume::STATUS_SENDED_NAME; ?>"</strong> исправлять уже нельзя, так как они попали на обработку к модератору. Если по каким-либо причинам исправления всё-таки надо внести, пожалуйста, свяжитесь с приёмной комиссией лично.<br><br>
-					Кнопка <strong>"Очистить"</strong> используется лишь для обнуления данных анкеты, <strong>сохранения при этом не происходит!</strong> То есть, когда Вам, например, надо внести значительные изменения в анкету, целесообразно нажать кнопку <strong>"Очистить"</strong>, поработать с анкетой, как с чистым листом, и потом сохранить её.
+					Анкету в состоянии <strong>"<?php echo $resume::STATUS_SAVED_NAME; ?>"</strong> можно исправлять без ограничений, но на её основании нельзя формировать заявления на поступление. Чтобы получить такую возможность, необходимо перевести анкету в состояние <strong>"<?php echo $resume::STATUS_SENDED_NAME; ?>"</strong>. Для этого нажмите кнопку <strong>"Отправить"</strong>, когда Вами проверены все внесённые данные и Вы будете готовы двигаться дальше.<br><br>
+					Анкеты в состоянии <strong>"<?php echo $resume::STATUS_SENDED_NAME; ?>"</strong> ИСПРАВЛЯТЬ НЕЛЬЗЯ, так как они попали на обработку к модератору. Если по каким-либо причинам (ошибка, получение нового паспорта или смена ФИО) исправления всё-таки надо внести, пожалуйста, свяжитесь с приёмной комиссией по телефону или по электронной почте, либо посетите приёмную комиссию лично.<br><br>
+					<u>Примечание:</u><br>
+					Кнопка <strong>"Очистить"</strong> используется лишь для обнуления данных анкеты, <strong>сохранения при этом не происходит!</strong> Целесообразно использовать кнопку <strong>"Очистить"</strong> для внесения значительных изменений. После внесения изменений не забудьте нажать кнопку <strong>"Сохранить"</strong>.
 				</p>
 			</div>
 			<div class="modal-footer">

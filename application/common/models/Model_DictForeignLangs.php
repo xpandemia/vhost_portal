@@ -82,8 +82,9 @@ class Model_DictForeignLangs extends Db_Helper
 	{
 		return $this->rowSelectAll('*',
 									self::TABLE_NAME,
-									'isfolder = :isfolder',
-									[':isfolder' => 0],
+									'isfolder = :isfolder AND code not in (:code1)',
+									[':isfolder' => 0,
+									':code1' => '000000007'],
 									'description');
 	}
 

@@ -3,10 +3,10 @@
 use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 use tinyframe\core\helpers\Form_Helper as Form_Helper;
-use frontend\models\Model_Resume as Model_Resume;
 use common\models\Model_Kladr as Model_Kladr;
 use common\models\Model_ForeignLangs as ForeignLangs;
 use common\models\Model_DictForeignLangs as DictForeignLangs;
+use frontend\models\Model_Resume as Model_Resume;
 
 	// check resume
 	if ((!isset($data['id']) || empty($data['id'])) && (!isset($data['status']) || empty($data['status']))) {
@@ -715,7 +715,7 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 							        }, ARRAY_FILTER_USE_KEY) as $key => $value)
         {
 			$lang = new DictForeignLangs();
-			$lang_arr = $lang->getBsu();
+			$lang_arr = $lang->getAll();
 			if ($lang_arr) {
 				echo '<div class="form-group row" id="div_lang'.$i.'">';
 				echo '<div class="col col-sm-3">';
@@ -733,7 +733,7 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 				echo '</div>';
 				echo '</div>';
 			} else {
-				echo 'Ошибка справочника инстранных языков!';
+				echo 'Ошибка справочника иностранных языков!';
 			}
 			$i++;
 		}
@@ -1627,12 +1627,12 @@ use common\models\Model_DictForeignLangs as DictForeignLangs;
 			var langs = $("select[id^='lang']").length;
 			if (langs == 0) {
 				$('#btn_lang_add').after('<div class="form-group row" id="div_lang1"><div class="col col-sm-3"><label class="font-weight-bold" for="lang1">Иностранный язык №1</label></div><div class="col col-sm-9"><select class="form-control" id="lang1" name="lang1"></select></div></div>');
-				getLangAJAX('/frontend/DictForeignLangs/ForeignLangsBsuJSON', '#lang1');
+				getLangAJAX('/frontend/DictForeignLangs/ForeignLangsJSON', '#lang1');
 			} else {
 				var lang_numb = langs + 1;
 				var lang = 'lang'+lang_numb;
 				$('#div_lang'+langs).after('<div class="form-group row" id="div_lang'+lang_numb+'"><div class="col col-sm-3"><label class="font-weight-bold" for="'+lang+'">Иностранный язык №'+lang_numb+'</label></div><div class="col col-sm-9"><select class="form-control" id="'+lang+'" name="'+lang+'"></select></div></div>');
-				getLangAJAX('/frontend/DictForeignLangs/ForeignLangsBsuJSON', '#'+lang);
+				getLangAJAX('/frontend/DictForeignLangs/ForeignLangsJSON', '#'+lang);
 			}
 		});
 

@@ -116,7 +116,7 @@ class Model_DocsEduc extends Model
 	public function validateFormAdvanced($form)
 	{
 		// change name
-		if ($form['change_name_flag'] == 'checked' && empty($form['change_name_name'])) {
+		if ($form['change_name_flag'] == 'checked') {
 			$form = $this->setFormErrorFile($form, 'change_name', 'Скан-копия "Свидетельство о перемене имени" обязательна для заполнения!');
 		}
 		// educ type
@@ -169,15 +169,13 @@ class Model_DocsEduc extends Model
      */
 	public function unsetScans($form)
 	{
+		// main
+		$form = Model_Scans::unsets('docs_educ', $form);
 		// change_name
 		if ($form['change_name_flag'] == 'checked') {
-			if (empty($form['change_name_name'])) {
-				$form['change_name_err'] = 'Скан-копия "Свидетельство о перемене имени" обязательна для заполнения!';
-				$form['change_name_scs'] = null;
-				$form['validate'] = false;
-			}
+			$form = $this->setFormErrorFile($form, 'change_name', 'Скан-копия "Свидетельство о перемене имени" обязательна для заполнения!');
 		}
-		return Model_Scans::unsets('docs_educ', $form);
+		return $form;
 	}
 
 	/**

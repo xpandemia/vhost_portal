@@ -211,9 +211,11 @@ class Model
      */
 	public function setFormErrorFile($form, $file, $msg)
 	{
-		$form[$file.'_err'] = $msg;
-		$form[$file.'_scs'] = null;
-		$form['validate'] = false;
+		if (empty($form[$file]) && empty($form[$file.'_err'])) {
+			$form[$file.'_err'] = $msg;
+			$form[$file.'_scs'] = null;
+			$form['validate'] = false;
+		}
 		return $form;
 	}
 

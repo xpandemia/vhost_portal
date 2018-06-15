@@ -64,6 +64,21 @@ use common\models\Model_DocsEduc as DocsEduc;
 												'value' => $data['docs_educ'],
 												'success' => $data['docs_educ_scs'],
 												'error' => $data['docs_educ_err']]);
+		// foreign language
+		echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nЗдесь указывается иностранный язык, который Вы будете <strong>продолжать</strong> изучать.\nЕсли позиция останется незаполненной, в заявлении будет автоматически указан первый подходящий язык <strong>(английский, немецкий или французский)</strong> из Вашей анкеты или <strong>\"Не изучал(а)\"</strong>, если в анкете не указан ни один."), 'alert-warning');
+		echo Form_Helper::setFormSelectListDB(['label' => 'Иностранный язык',
+												'control' => 'foreign_lang',
+												'class' => $data['foreign_lang_cls'],
+												'required' => 'no',
+												'model_class' => 'common\\models\\Model_ForeignLangs',
+												'model_method' => 'getBsuByResumeList',
+												'model_field' => 'code',
+												'model_field_name' => 'description',
+												'model_filter' => 'id_resume',
+												'model_filter_val' => $resume_row['id'],
+												'value' => $data['foreign_lang'],
+												'success' => $data['foreign_lang_scs'],
+												'error' => $data['foreign_lang_err']]);
 		/* additional info */
 		echo Form_Helper::setFormHeaderSub('Дополнительная информация');
 		// campus

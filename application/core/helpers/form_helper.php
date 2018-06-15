@@ -179,6 +179,7 @@ class Form_Helper
 									unset($form[$field_name.'_name']);
 									unset($form[$field_name.'_type']);
 									unset($form[$field_name.'_size']);
+									$validate = false;
 									$form[$field_name.'_err'] = $rule_var_arr['msg'];
 								}
 							}
@@ -191,6 +192,7 @@ class Form_Helper
 									unset($form[$field_name.'_name']);
 									unset($form[$field_name.'_type']);
 									unset($form[$field_name.'_size']);
+									$validate = false;
 									$form[$field_name.'_err'] = $rule_var_arr['msg'];
 								}
 							}

@@ -87,7 +87,10 @@ class Model_ForeignLangs extends Db_Helper
      */
 	public function get()
 	{
-		$doc_educ = $this->rowSelectOne('*', self::TABLE_NAME, 'id = :id', [':id' => $this->id]);
+		$doc_educ = $this->rowSelectOne('*',
+										self::TABLE_NAME,
+										'id = :id',
+										[':id' => $this->id]);
 	}
 
 	/**
@@ -104,6 +107,38 @@ class Model_ForeignLangs extends Db_Helper
 	}
 
 	/**
+     * Gets first foreign language by resume.
+     *
+     * @return array
+     */
+	public function getFirstByUser()
+	{
+		return $this->rowSelectOne('*',
+								'foreign_langs INNER JOIN resume ON foreign_langs.id_resume = resume.id',
+								'resume.id_user = :id_user AND numb = :numb',
+								[':id_user' => $_SESSION[APP_CODE]['user_id'],
+								':numb' => 1]);
+	}
+
+	/**
+     * Gets first BSU foreign language by resume.
+     *
+     * @return array
+     */
+	public function getFirstBsuByUser()
+	{
+		return $this->rowSelectAll('*',
+								'foreign_langs INNER JOIN resume ON foreign_langs.id_resume = resume.id'.
+								' INNER JOIN dict_foreign_langs ON foreign_langs.id_lang = dict_foreign_langs.id',
+								'resume.id_user = :id_user AND dict_foreign_langs.code in (:code1, :code2, :code3)',
+								[':id_user' => $_SESSION[APP_CODE]['user_id'],
+								':code1' => '000000002',
+								':code2' => '000000005',
+								':code3' => '000000006'],
+								'numb', 1, 1);
+	}
+
+	/**
      * Gets foreign languages by resume for List.
      *
      * @return array
@@ -117,17 +152,19 @@ class Model_ForeignLangs extends Db_Helper
 	}
 
 	/**
-     * Gets first foreign language by resume.
+     * Gets BSU foreign languages by resume for List.
      *
      * @return array
      */
-	public function getFirstByUser()
+	public function getBsuByResumeList()
 	{
-		return $this->rowSelectOne('*',
-								'foreign_langs INNER JOIN resume ON foreign_langs.id_resume = resume.id',
-								'resume.id_user = :id_user AND numb = :numb',
-								[':id_user' => $_SESSION[APP_CODE]['user_id'],
-								':numb' => 1]);
+		return $this->rowSelectAll('code, description',
+									'foreign_langs INNER JOIN dict_foreign_langs ON foreign_langs.id_lang = dict_foreign_langs.id',
+									'id_resume = :id_resume AND dict_foreign_langs.code in (:code1, :code2, :code3)',
+									[':id_resume' => $this->id_resume,
+									':code1' => '000000002',
+									':code2' => '000000005',
+									':code3' => '000000006']);
 	}
 
 	/**

@@ -47,6 +47,11 @@ class Model_Application extends Model
                                 'required' => ['default' => '', 'msg' => 'Документ об образовании обязателен для заполнения!'],
 								'success' => 'Документ об образовании заполнен верно.'
                                ],
+                'foreign_lang' => [
+									'type' => 'selectlist',
+	                                'class' => 'form-control',
+									'success' => 'Иностранный язык заполнено верно.'
+	                               ],
                 'campus' => [
 							'type' => 'checkbox',
                             'class' => 'form-check-input',
@@ -123,10 +128,10 @@ class Model_Application extends Model
 		$app_row = $app->get();
 		if ($app_row['status'] == $app::STATUS_CREATED || $app_row['status'] == $app::STATUS_SAVED) {
 			if ($app->clear() > 0) {
-				$_SESSION[APP_CODE]['success_msg'] = 'Заявление № '.$form['id'].' успешно удалено.';
+				$_SESSION[APP_CODE]['success_msg'] = 'Заявление № '.$form['id'].' удалено.';
 				return true;
 			} else {
-				$_SESSION[APP_CODE]['error_msg'] = 'Ошибка удаления заявления! Свяжитесь с администратором.';
+				$_SESSION[APP_CODE]['error_msg'] = 'Ошибка удаления заявления № '.$form['id'].'! Свяжитесь с администратором.';
 				return false;
 			}
 		} else {
@@ -172,13 +177,11 @@ class Model_Application extends Model
 			$docship->code = '000000001';
 			$docship_row = $docship->getByCode();
 		$app->id_docship = $docship_row['id'];
-			// foreign lang
-			$lang = new ForeignLangs();
-			$lang_row = $lang->getFirstByUser();
-			if ($lang_row) {
-				$lang = new DictForeignLangs();
-				$lang->id = $lang_row['id_lang'];
-				$lang_row = $lang->get();
+			// foreign language
+			$lang = new DictForeignLangs();
+			if (!empty($form['foreign_lang'])) {
+				$lang->code = $form['foreign_lang'];
+				$lang_row = $lang->getByCode();
 				if ($lang_row) {
 					$app->id_lang = $lang_row['id'];
 				} else {
@@ -186,13 +189,27 @@ class Model_Application extends Model
 					return $form;
 				}
 			} else {
-				$lang = new DictForeignLangs();
-				$lang_row = $lang->getBsuNot();
+				$lang = new ForeignLangs();
+				$lang_row = $lang->getFirstBsuByUser();
 				if ($lang_row) {
-					$app->id_lang = $lang_row['id'];
+					$lang = new DictForeignLangs();
+					$lang->id = $lang_row['id_lang'];
+					$lang_row = $lang->get();
+					if ($lang_row) {
+						$app->id_lang = $lang_row['id'];
+					} else {
+						$form['error_msg'] = 'Ошибка при получении иностранного языка из анкеты!';
+						return $form;
+					}
 				} else {
-					$form['error_msg'] = 'Ошибка при создании отметки о том, что иностранный язык не изучался!';
-					return $form;
+					$lang = new DictForeignLangs();
+					$lang_row = $lang->getBsuNot();
+					if ($lang_row) {
+						$app->id_lang = $lang_row['id'];
+					} else {
+						$form['error_msg'] = 'Ошибка при создании отметки о том, что иностранный язык не изучался!';
+						return $form;
+					}
 				}
 			}
 		$app->type = $app::TYPE_NEW;

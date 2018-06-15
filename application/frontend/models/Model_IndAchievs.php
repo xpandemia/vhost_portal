@@ -4,6 +4,7 @@ namespace frontend\models;
 
 use tinyframe\core\Model as Model;
 use tinyframe\core\helpers\Form_Helper as Form_Helper;
+use common\models\Model_Application as Application;
 use common\models\Model_IndAchievs as IndAchievs;
 use common\models\Model_DictIndAchievs as Model_DictIndAchievs;
 use common\models\Model_DictScans as Model_DictScans;
@@ -82,17 +83,25 @@ class Model_IndAchievs extends Model
 	/**
      * Deletes individual achievment from database.
      *
-     * @return boolean
+     * @return array
      */
-	public function delete($form)
+	public function delete($form) : array
 	{
+		$form['success_msg'] = null;
+		$form['error_msg'] = null;
 		$ia = new IndAchievs();
 		$ia->id = $form['id'];
-		if ($ia->clear() > 0) {
-			return true;
+		if ($ia->existsAppGo()) {
+			$app = new Application();
+			$form['error_msg'] = 'Удалять индивидуальные достижения, которые используются в заявлениях с состоянием: <strong>'.mb_convert_case($app::STATUS_SENDED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_APPROVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong> нельзя!';
 		} else {
-			return false;
+			if ($ia->clear() > 0) {
+				$form['success_msg'] = 'Индивидуальное достижение № '.$ia->id.' удалено.';
+			} else {
+				$form['error_msg'] = 'Ошибка удаления индивидуального достижения № '.$ia->id.'! Свяжитесь с администратором.';
+			}
 		}
+		return $form;
 	}
 
 	/**
@@ -130,6 +139,10 @@ class Model_IndAchievs extends Model
 			$ia_row = $ia->getByNumbExcept();
 			if ($ia_row) {
 				$form['error_msg'] = 'Индивидуальное достижение "'.$row_achievtype['description'].'" с серией/номером '.((!empty($docs->series)) ? $docs->series : '').'/'.$docs->numb.' уже есть!';
+				return $form;
+			} elseif ($ia->existsAppGo()) {
+				$app = new Application();
+				$form['error_msg'] = 'Изменять индивидуальные достижения, которые используются в заявлениях с состоянием: <strong>'.mb_convert_case($app::STATUS_SENDED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_APPROVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong> нельзя!';
 				return $form;
 			} else {
 				if ($ia->changeAll()) {

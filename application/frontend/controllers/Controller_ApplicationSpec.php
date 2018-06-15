@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use tinyframe\core\Controller as Controller;
 use tinyframe\core\View as View;
 use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
+use common\models\Model_ApplicationPlaces as ApplicationPlaces;
 use frontend\models\Model_ApplicationSpec as Model_ApplicationSpec;
 
 include ROOT_DIR.'/application/frontend/models/Model_Application.php';
@@ -190,7 +191,18 @@ class Controller_ApplicationSpec extends Controller
 	public function actionSavePdf()
 	{
 		if (isset($_GET['pid']) && !empty($_GET['pid'])) {
-			$this->model->savePdf(htmlspecialchars($_GET['pid']));
+			$id = htmlspecialchars($_GET['pid']);
+			$place = new ApplicationPlaces();
+			$place->pid = $id;
+			if ($place->getSpecsByApp()) {
+				$this->model->savePdf(htmlspecialchars($id));
+			} else {
+				$spec_row = $this->model->get($id);
+				$this->form = $this->model->setForm($this->model->rules(), $spec_row);
+				$this->form['id'] = $id;
+				$this->form['error_msg'] = 'Направления подготовки не выбраны!';
+				return $this->view->generate('application-edit.php', 'main.php', 'Заявление', $this->form);
+			}
 		} else {
 			return Basic_Helper::redirect('Заявления', 202, APP['ctr'], 'Index', null, 'Отсутствует идент-р заявления!');
 		}

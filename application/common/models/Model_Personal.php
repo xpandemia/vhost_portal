@@ -166,6 +166,19 @@ class Model_Personal extends Db_Helper
 	}
 
 	/**
+     * Gets code 1s by user.
+     *
+     * @return array
+     */
+	public function getCode1sByUser()
+	{
+		return $this->rowSelectOne('code1s',
+								self::TABLE_NAME.' INNER JOIN resume ON '.self::TABLE_NAME.'.id_resume = resume.id',
+								'resume.id_user = :id_user',
+								[':id_user' => $_SESSION[APP_CODE]['user_id']]);
+	}
+
+	/**
      * Gets citizenship by user.
      *
      * @return array

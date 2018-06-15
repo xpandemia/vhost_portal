@@ -257,11 +257,10 @@ class Model_IndAchievs extends Db_Helper
 		$app_arr = $this->rowSelectAll('application.id',
 										'application INNER JOIN application_achievs ON application_achievs.pid = application.id'.
 										' INNER JOIN ind_achievs ON application_achievs.id_achiev = ind_achievs.id',
-										'ind_achievs.id = :id AND application.status in (:status1, :status2, :status3)',
+										'ind_achievs.id = :id AND application.status in (:status1, :status2)',
 										[':id' => $this->id,
 										':status1' => Application::STATUS_SENDED,
-										':status2' => Application::STATUS_APPROVED,
-										':status3' => Application::STATUS_REJECTED]);
+										':status2' => Application::STATUS_APPROVED]);
 		if ($app_arr) {
 			return true;
 		} else {
