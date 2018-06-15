@@ -20,7 +20,7 @@ use common\models\Model_DocsEduc as DocsEduc;
 	<?php
 		echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
 		echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
-		echo Form_Helper::setFormBegin(APP['ctr'], APP['act'], APP['id'], APP['hdr']);
+		echo Form_Helper::setFormBegin(APP['ctr'], APP['act'], APP['id'], APP['hdr'], 0, '/images/logo_bsu_transparent.gif');
 		// university
 		echo Form_Helper::setFormSelectListDB(['label' => 'Место поступления',
 												'control' => 'university',
@@ -93,8 +93,8 @@ use common\models\Model_DocsEduc as DocsEduc;
 	<div class="form-group">
 		<div class="col">
 			<?php
-				echo HTML_Helper::setSubmit('btn btn-success', 'btn_save', 'Сохранить');
-				echo HTML_Helper::setHrefButton(APP['ctr'], 'Reset', 'btn btn-danger', 'Очистить');
+				echo HTML_Helper::setSubmit('btn btn-success', 'btn_save', 'Сохранить', 'Сохраняет данные заявления');
+				echo HTML_Helper::setHrefButton(APP['ctr'], 'Reset', 'btn btn-danger', 'Очистить', 'Обнуляет форму ввода');
 				echo HTML_Helper::setHrefButton(APP['ctr'], 'Index', 'btn btn-warning', 'Отмена');
 			?>
 		</div>

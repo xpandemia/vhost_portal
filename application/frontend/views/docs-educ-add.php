@@ -12,7 +12,7 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 	<?php
 		echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
 		echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
-		echo Form_Helper::setFormBegin(DOCS_EDUC['ctr'], DOCS_EDUC['act'], DOCS_EDUC['id'], DOCS_EDUC['hdr']);
+		echo Form_Helper::setFormBegin(DOCS_EDUC['ctr'], DOCS_EDUC['act'], DOCS_EDUC['id'], DOCS_EDUC['hdr'], 0, '/images/logo_bsu_transparent.gif');
 	?>
 	<div class="form-group">
 		<input type="hidden" id="id" name="id" value="<?php echo (isset($data['id'])) ? $data['id'] : null; ?>"/>
@@ -156,8 +156,12 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 	<div class="form-group">
 		<div class="col">
 			<?php
-				echo HTML_Helper::setSubmit('btn btn-success', 'btn_save', 'Сохранить');
-				echo HTML_Helper::setHrefButton(DOCS_EDUC['ctr'], 'Reset', 'btn btn-danger', 'Очистить');
+				echo HTML_Helper::setSubmit('btn btn-success', 'btn_save', 'Сохранить', 'Сохраняет данные документа об образовании');
+				if (isset($data['id'])) {
+					echo HTML_Helper::setHrefButton(DOCS_EDUC['ctr'], 'Reset', 'btn btn-danger', 'Очистить', 'Сбрасывает данные документа об образовании');
+				} else {
+					echo HTML_Helper::setHrefButton(DOCS_EDUC['ctr'], 'Reset', 'btn btn-danger', 'Очистить', 'Обнуляет форму ввода');
+				}
 				echo HTML_Helper::setHrefButton(DOCS_EDUC['ctr'], 'Index', 'btn btn-warning', 'Отмена');
 			?>
 		</div>

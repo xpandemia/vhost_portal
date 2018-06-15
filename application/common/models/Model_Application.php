@@ -322,14 +322,15 @@ class Model_Application extends Db_Helper
      *
      * @return boolean
      */
-	public function existsUserCampaign()
+	public function existsUserCampaign() : bool
 	{
-		$app = $this->rowSelectOne('*',
+		$app = $this->rowSelectAll('*',
 									self::TABLE_NAME,
 									'id_user = :id_user AND id_campaign = :id_campaign AND active = :active',
 									[':id_user' => $_SESSION[APP_CODE]['user_id'],
 									':id_campaign' => $this->id_campaign,
-									':active' => 1]);
+									':active' => 1],
+									'dt_created', 1, 1);
 		if ($app) {
 			switch ($app['type']) {
 				case self::TYPE_NEW:
@@ -338,17 +339,14 @@ class Model_Application extends Db_Helper
 					} else {
 						return true;
 					}
-					break;
-				case self:TYPE_CHANGE:
+				case self::TYPE_CHANGE:
 					return true;
-					break;
-				case self:TYPE_RECALL:
+				case self::TYPE_RECALL:
 					if ($app['status'] == self::STATUS_APPROVED) {
 						return false;
 					} else {
 						return true;
 					}
-					break;
 				default:
 					return true;
 			}

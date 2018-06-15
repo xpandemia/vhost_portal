@@ -24,6 +24,25 @@ class Controller_ApplicationSpec extends Controller
 	}
 
 	/**
+     * Synchronizes individual achievments for application.
+     *
+     * @return mixed
+     */
+	public function actionSyncIa()
+	{
+		if (isset($_GET['id']) && !empty($_GET['id'])) {
+			$id = htmlspecialchars($_GET['id']);
+			$spec_row = $this->model->get($id);
+			$this->form = $this->model->setForm($this->model->rules(), $spec_row);
+			$this->form['id'] = $id;
+			$this->form = $this->model->syncIa($this->form);
+			return $this->view->generate('application-edit.php', 'main.php', 'Заявление', $this->form);
+		} else {
+			return Basic_Helper::redirect('Заявления', 202, APP['ctr'], 'Index', null, 'Отсутствует идент-р заявления!');
+		}
+	}
+
+	/**
      * Cancels application spec page.
      *
      * @return mixed
@@ -89,10 +108,11 @@ class Controller_ApplicationSpec extends Controller
 	{
 		$id = htmlspecialchars($_POST['id']);
 			$this->form = $this->model->getForm($this->model->rules(), $_POST, $_FILES);
+			$this->form['id'] = $id;
 			$this->form = $this->model->getExams($this->form);
+			$this->form = $this->model->saveExams($this->form);
 				$this->form = $this->model->validateForm($this->form, $this->model->rules());
-				$this->form = $this->model->validateFormAdvanced($this->form, $id);
-		$this->form['id'] = $id;
+				$this->form = $this->model->validateFormAdvanced($this->form);
 		if ($this->form['validate']) {
 			$this->form = $this->model->check($this->form);
 			if (!$this->form['error_msg']) {

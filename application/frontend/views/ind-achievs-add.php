@@ -12,7 +12,7 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 	<?php
 		echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
 		echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
-		echo Form_Helper::setFormBegin(IND_ACHIEVS['ctr'], IND_ACHIEVS['act'], IND_ACHIEVS['id'], IND_ACHIEVS['hdr']);
+		echo Form_Helper::setFormBegin(IND_ACHIEVS['ctr'], IND_ACHIEVS['act'], IND_ACHIEVS['id'], IND_ACHIEVS['hdr'], 0, '/images/logo_bsu_transparent.gif');
 	?>
 	<div class="form-group">
 		<input type="hidden" id="id" name="id" value="<?php echo (isset($data['id'])) ? $data['id'] : null; ?>"/>
@@ -91,8 +91,12 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 	<div class="form-group">
 		<div class="col">
 			<?php
-				echo HTML_Helper::setSubmit('btn btn-success', 'btn_save', 'Сохранить');
-				echo HTML_Helper::setHrefButton(IND_ACHIEVS['ctr'], 'Reset', 'btn btn-danger', 'Очистить');
+				echo HTML_Helper::setSubmit('btn btn-success', 'btn_save', 'Сохранить', 'Сохраняет данные индивидуального достижения');
+				if (isset($data['id'])) {
+					echo HTML_Helper::setHrefButton(IND_ACHIEVS['ctr'], 'Reset', 'btn btn-danger', 'Очистить', 'Сбрасывает данные индивидуального достижения');
+				} else {
+					echo HTML_Helper::setHrefButton(IND_ACHIEVS['ctr'], 'Reset', 'btn btn-danger', 'Очистить', 'Обнуляет форму ввода');
+				}
 				echo HTML_Helper::setHrefButton(IND_ACHIEVS['ctr'], 'Cancel', 'btn btn-warning', 'Отмена');
 			?>
 		</div>

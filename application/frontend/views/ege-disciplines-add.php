@@ -12,7 +12,7 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 	<?php
 		echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
 		echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
-		echo Form_Helper::setFormBegin(EGE_DSP['ctr'], EGE_DSP['act'], EGE_DSP['id'], EGE_DSP['hdr']);
+		echo Form_Helper::setFormBegin(EGE_DSP['ctr'], EGE_DSP['act'], EGE_DSP['id'], EGE_DSP['hdr'], 0, '/images/logo_bsu_transparent.gif');
 	?>
 		<div class="form-group">
 			<input type="hidden" id="id" name="id" value="<?php echo (isset($data['id'])) ? $data['id'] : null; ?>"/>
@@ -36,8 +36,7 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 										'control' => 'points',
 										'type' => 'text',
 										'class' => $data['points_cls'],
-										'required' => 'yes',
-										'required_style' => 'StarUp',
+										'required' => 'no',
 										'value' => $data['points'],
 										'success' => $data['points_scs'],
 										'error' => $data['points_err']]);
@@ -49,8 +48,12 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 	<div class="form-group">
 		<div class="col">
 			<?php
-				echo HTML_Helper::setSubmit('btn btn-success', 'btn_save', 'Сохранить');
-				echo HTML_Helper::setHrefButton(EGE_DSP['ctr'], 'Reset/?pid='.$data['pid'], 'btn btn-danger', 'Очистить');
+				echo HTML_Helper::setSubmit('btn btn-success', 'btn_save', 'Сохранить', 'Сохраняет данные дисциплины ЕГЭ');
+				if (isset($data['id'])) {
+					echo HTML_Helper::setHrefButton(EGE_DSP['ctr'], 'Reset/?pid='.$data['pid'], 'btn btn-danger', 'Очистить', 'Сбрасывает данные дисциплины ЕГЭ');
+				} else {
+					echo HTML_Helper::setHrefButton(EGE_DSP['ctr'], 'Reset/?pid='.$data['pid'], 'btn btn-danger', 'Очистить', 'Обнуляет форму ввода');
+				}
 				echo HTML_Helper::setHrefButton(EGE_DSP['ctr'], 'Cancel/?pid='.$data['pid'], 'btn btn-warning', 'Отмена');
 			?>
 		</div>

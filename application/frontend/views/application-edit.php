@@ -64,15 +64,15 @@ use frontend\models\Model_Application as Model_Application;
 		echo Model_Application::showType($app_row['type']);
 		/* status */
 		echo Model_Application::showStatus($app_row['status']);
-		/* education document */
-		echo HTML_Helper::setAlert('Документ об образовании: <strong>'.$docs_row['docs_educ'].'</strong>', 'alert-info');
 		/* comment */
 		if ($app_row['status'] == $app::STATUS_REJECTED) {
 			$applog = new ApplicationStatus();
 			$applog->id_application = $app_row['id'];
 			$applog_row = $applog->getLast();
-			echo HTML_Helper::setAlert('Причина отклонения: <strong>'.$applog_row['comment'].'</strong>', 'alert-danger');
+			echo HTML_Helper::setAlert('Причины отклонения: <strong>'.$applog_row['comment'].'</strong>', 'alert-danger');
 		}
+		/* education document */
+		echo HTML_Helper::setAlert('Документ об образовании: <strong>'.$docs_row['docs_educ'].'</strong>', 'alert-info');
 	?>
 	<hr><h5>Направления подготовки</h5><br>
 	<?php
@@ -117,7 +117,7 @@ use frontend\models\Model_Application as Model_Application;
 						echo '<tr>';
 						echo '<td>'.$exams_row['discipline_name'].'</td>';
 							if ($citizenship['code'] != '643') {
-								$disabled = 1;
+								$disabled = 0;
 							} else {
 								if ($citizenship['code'] == '643' && $app->checkCertificate()) {
 									$disabled = 1;
@@ -141,8 +141,12 @@ use frontend\models\Model_Application as Model_Application;
 					}
 				}
 			?>
-			</table><br>
-			<h5>Индивидуальные достижения</h5><br>
+			</table>
+			<div class="row">
+				<h5>Индивидуальные достижения</h5>
+				<?php echo HTML_Helper::setHrefButtonIcon('ApplicationSpec', 'SyncIa/?id='.$data['id'], 'btn btn-primary', 'fas fa-sync', 'Обновить индивидуальные достижения'); ?>
+			</div>
+			<br>
 			<table class="table table-bordered table-hover">
 				<thead class="thead-dark">
 					<tr>
@@ -217,10 +221,10 @@ use frontend\models\Model_Application as Model_Application;
 		<div class="form-group">
 			<div class="col">
 				<?php
-					echo HTML_Helper::setSubmit('btn btn-info', 'btn_save', 'Сохранить');
-					echo HTML_Helper::setHrefButton('ApplicationSpec', 'Send/?id='.$data['id'], 'btn btn-success', 'Отправить');
-					echo HTML_Helper::setHrefButton('ApplicationSpec', 'Change/?id='.$data['id'], 'btn btn-primary', 'Изменить');
-					echo HTML_Helper::setHrefButton('ApplicationSpec', 'Recall/?id='.$data['id'], 'btn btn-danger', 'Отозвать');
+					echo HTML_Helper::setSubmit('btn btn-info', 'btn_save', 'Сохранить', 'Сохраняет данные заявления');
+					echo HTML_Helper::setHrefButton('ApplicationSpec', 'Send/?id='.$data['id'], 'btn btn-success', 'Отправить', 'Отправляет данные заявления на проверку модератору');
+					echo HTML_Helper::setHrefButton('ApplicationSpec', 'Change/?id='.$data['id'], 'btn btn-primary', 'Изменить', 'Создаёт заявление на изменение');
+					echo HTML_Helper::setHrefButton('ApplicationSpec', 'Recall/?id='.$data['id'], 'btn btn-danger', 'Отозвать', 'Создаёт заявление на отзыв');
 					echo HTML_Helper::setHrefButton('ApplicationSpec', 'Cancel', 'btn btn-warning', 'Отмена');
 				?>
 			</div>
@@ -266,6 +270,22 @@ use frontend\models\Model_Application as Model_Application;
 	// form events
 	function formEvents()
 	{
+		// exam change
+		$("select[name^='exam']").change(function() {
+			var exams = 0;
+			var exam = 0;
+			$("select[name^='exam']").each(function(i, elem) {
+				if ($(elem).val() == '000000002') {
+					exam = exam + 1;
+				}
+				exams = exams + 1;
+			});
+			if (exams == exam) {
+				$("label[for='photo3x4']").html('Фотография 3х4*');
+			} else {
+				$("label[for='photo3x4']").html('Фотография 3х4');
+			}
+		});
 		// submit click
 		$('#btn_save').click(function() {
 			$("select[name^='exam']").prop('disabled', false);

@@ -12,7 +12,7 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 	<?php
 		echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
 		echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
-		echo Form_Helper::setFormBegin(EGE['ctr'], EGE['act'], EGE['id'], EGE['hdr']);
+		echo Form_Helper::setFormBegin(EGE['ctr'], EGE['act'], EGE['id'], EGE['hdr'], 0, '/images/logo_bsu_transparent.gif');
 			// reg_year
 			echo Form_Helper::setFormInput(['label' => 'Год сдачи',
 											'control' => 'reg_year',
@@ -28,8 +28,8 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 	<div class="form-group">
 		<div class="col">
 			<?php
-				echo HTML_Helper::setSubmit('btn btn-success', 'btn_save', 'Сохранить');
-				echo HTML_Helper::setHrefButton(EGE['ctr'], 'Reset', 'btn btn-danger', 'Очистить');
+				echo HTML_Helper::setSubmit('btn btn-success', 'btn_save', 'Сохранить', 'Сохраняет данные результатов ЕГЭ');
+				echo HTML_Helper::setHrefButton(EGE['ctr'], 'Reset', 'btn btn-danger', 'Очистить', 'Обнуляет форму ввода');
 				echo HTML_Helper::setHrefButton(EGE['ctr'], 'Index', 'btn btn-warning', 'Отмена');
 			?>
 		</div>

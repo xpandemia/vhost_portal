@@ -13,6 +13,7 @@ use common\models\Model_ApplicationPlacesExams as ApplicationPlacesExams;
 use common\models\Model_ApplicationStatus as ApplicationStatus;
 use common\models\Model_DictScans as Model_DictScans;
 use common\models\Model_Scans as Scans;
+use common\models\Model_IndAchievs as IndAchievs;
 use common\models\Model_Docs as Model_Docs;
 use common\models\Model_DocsEduc as DocsEduc;
 use common\models\Model_AdmissionCampaign as Model_AdmissionCampaign;
@@ -65,12 +66,12 @@ class Model_ApplicationSpec extends Model
      *
      * @return array
      */
-	public function validateFormAdvanced($form, $id)
+	public function validateFormAdvanced($form)
 	{
 		$place = new ApplicationPlaces();
-		$place->pid = $id;
+		$place->pid = $form['id'];
 		$exam = new ApplicationPlacesExams();
-		$exam->pid = $id;
+		$exam->pid = $form['id'];
 		// application_2
 		if (!$place->getByAppForSpecial()) {
 			if (empty($form['application_2_name'])) {
@@ -118,6 +119,42 @@ class Model_ApplicationSpec extends Model
 			if (substr($key, 0, 4) == 'exam') {
 				$form[$key] = $value;
 			}
+		}
+		return $form;
+	}
+
+	/**
+     * Saves application spec exams data.
+     *
+     * @return array
+     */
+	public function saveExams($form)
+	{
+		$places = new ApplicationPlaces();
+		$places->pid = $form['id'];
+		$places_arr = $places->getSpecsByApp();
+		if ($places_arr) {
+			foreach ($places_arr as $places_row) {
+				$exams = new ApplicationPlacesExams();
+				$exams->pid = $places_row['id'];
+				$exams_arr = $exams->getExamsByPlace();
+				if ($exams_arr) {
+					foreach ($exams_arr as $exams_row) {
+						if ($exams_row['test_code'] != $form['exam'.$exams_row['discipline_code']]) {
+							$exams->id = $exams_row['id'];
+								$test = new Model_DictTestingScopes();
+								$test->code = $form['exam'.$exams_row['discipline_code']];
+								$test_row = $test->getByCode();
+							$exams->id_test = $test_row['id'];
+							if (!$exams->changeTest()) {
+								$form['error_msg'] = 'Ошибка при изменении типа вступительного испытания с ID '.$exams_row['id'].'!';
+							}
+						}
+					}
+				}
+			}
+		} else {
+			$form['error_msg'] = 'Сохранение невозможно - направления подготовки не выбраны!';
 		}
 		return $form;
 	}
@@ -248,7 +285,7 @@ class Model_ApplicationSpec extends Model
 									$disc_row = $disc->getOne();
 										$enter->id_discipline = $disc_row['id'];
 									$test = new Model_DictTestingScopes();
-									if (strripos($exams_row['exam_name'], 'Профессиональное испытание') === false && strripos($exams_row['exam_name'], 'Творческое испытание') === false) {
+									if (strripos($exams_row['exam_name'], 'Профессиональное испытание') === false && strripos($exams_row['exam_name'], 'Творческое испытание') === false && strripos($exams_row['exam_name'], 'Теория физической культуры') === false) {
 										if ($citizenship['code'] != '643') {
 											// foreigners - exam only
 											$test_row = $test->getExam();
@@ -314,6 +351,45 @@ class Model_ApplicationSpec extends Model
 	}
 
 	/**
+     * Synchronizes individual achievments for application.
+     *
+     * @return array
+     */
+	public function syncIa($form)
+	{
+		$form['success_msg'] = null;
+		$form['error_msg'] = null;
+		$app = new Application();
+		$app->id = $form['id'];
+		$app_row = $app->get();
+		/* check status */
+		if ($app_row['status'] != $app::STATUS_CREATED && $app_row['status'] != $app::STATUS_SAVED) {
+			$form['error_msg'] = 'Обновлять индивидуальные достижения можно только в заявлениях с состоянием: <strong>'.mb_convert_case($app::STATUS_CREATED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_SAVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!';
+			return $form;
+		}
+		/* sync ia */
+		$campaign = new Model_AdmissionCampaign();
+		$campaign->id = $app_row['id_campaign'];
+		$campaign_row = $campaign->getById();
+			$appia = new ApplicationAchievs();
+			$appia->pid = $app_row['id'];
+			$appia->clearByApplication();
+		$ia = new IndAchievs();
+		$ia->campaign_code = $campaign_row['code'];
+		$ia_arr = $ia->getByUserCampaign();
+		if ($ia_arr) {
+			foreach ($ia_arr as $ia_row) {
+				$appia->id_achiev = $ia_row['id'];
+				$appia->save();
+			}
+		}
+		Basic_Helper::msgReset();
+		$form['success_msg'] = 'Индивидуальные достижения обновлены.';
+		$form['error_msg'] = null;
+		return $form;
+	}
+
+	/**
      * Checks application spec data.
      *
      * @return array
@@ -335,35 +411,6 @@ class Model_ApplicationSpec extends Model
 			$form['error_msg'] = 'Сохранять можно только заявления с состоянием: <strong>'.mb_convert_case($app::STATUS_CREATED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_SAVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_CHANGED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!';
 			return $form;
 		}
-		/* exams */
-		$places = new ApplicationPlaces();
-		$places->pid = $form['id'];
-		$places_arr = $places->getSpecsByApp();
-		if ($places_arr) {
-			foreach ($places_arr as $places_row) {
-				$exams = new ApplicationPlacesExams();
-				$exams->pid = $places_row['id'];
-				$exams_arr = $exams->getExamsByPlace();
-				if ($exams_arr) {
-					foreach ($exams_arr as $exams_row) {
-						if ($exams_row['test_code'] != $form['exam'.$exams_row['discipline_code']]) {
-							$exams->id = $exams_row['id'];
-								$test = new Model_DictTestingScopes();
-								$test->code = $form['exam'.$exams_row['discipline_code']];
-								$test_row = $test->getByCode();
-							$exams->id_test = $test_row['id'];
-							if (!$exams->changeTest()) {
-								$form['error_msg'] = 'Ошибка при изменении типа вступительного испытания с ID '.$exams_row['id'].'!';
-								return $form;
-							}
-						}
-					}
-				}
-			}
-		} else {
-			$form['error_msg'] = 'Сохранение невозможно - направления подготовки не выбраны!';
-			return $form;
-		}
 		/* application */
 		$app->id_docseduc = $app_row['id_docseduc'];
 		$app->id_docship = $app_row['id_docship'];
@@ -373,6 +420,8 @@ class Model_ApplicationSpec extends Model
 		$app->campus = (($form['campus'] == 'checked') ? 1 : 0);
 		$app->conds = (($form['conds'] == 'checked') ? 1 : 0);
 		// check remote
+		$places = new ApplicationPlaces();
+		$places->pid = $form['id'];
 		if (count($places->getByAppForPayedOnline()) != 0 && count($places->getByAppForPayedOnline()) == count($places->getSpecsByApp())) {
 			$app->remote = (($form['remote'] == 'checked') ? 1 : 0);
 		} else {
@@ -401,7 +450,7 @@ class Model_ApplicationSpec extends Model
 			}
 		}
 		Basic_Helper::msgReset();
-		$form['success_msg'] = 'Заявление успешно сохранено.';
+		$form['success_msg'] = 'Заявление сохранено.';
 		$form['error_msg'] = null;
 		return $form;
 	}
@@ -435,7 +484,7 @@ class Model_ApplicationSpec extends Model
 			$applog->id_application = $app->id;
 			$applog->create();
 		Basic_Helper::msgReset();
-		$form['success_msg'] = 'Заявление успешно отправлено.';
+		$form['success_msg'] = 'Заявление отправлено.';
 		$form['error_msg'] = null;
 		return $form;
 	}
@@ -469,7 +518,7 @@ class Model_ApplicationSpec extends Model
 			$form = $this->setForm($this->rules(), $spec_row);
 			$form['id'] = $id;
 			Basic_Helper::msgReset();
-			$form['success_msg'] = 'Заявление успешно изменено.';
+			$form['success_msg'] = 'Заявление на изменение сформировано.';
 			$form['error_msg'] = null;
 		} else {
 			Basic_Helper::msgReset();
@@ -515,7 +564,7 @@ class Model_ApplicationSpec extends Model
 				$applog->id_application = $form['id'];
 				$applog->create();
 			Basic_Helper::msgReset();
-			$form['success_msg'] = 'Заявление успешно отозвано.';
+			$form['success_msg'] = 'Заявление на отзыв сформировано.';
 			$form['error_msg'] = null;
 		} else {
 			Basic_Helper::msgReset();
@@ -622,8 +671,16 @@ class Model_ApplicationSpec extends Model
      */
 	public function setAppForPdf($data, $app_row) : array
 	{
+		$app = new Application();
 		$data['app_numb'] = $app_row['numb'];
-		$data['app_dt'] = date('d.m.Y');
+		if ($app_row['type'] == $app::TYPE_RECALL) {
+			$resume = new Resume();
+			$resume_row = $resume->getByUser();
+			$data['recall_fio'] = $resume_row['name_last'].' '.$resume_row['name_first'].$resume_row['name_middle'];
+			$data['recall_dt'] = date('d.m.Y');
+		} else {
+			$data['app_dt'] = date('d.m.Y');
+		}
 		return $data;
 	}
 
@@ -699,7 +756,7 @@ class Model_ApplicationSpec extends Model
 						$data['exams_ege'] = 'On';
 						break;
 					case 'Экзамен':
-						if (strripos($exams_row['discipline_name'], 'Профессиональное испытание') === false && strripos($exams_row['discipline_name'], 'Творческое испытание') === false) {
+						if (strripos($exams_row['discipline_name'], 'Профессиональное испытание') === false && strripos($exams_row['discipline_name'], 'Творческое испытание') === false && strripos($exams_row['discipline_name'], 'Теория физической культуры') === false) {
 							$data['exams_university'] = 'On';
 							$exams_disciplines .= ' '.$exams_row['discipline_name'];
 						}

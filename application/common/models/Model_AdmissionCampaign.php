@@ -156,6 +156,28 @@ class Model_AdmissionCampaign extends Db_Helper
 	}
 
 	/**
+     * Gets admission campaign period.
+     *
+     * @return array
+     */
+	public function getPeriod()
+	{
+		$dt_begin = $this->rowSelectOne("min(date_format(dict_speciality.stage_dt_begin, '%d.%m.%Y')) as dt_begin",
+										'admission_campaign INNER JOIN dict_speciality ON admission_campaign.code = dict_speciality.campaign_code',
+										'code = :code',
+										[':code' => $this->code]);
+		$dt_end = $this->rowSelectOne("max(date_format(dict_speciality.stage_dt_end, '%d.%m.%Y')) as dt_end",
+										'admission_campaign INNER JOIN dict_speciality ON admission_campaign.code = dict_speciality.campaign_code',
+										'code = :code',
+										[':code' => $this->code]);
+		if ($dt_begin && $dt_end) {
+			return array_merge($dt_begin, $dt_end);
+		} else {
+			return null;
+		}
+	}
+
+	/**
      * Saves admission campaign data to database.
      *
      * @return integer

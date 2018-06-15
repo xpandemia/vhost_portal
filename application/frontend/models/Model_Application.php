@@ -151,9 +151,20 @@ class Model_Application extends Model
 			$campaign->code = $form['campaign'];
 			$campaign_row = $campaign->getByCode();
 		$app->id_campaign = $campaign_row['id'];
-			// check campaign
-			if ($app->existsUserCampaign()) {
+			// check campaign app
+			if ($app->existsUserCampaign() === true) {
 				$form['error_msg'] = 'Заявление на данную приёмную кампанию уже есть!';
+				return $form;
+			}
+			// check campaign period
+			$campaign_row = $campaign->getPeriod();
+			if ($campaign_row) {
+				if (date('d.m.Y') < $campaign_row['dt_begin'] || date('d.m.Y') > $campaign_row['dt_end']) {
+					$form['error_msg'] = 'Сроки приёма выбранной кампании - с '.$campaign_row['dt_begin'].' по '.$campaign_row['dt_end'].' !';
+					return $form;
+				}
+			} else {
+				$form['error_msg'] = 'Ошибка при получении сроков приёма!';
 				return $form;
 			}
 		$app->id_docseduc = $form['docs_educ'];

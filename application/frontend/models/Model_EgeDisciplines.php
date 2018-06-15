@@ -29,7 +29,6 @@ class Model_EgeDisciplines extends Model
                 'points' => [
                             'type' => 'text',
                             'class' => 'form-control',
-                            'required' => ['default' => '', 'msg' => 'Баллы обязательны для заполнения!'],
                             'pattern' => ['value' => PATTERN_NUMB, 'msg' => 'Для баллов можно использовать только цифры!'],
                             'width' => ['format' => 'numb', 'min' => 0, 'max' => 100, 'msg' => 'Значение баллов должно быть между 0 и 100!'],
                             'success' => 'Баллы заполнены верно.'
@@ -82,7 +81,11 @@ class Model_EgeDisciplines extends Model
 			$dsp->code = $form['discipline'];
 			$row_dsp =  $dsp->getByCode();
 		$egedsp->id_discipline = $row_dsp['id'];
-		$egedsp->points = $form['points'];
+		if (empty($form['points'])) {
+			$egedsp->points = 0;
+		} else {
+			$egedsp->points = $form['points'];
+		}
 		if (isset($form['id']) && !empty($form['id'])) {
 			// update
 			$egedsp->id = $form['id'];
