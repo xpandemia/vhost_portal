@@ -557,7 +557,6 @@ class Model_ApplicationSpec extends Model
 		$place->pid = $id;
 		$data = [];
 		if ($place->getByAppForBachelorSpec()) {
-			// bachelors and specialists
 			$data = $this->setAppForPdf($data, $app_row);
 			$data = $this->setResumeForPdf($data);
 	        $data = $this->setPlacesForPdf($data, $id, 5);

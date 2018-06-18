@@ -11,6 +11,7 @@ use tinyframe\core\Routing as Routing;
 	require_once ROOT_DIR.'/application/core/helpers/db_helper.php'; // DB processing
 	require_once ROOT_DIR.'/application/core/helpers/files_helper.php'; // FILES processing
 	require_once ROOT_DIR.'/application/core/helpers/form_helper.php'; // FORMS processing
+	require_once ROOT_DIR.'/application/core/helpers/help_helper.php'; // HELP processing
 	require_once ROOT_DIR.'/application/core/helpers/html_helper.php'; // HTML processing
 	require_once ROOT_DIR.'/application/core/helpers/mail_helper.php'; // EMAIL processing
 	require_once ROOT_DIR.'/application/core/helpers/pdf_helper.php'; // PDF processing
@@ -45,7 +46,7 @@ use tinyframe\core\Routing as Routing;
 	require_once ROOT_DIR.'/vendors/PHPMailer/src/PHPMailer.php';
 	require_once ROOT_DIR.'/vendors/PHPMailer/src/SMTP.php';
 	// php-pdftk
-	require_once(ROOT_DIR.'/vendors/php-pdftk/vendor/autoload.php');
+	require_once ROOT_DIR.'/vendors/php-pdftk/vendor/autoload.php';
 
 
 # ---------------------------------------------------------------

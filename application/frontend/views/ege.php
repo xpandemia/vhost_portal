@@ -1,5 +1,6 @@
 <?php
 
+use tinyframe\core\helpers\Help_Helper as Help_Helper;
 use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 
 	// check login
@@ -11,6 +12,9 @@ use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 	<div class="row">
 		<div class="">
 			<h2>Результаты ЕГЭ</h2>
+		</div>
+		<div class="">
+			<button type="button" class="btn btn-info" data-toggle="modal" data-target="#helpEge">Инструкция</button>
 		</div>
 		<div class="col text-left">
 			<?php echo HTML_Helper::setHrefButtonIcon('Main', 'Index', 'btn btn-primary', 'fas fa-home', 'На главную'); ?>
@@ -31,4 +35,21 @@ use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 									'action_delete' => 'DeleteConfirm',
 									'home_hdr' => EGE['hdr']]);
 	?>
+</div>
+
+<div class="modal fade" id="helpEge" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Результаты ЕГЭ (инструкция)</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body text-justify">
+				<?php echo Help_Helper::ege(); ?>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+			</div>
+		</div>
+	</div>
 </div>

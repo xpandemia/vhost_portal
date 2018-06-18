@@ -136,6 +136,16 @@ class Controller_Kladr extends Controller
 		echo $this->model->getStreetByLocationJSON($this->code);
 	}
 
+	/**
+     * Prints postcode by code JSON.
+     *
+     * @return void
+     */
+	public function actionPostcodeByCodeJSON()
+	{
+		echo $this->model->getPostcodeByCodeJSON($this->code);
+	}
+
 	public function __destruct()
 	{
 		$this->model = null;

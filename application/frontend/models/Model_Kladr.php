@@ -3,7 +3,7 @@
 namespace frontend\models;
 
 use tinyframe\core\helpers\Db_Helper as Db_Helper;
-use common\models\Model_Kladr as Model_Kladr_Data;
+use common\models\Model_Kladr as Kladr;
 
 class Model_Kladr extends Db_Helper
 {
@@ -23,7 +23,7 @@ class Model_Kladr extends Db_Helper
 	public function __construct()
 	{
 		$this->db = Db_Helper::getInstance();
-		$this->kladr = new Model_Kladr_Data();
+		$this->kladr = new Kladr();
 	}
 
 	/**
@@ -373,6 +373,26 @@ class Model_Kladr extends Db_Helper
 			}
 			if (!empty($street_json)) {
 				return json_encode($street_json);
+			} else {
+				return json_encode(null);
+			}
+		} else {
+			return json_encode(null);
+		}
+	}
+
+	/**
+     * Gets postcode by code JSON.
+     *
+     * @return JSON
+     */
+	public function getPostcodeByCodeJSON($code) : string
+	{
+		if (!empty($code)) {
+			// get kladr
+			$kladr = $this->kladr->getByCode($code);
+			if ($kladr && !empty($kladr['postcode'])) {
+				return json_encode($kladr['postcode']);
 			} else {
 				return json_encode(null);
 			}

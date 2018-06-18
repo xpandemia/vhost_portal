@@ -1,5 +1,6 @@
 <?php
 
+use tinyframe\core\helpers\Help_Helper as Help_Helper;
 use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 use tinyframe\core\helpers\Form_Helper as Form_Helper;
 
@@ -12,6 +13,9 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 	<div class="row">
 		<div class="">
 			<h2>Заявления</h2>
+		</div>
+		<div class="">
+			<button type="button" class="btn btn-info" data-toggle="modal" data-target="#helpApp">Инструкция</button>
 		</div>
 		<div class="col text-left">
 			<?php echo HTML_Helper::setHrefButtonIcon('Main', 'Index', 'btn btn-primary', 'fas fa-home', 'На главную'); ?>
@@ -32,4 +36,21 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 									'action_delete' => 'DeleteConfirm',
 									'home_hdr' => 'Заявления']);
 	?>
+</div>
+
+<div class="modal fade" id="helpApp" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Заявления (инструкция)</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body">
+				<?php echo Help_Helper::app(); ?>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+			</div>
+		</div>
+	</div>
 </div>

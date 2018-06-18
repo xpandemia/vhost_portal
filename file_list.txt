@@ -109,6 +109,7 @@ PORTALBSU
 |   |   |       db_helper.php - помощник для работы с БД
 |   |   |       files_helper.php - помощник для работы с файлами
 |   |   |       form_helper.php - помощник для работы с формами
+|   |   |       help_helper.php - помощник для работы с инструкциями
 |   |   |       html_helper.php - помощник для работы с HTML
 |   |   |       mail_helper.php - помощник для работы с эл. почтой
 |   |   |       pdf_helper.php - помощник для работы с PDF

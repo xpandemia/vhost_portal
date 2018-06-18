@@ -7,7 +7,6 @@ use common\models\Model_Resume as Resume;
 use common\models\Model_DocsEduc as DocsEduc;
 
 	$resume = new Resume();
-	$resume->id_user = $_SESSION[APP_CODE]['user_id'];
 	$resume_row = $resume->checkByUser();
 		$docs = new DocsEduc();
 		$docs->id_user = $_SESSION[APP_CODE]['user_id'];

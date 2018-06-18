@@ -4,6 +4,7 @@ namespace frontend\models;
 
 use tinyframe\core\Model as Model;
 use tinyframe\core\helpers\Form_Helper as Form_Helper;
+use common\models\Model_Application as Application;
 use common\models\Model_DocsEduc as DocsEduc;
 use common\models\Model_DictEducforms as DictEducforms;
 use common\models\Model_DictEductypes as Model_DictEductypes;
@@ -149,17 +150,25 @@ class Model_DocsEduc extends Model
 	/**
      * Deletes education document from database.
      *
-     * @return boolean
+     * @return array
      */
-	public function delete($form)
+	public function delete($form) : array
 	{
+		$form['success_msg'] = null;
+		$form['error_msg'] = null;
 		$docs = new DocsEduc();
 		$docs->id = $form['id'];
-		if ($docs->clear() > 0) {
-			return true;
+		if ($docs->existsAppGo()) {
+			$app = new Application();
+			$form['error_msg'] = 'Удалять документы об образовании, которые используются в заявлениях с состоянием: <strong>'.mb_convert_case($app::STATUS_SENDED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_APPROVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong> нельзя!';
 		} else {
-			return false;
+			if ($docs->clear() > 0) {
+				$form['success_msg'] = 'Документ об образовании № '.$docs->id.' удалён.';
+			} else {
+				$form['error_msg'] = 'Ошибка удаления документа об образовании № '.$docs->id.'! Свяжитесь с администратором.';
+			}
 		}
+		return $form;
 	}
 
 	/**
@@ -216,9 +225,12 @@ class Model_DocsEduc extends Model
 			if ($row_docs) {
 				$form['error_msg'] = 'Документ об образовании с серией/номером '.((!empty($docs->series)) ? $docs->series : '').'/'.$docs->numb.' уже есть!';
 				return $form;
+			} elseif ($docs->existsAppGo()) {
+				$app = new Application();
+				$form['error_msg'] = 'Изменять документы об образовании, которые используются в заявлениях с состоянием: <strong>'.mb_convert_case($app::STATUS_SENDED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_APPROVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong> нельзя!';
 			} else {
 				if ($docs->changeAll()) {
-					$form['success_msg'] = 'Изменен документ об образовании № '.$form['id'].'.';
+					$form['success_msg'] = 'Изменён документ об образовании № '.$form['id'].'.';
 				} else {
 					$form['error_msg'] = 'Ошибка при изменении документа об образовании № '.$form['id'].'!';
 					return $form;

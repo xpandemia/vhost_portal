@@ -163,8 +163,11 @@ class Model_Application extends Model
 			}
 			// check campaign period
 			$campaign_row = $campaign->getPeriod();
+			$now = new \DateTime;
+			$start = \DateTime::CreateFromFormat('d.m.Y',$campaign_row['dt_begin']);
+			$end = \DateTime::CreateFromFormat('d.m.Y',$campaign_row['dt_end']);
 			if ($campaign_row) {
-				if (date('d.m.Y') < $campaign_row['dt_begin'] || date('d.m.Y') > $campaign_row['dt_end']) {
+				if ($now < $start || $now > $end) {
 					$form['error_msg'] = 'Сроки приёма выбранной кампании - с '.$campaign_row['dt_begin'].' по '.$campaign_row['dt_end'].' !';
 					return $form;
 				}

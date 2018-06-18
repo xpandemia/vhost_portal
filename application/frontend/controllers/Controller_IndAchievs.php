@@ -96,7 +96,7 @@ class Controller_IndAchievs extends Controller
 			$this->form = $this->model->delete($this->form);
 			return Basic_Helper::redirect($this->form['hdr'], 200, $this->form['ctr'], 'Index', $this->form['success_msg'], $this->form['error_msg']);
 		} else {
-			return Basic_Helper::redirect(IND_ACHIEVS['hdr'], 200, IND_ACHIEVS['ctr'], 'Index', null, 'Ошибка удаления индивидуального достижения!');
+			return Basic_Helper::redirect('Индивидуальные достижения', 200, IND_ACHIEVS['ctr'], 'Index', null, 'Ошибка удаления индивидуального достижения!');
 		}
 	}
 
@@ -113,7 +113,7 @@ class Controller_IndAchievs extends Controller
 		if ($this->form['validate']) {
 			$this->form = $this->model->check($this->form);
 			if (!$this->form['error_msg']) {
-				return Basic_Helper::redirect(IND_ACHIEVS['hdr'], 200, IND_ACHIEVS['ctr'], 'Index', $this->form['success_msg']);
+				return Basic_Helper::redirect('Индивидуальные достижения', 200, IND_ACHIEVS['ctr'], 'Index', $this->form['success_msg']);
 			}
 		}
 		$this->form = $this->model->unsetScans($this->form);

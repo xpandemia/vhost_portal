@@ -22,6 +22,18 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 	<!-- Font Awesome -->
 	<script defer src="/vendors/fontawesome/fontawesome-all.min.js"></script>
 	<link rel="stylesheet" href="/vendors/fontawesome/fontawesome-all.css">
+
+	<style>
+		.footer {
+			position: fixed;
+			left: 0;
+		    bottom: 0;
+		    width: 100%;
+		    height: 8%;
+			background: #d8d8d8;
+			text-align: center;
+	    }
+	</style>
 </head>
 <body class="bg-secondary">
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
@@ -61,17 +73,13 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 		<?php include ROOT_DIR.'/application/backend/views/'.$content_view; ?>
 	</div>
 
-	<div class="fixed-bottom" style="background:#d8d8d8">
-		<div class="row">
-			<div class="col text-center">
-				<p>
-					© <?php echo date('Y'); ?> <a href="https://www.bsu.edu.ru/" target="_blank">НИУ «БелГУ»</a>.<br>
-					По вопросам электронной подачи документов для поступления обращаться в <a href="http://abitur.bsu.edu.ru/abitur/help/contacts/" target="_blank">Приемную комиссию</a>. E-mail: <a href="mailto:Abitur@bsu.edu.ru">Abitur@bsu.edu.ru</a><br>
-					Разработка и техническая поддержка: <a href="https://www.bsu.edu.ru/bsu/structure/detail.php?ID=10247" target="_blank">управление информатизации НИУ «БелГУ»</a>. E-mail: <a href="mailto:WebmasterAbitur@bsu.edu.ru">WebmasterAbitur@bsu.edu.ru</a>
-				</p>
-			</div>
-		</div>
-    </div>
+	<footer class="footer">
+		<p>
+			© <?php echo date('Y'); ?> <a href="https://www.bsu.edu.ru/" target="_blank">НИУ «БелГУ»</a>.<br>
+			По вопросам электронной подачи документов для поступления обращаться в <a href="http://abitur.bsu.edu.ru/abitur/help/contacts/" target="_blank">Приёмную комиссию</a>. E-mail: <a href="mailto:Abitur@bsu.edu.ru">Abitur@bsu.edu.ru</a><br>
+			Разработка и техническая поддержка: <a href="https://www.bsu.edu.ru/bsu/structure/detail.php?ID=10247" target="_blank">управление информатизации НИУ «БелГУ»</a>. E-mail: <a href="mailto:WebmasterAbitur@bsu.edu.ru">WebmasterAbitur@bsu.edu.ru</a>
+		</p>
+	</footer>
 
 	<script>
 		$(document).ready(function(){

@@ -1,6 +1,7 @@
 <?php
 
 use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
+use tinyframe\core\helpers\Help_Helper as Help_Helper;
 use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 use tinyframe\core\helpers\Form_Helper as Form_Helper;
 use common\models\Model_Kladr as Model_Kladr;
@@ -24,6 +25,8 @@ use frontend\models\Model_Resume as Model_Resume;
 		echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
 		echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
 		echo Form_Helper::setFormBegin(RESUME['ctr'], RESUME['act'], RESUME['id'], RESUME['hdr'], 2, '/images/logo_bsu_transparent.gif');
+		/* help */
+		echo '<button type="button" class="btn btn-info" data-toggle="modal" data-target="#helpResume">Инструкция</button>';
 		/* status */
 		echo Model_Resume::showStatus($data['status']);
 		/* personal data */
@@ -847,6 +850,23 @@ use frontend\models\Model_Resume as Model_Resume;
 	</div>
 </div>
 
+<div class="modal fade" id="helpResume" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Анкета (инструкция)</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body text-justify">
+				<?php echo Help_Helper::resume(); ?>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <script>
 	$(document).ready(function(){
 		formInit();
@@ -1064,6 +1084,13 @@ use frontend\models\Model_Resume as Model_Resume;
 		    $('#building_reg').val('');
 		    $('#flat_reg').val('');
 		    $('#postcode_reg').val('');
+		    /*getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', region_reg, '#postcode_reg');
+		    var postcode_reg = $('#postcode_reg').val();
+		    if (postcode_reg == '') {
+				$('#address_reg').val(region_reg_name);
+			} else {
+				$('#address_reg').val(postcode_reg + ', ' + region_reg_name);
+			}*/
 
 		    $('#address_reg_clone').show();
 		    if ($('#address_res').val() != '') {
@@ -1090,6 +1117,7 @@ use frontend\models\Model_Resume as Model_Resume;
 		    $('#building_reg').val('');
 		    $('#flat_reg').val('');
 		    $('#postcode_reg').val('');
+		    //getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', area_reg, '#postcode_reg');
 
 			$('#address_reg_clone').show();
 			if ($('#address_res').val() != '') {
@@ -2046,6 +2074,32 @@ use frontend\models\Model_Resume as Model_Resume;
 						$(select).append('<option value="' + value.kladr_code + '">' + value.kladr_name + ' ' + value.kladr_abbr + '</option>');
 					}
 		        });
+			}
+	      },
+	      error: function(xhr, status, error) {
+		      console.log('Request Failed: ' + status + ' ' + error + ' ' + xhr.status + ' ' + xhr.statusText);
+		  }
+	    });
+	    stopLoadingAnimation();
+	}
+
+	function getPostcodeAJAX(url, code, control)
+	{
+		var postcode;
+		startLoadingAnimation();
+		$.ajax({
+	      async: false,
+	      url: url,
+	      type: 'POST',
+	      data: {format: 'json'},
+		  dataType: 'json',
+		  data: {code: code},
+	      success: function(result) {
+			console.log(result);
+			if (!jQuery.isEmptyObject(result)) {
+				$(control).val(result);
+			} else {
+				$(control).val('');
 			}
 	      },
 	      error: function(xhr, status, error) {

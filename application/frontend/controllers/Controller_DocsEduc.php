@@ -111,14 +111,14 @@ class Controller_DocsEduc extends Controller
      */
 	public function actionDelete()
 	{
-		$this->form['id'] = htmlspecialchars($_POST['id']);
-		$this->form['hdr'] = htmlspecialchars($_POST['hdr']);
-		$this->form['ctr'] = htmlspecialchars($_POST['ctr']);
-		if ($this->model->delete($this->form)) {
-			Basic_Helper::redirect($this->form['hdr'], 200, $this->form['ctr'], 'Index');
+		if (isset($_POST['id']) && isset($_POST['hdr']) && isset($_POST['ctr'])) {
+			$this->form['id'] = htmlspecialchars($_POST['id']);
+			$this->form['hdr'] = htmlspecialchars($_POST['hdr']);
+			$this->form['ctr'] = htmlspecialchars($_POST['ctr']);
+			$this->form = $this->model->delete($this->form);
+			return Basic_Helper::redirect($this->form['hdr'], 200, $this->form['ctr'], 'Index', $this->form['success_msg'], $this->form['error_msg']);
 		} else {
-			$this->form['error_msg'] = 'Ошибка удаления документа '.$this->form['ctr'].'! Свяжитесь с администратором.';
-			return $this->view->generate('delete-confirm.php', 'form.php', 'Удаление документа '.$this->form['ctr'], $this->form);
+			return Basic_Helper::redirect('Документы об образовании', 200, DOCS_EDUC['ctr'], 'Index', null, 'Ошибка удаления документа об образовании!');
 		}
 	}
 
@@ -136,7 +136,7 @@ class Controller_DocsEduc extends Controller
 		if ($this->form['validate']) {
 			$this->form = $this->model->check($this->form);
 			if (!$this->form['error_msg']) {
-				return $this->view->generate('docs-educ.php', 'main.php', 'Документы об образовании', $this->form);
+				return Basic_Helper::redirect('Документы об образовании', 200, DOCS_EDUC['ctr'], 'Index', $this->form['success_msg']);
 			}
 		}
 		$this->form = $this->model->unsetScans($this->form);
