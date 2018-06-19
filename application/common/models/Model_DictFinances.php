@@ -140,7 +140,8 @@ class Model_DictFinances extends Db_Helper
 	{
 		return $this->rowUpdate(self::TABLE_NAME,
 								'isfolder = :isfolder',
-								[':isfolder' => $this->isfolder]);
+								[':isfolder' => $this->isfolder],
+								['id' => $this->id]);
 	}
 
 	/**
@@ -152,7 +153,8 @@ class Model_DictFinances extends Db_Helper
 	{
 		return $this->rowUpdate(self::TABLE_NAME,
 								'parent_key = :parent_key',
-								[':parent_key' => $this->parent_key]);
+								[':parent_key' => $this->parent_key],
+								['id' => $this->id]);
 	}
 
 	/**
@@ -164,7 +166,8 @@ class Model_DictFinances extends Db_Helper
 	{
 		return $this->rowUpdate(self::TABLE_NAME,
 								'code = :code',
-								[':code' => $this->code]);
+								[':code' => $this->code],
+								['id' => $this->id]);
 	}
 
 	/**
@@ -176,7 +179,8 @@ class Model_DictFinances extends Db_Helper
 	{
 		return $this->rowUpdate(self::TABLE_NAME,
 								'description = :description',
-								[':description' => $this->description]);
+								[':description' => $this->description],
+								['id' => $this->id]);
 	}
 
 	/**
@@ -188,7 +192,8 @@ class Model_DictFinances extends Db_Helper
 	{
 		return $this->rowUpdate(self::TABLE_NAME,
 								'abbr = :abbr',
-								[':abbr' => $this->abbr]);
+								[':abbr' => $this->abbr],
+								['id' => $this->id]);
 	}
 
 	/**
@@ -254,6 +259,7 @@ class Model_DictFinances extends Db_Helper
 					} else {
 						// update
 						$upd = 0;
+						$this->id = $finance['id'];
 						// isfolder
 						if ($finance['isfolder'] != $this->isfolder) {
 							if ($this->changeIsfolder()) {

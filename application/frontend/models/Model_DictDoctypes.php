@@ -38,6 +38,25 @@ class Model_DictDoctypes extends Model
 	}
 
 	/**
+     * Gets passports BSU JSON.
+     *
+     * @return JSON
+     */
+	public function getPassportsBsuJSON() : string
+	{
+		$doc = $this->doc->getPassportsBsu();
+		foreach ($doc as $value) {
+			$doc_json[] = ['code' => $value['code'],
+							'description' => $value['description']];
+		}
+		if (!empty($doc_json)) {
+			return json_encode($doc_json);
+		} else {
+			return json_encode(null);
+		}
+	}
+
+	/**
      * Gets russian passports JSON.
      *
      * @return JSON

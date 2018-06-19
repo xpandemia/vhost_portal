@@ -115,10 +115,7 @@ class Model_DictIndAchievsAc extends Db_Helper
 	public function changeAll()
 	{
 		$prepare = $this->prepareUpdate(self::TABLE_NAME, $this->rules());
-		return $this->rowUpdate(self::TABLE_NAME,
-								$prepare['fields'],
-								$prepare['params'],
-								['code' => $this->code]);
+		return $this->rowUpdate(self::TABLE_NAME, $prepare['fields'], $prepare['params'], ['id' => $this->id]);
 	}
 
 	/**
@@ -186,6 +183,7 @@ class Model_DictIndAchievsAc extends Db_Helper
 			} else {
 				// update
 				$upd = 0;
+				$this->id = $ia['id'];
 				if ($this->changeAll()) {
 					$log->msg = 'Изменено индивидуальное достижение с кодом "'.$this->achiev_code.'" по приёмной кампании с кодом "'.$this->campaign_code.'".';
 					$log->value_old = null;

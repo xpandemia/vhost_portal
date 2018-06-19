@@ -6,8 +6,9 @@ use tinyframe\core\Model as Model;
 use tinyframe\core\helpers\Calc_Helper as Calc_Helper;
 use tinyframe\core\helpers\Form_Helper as Form_Helper;
 use tinyframe\core\helpers\Files_Helper as Files_Helper;
+use common\models\Model_Application as Application;
 use common\models\Model_Resume as Resume;
-use common\models\Model_Personal as Model_Personal;
+use common\models\Model_Personal as Personal;
 use common\models\Model_Contacts as Model_Contacts;
 use common\models\Model_Passport as Model_Passport;
 use common\models\Model_DictDoctypes as Model_DictDoctypes;
@@ -244,7 +245,7 @@ class Model_Resume extends Model
                                 'type' => 'text',
                                 'class' => 'form-control',
                                 'required' => ['default' => '', 'msg' => 'Адрес регистрации обязателен для заполнения!'],
-                                'pattern' => ['value' => PATTERN_INFO_RUS, 'msg' => 'Для адреса регистрации можно использовать только цифры, русские буквы, тире, точки, запятые и пробелы!'],
+                                'pattern' => ['value' => PATTERN_INFO_RUS, 'msg' => 'Для адреса регистрации можно использовать только цифры, русские буквы, тире, точки, запятые или пробелы!'],
                                 'width' => ['format' => 'string', 'min' => 1, 'max' => 255, 'msg' => 'Слишком длинный адрес регистрации!'],
                                 'success' => 'Адрес регистрации заполнен верно.'
                                ],
@@ -258,7 +259,7 @@ class Model_Resume extends Model
                                 'type' => 'text',
                                 'class' => 'form-control',
                                 'required' => ['default' => '', 'msg' => 'Адрес проживания обязателен для заполнения!'],
-                                'pattern' => ['value' => PATTERN_INFO_RUS, 'msg' => 'Для адреса проживания можно использовать только цифры, русские буквы, тире, точки, запятые и пробелы!'],
+                                'pattern' => ['value' => PATTERN_INFO_RUS, 'msg' => 'Для адреса проживания можно использовать только цифры, русские буквы, тире, точки, запятые или пробелы!'],
                                 'width' => ['format' => 'string', 'min' => 1, 'max' => 255, 'msg' => 'Слишком длинный адрес проживания!'],
                                 'success' => 'Адрес проживания заполнен верно.'
                                ],
@@ -850,7 +851,7 @@ class Model_Resume extends Model
 			return $form;
 		}
 		/* personal */
-		$personal = new Model_Personal();
+		$personal = new Personal();
 		$personal->id_user = $_SESSION[APP_CODE]['user_id'];
 		$personal->id_resume = $form['id'];
 		$personal->name_first = $form['name_first'];
@@ -1329,6 +1330,12 @@ class Model_Resume extends Model
 		if ($form['status'] != $resume::STATUS_SAVED) {
 			$form['error_msg'] = 'Отправлять анкеты можно только с состоянием <strong>'.mb_convert_case($resume::STATUS_SAVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!';
 			return $form;
+		} elseif ($form['citizenship'] == '000') {
+			$form['error_msg'] = nl2br("Лицам без гражданства не разрешена подача документов через веб!\nПожалуйста, обратитесть в приёмную комиссию лично.");
+			return $form;
+		} elseif (!empty($form['beneficiary'])) {
+			$form['error_msg'] = nl2br("Лицам, имеющим льготы, не разрешена подача документов через веб!\nПожалуйста, обратитесть в приёмную комиссию лично.");
+			return $form;
 		}
 		/* send */
 		$resume->id = $form['id'];
@@ -1336,6 +1343,41 @@ class Model_Resume extends Model
 		$resume->changeStatus();
 		$form['status'] = $resume->status;
 		$form['success_msg'] = 'Анкета отправлена.';
+		$form['error_msg'] = null;
+		return $form;
+	}
+
+	/**
+     * Recalls resume data.
+     *
+     * @return array
+     */
+	public function recall($form)
+	{
+		$app = new Application();
+		$resume = new Resume();
+		$form['success_msg'] = null;
+		$form['error_msg'] = null;
+		/* check status */
+		$personal = new Personal();
+		$personal->id_resume = $form['id'];
+		$personal_row = $personal->getByResume();
+		if ($form['status'] != $resume::STATUS_SENDED) {
+			$form['error_msg'] = 'Отзывать анкеты можно только с состоянием <strong>'.mb_convert_case($resume::STATUS_SENDED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!';
+			return $form;
+		} elseif (!empty($personal_row['guid'])) {
+			$form['error_msg'] = 'Отзывать анкету нельзя, так как приёмная комиссия уже создала для Вас запись физ. лица в учётной системе!';
+			return $form;
+		} elseif ($app->existsAppGo() == true) {
+			$form['error_msg'] = 'Отзывать анкеты нельзя, если есть заявления с состоянием: <strong>'.mb_convert_case($app::STATUS_SENDED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_APPROVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!';
+			return $form;
+		}
+		/* recall */
+		$resume->id = $form['id'];
+		$resume->status = $resume::STATUS_SAVED;
+		$resume->changeStatus();
+		$form['status'] = $resume->status;
+		$form['success_msg'] = 'Анкета отозвана.';
 		$form['error_msg'] = null;
 		return $form;
 	}

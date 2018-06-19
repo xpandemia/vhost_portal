@@ -32,8 +32,8 @@ class Controller_DocsEduc extends Controller
 		$resume = new Resume();
 		$resume_row = $resume->getStatusByUser();
 		if ($resume_row) {
-			if ($resume_row['status'] == $resume::STATUS_CREATED) {
-				return Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Home', null, 'Анкета в состоянии <strong>'.mb_convert_case($resume::STATUS_CREATED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!');
+			if ($resume_row['status'] == $resume::STATUS_CREATED || $resume_row['status'] == $resume::STATUS_SAVED) {
+				return Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Home', null, 'Анкета ещё не отправлена!');
 			}
 		} else {
 			return Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Home', null, 'Анкета ещё не создана!');

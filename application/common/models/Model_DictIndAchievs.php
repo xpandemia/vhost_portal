@@ -149,7 +149,8 @@ class Model_DictIndAchievs extends Db_Helper
 	{
 		return $this->rowUpdate(self::TABLE_NAME,
 								'code = :code',
-								[':code' => $this->code]);
+								[':code' => $this->code],
+								['id' => $this->id]);
 	}
 
 	/**
@@ -161,7 +162,8 @@ class Model_DictIndAchievs extends Db_Helper
 	{
 		return $this->rowUpdate(self::TABLE_NAME,
 								'description = :description',
-								[':description' => $this->description]);
+								[':description' => $this->description],
+								['id' => $this->id]);
 	}
 
 	/**
@@ -173,7 +175,8 @@ class Model_DictIndAchievs extends Db_Helper
 	{
 		return $this->rowUpdate(self::TABLE_NAME,
 								'numb = :numb',
-								[':numb' => $this->numb]);
+								[':numb' => $this->numb],
+								['id' => $this->id]);
 	}
 
 	/**
@@ -185,7 +188,8 @@ class Model_DictIndAchievs extends Db_Helper
 	{
 		return $this->rowUpdate(self::TABLE_NAME,
 								'abbr = :abbr',
-								[':abbr' => $this->abbr]);
+								[':abbr' => $this->abbr],
+								['id' => $this->id]);
 	}
 
 	/**
@@ -197,7 +201,8 @@ class Model_DictIndAchievs extends Db_Helper
 	{
 		return $this->rowUpdate(self::TABLE_NAME,
 								'confirm = :confirm',
-								[':confirm' => $this->confirm]);
+								[':confirm' => $this->confirm],
+								['id' => $this->id]);
 	}
 
 	/**
@@ -264,6 +269,7 @@ class Model_DictIndAchievs extends Db_Helper
 					} else {
 						// update
 						$upd = 0;
+						$this->id = $ia['id'];
 						// code
 						if ($ia['code'] != $this->code) {
 							if ($this->changeCode()) {

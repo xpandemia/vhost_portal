@@ -36,6 +36,16 @@ class Controller_DictDoctypes extends Controller
 	}
 
 	/**
+     * Prints passports BSU JSON.
+     *
+     * @return void
+     */
+	public function actionPassportsBsuJSON()
+	{
+		echo $this->model->getPassportsBsuJSON();
+	}
+
+	/**
      * Prints russian passports JSON.
      *
      * @return void

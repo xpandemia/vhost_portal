@@ -236,8 +236,8 @@ class Model_ApplicationSpec extends Model
 					$id = $places->save();
 					if ($id > 0) {
 						// get entrance exams
-						// bachelor and specialist only
-						if ($spec_row[4] == '000000001' || $spec_row[4] == '000000002') {
+						// bachelor, specialist, magisters, attending physicians
+						if ($spec_row[4] == '000000001' || $spec_row[4] == '000000002' || $spec_row[4] == '000000003' || $spec_row[4] == '000000005') {
 							$exams = new Model_DictEntranceExams();
 							$exams->campaign_code = $spec_row[1];
 							$exams->group_code = $spec_row[3];
@@ -254,27 +254,42 @@ class Model_ApplicationSpec extends Model
 										$enter->id_discipline = $disc_row['id'];
 									$test = new Model_DictTestingScopes();
 									if (strripos($exams_row['exam_name'], 'Профессиональное испытание') === false && strripos($exams_row['exam_name'], 'Творческое испытание') === false && strripos($exams_row['exam_name'], 'Теория физической культуры') === false) {
-										if ($citizenship['code'] != '643') {
-											// foreigners - exam only
-											$test_row = $test->getExam();
-										} else {
-											if ($citizenship['code'] == '643' && $app->checkCertificate()) {
-												// russia with certificate - ege only
-												$test_row = $test->getEge();
-											} else {
-												// russia without certificate - ege or exam
-												$ege = new Model_EgeDisciplines();
-												$ege->code_discipline = $exams_row['exam_code'];
-												$ege_row = $ege->checkDiscipline();
-												if ($ege_row) {
-													// ege
-													$test_row = $test->getEge();
-												} else {
-													// exam
+										switch ($spec_row[4]) {
+											// bachelors
+											case '000000001':
+											// specialists
+											case '000000002':
+												if ($citizenship['code'] != '643') {
+													// foreigners - exam only
 													$test_row = $test->getExam();
+												} else {
+													if ($citizenship['code'] == '643' && $app->checkCertificate()) {
+														// russia with certificate - ege only
+														$test_row = $test->getEge();
+													} else {
+														// russia without certificate - ege or exam
+														$ege = new Model_EgeDisciplines();
+														$ege->code_discipline = $exams_row['exam_code'];
+														$ege_row = $ege->checkDiscipline();
+														if ($ege_row) {
+															// ege
+															$test_row = $test->getEge();
+														} else {
+															// exam
+															$test_row = $test->getExam();
+														}
+													}
 												}
-											}
-										}	
+												break;
+											// magisters
+											case '000000003':
+												$test_row = $test->getExam();
+												break;
+											// attending physicians
+											case '000000005':
+												$test_row = $test->getTest();
+												break;
+										}
 									} else {
 										$test_row = $test->getExam();
 									}
@@ -557,6 +572,7 @@ class Model_ApplicationSpec extends Model
 		$place->pid = $id;
 		$data = [];
 		if ($place->getByAppForBachelorSpec()) {
+			// bachelors and specialists
 			$data = $this->setAppForPdf($data, $app_row);
 			$data = $this->setResumeForPdf($data);
 	        $data = $this->setPlacesForPdf($data, $id, 5);
@@ -582,7 +598,7 @@ class Model_ApplicationSpec extends Model
 			$data = $this->setIaForPdf($data, $id);
 			$pdf->create($data, 'application_magistrature_2018', 'заявление'.$app_row['numb']);
 		} elseif ($place->getByAppForSpecial()) {
-			// specialists
+			// specials
 			$data = $this->setAppForPdf($data, $app_row);
 			$data = $this->setResumeForPdf($data);
 			$data['exams'] = 'On';

@@ -197,7 +197,21 @@ class Model_AdmissionCampaign extends Db_Helper
 	{
 		return $this->rowUpdate(self::TABLE_NAME,
 								'description = :description',
-								[':description' => $this->description]);
+								[':description' => $this->description],
+								['id' => $this->id]);
+	}
+
+	/**
+     * Changes admission campaign receipt allowed.
+     *
+     * @return boolean
+     */
+	public function changeReceiptAllowed()
+	{
+		return $this->rowUpdate(self::TABLE_NAME,
+								'receipt_allowed = :receipt_allowed',
+								[':receipt_allowed' => $this->receipt_allowed],
+								['id' => $this->id]);
 	}
 
 	/**
@@ -271,16 +285,30 @@ class Model_AdmissionCampaign extends Db_Helper
 			} else {
 				// update
 				$upd = 0;
+				$this->id = $pk['id'];
 				// description
 				if ($pk['description'] != $this->description) {
 					if ($this->changeDescription()) {
-						$log->msg = 'Изменёно наименование приёмной кампании с кодом ['.$this->code.'].';
+						$log->msg = 'Изменено наименование приёмной кампании с кодом ['.$this->code.'].';
 						$log->value_old = $pk['description'];
 						$log->value_new = $this->description;
 						$log->save();
 						$upd = 1;
 					} else {
-						$result['error_msg'] = 'Ошибка при изменении наименование приёмной кампании с кодом ['.$this->code.']!';
+						$result['error_msg'] = 'Ошибка при изменении наименования приёмной кампании с кодом ['.$this->code.']!';
+						return $result;
+					}
+				}
+				// receipt_allowed
+				if ($pk['receipt_allowed'] != $this->receipt_allowed) {
+					if ($this->changeReceiptAllowed()) {
+						$log->msg = 'Изменено разрешение приёмной кампании с кодом ['.$this->code.'].';
+						$log->value_old = $pk['receipt_allowed'];
+						$log->value_new = $this->receipt_allowed;
+						$log->save();
+						$upd = 1;
+					} else {
+						$result['error_msg'] = 'Ошибка при изменении разрешения приёмной кампании с кодом ['.$this->code.']!';
 						return $result;
 					}
 				}

@@ -78,9 +78,9 @@ use frontend\models\Model_Application as Model_Application;
 	<?php
 		echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nЧтобы добавить/изменить <strong>направления подготовки</strong>, нажмите <i class=\"far fa-file\"></i>\n<strong>При изменении направлений подготовки загруженные до этого скан-копии удаляются!</strong>"), 'alert-warning');
 		if ($app_row['pay'] == 0) {
-			$pay = 'Вы можете поступать и на бесплатную, и на платную основу обучения.';
+			$pay = 'Вы можете поступать и на бесплатной, и на платной основе обучения.';
 		} else {
-			$pay = 'Вы можете поступать <strong>только на платную</strong> основу обучения!';
+			$pay = 'Вы можете поступать <strong>только на платной</strong> основе обучения!';
 		}
 		echo HTML_Helper::setAlert($pay, 'alert-info');
 		echo HTML_Helper::setGridDB(['model_class' => 'common\\models\\Model_ApplicationPlaces',
@@ -116,26 +116,55 @@ use frontend\models\Model_Application as Model_Application;
 					foreach ($exams_arr as $exams_row) {
 						echo '<tr>';
 						echo '<td>'.$exams_row['discipline_name'].'</td>';
-							if ($citizenship['code'] != '643') {
-								$disabled = 0;
-							} else {
-								if ($citizenship['code'] == '643' && $app->checkCertificate()) {
-									$disabled = 1;
-								} else {
+							if ($place->getByAppForBachelorSpec()) {
+							// bachelors and specialists
+								if ($citizenship['code'] != '643') {
 									$disabled = 0;
+								} else {
+									if ($citizenship['code'] == '643' && $app->checkCertificate()) {
+										$disabled = 1;
+									} else {
+										$disabled = 0;
+									}
+									if ($test_arr) {
+										echo '<td><select class="form-control" id="exam'.$exams_row['discipline_code'].'" name="exam'.$exams_row['discipline_code'].'"'.(($disabled == 1) ? ' disabled' : '').'>';
+										foreach ($test_arr as $test_row) {
+											echo '<option value="'.$test_row['code'].'"'.
+												(($exams_row['code'] === $test_row['code']) ? ' selected' : '').'>'.
+												$test_row['description'].
+												'</option>';
+										}
+										echo '</select></td>';
+									}
 								}
-							}
-							$test = new Model_DictTestingScopes();
-							$test_arr = $test->getEntranceExams();
-							if ($test_arr) {
-								echo '<td><select class="form-control" id="exam'.$exams_row['discipline_code'].'" name="exam'.$exams_row['discipline_code'].'"'.(($disabled == 1) ? ' disabled' : '').'>';
-								foreach ($test_arr as $test_row) {
-									echo '<option value="'.$test_row['code'].'"'.
-										(($exams_row['code'] === $test_row['code']) ? ' selected' : '').'>'.
-										$test_row['description'].
-										'</option>';
+								$test = new Model_DictTestingScopes();
+								$test_arr = $test->getEntranceExams();
+							} elseif ($place->getByAppForMagister() || $place->getByAppForSpecial()) {
+								// magisters, specials
+								$disabled = 1;
+								$test = new Model_DictTestingScopes();
+								$test_row = $test->getExam();
+								if ($test_row) {
+									echo '<td><select class="form-control" id="exam'.$exams_row['discipline_code'].'" name="exam'.$exams_row['discipline_code'].'"'.(($disabled == 1) ? ' disabled' : '').'>';
+										echo '<option value="'.$test_row['code'].'"'.
+											(($exams_row['code'] === $test_row['code']) ? ' selected' : '').'>'.
+											$test_row['description'].
+											'</option>';
+										echo '</select></td>';
 								}
-								echo '</select></td>';
+							} elseif ($place->getByAppForClinical()) {
+								// attending physicians
+								$disabled = 1;
+								$test = new Model_DictTestingScopes();
+								$test_row = $test->getTest();
+								if ($test_row) {
+									echo '<td><select class="form-control" id="exam'.$exams_row['discipline_code'].'" name="exam'.$exams_row['discipline_code'].'"'.(($disabled == 1) ? ' disabled' : '').'>';
+										echo '<option value="'.$test_row['code'].'"'.
+											(($exams_row['code'] === $test_row['code']) ? ' selected' : '').'>'.
+											$test_row['description'].
+											'</option>';
+										echo '</select></td>';
+								}
 							}
 						echo '</tr>';
 					}

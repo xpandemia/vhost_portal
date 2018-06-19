@@ -157,6 +157,31 @@ class Controller_Resume extends Controller
 		return $this->view->generate('resume.php', 'form.php', RESUME['hdr'], $this->form);
 	}
 
+	/**
+     * Recalls resume.
+     *
+     * @return mixed
+     */
+	public function actionRecall()
+	{
+		$row = $this->resume->getByUser();
+		if ($row) {
+			$this->form = $this->model->setForm($this->model->rules(), $row);
+			$this->form['id'] = $row['id'];
+			$this->form['status'] = $row['status'];
+			if (!empty($this->form['passport_type_old'])) {
+				$this->form['passport_old_yes'] = 'checked';
+			}
+			$this->form = $this->model->setAddressReg($this->form);
+			$this->form = $this->model->setAddressRes($this->form);
+			$this->form = $this->model->setForeignLangs($this->form);
+		} else {
+			Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Index', null, 'Ошибка при получении анкеты!');
+		}
+		$this->form = $this->model->recall($this->form);
+		return $this->view->generate('resume.php', 'form.php', RESUME['hdr'], $this->form);
+	}
+
 	public function __destruct()
 	{
 		$this->model = null;

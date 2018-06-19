@@ -392,7 +392,7 @@ class Model_Kladr extends Db_Helper
 			// get kladr
 			$kladr = $this->kladr->getByCode($code);
 			if ($kladr && !empty($kladr['postcode'])) {
-				return json_encode($kladr['postcode']);
+				return json_encode(trim($kladr['postcode']));
 			} else {
 				return json_encode(null);
 			}

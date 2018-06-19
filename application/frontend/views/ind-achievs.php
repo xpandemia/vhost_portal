@@ -45,7 +45,7 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 			<div class="modal-body">
-				<?php echo Help_Helper::ind_achievs(); ?>
+				<?php echo Help_Helper::ind_achievs_help(); ?>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>

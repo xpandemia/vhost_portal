@@ -25,7 +25,7 @@ class Model_Application extends Db_Helper
 	const TYPE_RECALL_NAME = 'Заявление на отзыв документов';
 
 	/*
-		"GO" - sended, approved, rejected
+		"GO" - SENDED, APPROVED
 	*/
 	const STATUS_CREATED = 0;
 	const STATUS_CREATED_NAME = 'Новое';
@@ -350,6 +350,26 @@ class Model_Application extends Db_Helper
 				default:
 					return true;
 			}
+		} else {
+			return false;
+		}
+	}
+
+	/**
+     * Checks if education document used in applications "GO".
+     *
+     * @return boolean
+     */
+	public function existsAppGo() : bool
+	{
+		$app_arr = $this->rowSelectAll('application.id',
+										self::TABLE_NAME,
+										'id_user = :id_user AND status in (:status1, :status2)',
+										[':id_user' => $_SESSION[APP_CODE]['user_id'],
+										':status1' => self::STATUS_SENDED,
+										':status2' => self::STATUS_APPROVED]);
+		if ($app_arr) {
+			return true;
 		} else {
 			return false;
 		}

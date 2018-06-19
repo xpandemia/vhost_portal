@@ -45,7 +45,7 @@ use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 			<div class="modal-body text-justify">
-				<?php echo Help_Helper::ege(); ?>
+				<?php echo Help_Helper::ege_help(); ?>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>

@@ -172,7 +172,7 @@ include ROOT_DIR.'/application/frontend/models/Model_Resume.php';
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 			<div class="modal-body text-justify">
-				<?php echo Help_Helper::resume(); ?>
+				<?php echo Help_Helper::resume_help(); ?>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
@@ -189,7 +189,7 @@ include ROOT_DIR.'/application/frontend/models/Model_Resume.php';
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 			<div class="modal-body text-justify">
-				<?php echo Help_Helper::docs_educ(); ?>
+				<?php echo Help_Helper::docs_educ_help(); ?>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
@@ -206,7 +206,7 @@ include ROOT_DIR.'/application/frontend/models/Model_Resume.php';
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 			<div class="modal-body text-justify">
-				<?php echo Help_Helper::ege(); ?>
+				<?php echo Help_Helper::ege_help(); ?>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
@@ -223,7 +223,7 @@ include ROOT_DIR.'/application/frontend/models/Model_Resume.php';
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 			<div class="modal-body">
-				<?php echo Help_Helper::ind_achievs(); ?>
+				<?php echo Help_Helper::ind_achievs_help(); ?>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
@@ -240,7 +240,7 @@ include ROOT_DIR.'/application/frontend/models/Model_Resume.php';
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 			<div class="modal-body">
-				<?php echo Help_Helper::app(); ?>
+				<?php echo Help_Helper::app_help(); ?>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>

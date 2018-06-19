@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use tinyframe\core\Controller as Controller;
 use tinyframe\core\View as View;
 use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
+use common\models\Model_Resume as Resume;
 use frontend\models\Model_Ege as Model_Ege;
 
 class Controller_Ege extends Controller
@@ -19,6 +20,16 @@ class Controller_Ege extends Controller
 	{
 		$this->model = new Model_Ege();
 		$this->view = new View();
+		// check resume
+		$resume = new Resume();
+		$resume_row = $resume->getStatusByUser();
+		if ($resume_row) {
+			if ($resume_row['status'] == $resume::STATUS_CREATED || $resume_row['status'] == $resume::STATUS_SAVED) {
+				return Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Home', null, 'Анкета ещё не отправлена!');
+			}
+		} else {
+			return Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Home', null, 'Анкета ещё не создана!');
+		}
 	}
 
 	/**

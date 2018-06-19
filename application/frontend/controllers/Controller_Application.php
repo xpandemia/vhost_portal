@@ -5,6 +5,8 @@ namespace frontend\controllers;
 use tinyframe\core\Controller as Controller;
 use tinyframe\core\View as View;
 use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
+use common\models\Model_Resume as Resume;
+use common\models\Model_DocsEduc as DocsEduc;
 use frontend\models\Model_Application as Model_Application;
 use frontend\models\Model_ApplicationSpec as Model_ApplicationSpec;
 
@@ -22,6 +24,22 @@ class Controller_Application extends Controller
 	{
 		$this->model = new Model_Application();
 		$this->view = new View();
+		// check resume
+		$resume = new Resume();
+		$resume_row = $resume->getStatusByUser();
+		if ($resume_row) {
+			if ($resume_row['status'] == $resume::STATUS_CREATED || $resume_row['status'] == $resume::STATUS_SAVED) {
+				return Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Home', null, 'Анкета ещё не отправлена!');
+			}
+		} else {
+			return Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Home', null, 'Анкета ещё не создана!');
+		}
+		// check education documents
+		$docs = new DocsEduc();
+		$docs_row = $docs->getByUser();
+		if (!$docs_row) {
+			return Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Home', null, 'Нет ни одного документа об образовании!');
+		}
 	}
 
 	/**

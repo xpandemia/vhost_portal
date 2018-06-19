@@ -108,6 +108,27 @@ class Model_DictDoctypes extends Db_Helper
 	}
 
 	/**
+     * Gets passports BSU.
+     *
+     * @return array
+     */
+	public function getPassportsBsu()
+	{
+		return $this->rowSelectAll('d1.*',
+									'dict_doctypes d1 INNER JOIN dict_doctypes d2 ON d1.parent_key = d2.guid',
+									'd2.isfolder = :isfolder AND d2.description = :description AND d1.code in (:code1, :code2, :code3, :code4, :code5, :code6, :code7)',
+									[':isfolder' => 1,
+									':description' => 'Паспорта',
+									':code1' => '000000047',
+									':code2' => '000000049',
+									':code3' => '000000075',
+									':code4' => '000000087',
+									':code5' => '000000202',
+									':code6' => '000000223',
+									':code7' => '000000226']);
+	}
+
+	/**
      * Gets russian passports.
      *
      * @return array
@@ -187,7 +208,8 @@ class Model_DictDoctypes extends Db_Helper
 	{
 		return $this->rowUpdate(self::TABLE_NAME,
 								'isfolder = :isfolder',
-								[':isfolder' => $this->isfolder]);
+								[':isfolder' => $this->isfolder],
+								['id' => $this->id]);
 	}
 
 	/**
@@ -199,7 +221,8 @@ class Model_DictDoctypes extends Db_Helper
 	{
 		return $this->rowUpdate(self::TABLE_NAME,
 								'parent_key = :parent_key',
-								[':parent_key' => $this->parent_key]);
+								[':parent_key' => $this->parent_key],
+								['id' => $this->id]);
 	}
 
 	/**
@@ -211,7 +234,8 @@ class Model_DictDoctypes extends Db_Helper
 	{
 		return $this->rowUpdate(self::TABLE_NAME,
 								'code = :code',
-								[':code' => $this->code]);
+								[':code' => $this->code],
+								['id' => $this->id]);
 	}
 
 	/**
@@ -223,7 +247,8 @@ class Model_DictDoctypes extends Db_Helper
 	{
 		return $this->rowUpdate(self::TABLE_NAME,
 								'description = :description',
-								[':description' => $this->description]);
+								[':description' => $this->description],
+								['id' => $this->id]);
 	}
 
 	/**
@@ -288,6 +313,7 @@ class Model_DictDoctypes extends Db_Helper
 					} else {
 						// update
 						$upd = 0;
+						$this->id = $doctype['id'];
 						// isfolder
 						if ($doctype['isfolder'] != $this->isfolder) {
 							if ($this->changeIsfolder()) {

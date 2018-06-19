@@ -299,7 +299,8 @@ class Model_DocsEduc extends Db_Helper
 		return $this->rowSelectAll("docs_educ.id, concat(dict_doctypes.description, ' № ', ifnull(concat(docs_educ.series, '-'), ''), docs_educ.numb, ' от ', date_format(dt_issue, '%d.%m.%Y')) as description",
 									'docs_educ INNER JOIN dict_doctypes ON docs_educ.id_doctype = dict_doctypes.id',
 									'docs_educ.id_user = :id_user',
-									[':id_user' => $_SESSION[APP_CODE]['user_id']]);
+									[':id_user' => $_SESSION[APP_CODE]['user_id']],
+									'description');
 	}
 
 	/**
@@ -319,7 +320,7 @@ class Model_DocsEduc extends Db_Helper
 										'dict_speciality.campaign_code = :campaign_code and docs_educ.id_user = :id_user',
 										[':campaign_code' => $campaign_code,
 										':id_user' => $_SESSION[APP_CODE]['user_id']],
-										'dict_doctypes.description');
+										'description');
 		} else {
 			return null;
 		}

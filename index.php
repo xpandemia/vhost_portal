@@ -2,7 +2,7 @@
 
 define('APP_NAME', 'Личный кабинет абитуриента');
 define('APP_CODE', 'portalbsu'); // MUST BE UNIQUE
-define('APP_VERSION', '0.3.7');
+define('APP_VERSION', '0.3.8');
 define('APP_DATA', 'local');
 
 # Портал абитуриента

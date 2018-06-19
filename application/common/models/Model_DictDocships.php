@@ -111,7 +111,8 @@ class Model_DictDocships extends Db_Helper
 	{
 		return $this->rowUpdate(self::TABLE_NAME,
 								'code = :code',
-								[':code' => $this->code]);
+								[':code' => $this->code],
+								['id' => $this->id]);
 	}
 
 	/**
@@ -123,7 +124,8 @@ class Model_DictDocships extends Db_Helper
 	{
 		return $this->rowUpdate(self::TABLE_NAME,
 								'description = :description',
-								[':description' => $this->description]);
+								[':description' => $this->description],
+								['id' => $this->id]);
 	}
 
 	/**
@@ -186,6 +188,7 @@ class Model_DictDocships extends Db_Helper
 					} else {
 						// update
 						$upd = 0;
+						$this->id = $docship['id'];
 						// code
 						if ($docship['code'] != $this->code) {
 							if ($this->changeCode()) {
