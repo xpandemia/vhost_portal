@@ -283,21 +283,11 @@ class Model_Resume extends Db_Helper
      */
 	public function changeStatus()
 	{
-		if (self::STATUS_APPROVED) {
-			return $this->rowUpdate(self::TABLE_NAME,
-								'status = :status, dt_updated = :dt_updated, dt_approve = :dt_approve, id_approver = :id_approver',
-								[':status' => $this->status,
-								':dt_updated' => date('Y-m-d H:i:s'),
-								':dt_approve' => date('Y-m-d H:i:s'),
-								':id_approver' => $this->id_approver],
-								['id' => $this->id]);
-		} else {
-			return $this->rowUpdate(self::TABLE_NAME,
+		return $this->rowUpdate(self::TABLE_NAME,
 								'status = :status, dt_updated = :dt_updated',
 								[':status' => $this->status,
 								':dt_updated' => date('Y-m-d H:i:s')],
 								['id' => $this->id]);
-		}
 	}
 
 	/**
@@ -308,16 +298,16 @@ class Model_Resume extends Db_Helper
 	public function changeApp()
 	{
 		return $this->rowUpdate(self::TABLE_NAME,
-							'app = :app, dt_updated = :dt_updated',
-							[':app' => $this->app,
-							':dt_updated' => date('Y-m-d H:i:s')],
-							['id' => $this->id]);
+								'app = :app, dt_updated = :dt_updated',
+								[':app' => $this->app,
+								':dt_updated' => date('Y-m-d H:i:s')],
+								['id' => $this->id]);
 	}
 
 	/**
      * Checks resume by user.
      *
-     * @return boolean
+     * @return array
      */
 	public function checkByUser()
 	{

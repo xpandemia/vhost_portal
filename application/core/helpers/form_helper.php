@@ -6,10 +6,10 @@ namespace tinyframe\core\helpers;
 define('PATTERN_NUMB', '/^[0-9]*$/u'); // numbers only
 define('PATTERN_ALPHA', '/^[a-zA-Z]*$/u'); // letters ENG only
 define('PATTERN_ALPHA_RUS', '/^[ёЁа-яА-Я]*$/u'); // letters RUS only
-define('PATTERN_TEXT', '/^[a-zA-Z-\.\,\s"]*$/u'); // letters ENG, "-", ".", ",", spaces, quotes
-define('PATTERN_TEXT_RUS', '/^[ёЁа-яА-Я-.,\s"]*$/u'); // letters RUS, "-", ".", ",", spaces, quotes
-define('PATTERN_INFO', '/^[a-zA-Z0-9-\.\,\#\/\s"]*$/u'); // letters ENG, numbers, "-", ".", ",", "#", spaces, quotes
-define('PATTERN_INFO_RUS', '/^[ёЁа-яА-Я0-9-.,№\/\s"]*$/u'); // letters RUS, numbers, "-", ".", ",", "№", spaces, quotes
+define('PATTERN_TEXT', '/^[a-zA-Z-\.\,\s]*$/u'); // letters ENG, "-", ".", ",", spaces
+define('PATTERN_TEXT_RUS', '/^[ёЁа-яА-Я-.,\s]*$/u'); // letters RUS, "-", ".", ",", spaces
+define('PATTERN_INFO', '/^[a-zA-Z0-9-\.\,\#\/\s]*$/u'); // letters ENG, numbers, "-", ".", ",", "#", spaces
+define('PATTERN_INFO_RUS', '/^[ёЁа-яА-Я0-9-.,№\/\s]*$/u'); // letters RUS, numbers, "-", ".", ",", "№", spaces
 define('PATTERN_ALPHA_NUMB', '/^[a-zA-Z0-9]*$/u'); // letters and numbers ENG
 define('PATTERN_ALPHA_NUMB_RUS', '/^[ёЁа-яА-Я0-9]*$/u'); // letters and numbers RUS
 define('PATTERN_ALPHA_NUMB_ALL', '/^[a-zA-ZёЁа-яА-Я0-9]*$/u'); // letters and numbers

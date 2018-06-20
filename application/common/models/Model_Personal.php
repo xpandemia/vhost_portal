@@ -146,10 +146,23 @@ class Model_Personal extends Db_Helper
      */
 	public function getByResume()
 	{
-		return $this->rowSelectOne(self::TABLE_NAME.'.id, id_resume, name_first, name_middle, name_last, sex, birth_dt, birth_place, dict_countries.description as citizenship, '.self::TABLE_NAME.'.citizenship as id_citizenship, dt_created, dt_updated, '.self::TABLE_NAME.'.guid',
+		return $this->rowSelectOne(self::TABLE_NAME.'.id, id_resume, name_first, name_middle, name_last, sex, birth_dt, birth_place, dict_countries.description as citizenship, '.self::TABLE_NAME.'.citizenship as id_citizenship, dt_created, dt_updated, '.self::TABLE_NAME.'.guid, code1s',
 								self::TABLE_NAME.' INNER JOIN dict_countries ON '.self::TABLE_NAME.'.citizenship = dict_countries.id',
 								'id_resume = :id_resume',
 								[':id_resume' => $this->id_resume]);
+	}
+
+	/**
+     * Gets personal by user.
+     *
+     * @return array
+     */
+	public function getByUser()
+	{
+		return $this->rowSelectOne('*',
+								self::TABLE_NAME,
+								'id_user = :id_user',
+								[':id_user' => $_SESSION[APP_CODE]['user_id']]);
 	}
 
 	/**

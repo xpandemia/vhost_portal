@@ -5,6 +5,8 @@ namespace frontend\controllers;
 use tinyframe\core\Controller as Controller;
 use tinyframe\core\View as View;
 use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
+use common\models\Model_Personal as Personal;
+use common\models\Model_Resume as Resume;
 use common\models\Model_User as Model_User;
 use frontend\models\Model_Main as Model_Main;
 
@@ -22,6 +24,28 @@ class Controller_Main extends Controller
 	{
 		$this->model = new Model_Main();
 		$this->view = new View();
+		// check user
+		if (isset($_SESSION[APP_CODE]['user_name'])) {
+			if (!isset($_SESSION[APP_CODE]['user_id'])) {
+				if (!$this->model->checkUser()) {
+					exit("<p><strong>Ошибка!</strong> Авторизация не выполнена.</p>");
+				}
+			}
+		} else {
+			return Basic_Helper::redirectHome();
+		}
+		// check personal
+		$personal = new Personal();
+		$personal_row = $personal->getByUser();
+		if ($personal_row && !empty($personal_row['code1s'])) {
+			$resume = new Resume();
+			$resume_row = $resume->getStatusByUser();
+			if ($resume_row['status'] != $resume::STATUS_APPROVED) {
+				$resume->id = $personal_row['id_resume'];
+				$resume->status = $resume::STATUS_APPROVED;
+				$resume->changeStatus();
+			}
+		}
 	}
 
 	/**
@@ -31,21 +55,8 @@ class Controller_Main extends Controller
      */
 	function actionIndex()
 	{
-		if (isset($_SESSION[APP_CODE]['user_name'])) {
-			if (!isset($_SESSION[APP_CODE]['user_id'])) {
-				if ($this->model->checkUser()) {
-					Basic_Helper::msgReset();
-					return $this->view->generate('main.php', 'main.php', APP_NAME);
-				} else {
-					exit("<p><strong>Ошибка!</strong> Авторизация не выполнена.</p>");
-				}
-			} else {
-				Basic_Helper::msgReset();
-				return $this->view->generate('main.php', 'main.php', APP_NAME);
-			}
-		} else {
-			return Basic_Helper::redirectHome();
-		}
+		Basic_Helper::msgReset();
+		return $this->view->generate('main.php', 'main.php', APP_NAME);
 	}
 
 	/**

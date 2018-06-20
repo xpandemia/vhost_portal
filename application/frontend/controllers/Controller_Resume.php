@@ -7,7 +7,8 @@ use tinyframe\core\View as View;
 use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 use tinyframe\core\helpers\Calc_Helper as Calc_Helper;
 use common\models\Model_Contacts as Model_Contacts;
-use common\models\Model_Resume as Model_Resume_Data;
+use common\models\Model_Personal as Personal;
+use common\models\Model_Resume as Resume;
 use frontend\models\Model_Resume as Model_Resume;
 
 class Controller_Resume extends Controller
@@ -23,8 +24,19 @@ class Controller_Resume extends Controller
 	{
 		$this->model = new Model_Resume();
 		$this->view = new View();
-		$this->resume = new Model_Resume_Data();
+		$this->resume = new Resume();
 		$this->resume->id_user = $_SESSION[APP_CODE]['user_id'];
+		// check personal
+		$personal = new Personal();
+		$personal_row = $personal->getByUser();
+		if ($personal_row && !empty($personal_row['code1s'])) {
+			$resume_row = $this->resume->getStatusByUser();
+			if ($resume_row['status'] != $this->resume::STATUS_APPROVED) {
+				$this->resume->id = $personal_row['id_resume'];
+				$this->resume->status = $this->resume::STATUS_APPROVED;
+				$resume->changeStatus();
+			}
+		}
 	}
 
 	/**

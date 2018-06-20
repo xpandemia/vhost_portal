@@ -1307,7 +1307,7 @@ class Model_Resume extends Model
 		$resume->changeStatus();
 		$form['status'] = $resume->status;
 		/* resume app */
-		if ($form['passport_type'] == '000000087') {
+		if ($form['citizenship'] == '000' || !empty($form['beneficiary']) || $form['passport_type'] == '000000087') {
 			$resume->app = 0;
 		}
 		$resume->changeApp();
@@ -1335,6 +1335,9 @@ class Model_Resume extends Model
 			return $form;
 		} elseif (!empty($form['beneficiary'])) {
 			$form['error_msg'] = nl2br("Лицам, имеющим льготы, не разрешена подача документов через веб!\nПожалуйста, обратитесть в приёмную комиссию лично.");
+			return $form;
+		} elseif ($form['passport_type'] == '000000087') {
+			$form['error_msg'] = nl2br("По \"Свидетельству о предоставлении временного убежища на территории РФ\" не разрешена подача документов через веб!\nПожалуйста, обратитесть в приёмную комиссию лично.");
 			return $form;
 		}
 		/* send */
