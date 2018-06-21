@@ -126,8 +126,12 @@ class Controller_Ege extends Controller
 			if (!$this->form['error_msg']) {
 				return $this->view->generate('ege.php', 'main.php', EGE['hdr'], $this->form);
 			}
+		} else {
+			if (empty($this->form['error_msg'])) {
+				$this->form['error_msg'] = '<strong>Ошибка при проверке данных результатов ЕГЭ!</strong> Пожалуйста, проверьте все поля ввода.';
+			}
+			return $this->view->generate('ege-add.php', 'form.php', EGE['hdr'], $this->form);
 		}
-		return $this->view->generate('ege-add.php', 'form.php', EGE['hdr'], $this->form);
 	}
 
 	public function __destruct()

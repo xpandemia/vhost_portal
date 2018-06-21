@@ -25,7 +25,7 @@ class Model_ResetPwdRequest extends Model
 							'type' => 'email',
                             'class' => 'form-control',
                             'required' => ['default' => '', 'msg' => 'Адрес эл. почты обязателен для заполнения!'],
-                            'pattern' => ['value' => PATTERN_EMAIL_LIGHT, 'msg' => 'Адрес электронной почты должен быть в формате user@domain'],
+                            'pattern' => ['value' => PATTERN_EMAIL_LIGHT, 'msg' => 'Адрес электронной почты должен быть '.MSG_EMAIL_LIGHT],
                             'width' => ['format' => 'string', 'min' => 0, 'max' => 45, 'msg' => 'Слишком длинный адрес эл. почты!'],
                             'success' => 'Адрес эл. почты заполнен верно.'
                             ]

@@ -136,8 +136,12 @@ class Controller_Application extends Controller
 			if (!$this->form['error_msg']) {
 				return Basic_Helper::redirect('Заявления', 200, APP['ctr'], 'Index', 'Создано новое заявление.');
 			}
+		} else {
+			if (empty($this->form['error_msg'])) {
+				$this->form['error_msg'] = '<strong>Ошибка при проверке данных заявления!</strong> Пожалуйста, проверьте все поля ввода.';
+			}
+			return $this->view->generate('application-add.php', 'form.php', APP['hdr'], $this->form);
 		}
-		return $this->view->generate('application-add.php', 'form.php', APP['hdr'], $this->form);
 	}
 
 	public function __destruct()

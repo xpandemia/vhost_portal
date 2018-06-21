@@ -116,8 +116,10 @@ use frontend\models\Model_Application as Model_Application;
 					foreach ($exams_arr as $exams_row) {
 						echo '<tr>';
 						echo '<td>'.$exams_row['discipline_name'].'</td>';
+							$test = new Model_DictTestingScopes();
 							if ($place->getByAppForBachelorSpec()) {
 							// bachelors and specialists
+								$test_arr = $test->getEntranceExams();
 								if ($citizenship['code'] != '643') {
 									$disabled = 0;
 								} else {
@@ -137,12 +139,9 @@ use frontend\models\Model_Application as Model_Application;
 										echo '</select></td>';
 									}
 								}
-								$test = new Model_DictTestingScopes();
-								$test_arr = $test->getEntranceExams();
 							} elseif ($place->getByAppForMagister() || $place->getByAppForSpecial()) {
 								// magisters, specials
 								$disabled = 1;
-								$test = new Model_DictTestingScopes();
 								$test_row = $test->getExam();
 								if ($test_row) {
 									echo '<td><select class="form-control" id="exam'.$exams_row['discipline_code'].'" name="exam'.$exams_row['discipline_code'].'"'.(($disabled == 1) ? ' disabled' : '').'>';
@@ -155,7 +154,6 @@ use frontend\models\Model_Application as Model_Application;
 							} elseif ($place->getByAppForClinical()) {
 								// attending physicians
 								$disabled = 1;
-								$test = new Model_DictTestingScopes();
 								$test_row = $test->getTest();
 								if ($test_row) {
 									echo '<td><select class="form-control" id="exam'.$exams_row['discipline_code'].'" name="exam'.$exams_row['discipline_code'].'"'.(($disabled == 1) ? ' disabled' : '').'>';

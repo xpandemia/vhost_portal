@@ -4,10 +4,10 @@ namespace common\models;
 
 use tinyframe\core\helpers\Db_Helper as Db_Helper;
 
-define('USERNAME_HELP', 'Логин должен содержать <b>только латинские буквы</b>, и быть не более <b>45</b> символов длиной.');
-define('EMAIL_HELP', 'Адрес электронной почты должен быть в формате <b>user@domain</b>, содержать <b>только латинские буквы</b> и не более <b>45</b> символов длиной.');
-define('PWD_HELP', 'Пароль должен содержать <b>только латинские буквы и цифры</b>, и быть <b>6-10</b> символов длиной.');
-define('PWD_CONFIRM_HELP', 'Пароль должен содержать <b>только латинские буквы и цифры</b>, и быть <b>6-10</b> символов длиной.');
+define('USERNAME_HELP', 'Логин должен содержать <strong>'.MSG_ALPHA.'</strong>, и быть не более <strong>45</strong> символов длиной.');
+define('EMAIL_HELP', 'Адрес электронной почты должен быть <strong>'.MSG_EMAIL_LIGHT.'<strong>, содержать <strong>'.MSG_ALPHA.'</strong> и не более <strong>45</strong> символов длиной.');
+define('PWD_HELP', 'Пароль должен содержать <strong>'.MSG_ALPHA_NUMB.'</strong>, и быть <strong>6-10</strong> символов длиной.');
+define('PWD_CONFIRM_HELP', 'Пароль должен содержать <strong>'.MSG_ALPHA_NUMB.'</strong>, и быть <strong>6-10</strong> символов длиной.');
 
 define('USERNAME_PLC', 'Логин');
 define('EMAIL_PLC', 'user@domain');

@@ -43,7 +43,7 @@ class Model_Resume extends Model
                                 'type' => 'text',
                                 'class' => 'form-control',
                                 'required' => ['default' => '', 'msg' => 'Фамилия обязательна для заполнения!'],
-                                'pattern' => ['value' => PATTERN_ALPHA_RUS, 'msg' => 'Для фамилии можно использовать только русские буквы!'],
+                                'pattern' => ['value' => PATTERN_ALPHA_RUS, 'msg' => 'Для фамилии можно использовать '.MSG_ALPHA_RUS.'!'],
                                 'width' => ['format' => 'string', 'min' => 1, 'max' => 50, 'msg' => 'Слишком длинная фамилия!'],
                                 'success' => 'Фамилия заполнена верно.'
                                ],
@@ -51,14 +51,14 @@ class Model_Resume extends Model
                                 'type' => 'text',
                                 'class' => 'form-control',
                                 'required' => ['default' => '', 'msg' => 'Имя обязательно для заполнения!'],
-                                'pattern' => ['value' => PATTERN_ALPHA_RUS, 'msg' => 'Для имени можно использовать только русские буквы!'],
+                                'pattern' => ['value' => PATTERN_ALPHA_RUS, 'msg' => 'Для имени можно использовать '.MSG_ALPHA_RUS.'!'],
                                 'width' => ['format' => 'string', 'min' => 1, 'max' => 50, 'msg' => 'Слишком длинное имя!'],
                                 'success' => 'Имя заполнено верно.'
                                ],
                 'name_middle' => [
                                 'type' => 'text',
                                 'class' => 'form-control',
-                                'pattern' => ['value' => PATTERN_ALPHA_RUS, 'msg' => 'Для отчества можно использовать только русские буквы!'],
+                                'pattern' => ['value' => PATTERN_ALPHA_RUS, 'msg' => 'Для отчества можно использовать '.MSG_ALPHA_RUS.'!'],
                                 'width' => ['format' => 'string', 'min' => 1, 'max' => 50, 'msg' => 'Слишком длинное отчество!'],
                                 'success' => 'Отчество заполнено верно.'
                                ],
@@ -73,7 +73,7 @@ class Model_Resume extends Model
                                 'format' => 'd.m.Y',
                                 'class' => 'form-control',
                                 'required' => ['default' => '', 'msg' => 'Дата рождения обязательна для заполнения!'],
-                                'pattern' => ['value' => PATTERN_DATE_STRONG, 'msg' => 'Дата рождения должна быть в фомате ДД.ММ.ГГГГ и только 20-го, 21-го вв!'],
+                                'pattern' => ['value' => PATTERN_DATE_STRONG, 'msg' => 'Дата рождения должна быть '.MSG_DATE_STRONG.'!'],
                                 'compared' => ['value' => date('d.m.Y'), 'type' => '<', 'msg' => 'Дата рождения больше текущей даты или равна ей!'],
                                 'success' => 'Дата рождения заполнена верно.'
                                ],
@@ -88,7 +88,7 @@ class Model_Resume extends Model
                                 'type' => 'text',
                                 'class' => 'form-control',
                                 'required' => ['default' => '', 'msg' => 'Место рождения обязательно для заполнения!'],
-                                'pattern' => ['value' => PATTERN_TEXT_RUS, 'msg' => 'Для места рождения можно использовать только русские буквы, тире, точки, запятые и пробелы!'],
+                                'pattern' => ['value' => PATTERN_TEXT_RUS, 'msg' => 'Для места рождения можно использовать '.MSG_TEXT_RUS.'!'],
                                 'width' => ['format' => 'string', 'min' => 1, 'max' => 240, 'msg' => 'Слишком длинное место рождения!'],
                                 'success' => 'Место рождения заполнено верно.'
                                ],
@@ -107,7 +107,7 @@ class Model_Resume extends Model
                             'type' => 'email',
                             'class' => 'form-control',
                             'required' => ['default' => '', 'msg' => 'Адрес эл. почты обязателен для заполнения!'],
-                            'pattern' => ['value' => PATTERN_EMAIL_LIGHT, 'msg' => 'Адрес электронной почты должен быть в формате user@domain'],
+                            'pattern' => ['value' => PATTERN_EMAIL_LIGHT, 'msg' => 'Адрес электронной почты должен быть '.MSG_EMAIL_LIGHT],
                             'width' => ['format' => 'string', 'min' => 0, 'max' => 45, 'msg' => 'Слишком длинный адрес эл. почты!'],
                             'success' => 'Адрес эл. почты заполнен верно.'
                            ],
@@ -119,13 +119,13 @@ class Model_Resume extends Model
 		        'phone_home' => [
 	                            'type' => 'text',
 	                            'class' => 'form-control',
-	                            'pattern' => ['value' => PATTERN_NUMB, 'msg' => 'Номер домашнего телефона должен содержать только цифры!'],
+	                            'pattern' => ['value' => PATTERN_NUMB, 'msg' => 'Номер домашнего телефона должен содержать '.MSG_NUMB.'!'],
 	                            'success' => 'Номер домашнего телефона заполнен верно.'
 	                           ],
 		        'phone_add' => [
 	                            'type' => 'text',
 	                            'class' => 'form-control',
-	                            'pattern' => ['value' => PATTERN_PHONE_ADD, 'msg' => 'Номер дополнительного телефона должен содержать только русские буквы, цифры, запятые и пробелы!'],
+	                            'pattern' => ['value' => PATTERN_PHONE_ADD, 'msg' => 'Номер дополнительного телефона должен содержать '.MSG_PHONE_ADD.'!'],
 	                            'success' => 'Номер дополнительного телефона заполнен верно.'
 	                           ],
                 'passport_type' => [
@@ -144,7 +144,7 @@ class Model_Resume extends Model
                             'type' => 'text',
                             'class' => 'form-control',
                             'required' => ['default' => '', 'msg' => 'Номер обязателен для заполнения!'],
-                            'pattern' => ['value' => PATTERN_NUMB, 'msg' => 'Для номера можно использовать только цифры!'],
+                            'pattern' => ['value' => PATTERN_NUMB, 'msg' => 'Для номера можно использовать '.MSG_NUMB.'!'],
                             'width' => ['format' => 'string', 'min' => 1, 'max' => 15, 'msg' => 'Слишком длинный номер!'],
                             'success' => 'Номер заполнен верно.'
                            ],
@@ -153,14 +153,14 @@ class Model_Resume extends Model
                                 'format' => 'd.m.Y',
                                 'class' => 'form-control',
                                 'required' => ['default' => '', 'msg' => 'Дата выдачи обязательна для заполнения!'],
-                                'pattern' => ['value' => PATTERN_DATE_STRONG, 'msg' => 'Дата выдачи должна быть в фомате ДД.ММ.ГГГГ и только 20-го, 21-го вв!'],
+                                'pattern' => ['value' => PATTERN_DATE_STRONG, 'msg' => 'Дата выдачи должна быть '.MSG_DATE_STRONG.'!'],
                                 'compared' => ['value' => date('d.m.Y'), 'type' => '<', 'msg' => 'Дата выдачи больше текущей даты или равна ей!'],
                                 'success' => 'Дата выдачи заполнена верно.'
                                ],
                 'unit_name' => [
                                 'type' => 'text',
                                 'class' => 'form-control',
-                                'pattern' => ['value' => PATTERN_INFO_RUS, 'msg' => 'Для наименования подразделения можно использовать только русские буквы, тире, точки, запятые и пробелы!'],
+                                'pattern' => ['value' => PATTERN_INFO_RUS, 'msg' => 'Для наименования подразделения можно использовать '.MSG_INFO_RUS.'!'],
                                 'width' => ['format' => 'string', 'min' => 1, 'max' => 100, 'msg' => 'Слишком длинное наименование подразделения!'],
                                 'success' => 'Наименование подразделения заполнено верно.'
                                ],
@@ -173,7 +173,7 @@ class Model_Resume extends Model
                             'type' => 'date',
                             'format' => 'd.m.Y',
                             'class' => 'form-control',
-                            'pattern' => ['value' => PATTERN_DATE_STRONG, 'msg' => 'Дата окончания действия должна быть в фомате ДД.ММ.ГГГГ и только 20-го, 21-го вв!'],
+                            'pattern' => ['value' => PATTERN_DATE_STRONG, 'msg' => 'Дата окончания действия должна быть '.MSG_DATE_STRONG.'!'],
                             'compared' => ['value' => date('d.m.Y'), 'type' => '>', 'msg' => 'Дата окончания действия меньше текущей даты или равна ей!'],
                             'success' => 'Дата окончания действия заполнена верно.'
                            ],
@@ -196,7 +196,7 @@ class Model_Resume extends Model
                 'numb_old' => [
 	                            'type' => 'text',
 	                            'class' => 'form-control',
-	                            'pattern' => ['value' => PATTERN_NUMB, 'msg' => 'Для номера можно использовать только цифры!'],
+	                            'pattern' => ['value' => PATTERN_NUMB, 'msg' => 'Для номера можно использовать '.MSG_NUMB.'!'],
 	                            'width' => ['format' => 'string', 'min' => 1, 'max' => 15, 'msg' => 'Слишком длинный номер!'],
 	                            'success' => 'Номер заполнен верно.'
 	                           ],
@@ -204,14 +204,14 @@ class Model_Resume extends Model
                                 'type' => 'date',
                                 'format' => 'd.m.Y',
                                 'class' => 'form-control',
-                                'pattern' => ['value' => PATTERN_DATE_STRONG, 'msg' => 'Дата выдачи должна быть в фомате ДД.ММ.ГГГГ и только 20-го, 21-го вв!'],
+                                'pattern' => ['value' => PATTERN_DATE_STRONG, 'msg' => 'Дата выдачи должна быть '.MSG_DATE_STRONG.'!'],
                                 'compared' => ['value' => date('d.m.Y'), 'type' => '<', 'msg' => 'Дата выдачи больше текущей даты или равна ей!'],
                                 'success' => 'Дата выдачи заполнена верно.'
                                ],
                 'unit_name_old' => [
 	                                'type' => 'text',
 	                                'class' => 'form-control',
-	                                'pattern' => ['value' => PATTERN_INFO_RUS, 'msg' => 'Для наименования подразделения можно использовать только русские буквы, тире, точки, запятые и пробелы!'],
+	                                'pattern' => ['value' => PATTERN_INFO_RUS, 'msg' => 'Для наименования подразделения можно использовать '.MSG_INFO_RUS.'!'],
 	                                'width' => ['format' => 'string', 'min' => 1, 'max' => 100, 'msg' => 'Слишком длинное наименование подразделения!'],
 	                                'success' => 'Наименование подразделения заполнено верно.'
 	                               ],
@@ -224,7 +224,7 @@ class Model_Resume extends Model
 	                            'type' => 'date',
 	                            'format' => 'd.m.Y',
 	                            'class' => 'form-control',
-	                            'pattern' => ['value' => PATTERN_DATE_STRONG, 'msg' => 'Дата окончания действия должна быть в фомате ДД.ММ.ГГГГ и только 20-го, 21-го вв!'],
+	                            'pattern' => ['value' => PATTERN_DATE_STRONG, 'msg' => 'Дата окончания действия должна быть '.MSG_DATE_STRONG.'!'],
 	                            'compared' => ['value' => date('d.m.Y'), 'type' => '>', 'msg' => 'Дата окончания действия меньше текущей даты или равна ей!'],
 	                            'success' => 'Дата окончания действия заполнена верно.'
 	                           ],
@@ -245,7 +245,7 @@ class Model_Resume extends Model
                                 'type' => 'text',
                                 'class' => 'form-control',
                                 'required' => ['default' => '', 'msg' => 'Адрес регистрации обязателен для заполнения!'],
-                                'pattern' => ['value' => PATTERN_INFO_RUS, 'msg' => 'Для адреса регистрации можно использовать только цифры, русские буквы, тире, точки, запятые или пробелы!'],
+                                'pattern' => ['value' => PATTERN_INFO_RUS, 'msg' => 'Для адреса регистрации можно использовать '.MSG_INFO_RUS.'!'],
                                 'width' => ['format' => 'string', 'min' => 1, 'max' => 255, 'msg' => 'Слишком длинный адрес регистрации!'],
                                 'success' => 'Адрес регистрации заполнен верно.'
                                ],
@@ -259,7 +259,7 @@ class Model_Resume extends Model
                                 'type' => 'text',
                                 'class' => 'form-control',
                                 'required' => ['default' => '', 'msg' => 'Адрес проживания обязателен для заполнения!'],
-                                'pattern' => ['value' => PATTERN_INFO_RUS, 'msg' => 'Для адреса проживания можно использовать только цифры, русские буквы, тире, точки, запятые или пробелы!'],
+                                'pattern' => ['value' => PATTERN_INFO_RUS, 'msg' => 'Для адреса проживания можно использовать '.MSG_INFO_RUS.'!'],
                                 'width' => ['format' => 'string', 'min' => 1, 'max' => 255, 'msg' => 'Слишком длинный адрес проживания!'],
                                 'success' => 'Адрес проживания заполнен верно.'
                                ],

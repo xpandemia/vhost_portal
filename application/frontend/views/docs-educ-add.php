@@ -19,6 +19,7 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 		<input type="hidden" id="doc_type_hidden" name="doc_type_hidden" value="<?php echo $data['doc_type']; ?>"/>
 	</div>
 	<?php
+		echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\n9 классов: вид образования - <strong>\"среднее (основное, общее)\"</strong>, тип документа - <strong>\"Аттестат об основном общем образовании\"</strong>\n11 классов: вид образования - <strong>\"Среднее общее\"</strong>, тип документа - <strong>\"Аттестат\"</strong>\nПолное высшее образование, <strong>полученное до 2016 года включительно</strong>: вид образования - <strong>\"Высшее\"</strong>, тип документа - <strong>\"Диплом дипломированного специалиста\"</strong>"), 'alert-warning');
 		// educ type
 		echo Form_Helper::setFormSelectListDB(['label' => 'Вид образования',
 												'control' => 'educ_type',

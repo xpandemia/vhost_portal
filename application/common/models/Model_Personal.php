@@ -4,10 +4,10 @@ namespace common\models;
 
 use tinyframe\core\helpers\Db_Helper as Db_Helper;
 
-define('FIRSTNAME_HELP', 'Имя должно содержать <b>только русские буквы</b>, и быть не более <b>50</b> символов длиной.');
-define('MIDDLENAME_HELP', 'Отчество должно содержать <b>только русские буквы</b>, и быть не более <b>50</b> символов длиной.');
-define('LASTNAME_HELP', 'Фамилия должна содержать <b>только русские буквы</b>, и быть не более <b>50</b> символов длиной.');
-define('BIRTHPLACE_HELP', 'Место рождения должно содержать <b>только русские буквы, тире, точки, запятые или пробелы</b>, и быть не более <b>240</b> символов длиной.');
+define('FIRSTNAME_HELP', 'Имя должно содержать <strong>'.MSG_ALPHA_RUS.'</strong>, и быть не более <strong>50</strong> символов длиной.');
+define('MIDDLENAME_HELP', 'Отчество должно содержать <strong>'.MSG_ALPHA_RUS.'</strong>, и быть не более <strong>50</strong> символов длиной.');
+define('LASTNAME_HELP', 'Фамилия должна содержать <strong>'.MSG_ALPHA_RUS.'</strong>, и быть не более <strong>50</strong> символов длиной.');
+define('BIRTHPLACE_HELP', 'Место рождения должно содержать <strong>'.MSG_TEXT_RUS.'</strong>, и быть не более <strong>240</strong> символов длиной.');
 
 define('FIRSTNAME_PLC', 'Имя');
 define('MIDDLENAME_PLC', 'Отчество');

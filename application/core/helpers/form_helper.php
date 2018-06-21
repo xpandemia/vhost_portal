@@ -3,24 +3,59 @@
 namespace tinyframe\core\helpers;
 
 // patterns
-define('PATTERN_NUMB', '/^[0-9]*$/u'); // numbers only
-define('PATTERN_ALPHA', '/^[a-zA-Z]*$/u'); // letters ENG only
-define('PATTERN_ALPHA_RUS', '/^[ёЁа-яА-Я]*$/u'); // letters RUS only
-define('PATTERN_TEXT', '/^[a-zA-Z-\.\,\s]*$/u'); // letters ENG, "-", ".", ",", spaces
-define('PATTERN_TEXT_RUS', '/^[ёЁа-яА-Я-.,\s]*$/u'); // letters RUS, "-", ".", ",", spaces
-define('PATTERN_INFO', '/^[a-zA-Z0-9-\.\,\#\/\s]*$/u'); // letters ENG, numbers, "-", ".", ",", "#", spaces
-define('PATTERN_INFO_RUS', '/^[ёЁа-яА-Я0-9-.,№\/\s]*$/u'); // letters RUS, numbers, "-", ".", ",", "№", spaces
-define('PATTERN_ALPHA_NUMB', '/^[a-zA-Z0-9]*$/u'); // letters and numbers ENG
-define('PATTERN_ALPHA_NUMB_RUS', '/^[ёЁа-яА-Я0-9]*$/u'); // letters and numbers RUS
-define('PATTERN_ALPHA_NUMB_ALL', '/^[a-zA-ZёЁа-яА-Я0-9]*$/u'); // letters and numbers
-define('PATTERN_SPEC', '/^[a-zA-Z0-9-\s]*$/u'); // letters ENG, numbers, "-", spaces
-define('PATTERN_SPEC_RUS', '/^[ёЁа-яА-Я0-9-\s]*$/u'); // letters RUS, numbers, "-", spaces
-define('PATTERN_EMAIL_LIGHT', '/^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9_\-.]+$/'); // email light
-define('PATTERN_EMAIL_STRONG', '/^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9_\-]+\.[a-zA-Z0-9_\-]+$/'); // email strong
-define('PATTERN_PHONE_HOME', '/^[0-9-()]*$/u'); // numbers, "(", ")"
-define('PATTERN_PHONE_ADD', '/^[ёЁа-яА-Я0-9,\s]*$/u'); // letters RUS, numbers, ",", spaces
-define('PATTERN_DATE_LIGHT', '/^(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}$/'); // date DD.MM.YYYY light
-define('PATTERN_DATE_STRONG', '/^(?:(?:0[1-9]|1[0-9]|2[0-9]).(?:0[1-9]|1[0-2])|(?:(?:30).(?!02)(?:0[1-9]|1[0-2]))|(?:31.(?:0[13578]|1[02]))).(?:19|20)[0-9]{2}$/'); // date DD.MM.YYYY strong
+// numbers only
+define('PATTERN_NUMB', '/^[0-9]*$/u');
+define('MSG_NUMB', 'только цифры');
+// letters ENG only
+define('PATTERN_ALPHA', '/^[a-zA-Z]*$/u');
+define('MSG_ALPHA', 'только латинские буквы');
+// letters RUS only
+define('PATTERN_ALPHA_RUS', '/^[ёЁа-яА-Я]*$/u');
+define('MSG_ALPHA_RUS', 'только русские буквы');
+// letters ENG, "-", ".", ",", spaces
+define('PATTERN_TEXT', '/^[a-zA-Z-\.\,\s]*$/u');
+define('MSG_TEXT', 'только латинские буквы, тире, точки, запятые и пробелы');
+// letters RUS, "-", ".", ",", spaces
+define('PATTERN_TEXT_RUS', '/^[ёЁа-яА-Я-.,\s]*$/u');
+define('MSG_TEXT_RUS', 'только русские буквы, тире, точки, запятые и пробелы');
+// letters ENG, numbers, "-", ".", ",", "#", spaces
+define('PATTERN_INFO', '/^[a-zA-Z0-9-\.\,\#\/\s]*$/u');
+define('MSG_INFO', 'только латинские буквы, цифры, тире, точки, запятые, символ # и пробелы');
+// letters RUS, numbers, "-", ".", ",", "№", spaces
+define('PATTERN_INFO_RUS', '/^[ёЁа-яА-Я0-9-.,№\/\s]*$/u');
+define('MSG_INFO_RUS', 'только русские буквы, цифры, тире, точки, запятые, символ № и пробелы');
+// letters ENG and numbers
+define('PATTERN_ALPHA_NUMB', '/^[a-zA-Z0-9]*$/u');
+define('MSG_ALPHA_NUMB', 'только латинские буквы и цифры');
+// letters RUS and numbers
+define('PATTERN_ALPHA_NUMB_RUS', '/^[ёЁа-яА-Я0-9]*$/u');
+define('MSG_ALPHA_NUMB_RUS', 'только русские буквы и цифры');
+// letters and numbers
+define('PATTERN_ALPHA_NUMB_ALL', '/^[a-zA-ZёЁа-яА-Я0-9]*$/u');
+define('MSG_ALPHA_NUMB_ALL', 'только цифры и буквы');
+// letters ENG, numbers, "-", spaces
+define('PATTERN_SPEC', '/^[a-zA-Z0-9-\s]*$/u');
+define('MSG_SPEC', 'только латинские буквы, цифры, тире и пробелы');
+// letters RUS, numbers, "-", spaces
+define('PATTERN_SPEC_RUS', '/^[ёЁа-яА-Я0-9-\s]*$/u');
+define('MSG_SPEC_RUS', 'только русские буквы, цифры, тире и пробелы');
+// email light
+define('PATTERN_EMAIL_LIGHT', '/^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9_\-.]+$/');
+define('MSG_EMAIL_LIGHT', 'в формате user@domain');
+// email strong
+define('PATTERN_EMAIL_STRONG', '/^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9_\-]+\.[a-zA-Z0-9_\-]+$/');
+// numbers, "(", ")"
+define('PATTERN_PHONE_HOME', '/^[0-9-()]*$/u');
+define('MSG_PHONE_HOME', 'только цифры и круглые скобки');
+// letters RUS, numbers, ",", spaces
+define('PATTERN_PHONE_ADD', '/^[ёЁа-яА-Я0-9,\s]*$/u');
+define('MSG_PHONE_ADD', 'только русские буквы, цифры, запятые и пробелы');
+// date DD.MM.YYYY light
+define('PATTERN_DATE_LIGHT', '/^(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}$/');
+define('MSG_DATE_LIGHT', 'в формате ДД.ММ.ГГГГ');
+// date DD.MM.YYYY strong
+define('PATTERN_DATE_STRONG', '/^(?:(?:0[1-9]|1[0-9]|2[0-9]).(?:0[1-9]|1[0-2])|(?:(?:30).(?!02)(?:0[1-9]|1[0-2]))|(?:31.(?:0[13578]|1[02]))).(?:19|20)[0-9]{2}$/');
+define('MSG_DATE_STRONG', 'в формате ДД.ММ.ГГГГ и только 20-го, 21-го вв');
 
 class Form_Helper
 {

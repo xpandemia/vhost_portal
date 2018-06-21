@@ -138,9 +138,13 @@ class Controller_DocsEduc extends Controller
 			if (!$this->form['error_msg']) {
 				return Basic_Helper::redirect('Документы об образовании', 200, DOCS_EDUC['ctr'], 'Index', $this->form['success_msg']);
 			}
+		} else {
+			if (empty($this->form['error_msg'])) {
+				$this->form['error_msg'] = '<strong>Ошибка при проверке данных документа об образовании!</strong> Пожалуйста, проверьте все поля ввода.';
+			}
+			$this->form = $this->model->unsetScans($this->form);
+			return $this->view->generate('docs-educ-add.php', 'form.php', DOCS_EDUC['hdr'], $this->form);
 		}
-		$this->form = $this->model->unsetScans($this->form);
-		return $this->view->generate('docs-educ-add.php', 'form.php', DOCS_EDUC['hdr'], $this->form);
 	}
 
 	/**

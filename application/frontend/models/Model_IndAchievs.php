@@ -34,7 +34,7 @@ class Model_IndAchievs extends Model
                 'series' => [
                             'type' => 'text',
                             'class' => 'form-control',
-                            'pattern' => ['value' => PATTERN_ALPHA_NUMB_ALL, 'msg' => 'Для серии можно использовать только цифры и буквы!'],
+                            'pattern' => ['value' => PATTERN_ALPHA_NUMB_ALL, 'msg' => 'Для серии можно использовать '.MSG_ALPHA_NUMB_ALL.'!'],
                             'width' => ['format' => 'string', 'min' => 1, 'max' => 10, 'msg' => 'Слишком длинная серия!'],
                             'success' => 'Серия заполнена верно.'
                            ],
@@ -42,7 +42,7 @@ class Model_IndAchievs extends Model
                             'type' => 'text',
                             'class' => 'form-control',
                             'required' => ['default' => '', 'msg' => 'Номер обязателен для заполнения!'],
-                            'pattern' => ['value' => PATTERN_NUMB, 'msg' => 'Для номера можно использовать только цифры!'],
+                            'pattern' => ['value' => PATTERN_NUMB, 'msg' => 'Для номера можно использовать '.MSG_NUMB.'!'],
                             'width' => ['format' => 'string', 'min' => 1, 'max' => 20, 'msg' => 'Слишком длинный номер!'],
                             'success' => 'Номер заполнен верно.'
                            ],
@@ -50,7 +50,7 @@ class Model_IndAchievs extends Model
                             'type' => 'text',
                             'class' => 'form-control',
                             'required' => ['default' => '', 'msg' => 'Наименование организациии обязательно для заполнения!'],
-                            'pattern' => ['value' => PATTERN_INFO_RUS, 'msg' => 'Для наименования организации можно использовать только русские буквы, тире, точки, запятые, № и пробелы!'],
+                            'pattern' => ['value' => PATTERN_INFO_RUS, 'msg' => 'Для наименования организации можно использовать '.MSG_INFO_RUS.'!'],
                             'width' => ['format' => 'string', 'min' => 1, 'max' => 150, 'msg' => 'Слишком длинное наименование организации!'],
                             'success' => 'Наименование учебного заведения заполнено верно.'
                            ],
@@ -59,7 +59,7 @@ class Model_IndAchievs extends Model
                                 'format' => 'd.m.Y',
                                 'class' => 'form-control',
                                 'required' => ['default' => '', 'msg' => 'Дата выдачи обязательна для заполнения!'],
-                                'pattern' => ['value' => PATTERN_DATE_STRONG, 'msg' => 'Дата выдачи должна быть в фомате ДД.ММ.ГГГГ и только 20-го, 21-го вв!'],
+                                'pattern' => ['value' => PATTERN_DATE_STRONG, 'msg' => 'Дата выдачи должна быть '.MSG_DATE_STRONG.'!'],
                                 'compared' => ['value' => date('d.m.Y'), 'type' => '<', 'msg' => 'Дата выдачи больше текущей даты или равна ей!'],
                                 'success' => 'Дата выдачи заполнена верно.'
                                ]

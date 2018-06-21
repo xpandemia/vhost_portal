@@ -4,7 +4,7 @@ namespace common\models;
 
 use tinyframe\core\helpers\Db_Helper as Db_Helper;
 
-define('UNITNAME_HELP', 'Наименование подразделения должно содержать <b>только русские буквы, тире, точки, запятые или пробелы</b>, и быть не более <b>100</b> символов длиной.');
+define('UNITNAME_HELP', 'Наименование подразделения должно содержать <strong>'.MSG_INFO_RUS.'</strong>, и быть не более <b>100</b> символов длиной.');
 
 define('UNITNAME_PLC', 'Наименование подразделения');
 

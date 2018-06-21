@@ -139,9 +139,9 @@ class Controller_Resume extends Controller
 				$this->form = $this->model->setAddressRes($this->form);
 			}
 			$this->form = $this->model->unsetScans($this->form);
+			$this->form = $this->model->setForeignLangs($this->form);
+			return $this->view->generate('resume.php', 'form.php', RESUME['hdr'], $this->form);
 		}
-		$this->form = $this->model->setForeignLangs($this->form);
-		return $this->view->generate('resume.php', 'form.php', RESUME['hdr'], $this->form);
 	}
 
 	/**

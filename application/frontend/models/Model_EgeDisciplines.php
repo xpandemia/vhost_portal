@@ -29,7 +29,7 @@ class Model_EgeDisciplines extends Model
                 'points' => [
                             'type' => 'text',
                             'class' => 'form-control',
-                            'pattern' => ['value' => PATTERN_NUMB, 'msg' => 'Для баллов можно использовать только цифры!'],
+                            'pattern' => ['value' => PATTERN_NUMB, 'msg' => 'Для баллов можно использовать '.MSG_NUMB.'!'],
                             'width' => ['format' => 'numb', 'min' => 0, 'max' => 100, 'msg' => 'Значение баллов должно быть между 0 и 100!'],
                             'success' => 'Баллы заполнены верно.'
                            ]

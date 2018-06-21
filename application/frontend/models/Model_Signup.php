@@ -25,7 +25,7 @@ class Model_Signup extends Model
                                 'type' => 'text',
                                 'class' => 'form-control',
                                 'required' => ['default' => '', 'msg' => 'Логин обязателен для заполнения!'],
-                                'pattern' => ['value' => PATTERN_ALPHA, 'msg' => 'Для логина можно использовать только буквы!'],
+                                'pattern' => ['value' => PATTERN_ALPHA, 'msg' => 'Для логина можно использовать '.MSG_ALPHA.'!'],
                                 'width' => ['format' => 'string', 'min' => 1, 'max' => 45, 'msg' => 'Слишком длинный логин!'],
                                 'unique' => ['class' => 'common\\models\\Model_User', 'method' => 'ExistsUsername', 'msg' => 'Такой логин уже есть!'],
                                 'success' => 'Логин заполнен верно.'
@@ -34,7 +34,7 @@ class Model_Signup extends Model
                             'type' => 'email',
                             'class' => 'form-control',
                             'required' => ['default' => '', 'msg' => 'Адрес эл. почты обязателен для заполнения!'],
-                            'pattern' => ['value' => PATTERN_EMAIL_LIGHT, 'msg' => 'Адрес электронной почты должен быть в формате user@domain'],
+                            'pattern' => ['value' => PATTERN_EMAIL_LIGHT, 'msg' => 'Адрес электронной почты должен быть '.MSG_EMAIL_LIGHT],
                             'width' => ['format' => 'string', 'min' => 0, 'max' => 45, 'msg' => 'Слишком длинный адрес эл. почты!'],
                             'unique' => ['class' => 'common\\models\\Model_User', 'method' => 'ExistsEmail', 'msg' => 'Такой адрес эл. почты уже есть!'],
                             'success' => 'Адрес эл. почты заполнен верно.'
@@ -43,7 +43,7 @@ class Model_Signup extends Model
 							'type' => 'password',
                             'class' => 'form-control',
 	                        'required' => ['default' => '', 'msg' => 'Пароль обязателен для заполнения!'],
-	                        'pattern' => ['value' => PATTERN_ALPHA_NUMB, 'msg' => 'Пароль должен быть буквенно-цифровым!'],
+	                        'pattern' => ['value' => PATTERN_ALPHA_NUMB, 'msg' => 'Для пароля можно использовать '.MSG_ALPHA_NUMB.'!'],
 	                        'width' => ['format' => 'string', 'min' => 6, 'max' => 10, 'msg' => 'Пароль должен быть 6-10 символов длиной!'],
 	                        'success' => 'Пароль заполнен верно.'
 	                       ],
@@ -51,7 +51,7 @@ class Model_Signup extends Model
                             'type' => 'password',
                             'class' => 'form-control',
                             'required' => ['default' => '', 'msg' => 'Пароль обязателен для заполнения!'],
-                            'pattern' => ['value' => PATTERN_ALPHA_NUMB, 'msg' => 'Пароль должен быть буквенно-цифровым!'],
+                            'pattern' => ['value' => PATTERN_ALPHA_NUMB, 'msg' => 'Для пароля можно использовать '.MSG_ALPHA_NUMB.'!'],
                             'width' => ['format' => 'string', 'min' => 6, 'max' => 10, 'msg' => 'Пароль должен быть 6-10 символов длиной!'],
                             'success' => 'Пароль заполнен верно.'
                            ],
@@ -59,10 +59,10 @@ class Model_Signup extends Model
                             'type' => 'text',
                             'class' => 'form-control',
                             'required' => ['default' => '', 'msg' => 'Указанный на изображении код обязателен!'],
-                            'pattern' => ['value' => PATTERN_ALPHA_NUMB, 'msg' => 'Код, указанный на изображении, должен быть буквенно-цифровым!'],
+                            'pattern' => ['value' => PATTERN_ALPHA_NUMB, 'msg' => 'Для кода, указанного на изображении, можно использовать '.MSG_ALPHA_NUMB.'!'],
                             'width' => ['format' => 'string', 'min' => CAPTCHA_LEN, 'max' => CAPTCHA_LEN, 'msg' => 'Код, указанный на изображении, должен быть '.CAPTCHA_LEN.' символов длиной!'],
                             'compared' => ['type' => '==', 'value' => $_SESSION[APP_CODE]['captcha'], 'msg' => 'Введен неверный код, указанный на изображении!'],
-                            'success' => 'Код, указанный на изображении, введен верно, но из-за других ошибок, пожалуйста, введите его еще раз.'
+                            'success' => 'Код, указанный на изображении, введён верно, но из-за других ошибок, пожалуйста, введите его ещё раз.'
                            ]
             ];
 	}

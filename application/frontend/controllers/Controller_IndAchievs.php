@@ -126,9 +126,13 @@ class Controller_IndAchievs extends Controller
 			if (!$this->form['error_msg']) {
 				return Basic_Helper::redirect('Индивидуальные достижения', 200, IND_ACHIEVS['ctr'], 'Index', $this->form['success_msg']);
 			}
+		} else {
+			if (empty($this->form['error_msg'])) {
+				$this->form['error_msg'] = '<strong>Ошибка при проверке данных индивидуального достижения!</strong> Пожалуйста, проверьте все поля ввода.';
+			}
+			$this->form = $this->model->unsetScans($this->form);
+			return $this->view->generate('ind-achievs-add.php', 'form.php', IND_ACHIEVS['hdr'], $this->form);
 		}
-		$this->form = $this->model->unsetScans($this->form);
-		return $this->view->generate('ind-achievs-add.php', 'form.php', IND_ACHIEVS['hdr'], $this->form);
 	}
 
 	/**

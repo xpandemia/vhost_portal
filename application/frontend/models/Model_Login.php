@@ -24,7 +24,7 @@ class Model_Login extends Model
                                 'type' => 'text',
                                 'class' => 'form-control',
                                 'required' => ['default' => '', 'msg' => 'Логин обязателен для заполнения!'],
-                                'pattern' => ['value' => PATTERN_ALPHA, 'msg' => 'Для логина можно использовать только буквы!'],
+                                'pattern' => ['value' => PATTERN_ALPHA, 'msg' => 'Для логина можно использовать '.MSG_ALPHA.'!'],
                                 'width' => ['format' => 'string', 'min' => 1, 'max' => 45, 'msg' => 'Слишком длинный логин!'],
                                 'success' => 'Логин заполнен верно.'
                                ],
@@ -32,7 +32,7 @@ class Model_Login extends Model
                             'type' => 'password',
                             'class' => 'form-control',
                             'required' => ['default' => '', 'msg' => 'Пароль обязателен для заполнения!'],
-                            'pattern' => ['value' => PATTERN_ALPHA_NUMB, 'msg' => 'Пароль должен быть буквенно-цифровым!'],
+                            'pattern' => ['value' => PATTERN_ALPHA_NUMB, 'msg' => 'Для пароля можно использовать '.MSG_ALPHA_NUMB.'!'],
                             'width' => ['format' => 'string', 'min' => 6, 'max' => 10, 'msg' => 'Пароль должен быть 6-10 символов длиной!'],
                             'success' => 'Пароль заполнен верно.'
                            ]

@@ -142,8 +142,12 @@ class Controller_EgeDisciplines extends Controller
 					return Basic_Helper::redirect('Дисциплины ЕГЭ', 200, EGE_DSP['ctr'], 'Index/?pid='.$this->form['pid'], null, $_SESSION[APP_CODE]['error_msg']);
 				}
 			}
+		} else {
+			if (empty($this->form['error_msg'])) {
+				$this->form['error_msg'] = '<strong>Ошибка при проверке данных дисциплин ЕГЭ!</strong> Пожалуйста, проверьте все поля ввода.';
+			}
+			return $this->view->generate('ege-disciplines-add.php', 'form.php', EGE_DSP['hdr'], $this->form);
 		}
-		return $this->view->generate('ege-disciplines-add.php', 'form.php', EGE_DSP['hdr'], $this->form);
 	}
 
 	/**

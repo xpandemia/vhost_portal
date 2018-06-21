@@ -1,6 +1,7 @@
 <?php
 
 use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
+use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 
 ?>
 <!DOCTYPE html>
@@ -41,14 +42,18 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col col-sm-2 text-left">
-				<a data-toggle="tooltip" title="Приёмная комиссия: абитуриент" href="http://abitur.bsu.edu.ru/" target="_blank"><img src="/images/logo_abitur.jpg" alt="LogoAbitur" style="width:100px;heigth:100px"></a>
+				<a data-toggle="tooltip" title="Приёмная комиссия: абитуриент" href="http://abitur.bsu.edu.ru/" target="_blank">
+					<img src="/images/logo_abitur.jpg" alt="LogoAbitur" style="width:100px;heigth:100px">
+				</a>
 			</div>
 			<div class="col col-sm-8 text-center">
 				<p class="font-weight-bold">Белгородский государственный национальный исследовательский университет</p>
 				<h1><?php echo APP_NAME; ?></h1>
 			</div>
 			<div class="col col-sm-2 text-right">
-				<a data-toggle="tooltip" title="НИУ БелГУ" href="https://www.bsu.edu.ru/" target="_blank"><img src="/images/logo_bsu.jpg" alt="LogoBsu" style="width:60px;heigth:90px"></a>
+				<a data-toggle="tooltip" title="НИУ БелГУ" href="https://www.bsu.edu.ru/" target="_blank">
+					<img src="/images/logo_bsu.jpg" alt="LogoBsu" style="width:60px;heigth:90px">
+				</a>
 			</div>
 		</div>
 	</div>
@@ -99,6 +104,52 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 			</ul>
 		</div>
 	</nav>
+
+	<noscript>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col alert alert-danger">
+					<strong>Внимание!</strong> Ваш браузер не поддерживает Java-скрипты. Пожалуйста, включите поддержку Java-скриптов или перейдите в другой браузер.
+				</div>
+			</div>
+		</div>
+	</noscript>
+
+	<?php
+		$browser = Basic_Helper::getBrowser();
+		$browser['version'] = stristr($browser['version'], '.', true);
+		$browser_act = Basic_Helper::checkBrowser($browser['name'], $browser['version']);
+		if ($browser_act) {
+	?>
+	<div class="container-fluid">
+		<div class="row">
+			<?php
+				if ($browser_act == 'install') {
+			?>
+			<div class="col alert alert-warning">
+				<strong>Внимание!</strong> Вы используете устаревший браузер. Рекомендуем выбрать и установить один из современных:
+			</div>
+			<div class="col">
+				<a data-toggle="tooltip" title="Google Chrome" href="http://www.google.com/chrome/" target="_blank">
+					<img src="/images/chrome.png" alt="LogoChrome" style="width:60px;heigth:90px">
+				</a>
+				<a data-toggle="tooltip" title="Opera" href="http://www.opera.com/" target="_blank">
+					<img src="/images/opera.png" alt="LogoOpera" style="width:60px;heigth:90px">
+				</a>
+				<a data-toggle="tooltip" title="Mozilla Firefox" href="http://www.mozilla-europe.org/" target="_blank">
+					<img src="/images/firefox.png" alt="LogoFirefox" style="width:60px;heigth:90px">
+				</a>
+			</div>
+			<?php } else { ?>
+			<div class="col alert alert-warning">
+				<strong>Внимание!</strong> Вы используете подходящий браузер, но его версия устарела. Рекомендуем обновить браузер.
+			</div>
+			<?php } ?>
+		</div>
+	</div>
+	<?php
+		}
+	?>
 
 	<div class="container-fluid" style="margin-bottom:80px">
 		<?php include ROOT_DIR.'/application/frontend/views/'.$content_view; ?>

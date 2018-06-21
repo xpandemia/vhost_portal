@@ -24,7 +24,7 @@ class Model_Ege extends Model
 	                            'type' => 'text',
 	                            'class' => 'form-control',
 	                            'required' => ['default' => '', 'msg' => 'Год сдачи обязателен для заполнения!'],
-	                            'pattern' => ['value' => PATTERN_NUMB, 'msg' => 'Для года сдачи можно использовать только цифры!'],
+	                            'pattern' => ['value' => PATTERN_NUMB, 'msg' => 'Для года сдачи можно использовать '.MSG_NUMB.'!'],
 	                            'width' => ['format' => 'string', 'min' => 1, 'max' => 4, 'msg' => 'Слишком длинный год сдачи!'],
 	                            'unique' => ['class' => 'common\\models\\Model_Ege', 'method' => 'ExistsRegyear', 'msg' => 'Такой год сдачи уже есть!'],
 	                            'compared' => ['value' => date('Y'), 'type' => '<=', 'msg' => 'Год сдачи должен быть меньше или равен '.date('Y').'.'],
@@ -41,7 +41,7 @@ class Model_Ege extends Model
 	public function validateFormAdvanced($form)
 	{
 		// reg_year
-		if (date('Y') - $form['reg_year'] > 4) {
+		if (!empty($form['reg_year']) && date('Y') - $form['reg_year'] > 4) {
 			$form = $this->setFormErrorField($form, 'reg_year', 'Неактуальный год сдачи ЕГЭ!');
 			return $form;
 		}
