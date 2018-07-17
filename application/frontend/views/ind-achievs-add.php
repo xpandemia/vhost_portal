@@ -59,7 +59,9 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 										'required_style' => 'StarUp',
 										'value' => $data['company'],
 										'success' => $data['company_scs'],
-										'error' => $data['company_err']]);
+										'error' => $data['company_err'],
+                                        'help' => "Это поле может содержать только <b>".MSG_INFO_RUS ."</b>" //  Добавил Паша
+                                                ]);
 		// dt_issue
 		echo Form_Helper::setFormInput(['label' => 'Дата выдачи',
 										'control' => 'dt_issue',

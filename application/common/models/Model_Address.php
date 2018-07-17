@@ -96,7 +96,7 @@ class Model_Address extends Db_Helper
 				'kladr' => [
 							'required' => 1,
 							'insert' => 1,
-							'update' => 0,
+							'update' => 1,
 							'value' => $this->kladr
 							],
 				'region_code' => [

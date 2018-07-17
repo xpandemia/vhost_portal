@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+
 use tinyframe\core\Model as Model;
 use tinyframe\core\helpers\Form_Helper as Form_Helper;
 use common\models\Model_Application as Application;
@@ -43,7 +44,7 @@ class Model_DocsEduc extends Model
                             'type' => 'text',
                             'class' => 'form-control',
                             'pattern' => ['value' => PATTERN_ALPHA_NUMB_ALL, 'msg' => 'Для серии можно использовать '.MSG_ALPHA_NUMB_ALL.'!'],
-                            'width' => ['format' => 'string', 'min' => 1, 'max' => 10, 'msg' => 'Слишком длинная серия!'],
+                            'width' => ['format' => 'string', 'min' => 0, 'max' => 10, 'msg' => 'Слишком длинная серия!'], //TODO может убрать пашины правки ?min (стало) 0 => 1 (было)
                             'success' => 'Серия заполнена верно.'
                            ],
                 'numb' => [
@@ -115,6 +116,7 @@ class Model_DocsEduc extends Model
      */
 	public function validateFormAdvanced($form)
 	{
+
 		// change name
 		if ($form['change_name_flag'] == 'checked') {
 			$form = $this->setFormErrorFile($form, 'change_name', 'Скан-копия "Свидетельство о перемене имени" обязательна для заполнения!');
@@ -178,9 +180,11 @@ class Model_DocsEduc extends Model
 	public function unsetScans($form)
 	{
 		// main
+
 		$form = Model_Scans::unsets('docs_educ', $form);
 		// change_name
-		if ($form['change_name_flag'] == 'checked') {
+		if ($form['change_name_flag'] == 'checked')
+		{
 			$form = $this->setFormErrorFile($form, 'change_name', 'Скан-копия "Свидетельство о перемене имени" обязательна для заполнения!');
 		}
 		return $form;
@@ -252,10 +256,12 @@ class Model_DocsEduc extends Model
 				}
 			}
 		}
+
 		/* change_name */
 		if ($form['change_name_flag'] == 'checked') {
 			$form = Model_Scans::push('docs_educ', 'change_name', $form);
 		}
+
 		/* scans */
 		$dict_scans = new Model_DictScans();
 		$dict_scans->doc_code = 'docs_educ';
@@ -268,6 +274,7 @@ class Model_DocsEduc extends Model
 				}
 			}
 		}
+
 		return $form;
 	}
 

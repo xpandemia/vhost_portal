@@ -31,10 +31,11 @@ class Controller_Resume extends Controller
 		$personal_row = $personal->getByUser();
 		if ($personal_row && !empty($personal_row['code1s'])) {
 			$resume_row = $this->resume->getStatusByUser();
-			if ($resume_row['status'] != $this->resume::STATUS_APPROVED) {
+			if ($resume_row['status'] != $this->resume::STATUS_APPROVED)
+			{
 				$this->resume->id = $personal_row['id_resume'];
 				$this->resume->status = $this->resume::STATUS_APPROVED;
-				$resume->changeStatus();
+				$this->resume->changeStatus();
 			}
 		}
 	}
@@ -51,6 +52,7 @@ class Controller_Resume extends Controller
 			$this->form = $this->model->setForm($this->model->rules(), $row);
 			$this->form['id'] = $row['id'];
 			$this->form['status'] = $row['status'];
+			$this->form['dt_updated'] = $row['dt_updated'];
 			if (!empty($this->form['passport_type_old'])) {
 				$this->form['passport_old_yes'] = 'checked';
 			}
@@ -67,6 +69,7 @@ class Controller_Resume extends Controller
 						$this->form = $this->model->setForm($this->model->rules(), $row);
 						$this->form['id'] = $row['id'];
 						$this->form['status'] = $row['status'];
+						$this->form['dt_updated'] = $row['dt_updated'];
 					} else {
 						$this->form['error_msg'] = 'Ошибка при создании анкеты!';
 						Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Index', $this->form);
@@ -79,6 +82,7 @@ class Controller_Resume extends Controller
 		$this->form = $this->model->setAddressReg($this->form);
 		$this->form = $this->model->setAddressRes($this->form);
 		$this->form = $this->model->setForeignLangs($this->form);
+		//file_put_contents("/var/www/html/vhost_test/log.log", var_export($this->model,TRUE)."\n",FILE_APPEND);
 		return $this->view->generate('resume.php', 'form.php', RESUME['hdr'], $this->form);
 	}
 
@@ -97,6 +101,7 @@ class Controller_Resume extends Controller
 			if ($row) {
 				$this->form['id'] = $row['id'];
 				$this->form['status'] = $row['status'];
+				$this->form['dt_updated'] = $row['dt_updated'];
 			} else {
 				$this->form['error_msg'] = 'Ошибка при создании анкеты!';
 				Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Index', $this->form);
@@ -119,10 +124,11 @@ class Controller_Resume extends Controller
 			if ($row) {
 				$this->form['id'] = $row['id'];
 				$this->form['status'] = $row['status'];
+				$this->form['dt_updated'] = $row['dt_updated'];
 			} else {
 				Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Index', null, 'Ошибка при получении анкеты!');
 			}
-			($this->form['status'] == $this->resume::STATUS_CREATED) ? $this->form['personal_vis'] = true : $this->form['personal_vis'] = false;
+			($this->form['status'] == $this->resume::STATUS_CREATED && empty($this->form['dt_updated'])) ? $this->form['personal_vis'] = true : $this->form['personal_vis'] = false;
 		$this->form = $this->model->validateForm($this->form, $this->model->rules());
 		$this->form = $this->model->validateFormAdvanced($this->form);
 		$this->form = $this->model->validateAgreement($this->form);
@@ -131,14 +137,18 @@ class Controller_Resume extends Controller
 		if ($this->form['validate']) {
 			$this->form = $this->model->check($this->form);
 		} else {
-			if (empty($this->form['error_msg'])) {
+			if (empty($this->form['error_msg']))
+			{
 				$this->form['error_msg'] = '<strong>Ошибка при проверке данных анкеты!</strong> Пожалуйста, проверьте все поля ввода.';
 			}
-			if ($this->form['status'] != $this->resume::STATUS_CREATED) {
+			if ($this->form['status'] != $this->resume::STATUS_CREATED)
+			{
 				$this->form = $this->model->setAddressReg($this->form);
 				$this->form = $this->model->setAddressRes($this->form);
 			}
-			$this->form = $this->model->unsetScans($this->form);
+			//if(!256==$_SESSION[APP_CODE]['user_id']||!7 == $_SESSION[APP_CODE]['user_id']) //TODO Чех в шоке, но это снимает пятисотку. B и да, я вообще не понимаю, каково предназначение этого метода. Зачем его вызывают, и что он даёт.
+			///$this->form = $this->model->unsetScans($this->form); //TODO вернуть
+
 		}
 		$this->form = $this->model->setForeignLangs($this->form);
 		return $this->view->generate('resume.php', 'form.php', RESUME['hdr'], $this->form);
@@ -156,6 +166,7 @@ class Controller_Resume extends Controller
 			$this->form = $this->model->setForm($this->model->rules(), $row);
 			$this->form['id'] = $row['id'];
 			$this->form['status'] = $row['status'];
+			$this->form['dt_updated'] = $row['dt_updated'];
 			if (!empty($this->form['passport_type_old'])) {
 				$this->form['passport_old_yes'] = 'checked';
 			}
@@ -181,6 +192,7 @@ class Controller_Resume extends Controller
 			$this->form = $this->model->setForm($this->model->rules(), $row);
 			$this->form['id'] = $row['id'];
 			$this->form['status'] = $row['status'];
+			$this->form['dt_updated'] = $row['dt_updated'];
 			if (!empty($this->form['passport_type_old'])) {
 				$this->form['passport_old_yes'] = 'checked';
 			}

@@ -76,6 +76,7 @@ class Model_EductypesDoctypes extends Model
      */
 	public function check($form)
 	{
+
 		$ed = new EductypesDoctypes();
 			$types = new DictEductypes();
 			$types->code = $form['educ_type'];

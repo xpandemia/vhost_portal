@@ -128,7 +128,8 @@ class Basic_Helper
 	    if (preg_match('/MSIE/i',$u_agent) && !preg_match('/Opera/i',$u_agent)) {
 			$bname = 'Internet Explorer';
 			$ub = 'MSIE';
-	    } elseif (preg_match('/Firefox/i',$u_agent)) {
+	    } elseif (preg_match('/Firefox/i',$u_agent))
+	    {
 			$bname = 'Mozilla Firefox';
 			$ub = 'Firefox';
 		} elseif (preg_match('/Chrome/i',$u_agent)) {
@@ -143,6 +144,15 @@ class Basic_Helper
 	    } elseif (preg_match('/Netscape/i',$u_agent)) {
 	        $bname = 'Netscape';
 	        $ub = 'Netscape';
+	    }
+	    elseif (preg_match('/Mozilla/i',$u_agent))
+	    {
+		    $bname = 'Mozilla Firefox';
+		    $ub = 'Mozilla';
+	    }//TODO добавил Паша
+	    else
+	    {
+		    file_put_contents("/var/www/html/vhost_test/log.log", "\$ub браузер не определён. Пользователь:".$_SESSION['phpCAS']['user']."\n".var_export($u_agent,TRUE)."\n",FILE_APPEND);
 	    }
 
 	    // finally get the correct version number

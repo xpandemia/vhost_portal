@@ -17,6 +17,8 @@ class Controller_Main extends Controller
 	{
 		$this->model = new Model_Main();
 		$this->view = new View();
+		// check user
+		$this->model->checkUser($_SESSION[APP_CODE]['user_name'], $_SESSION[APP_CODE]['user_id']);
 	}
 
 	/**
@@ -26,21 +28,8 @@ class Controller_Main extends Controller
      */
 	function actionIndex()
 	{
-		if (isset($_SESSION[APP_CODE]['user_name'])) {
-			if (!isset($_SESSION[APP_CODE]['user_id'])) {
-				if ($this->model->checkUser()) {
-					Basic_Helper::msgReset();
-					return $this->view->generate('main.php', 'main.php', APP_NAME);
-				} else {
-					exit("<p><strong>Ошибка!</strong> Авторизация не выполнена.</p>");
-				}
-			} else {
-				Basic_Helper::msgReset();
-				return $this->view->generate('main.php', 'main.php', APP_NAME);
-			}
-		} else {
-			return Basic_Helper::redirectHome();
-		}
+		Basic_Helper::msgReset();
+		return $this->view->generate('main.php', 'main.php', APP_NAME);
 	}
 
 	/**

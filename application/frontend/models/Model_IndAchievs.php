@@ -35,14 +35,14 @@ class Model_IndAchievs extends Model
                             'type' => 'text',
                             'class' => 'form-control',
                             'pattern' => ['value' => PATTERN_ALPHA_NUMB_ALL, 'msg' => 'Для серии можно использовать '.MSG_ALPHA_NUMB_ALL.'!'],
-                            'width' => ['format' => 'string', 'min' => 1, 'max' => 10, 'msg' => 'Слишком длинная серия!'],
+                            'width' => ['format' => 'string', 'min' => 0, 'max' => 10, 'msg' => 'Слишком длинная серия!'],   //TODO Пашины правки min (стало) 0 => 1 (было)
                             'success' => 'Серия заполнена верно.'
                            ],
                 'numb' => [
                             'type' => 'text',
                             'class' => 'form-control',
                             'required' => ['default' => '', 'msg' => 'Номер обязателен для заполнения!'],
-                            'pattern' => ['value' => PATTERN_NUMB, 'msg' => 'Для номера можно использовать '.MSG_NUMB.'!'],
+                            'pattern' => ['value' => PATTERN_INFO_RUS, 'msg' => 'Для номера можно использовать '.MSG_INFO_RUS.'!'],  //TODO Пашины правки PATTERN (стало) _INFO_RUS => _NUMB (было)
                             'width' => ['format' => 'string', 'min' => 1, 'max' => 20, 'msg' => 'Слишком длинный номер!'],
                             'success' => 'Номер заполнен верно.'
                            ],
@@ -50,7 +50,7 @@ class Model_IndAchievs extends Model
                             'type' => 'text',
                             'class' => 'form-control',
                             'required' => ['default' => '', 'msg' => 'Наименование организациии обязательно для заполнения!'],
-                            'pattern' => ['value' => PATTERN_INFO_RUS, 'msg' => 'Для наименования организации можно использовать '.MSG_INFO_RUS.'!'],
+                            'pattern' => ['value' => PATTERN_INFO_RUS, 'msg' => 'Для наименования организации можно использовать '.MSG_INFO_RUS.'!'], //TODO Пашины правки PATTERN (стало) _INFO_RUS => _NUMB (было)
                             'width' => ['format' => 'string', 'min' => 1, 'max' => 150, 'msg' => 'Слишком длинное наименование организации!'],
                             'success' => 'Наименование учебного заведения заполнено верно.'
                            ],

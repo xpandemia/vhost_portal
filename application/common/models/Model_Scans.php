@@ -131,6 +131,7 @@ class Model_Scans extends Db_Helper
      */
 	public function getByDoc()
 	{
+//тут последняя остановочка
 		return $this->rowSelectOne('*',
 								self::TABLE_NAME,
 								'id_doc = :id_doc AND id_scans = :id_scans',

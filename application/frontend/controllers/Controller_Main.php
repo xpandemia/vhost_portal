@@ -25,15 +25,7 @@ class Controller_Main extends Controller
 		$this->model = new Model_Main();
 		$this->view = new View();
 		// check user
-		if (isset($_SESSION[APP_CODE]['user_name'])) {
-			if (!isset($_SESSION[APP_CODE]['user_id'])) {
-				if (!$this->model->checkUser()) {
-					exit("<p><strong>Ошибка!</strong> Авторизация не выполнена.</p>");
-				}
-			}
-		} else {
-			return Basic_Helper::redirectHome();
-		}
+		$this->model->checkUser($_SESSION[APP_CODE]['user_name'], $_SESSION[APP_CODE]['user_id']);
 		// check personal
 		$personal = new Personal();
 		$personal_row = $personal->getByUser();
@@ -66,20 +58,7 @@ class Controller_Main extends Controller
      */
 	function actionHome()
 	{
-		if (isset($_SESSION[APP_CODE]['user_name'])) {
-			if (!isset($_SESSION[APP_CODE]['user_id'])) {
-				if ($this->model->checkUser()) {
-					Basic_Helper::msgReset();
-					return $this->view->generate('main.php', 'main.php', APP_NAME);
-				} else {
-					exit("<p><strong>Ошибка!</strong> Авторизация не выполнена.</p>");
-				}
-			} else {
-				return $this->view->generate('main.php', 'main.php', APP_NAME);
-			}
-		} else {
-			return Basic_Helper::redirectHome();
-		}
+		return $this->view->generate('main.php', 'main.php', APP_NAME);
 	}
 
 	/**

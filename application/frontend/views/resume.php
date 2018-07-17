@@ -4,6 +4,7 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 use tinyframe\core\helpers\Help_Helper as Help_Helper;
 use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 use tinyframe\core\helpers\Form_Helper as Form_Helper;
+use common\models\Model_Resume as Resume;
 use common\models\Model_Kladr as Model_Kladr;
 use common\models\Model_ForeignLangs as ForeignLangs;
 use common\models\Model_DictForeignLangs as DictForeignLangs;
@@ -13,7 +14,7 @@ use frontend\models\Model_Resume as Model_Resume;
 	if ((!isset($data['id']) || empty($data['id'])) && (!isset($data['status']) || empty($data['status']))) {
 		Basic_Helper::redirect(APP_NAME, 204, 'Main', 'Index', null, nl2br("Ошибка анкеты!\nСвяжитесь с администратором."));
 	} else {
-		if ($data['status'] == 0) {
+		if ($data['status'] == Resume::STATUS_CREATED && empty($data['dt_updated'])) {
 			$data['personal_vis'] = true;
 		} else {
 			$data['personal_vis'] = false;
@@ -22,7 +23,8 @@ use frontend\models\Model_Resume as Model_Resume;
 ?>
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
 	<?php
-		echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
+	//$pageData->addCSS("sadf"); //это проверка того, что отладчик запустился
+        echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
 		echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
 		echo Form_Helper::setFormBegin(RESUME['ctr'], RESUME['act'], RESUME['id'], RESUME['hdr'], 2, '/images/logo_bsu_transparent.gif');
 		/* help */
@@ -926,8 +928,17 @@ use frontend\models\Model_Resume as Model_Resume;
 					$('#address_reg_clone').show();
 			}
 		}
+		if ($('#region_reg').val() == '' && jQuery.isEmptyObject($('#area_reg').val()) && jQuery.isEmptyObject($('#city_reg').val()) && jQuery.isEmptyObject($('#location_reg').val()) && jQuery.isEmptyObject($('#street_reg').val()) && $('#house_reg').val() == '' && $('#building_reg').val() == '' && $('#flat_reg').val() == '' && $('#postcode_reg').val() == '' && $('#address_reg').val() != '') {
+			$('#kladr_reg_not').prop('checked', true);
+		} else {
+			$('#kladr_reg_not').prop('checked', false);
+		}
 		if ($('#kladr_reg_not').prop('checked')) {
+			$('#kladr_reg').hide();
 			$('#address_reg').prop('disabled', false);
+		} else {
+			$('#kladr_reg').show();
+			$('#address_reg').prop('disabled', true);
 		}
 		// address residential
 		var country_res = $('#country_res').val();
@@ -953,8 +964,17 @@ use frontend\models\Model_Resume as Model_Resume;
 					$('#address_res_clone').show();
 			}
 		}
+		if ($('#region_res').val() == '' && jQuery.isEmptyObject($('#area_res').val()) && jQuery.isEmptyObject($('#city_res').val()) && jQuery.isEmptyObject($('#location_res').val()) && jQuery.isEmptyObject($('#street_res').val()) && $('#house_res').val() == '' && $('#building_res').val() == '' && $('#flat_res').val() == '' && $('#postcode_res').val() == '' && $('#address_res').val() != '') {
+			$('#kladr_res_not').prop('checked', true);
+		} else {
+			$('#kladr_res_not').prop('checked', false);
+		}
 		if ($('#kladr_res_not').prop('checked')) {
+			$('#kladr_res').hide();
 			$('#address_res').prop('disabled', false);
+		} else {
+			$('#kladr_res').show();
+			$('#address_res').prop('disabled', true);
 		}
 		// address registration clone
 		if ($('#address_reg').val() != '' && $('#address_reg').val() == $('#address_res').val()) {
@@ -1380,7 +1400,6 @@ use frontend\models\Model_Resume as Model_Resume;
 		$('#kladr_reg_not').change(function() {
 			$('#homeless_reg').prop('checked', false)
 			if ($('#kladr_reg_not').prop('checked')) {
-				$('#country_reg').val('');
 				$('#kladr_reg').hide();
 				$('#address_reg').val('');
 				$('#address_reg').prop('disabled', false);
@@ -1803,6 +1822,9 @@ use frontend\models\Model_Resume as Model_Resume;
 					$("label[for='unit_code']").html('Код подразделения*');
 					$('#unit_code').mask('999-999');
 					$("label[for='dt_end']").html('Дата окончания действия');
+                    //TODO паша добавил скрытие поля
+                    $("label[for='dt_end']").hide();
+                    $("#dt_end").hide();
 						$("label[for='passport_face']").html('Первая страница паспорта*');
 						$('#passport_face_div').show();
 						$("label[for='passport_reg']").html('Страница паспорта с регистрацией*');
@@ -1843,6 +1865,9 @@ use frontend\models\Model_Resume as Model_Resume;
 					$("label[for='unit_code']").html('Код подразделения');
 					$('#unit_code').unmask();
 					$("label[for='dt_end']").html('Дата окончания действия');
+					//TODO паша добавил скрытие поля
+                            $("label[for='dt_end']").hide();
+                            $("#dt_end").hide();
 						$("label[for='passport_face']").html('Первая страница паспорта');
 						$('#passport_face_div').hide();
 						$("label[for='passport_reg']").html('Страница паспорта с регистрацией');
@@ -1873,7 +1898,7 @@ use frontend\models\Model_Resume as Model_Resume;
 						$('#certificate_pbirth_div').show();
 					break;
 				// Вид на жительство иностранного гражданина
-				case '000000075':
+                case '000000075':
 					$("label[for='series']").html('Серия*');
 					$('#series').unmask();
 					$("label[for='numb']").html('Номер*');
@@ -1883,6 +1908,9 @@ use frontend\models\Model_Resume as Model_Resume;
 					$("label[for='unit_code']").html('Код подразделения');
 					$('#unit_code').unmask();
 					$("label[for='dt_end']").html('Дата окончания действия*');
+                    //TODO паша добавил отображение поля
+                    $("label[for='dt_end']").show();
+                    $("#dt_end").show();
 					$('#unit_code').unmask();
 						$("label[for='passport_face']").html('Первая страница паспорта');
 						$('#passport_face_div').hide();
@@ -1924,6 +1952,9 @@ use frontend\models\Model_Resume as Model_Resume;
 					$("label[for='unit_code']").html('Код подразделения');
 					$('#unit_code').unmask();
 					$("label[for='dt_end']").html('Дата окончания действия*');
+                    //TODO паша добавил отображение поля
+                    $("label[for='dt_end']").show();
+                    $("#dt_end").show();
 						$("label[for='passport_face']").html('Первая страница паспорта');
 						$('#passport_face_div').hide();
 						$("label[for='passport_reg']").html('Страница паспорта с регистрацией');
@@ -1964,6 +1995,9 @@ use frontend\models\Model_Resume as Model_Resume;
 					$("label[for='unit_code']").html('Код подразделения');
 					$('#unit_code').unmask();
 					$("label[for='dt_end']").html('Дата окончания действия*');
+                    //TODO паша добавил отображение поля
+                    $("label[for='dt_end']").show();
+                    $("#dt_end").show();
 						$("label[for='passport_face']").html('Первая страница паспорта');
 						$('#passport_face_div').hide();
 						$("label[for='passport_reg']").html('Страница паспорта с регистрацией');
@@ -2004,6 +2038,9 @@ use frontend\models\Model_Resume as Model_Resume;
 					$("label[for='unit_code']").html('Код подразделения');
 					$('#unit_code').unmask();
 					$("label[for='dt_end']").html('Дата окончания действия');
+                    //TODO паша добавил скрытие поля
+                    $("label[for='dt_end']").hide();
+                    $("#dt_end").hide();
 						$("label[for='passport_face']").html('Первая страница паспорта');
 						$('#passport_face_div').hide();
 						$("label[for='passport_reg']").html('Страница паспорта с регистрацией');
@@ -2044,6 +2081,9 @@ use frontend\models\Model_Resume as Model_Resume;
 			$("label[for='unit_code']").html('Код подразделения');
 			$('#unit_code').unmask();
 			$("label[for='dt_end']").html('Дата окончания действия');
+            //TODO паша добавил скрытие поля
+            $("label[for='dt_end']").hide();
+            $("#dt_end").hide();
 				$("label[for='passport_face']").html('Первая страница паспорта');
 				$('#passport_face_div').hide();
 				$("label[for='passport_reg']").html('Страница паспорта с регистрацией');

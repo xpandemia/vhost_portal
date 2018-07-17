@@ -17,13 +17,13 @@ switch (APP_DATA) {
 		define('DB_NAME', 'portalbsu'); // MySQL database name
 		break;
 	case 'test':
-		define('DB_HOST', 'bsu-web03'); // MySQL hostname
+		define('DB_HOST', 'localhost'); // MySQL hostname
 		define('DB_USER', 'ac-admin'); // MySQL database username
 		define('DB_PASSWORD', 'PnKDmaDpqAUVCGagjMyA'); // MySQL database password
 		define('DB_NAME', 'portalbsu'); // MySQL database name
 		break;
 	case 'main':
-		define('DB_HOST', 'bsu-web03'); // MySQL hostname
+		define('DB_HOST', 'localhost'); // MySQL hostname
 		define('DB_USER', 'ac-admin'); // MySQL database username
 		define('DB_PASSWORD', 'PnKDmaDpqAUVCGagjMyA'); // MySQL database password
 		define('DB_NAME', 'abitur-web'); // MySQL database name

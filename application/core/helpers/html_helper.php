@@ -124,6 +124,23 @@ class HTML_Helper
 		}
 	}
 
+
+	/**
+	 * Creates HREF as icon button.
+	 *
+	 * @return string
+	 */
+	//TODO добавил паша, то же самое, но открывает на новой вкладке
+	public static function setHrefButtonIconToNewPage($controller, $action, $class, $icon, $tooltip = null)
+	{
+		if (!empty($controller) && !empty($action) && !empty($class) && !empty($icon)) {
+			return '<a data-toggle="tooltip" title="'.$tooltip.'" href="'.Basic_Helper::appUrl($controller, $action).'" class="'.$class.'" target="_blank"><i class="'.$icon.'"></i></a> ';
+		} else {
+			return '<p class="text-danger">HTML_Helper.setHrefButtonIcon - На входе недостаточно данных!</p>';
+		}
+	}
+
+
 	/**
      * Creates image.
      *
@@ -183,7 +200,7 @@ class HTML_Helper
 			// fetching data
 			$table = $model->$method();
 			if ($table) {
-				foreach ($table as $table_row) {
+				foreach ($table as $row_key=>$table_row) {
 					$result .= '<tr>';
 					foreach ($model->$grid() as $key => $value) {
 						if ($value['type'] == 'lob') {
@@ -193,7 +210,11 @@ class HTML_Helper
 								$result .= '<td>Файл не загружен</td>';
 							}
 						} else {
-							$result .= '<td>'.$table_row[$key].'</td>';
+							//TODO Паша добавил обработку для красного текста
+							$style="";
+							if('status'==$key)
+								$style = "style =\"color:#ba0000; font-weight:bold;\"";
+							$result .= '<td '.$style.'>'.$table_row[$key].'</td>';
 						}
 					}
 					// actions

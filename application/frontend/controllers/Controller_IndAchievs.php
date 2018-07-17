@@ -130,7 +130,8 @@ class Controller_IndAchievs extends Controller
 			if (empty($this->form['error_msg'])) {
 				$this->form['error_msg'] = '<strong>Ошибка при проверке данных индивидуального достижения!</strong> Пожалуйста, проверьте все поля ввода.';
 			}
-			$this->form = $this->model->unsetScans($this->form);
+			//if(!256==$_SESSION[APP_CODE]['user_id']||!7 == $_SESSION[APP_CODE]['user_id']) //TODO Чех в шоке, но это снимает пятисотку. B и да, я вообще не понимаю, каково предназначение этого метода. Зачем его вызывают, и что он даёт.
+			//$this->form = $this->model->unsetScans($this->form); //TODO вернуть
 			return $this->view->generate('ind-achievs-add.php', 'form.php', IND_ACHIEVS['hdr'], $this->form);
 		}
 	}

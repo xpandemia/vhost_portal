@@ -2,10 +2,10 @@
 
 define('APP_NAME', 'Личный кабинет абитуриента');
 define('APP_CODE', 'portalbsu'); // MUST BE UNIQUE
-define('APP_VERSION', '0.4.0');
+define('APP_VERSION', '0.4.1');
 define('APP_DATA', 'local');
 
-# Портал абитуриента
+# Личный кабинет абитуриента
 # Build with curiosity by Fiben on Tinyframe 0.2.1
 
 // These headers tell the browser to not load anything from cache at all
@@ -15,6 +15,30 @@ header("Expires: Thu, 01 Jan 1970 00:00:01 GMT"); // Date in the past
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT"); // always modified
 header("Cache-Control: no-cache"); // HTTP/1.1
 header("Pragma: no-cache"); // HTTP/1.0
+
+# ---------------------------------------------------------------
+# LOG
+# ---------------------------------------------------------------
+
+#  You can use logging to trace errors
+#
+#  This can be set to:
+#
+#      0
+#      1
+#
+
+$log = 0;
+
+if ($log == 1) {
+	function error_processor($errno, $errstr, $errfile, $errline, $errcontext)
+	{
+		$r = rand();
+		file_put_contents("/var/www/html/vhost_test/short_log.log", date("r")."|".$r.":".$errno." ".$errstr." ".$errfile." ".$errline."\n",FILE_APPEND);
+		file_put_contents("/var/www/html/vhost_test/log.log", date("r")."|".$r.":".$errno." ".$errstr." ".$errfile." ".$errline."\n SESSION:\n".var_export($_SESSION,TRUE)."\n back_trace:".var_export(debug_backtrace(),TRUE)."\n",FILE_APPEND);
+	}
+	$old_error_handler = set_error_handler("error_processor");
+}
 
 session_cache_limiter('private_no_expire');
 session_start();

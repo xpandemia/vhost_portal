@@ -1,5 +1,6 @@
 <?php
 
+
 use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 use tinyframe\core\helpers\Form_Helper as Form_Helper;
 
@@ -19,6 +20,7 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 		<input type="hidden" id="doc_type_hidden" name="doc_type_hidden" value="<?php echo $data['doc_type']; ?>"/>
 	</div>
 	<?php
+
 		echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\n9 классов: вид образования - <strong>\"среднее (основное, общее)\"</strong>, тип документа - <strong>\"Аттестат об основном общем образовании\"</strong>\n11 классов: вид образования - <strong>\"Среднее общее\"</strong>, тип документа - <strong>\"Аттестат\"</strong>\nПолное высшее образование, <strong>полученное до 2016 года включительно</strong>: вид образования - <strong>\"Высшее\"</strong>, тип документа - <strong>\"Диплом дипломированного специалиста\"</strong>"), 'alert-warning');
 		// educ type
 		echo Form_Helper::setFormSelectListDB(['label' => 'Вид образования',
@@ -49,14 +51,16 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 												'success' => $data['doc_type_scs'],
 												'error' => $data['doc_type_err']]);
 		// series
-		echo Form_Helper::setFormInput(['label' => 'Серия',
+		echo Form_Helper::setFormInput(['label' => 'Серия*', //да, я знаю что колхоз, но зависимости вывода звёздочки от required нет
 										'control' => 'series',
 										'type' => 'text',
 										'class' => $data['series_cls'],
 										'required' => 'no',
 										'value' => $data['series'],
 										'success' => $data['series_scs'],
-										'error' => $data['series_err']]);
+										'error' => $data['series_err']
+			                            ,'help' => "Если серия документа отсутствует, введите пробел в это поле"//Да колхоз, да добавил Паша
+        ]);
 		// numb
 		echo Form_Helper::setFormInput(['label' => 'Номер',
 										'control' => 'numb',
@@ -76,7 +80,9 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 										'required_style' => 'StarUp',
 										'value' => $data['school'],
 										'success' => $data['school_scs'],
-										'error' => $data['school_err']]);
+										'error' => $data['school_err']
+                                        ,'help' => "Это поле может содержать <b>только буквы, цифры, пробелы и знак №</b> и быть не более <b>60</b> символов длиной"//Да колхоз, да опять добавил Паша
+        ]);
 		// dt_issue
 		echo Form_Helper::setFormInput(['label' => 'Дата выдачи',
 										'control' => 'dt_issue',
@@ -96,7 +102,8 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 										'required_style' => 'StarUp',
 										'value' => $data['end_year'],
 										'success' => $data['end_year_scs'],
-										'error' => $data['end_year_err']]);
+										'error' => $data['end_year_err']
+										]);
 		// educ form
 		echo Form_Helper::setFormSelectListDB(['label' => 'Форма обучения',
 												'control' => 'educ_form',
@@ -117,7 +124,9 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 										'required' => 'no',
 										'value' => $data['speciality'],
 										'success' => $data['speciality_scs'],
-										'error' => $data['speciality_err']]);
+										'error' => $data['speciality_err']
+										,'help' => 'Наименование специальности должно содержать <strong>только русские буквы, цифры, знаки препинания  и пробелы</strong> и быть не более <b>50</b> символов длиной.' //TODO убртаь, добавил Паша
+										]);
 		/* change_name */
 		echo Form_Helper::setFormCheckbox(['label' => 'На момент получения документа об образовании мои фамилия, имя или отчество были другими',
 												'control' => 'change_name_flag',

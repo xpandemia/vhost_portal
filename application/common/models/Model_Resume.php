@@ -128,6 +128,10 @@ class Model_Resume extends Db_Helper
      */
 	public function getByUser()
 	{
+//		if(!isset($_SESSION[APP_CODE]['user_id']))
+//			file_put_contents("/var/www/html/vhost_test/log.log", date("r").":"." Что же  тут есть\n".var_export($_SESSION,TRUE)."\n".var_export([':id_user' => $_SESSION[APP_CODE]['user_id']],TRUE)."\n",FILE_APPEND);
+//		$resume = FALSE;                           // TODO добавил Паша, чтобы не задавать параметр NULL в PDO хз, поможет ли.
+//		if(isset($_SESSION[APP_CODE]['user_id'])) //
 		$resume = $this->rowSelectOne('*',
 									self::TABLE_NAME,
 									'id_user = :id_user',
@@ -254,10 +258,11 @@ class Model_Resume extends Db_Helper
      */
 	public function getStatusByUser()
 	{
+
 		return $this->rowSelectOne('status',
-									self::TABLE_NAME,
-									'id_user = :id_user',
-									[':id_user' => $_SESSION[APP_CODE]['user_id']]);
+								self::TABLE_NAME,
+								'id_user = :id_user',
+								[':id_user' => $_SESSION[APP_CODE]['user_id']]);
 	}
 
 	/**

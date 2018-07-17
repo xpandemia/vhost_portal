@@ -3,6 +3,7 @@
 namespace tinyframe\core\helpers;
 
 use PDO;
+use PHPMailer\PHPMailer\Exception;
 
 class Db_Helper
 {
@@ -48,6 +49,7 @@ class Db_Helper
     private function __wakeup()
     {
     }
+
 
 	/**
      * Returns the Db_Helper instance.
@@ -156,24 +158,55 @@ class Db_Helper
      */
 	public function rowSelectOne($fields, $tables, $conds = null, $params = null)
 	{
-		try {
+
+		//Паша расставил ловущку на багу //TODO delete this shit
+//		if(!isset($_SESSION[APP_CODE]['user_id']))
+//		{
+//			file_put_contents("/var/www/html/vhost_test/log.log", date("r").":"." Сичас буит мясо \nSESSION: ".var_export($_SESSION,TRUE)."\nPARAMS: ".var_export($params,TRUE)."\n back_trace",FILE_APPEND);
+//		}
+//		if(isset($_SESSION[APP_CODE]['user_id'])&&256==$_SESSION[APP_CODE]['user_id'])
+//			file_put_contents("/var/www/html/vhost_test/log.log", date("r").":"." Запрос здорового человека: \n 'SELECT $fields FROM $tables WHERE $conds  ;(".var_export($params,TRUE).")\n ",FILE_APPEND);
+//		if(!isset($_SESSION[APP_CODE]['user_id']) && "id_user = :id_user" == $conds)
+//			file_put_contents("/var/www/html/vhost_test/log.log", date("r").":"." Запрос курильщика: \n 'SELECT .$fields. FROM .$tables. WHERE $conds ;(".var_export($params,TRUE).")\n ",FILE_APPEND);
+		//конец пашиной херни
+
+		try
+		{
 			self::$pdo->beginTransaction();
-			if (!empty($conds) && (!empty($params))) {
+			if (!empty($conds) && (!empty($params)))
+			{
+//				file_put_contents("/var/www/html/vhost_test/log.log", var_export(debug_backtrace(),TRUE)."\n",FILE_APPEND);
+//				file_put_contents("/var/www/html/vhost_test/log.log", "[\n",FILE_APPEND);
+
 				$sql = self::$pdo->prepare('SELECT '.$fields.' FROM '.$tables.' WHERE '.$conds);
+				//file_put_contents("/var/www/html/vhost_test/log.log", "]\n",FILE_APPEND);
 				$sql->execute($params);
-			} else {
+			}
+			else
+			{
 				$sql = self::$pdo->prepare('SELECT '.$fields.' FROM '.$tables);
 				$sql->execute();
 			}
 			$row = $sql->fetch(PDO::FETCH_ASSOC);
 			self::$pdo->commit();
 		    $sql = null;
+//			if(!isset($_SESSION[APP_CODE]['user_id']) && "id_user = :id_user"==$conds) //TODO тут тоже пашина херня
+//				file_put_contents("/var/www/html/vhost_test/log.log", date("r").":"." Запрос курильщика: \n 'SELECT .$fields. FROM .$tables. WHERE $conds ;(".var_export($params,TRUE).") \n закончился:\n".var_export($row,TRUE)."\n",FILE_APPEND);
 		    return $row;
 		} catch(\PDOException $pdo_err) {
+			//file_put_contents("/var/www/html/vhost_test/log.log", var_export($pdo_err,TRUE)."\n",FILE_APPEND);
 			self::$pdo->rollBack();
 			$sql = null;
 			echo nl2br("Error MySQL: ".$pdo_err->getMessage()."\n");
 			return null;
+		}
+		catch(\Throwable $t)
+		{
+			file_put_contents("/var/www/html/vhost_test/log.log", var_export($t,TRUE)."\n",FILE_APPEND);
+		}
+		catch(\Throwable $e)
+		{
+			file_put_contents("/var/www/html/vhost_test/log.log", var_export($e,TRUE)."\n",FILE_APPEND);
 		}
 	}
 

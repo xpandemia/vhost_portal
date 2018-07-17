@@ -15,29 +15,14 @@ class Model_Main extends Model
 	/**
      * Checks user.
      *
-     * @return boolean
+     * @return void
      */
-	public function checkUser()
+	public function checkUser($user_name, $user_id)
 	{
-		$user = new Model_User();
-		$user->username = $_SESSION[APP_CODE]['user_name'];
-		$user_row = $user->getByUsername();
-		if ($user_row) {
-			$user->id = $user_row['id'];
-			$user->email = $user_row['email'];
-			$user->role = $user_row['role'];
-			$user->status = $user_row['status'];
-			$user->setUser();
-			return true;
-		} else {
-			if (strripos($_SESSION[APP_CODE]['user_name'], '@')) {
-				$user->email = $_SESSION[APP_CODE]['user_name'];
-			} else {
-				$user->email = $_SESSION[APP_CODE]['user_name'].'@'.CAS_DOMAIN;
-			}
-			$user->role = $user::ROLE_GUEST;
-			$user->status = $user::STATUS_ACTIVE;
-			if ($user->save()) {
+		if (isset($user_name)) {
+			if (!isset($user_id)) {
+				$user = new Model_User();
+				$user->username = $user_name;
 				$user_row = $user->getByUsername();
 				if ($user_row) {
 					$user->id = $user_row['id'];
@@ -45,13 +30,32 @@ class Model_Main extends Model
 					$user->role = $user_row['role'];
 					$user->status = $user_row['status'];
 					$user->setUser();
-					return true;
 				} else {
-					return false;
+					if (strripos($user_name, '@')) {
+						$user->email = $user_name;
+					} else {
+						$user->email = $user_name.'@'.CAS_DOMAIN;
+					}
+					$user->role = $user::ROLE_GUEST;
+					$user->status = $user::STATUS_ACTIVE;
+					if ($user->save()) {
+						$user_row = $user->getByUsername();
+						if ($user_row) {
+							$user->id = $user_row['id'];
+							$user->email = $user_row['email'];
+							$user->role = $user_row['role'];
+							$user->status = $user_row['status'];
+							$user->setUser();
+						} else {
+							exit("<p><strong>Ошибка!</strong> Авторизация не выполнена.</p>");
+						}
+					} else {
+						exit("<p><strong>Ошибка!</strong> Авторизация не выполнена.</p>");
+					}
 				}
-			} else {
-				return false;
 			}
+		} else {
+			return Basic_Helper::redirectHome();
 		}
 	}
 

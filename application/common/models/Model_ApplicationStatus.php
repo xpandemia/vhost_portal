@@ -88,11 +88,13 @@ class Model_ApplicationStatus extends Db_Helper
      */
 	public function getLast()
 	{
-		return $this->rowSelectAll('*',
+		$res = $this->rowSelectAll('*',
 									self::TABLE_NAME,
 									'id_application = :id_application',
 									[':id_application' => $this->id_application],
 									'dt_created', 1, 1);
+		//file_put_contents("/var/www/html/vhost_test/log.log", "test of Gets the last application status log data.\n".var_export($res,TRUE)."\n",FILE_APPEND);
+		return $res;
 	}
 
 	/**

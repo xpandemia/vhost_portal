@@ -199,6 +199,10 @@ class Model_Application extends Db_Helper
 							'name' => 'Номер',
 							'type' => 'int'
 							],
+				'status' => [
+					'name' => 'Статус заявления',
+					'type' => 'string'
+				],
 				'reason' => [
 							'name' => 'Основание',
 							'type' => 'string'
@@ -207,10 +211,7 @@ class Model_Application extends Db_Helper
 							'name' => 'Тип',
 							'type' => 'string'
 							],
-				'status' => [
-							'name' => 'Состояние',
-							'type' => 'string'
-							],
+
 				'university' => [
 								'name' => 'Место поступления',
 								'type' => 'string'
@@ -262,7 +263,8 @@ class Model_Application extends Db_Helper
 									' LEFT OUTER JOIN application reason ON application.id_app = reason.id',
 									'application.id_user = :id_user AND application.active = :active',
 									[':id_user' => $_SESSION[APP_CODE]['user_id'],
-									':active' => 1]);
+									':active' => 1],
+									'admission_campaign.description, application.numb');
 	}
 
 	/**

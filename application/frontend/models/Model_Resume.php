@@ -43,7 +43,7 @@ class Model_Resume extends Model
                                 'type' => 'text',
                                 'class' => 'form-control',
                                 'required' => ['default' => '', 'msg' => 'Фамилия обязательна для заполнения!'],
-                                'pattern' => ['value' => PATTERN_ALPHA_RUS, 'msg' => 'Для фамилии можно использовать '.MSG_ALPHA_RUS.'!'],
+                                'pattern' => ['value' => PATTERN_FAMILY_RUS, 'msg' => 'Для фамилии можно использовать '.MSG_FAMILY_RUS.'!'],
                                 'width' => ['format' => 'string', 'min' => 1, 'max' => 50, 'msg' => 'Слишком длинная фамилия!'],
                                 'success' => 'Фамилия заполнена верно.'
                                ],
@@ -295,7 +295,8 @@ class Model_Resume extends Model
 			$div = '<div class="';
 		}
 		// status
-		switch ($status) {
+		switch ($status)
+		{
 			case Resume::STATUS_CREATED:
 				return $div.'alert alert-info">Состояние: <strong>'.mb_convert_case(Resume::STATUS_CREATED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong></div>';
 			case Resume::STATUS_SAVED:
@@ -496,6 +497,7 @@ class Model_Resume extends Model
 		$address->type = $address::TYPE_REG;
 		$row = $address->getByResumeType();
 		if ($row) {
+			$form['kladr_reg'] = $row['kladr'];
 			$form['region_reg'] = $row['region_code'];
 			$form['area_reg'] = $row['area_code'];
 			$form['city_reg'] = $row['city_code'];
@@ -506,6 +508,7 @@ class Model_Resume extends Model
 			$form['flat_reg'] = $row['flat'];
 			$form['postcode_reg'] = $row['postcode'];
 		} else {
+			$form['kladr_reg'] = null;
 			$form['region_reg'] = null;
 			$form['area_reg'] = null;
 			$form['city_reg'] = null;
@@ -531,6 +534,7 @@ class Model_Resume extends Model
 		$address->type = $address::TYPE_RES;
 		$row = $address->getByResumeType();
 		if ($row) {
+			$form['kladr_res'] = $row['kladr'];
 			$form['region_res'] = $row['region_code'];
 			$form['area_res'] = $row['area_code'];
 			$form['city_res'] = $row['city_code'];
@@ -541,6 +545,7 @@ class Model_Resume extends Model
 			$form['flat_res'] = $row['flat'];
 			$form['postcode_res'] = $row['postcode'];
 		} else {
+			$form['kladr_res'] = null;
 			$form['region_res'] = null;
 			$form['area_res'] = null;
 			$form['city_res'] = null;
@@ -561,6 +566,7 @@ class Model_Resume extends Model
      */
 	public function resetAddressReg($form)
 	{
+		$form['kladr_reg'] = null;
 		$form['region_reg'] = null;
 		$form['area_reg'] = null;
 		$form['city_reg'] = null;
@@ -580,6 +586,7 @@ class Model_Resume extends Model
      */
 	public function resetAddressRes($form)
 	{
+		$form['kladr_res'] = null;
 		$form['region_res'] = null;
 		$form['area_res'] = null;
 		$form['city_res'] = null;
@@ -599,7 +606,7 @@ class Model_Resume extends Model
      */
 	public function getAddressReg($form)
 	{
-		if (isset($_POST['homeless_reg'])) {
+		if (isset($_POST['homeless_reg']) || isset($_POST['kladr_reg_not'])) {
 			$form['kladr_reg'] = 0;
 			$form['region_reg'] = null;
 			$form['area_reg'] = null;
@@ -611,7 +618,7 @@ class Model_Resume extends Model
 			$form['flat_reg'] = null;
 			$form['postcode_reg'] = null;
 		} else {
-			$form['kladr_reg'] = (isset($_POST['kladr_reg_not'])) ? 0 : 1;
+			$form['kladr_reg'] = 1;
 			$form['region_reg'] = (isset($_POST['region_reg'])) ? htmlspecialchars($_POST['region_reg']) : null;
 			$form['area_reg'] = (isset($_POST['area_reg'])) ? htmlspecialchars($_POST['area_reg']) : null;
 			$form['city_reg'] = (isset($_POST['city_reg'])) ? htmlspecialchars($_POST['city_reg']) : null;
@@ -632,7 +639,7 @@ class Model_Resume extends Model
      */
 	public function getAddressRes($form)
 	{
-		if (isset($_POST['homeless_res'])) {
+		if (isset($_POST['homeless_res']) || isset($_POST['kladr_res_not'])) {
 			$form['kladr_res'] = 0;
 			$form['region_res'] = null;
 			$form['area_res'] = null;
@@ -644,7 +651,7 @@ class Model_Resume extends Model
 			$form['flat_res'] = null;
 			$form['postcode_res'] = null;
 		} else {
-			$form['kladr_res'] = (isset($_POST['kladr_res_not'])) ? 0 : 1;
+			$form['kladr_res'] = 1;
 			$form['region_res'] = (isset($_POST['region_res'])) ? htmlspecialchars($_POST['region_res']) : null;
 			$form['area_res'] = (isset($_POST['area_res'])) ? htmlspecialchars($_POST['area_res']) : null;
 			$form['city_res'] = (isset($_POST['city_res'])) ? htmlspecialchars($_POST['city_res']) : null;

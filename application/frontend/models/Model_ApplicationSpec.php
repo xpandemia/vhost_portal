@@ -490,8 +490,8 @@ class Model_ApplicationSpec extends Model
 			return $form;
 		}
 		/* check status */
-		if ($app_row['status'] != $app::STATUS_APPROVED && $app_row['status'] != $app::STATUS_REJECTED) {
-			$form['error_msg'] = 'Изменять можно только заявления с состоянием: <strong>'.mb_convert_case($app::STATUS_APPROVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_REJECTED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!';
+		if ($app_row['status'] != $app::STATUS_APPROVED) {
+			$form['error_msg'] = 'Изменять можно только заявления с состоянием <strong>'.mb_convert_case($app::STATUS_APPROVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!';
 			return $form;
 		}
 		/* change */
