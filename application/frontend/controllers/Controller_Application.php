@@ -140,8 +140,8 @@ class Controller_Application extends Controller
 			if (empty($this->form['error_msg'])) {
 				$this->form['error_msg'] = '<strong>Ошибка при проверке данных заявления!</strong> Пожалуйста, проверьте все поля ввода.';
 			}
-			return $this->view->generate('application-add.php', 'form.php', APP['hdr'], $this->form);
 		}
+		return $this->view->generate('application-add.php', 'form.php', APP['hdr'], $this->form);
 	}
 
 	public function __destruct()

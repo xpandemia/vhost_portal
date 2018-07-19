@@ -138,7 +138,6 @@ class Controller_DocsEduc extends Controller
 		$this->form['id'] = htmlspecialchars($_POST['id']);
 		$this->form = $this->model->validateForm($this->form, $this->model->rules());
 		$this->form = $this->model->validateFormAdvanced($this->form);
-		//	file_put_contents("/var/www/html/vhost_test/log.log", var_export($this->form,TRUE)."\n",FILE_APPEND);
 		if ($this->form['validate'])
 		{
 			$this->form = $this->model->check($this->form);
@@ -151,16 +150,9 @@ class Controller_DocsEduc extends Controller
 			if (empty($this->form['error_msg'])) {
 				$this->form['error_msg'] = '<strong>Ошибка при проверке данных документа об образовании!</strong> Пожалуйста, проверьте все поля ввода.';
 			}
-//			if(isset($_SESSION['portalbsu']['user_id'])&&256 == $_SESSION['portalbsu']['user_id'])
-//			file_put_contents("/var/www/html/vhost_test/log.log", date("r").":"." test "."\n",FILE_APPEND);
-			//if(!256==$_SESSION[APP_CODE]['user_id']||!7 == $_SESSION[APP_CODE]['user_id']) //TODO Чех в шоке, но это снимает пятисотку. B и да, я вообще не понимаю, каково предназначение этого метода. Зачем его вызывают, и что он даёт.
-			//$this->form = $this->model->unsetScans($this->form); //TODO вернуть
-//			if(isset($_SESSION['portalbsu']['user_id'])&&256 == $_SESSION['portalbsu']['user_id'])
-//				file_put_contents("/var/www/html/vhost_test/log.log", date("r").":"." test2 "."\n",FILE_APPEND);
-			//file_put_contents("/var/www/html/vhost_test/log.log", date("r").":".var_export($this->form['error_msg'],TRUE)."\n",FILE_APPEND);
-			return $this->view->generate('docs-educ-add.php', 'form.php', DOCS_EDUC['hdr'], $this->form);
+			$this->form = $this->model->unsetScans($this->form);
 		}
-
+		return $this->view->generate('docs-educ-add.php', 'form.php', DOCS_EDUC['hdr'], $this->form);
 	}
 
 	/**

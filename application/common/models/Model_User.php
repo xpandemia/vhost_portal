@@ -23,12 +23,18 @@ class Model_User extends Db_Helper
 	const TABLE_NAME = 'user';
 
 	const ROLE_GUEST = 0;
+	const ROLE_GUEST_NAME = 'Гость';
 	const ROLE_MANAGER = 1;
+	const ROLE_MANAGER_NAME = 'Модератор';
 	const ROLE_ADMIN = 2;
+	const ROLE_ADMIN_NAME = 'Администратор';
 
 	const STATUS_NOTACTIVE = 0;
+	const STATUS_NOTACTIVE_NAME = 'Не активен';
     const STATUS_ACTIVE = 1;
+    const STATUS_ACTIVE_NAME = 'Активен';
     const STATUS_DELETED = 2;
+    const STATUS_DELETED_NAME = 'Удалён';
 
 	public $id;
 	public $username;
@@ -116,6 +122,61 @@ class Model_User extends Db_Helper
 								'value' => $this->dt_updated
 								]
 				];
+	}
+
+	/**
+     * User grid.
+     *
+     * @return array
+     */
+	public function grid()
+	{
+		return [
+				'id' => [
+						'name' => '№',
+						'type' => 'int'
+						],
+				'username' => [
+								'name' => 'Логин',
+								'type' => 'string'
+								],
+				'email' => [
+							'name' => 'Эл. почта',
+							'type' => 'string'
+							],
+				'role' => [
+							'name' => 'Роль',
+							'type' => 'string'
+							],
+				'status' => [
+							'name' => 'Состояние',
+							'type' => 'string'
+							],
+				'dt_created' => [
+								'name' => 'Дата создания',
+								'type' => 'date'
+								]
+				];
+	}
+
+	/**
+     * Gets users for GRID.
+     *
+     * @return array
+     */
+	public function getGrid()
+	{
+		return $this->rowSelectAll("id, username, email, getUserRoleName(role) as role, getUserStatusName(status) as status, date_format(dt_created, '%d.%m.%Y %h:%m:%s') as dt_created", self::TABLE_NAME);
+	}
+
+	/**
+     * Gets user by ID.
+     *
+     * @return array
+     */
+	public function get()
+	{
+		return $this->rowSelectOne('*', self::TABLE_NAME, 'id = :id', [':id' => $this->id]);
 	}
 
 	/**

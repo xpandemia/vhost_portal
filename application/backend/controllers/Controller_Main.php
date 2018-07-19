@@ -18,7 +18,11 @@ class Controller_Main extends Controller
 		$this->model = new Model_Main();
 		$this->view = new View();
 		// check user
-		$this->model->checkUser($_SESSION[APP_CODE]['user_name'], $_SESSION[APP_CODE]['user_id']);
+		if (isset($_SESSION[APP_CODE]['user_name'])) {
+			$this->model->checkUser();
+		} else {
+			Basic_Helper::redirectHome();
+		}
 	}
 
 	/**
@@ -30,6 +34,16 @@ class Controller_Main extends Controller
 	{
 		Basic_Helper::msgReset();
 		return $this->view->generate('main.php', 'main.php', APP_NAME);
+	}
+
+	/**
+     * Calls to users.
+     *
+     * @return void
+     */
+	function actionUser() : void
+	{
+		Basic_Helper::redirect(USER['hdr'], 202, USER['ctr'], 'Index');
 	}
 
 	/**

@@ -25,7 +25,13 @@ class Controller_Main extends Controller
 		$this->model = new Model_Main();
 		$this->view = new View();
 		// check user
-		$this->model->checkUser($_SESSION[APP_CODE]['user_name'], $_SESSION[APP_CODE]['user_id']);
+		if (isset($_SESSION[APP_CODE]['user_name'])) {
+			if (!isset($_SESSION[APP_CODE]['user_id'])) {
+				$this->model->checkUser();
+			}
+		} else {
+			Basic_Helper::redirectHome();
+		}
 		// check personal
 		$personal = new Personal();
 		$personal_row = $personal->getByUser();

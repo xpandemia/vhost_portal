@@ -43,8 +43,13 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 		</button>
 		<div class="collapse navbar-collapse" id="mainNavbar">
 			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link" href="<?php echo Basic_Helper::appUrl('Main', USER['ctr']); ?>">
+						<span data-toggle="tooltip" data-placement="auto" title="<?php echo USER['hdr']; ?>"><i class="fas fa-users fa-2x"></i></span>
+					</a>
+			    </li>
 			    <li class="nav-item">
-					<a class="nav-link" href="<?php echo Basic_Helper::appUrl('Main', 'DictManager'); ?>">
+					<a class="nav-link" href="<?php echo Basic_Helper::appUrl('Main', DICT_MANAGER['ctr']); ?>">
 						<span data-toggle="tooltip" data-placement="auto" title="<?php echo DICT_MANAGER['hdr']; ?>"><i class="fas fa-database fa-2x"></i></span>
 					</a>
 			    </li>

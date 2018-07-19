@@ -210,10 +210,11 @@ class HTML_Helper
 								$result .= '<td>Файл не загружен</td>';
 							}
 						} else {
-							//TODO Паша добавил обработку для красного текста
-							$style="";
-							if('status'==$key)
+							//TODO Паша добавил обработку для красного текста (состояние)
+							$style = "";
+							if($key == 'status') {
 								$style = "style =\"color:#ba0000; font-weight:bold;\"";
+							}
 							$result .= '<td '.$style.'>'.$table_row[$key].'</td>';
 						}
 					}

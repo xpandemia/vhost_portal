@@ -17,27 +17,27 @@ class Model_Main extends Model
      *
      * @return void
      */
-	public function checkUser($user_name, $user_id)
+	public function checkUser()
 	{
-		if (isset($user_name)) {
-			$user = new Model_User();
-			$user->username = $user_name;
-			$user_row = $user->getByUsername();
-			if ($user_row) {
-				if ($user_row['role'] == $user::ROLE_ADMIN) {
-					$user->id = $user_row['id'];
-					$user->email = $user_row['email'];
-					$user->role = $user_row['role'];
-					$user->status = $user_row['status'];
-					$user->setUser();
-				} else {
-					exit("<p><strong>Ошибка!</strong> Доступ только для администраторов.</p>");
-				}
+		$user = new Model_User();
+		if (isset($_SESSION[APP_CODE]['user_name'])) {
+			$user->username = $_SESSION[APP_CODE]['user_name'];
+		} else {
+			Basic_Helper::redirectHome();
+		}
+		$user_row = $user->getByUsername();
+		if ($user_row) {
+			if ($user_row['role'] == $user::ROLE_ADMIN) {
+				$user->id = $user_row['id'];
+				$user->email = $user_row['email'];
+				$user->role = $user_row['role'];
+				$user->status = $user_row['status'];
+				$user->setUser();
 			} else {
-				exit("<p><strong>Ошибка!</strong> Регистрация не выполнена.</p>");
+				exit("<p><strong>Ошибка!</strong> Доступ только для администраторов.</p>");
 			}
 		} else {
-			return Basic_Helper::redirectHome();
+			exit("<p><strong>Ошибка!</strong> Регистрация не выполнена.</p>");
 		}
 	}
 

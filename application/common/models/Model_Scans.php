@@ -125,17 +125,17 @@ class Model_Scans extends Db_Helper
 	}
 
 	/**
-     * Gets scan by document.
+     * Gets scan by document row.
      *
      * @return array
      */
-	public function getByDoc()
+	public function getByDocRowScan()
 	{
-//тут последняя остановочка
 		return $this->rowSelectOne('*',
 								self::TABLE_NAME,
-								'id_doc = :id_doc AND id_scans = :id_scans',
+								'id_doc = :id_doc AND id_row = :id_row AND id_scans = :id_scans',
 								[':id_doc' => $this->id_doc,
+								':id_row' => $this->id_row,
 								':id_scans' => $this->id_scans]);
 	}
 

@@ -180,7 +180,6 @@ class Model_DocsEduc extends Model
 	public function unsetScans($form)
 	{
 		// main
-
 		$form = Model_Scans::unsets('docs_educ', $form);
 		// change_name
 		if ($form['change_name_flag'] == 'checked')

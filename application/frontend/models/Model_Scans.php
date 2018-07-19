@@ -152,21 +152,27 @@ class Model_Scans extends Model
 	public static function unsets($doc_code, $form)
 	{
 		$dict_scans = new Model_DictScans();
-
 		$dict_scans->doc_code = $doc_code;
 		$dict_scans_arr = $dict_scans->getByDocument();
-
 		if ($dict_scans_arr) {
 			$docs = new Model_Docs();
 			$docs->doc_code = $doc_code;
 			$docs_row = $docs->getByCode();
 			$scans = new Scans();
-//			if(256==$_SESSION[APP_CODE]['user_id'])
-//			file_put_contents("/var/www/html/vhost_test/log.log", "+++".date("r").":".var_export($dict_scans_arr,TRUE)."\n",FILE_APPEND);
 			foreach ($dict_scans_arr as $dict_scans_row) {
-				$scans->id_doc = $docs_row['id'];
-				$scans->id_scans = $dict_scans_row['id'];
-				if (!$scans->getByDoc()) {
+				if (isset($form['id'])) {
+					$scans->id_doc = $docs_row['id'];
+					$scans->id_row = $form['id'];
+					$scans->id_scans = $dict_scans_row['id'];
+					if ($scans->getByDocRowScan()) {
+						$unset = 0;
+					} else {
+						$unset = 1;
+					}
+				} else {
+					$unset = 1;
+				}
+				if ($unset == 1) {
 					$form[$dict_scans_row['scan_code'].'_id'] = null;
 					$form[$dict_scans_row['scan_code']] = null;
 					$form[$dict_scans_row['scan_code'].'_id'] = null;

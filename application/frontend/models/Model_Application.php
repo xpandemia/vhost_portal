@@ -162,7 +162,7 @@ class Model_Application extends Model
 				return $form;
 			}
 			// check campaign period
-			/*$campaign_row = $campaign->getPeriod();
+			$campaign_row = $campaign->getPeriod();
 			$now = new \DateTime;
 			$start = \DateTime::CreateFromFormat('d.m.Y',$campaign_row['dt_begin']);
 			$end = \DateTime::CreateFromFormat('d.m.Y',$campaign_row['dt_end']);
@@ -174,7 +174,7 @@ class Model_Application extends Model
 			} else {
 				$form['error_msg'] = 'Ошибка при получении сроков приёма!';
 				return $form;
-			}*/
+			}
 		$app->id_docseduc = $form['docs_educ'];
 			$docship = new Model_DictDocships();
 			$docship->code = '000000001';
