@@ -133,7 +133,8 @@ class Model_EgeDisciplines extends Db_Helper
 		return $this->rowSelectAll('ege_disciplines.id, pid, dict_ege.description as discipline, points',
 									'ege_disciplines INNER JOIN dict_ege ON ege_disciplines.id_discipline = dict_ege.id',
 									'pid = :pid',
-									[':pid' => $this->pid]);
+									[':pid' => $this->pid],
+									'dict_ege.description ASC');
 	}
 
 	/**
@@ -218,13 +219,14 @@ class Model_EgeDisciplines extends Db_Helper
      */
 	public function checkDiscipline()
 	{
-		return $this->rowSelectOne('ege_disciplines.id',
+		return $this->rowSelectAll('points, reg_year',
 									'ege_disciplines INNER JOIN ege ON ege_disciplines.pid = ege.id'.
 									' INNER JOIN dict_ege ON ege_disciplines.id_discipline = dict_ege.id',
 									'dict_ege.code = :code_discipline AND ege.id_user = :id_user AND ege.reg_year >= :reg_year',
 									[':code_discipline' => $this->code_discipline,
 									':id_user' => $_SESSION[APP_CODE]['user_id'],
-									':reg_year' => date('Y') - 6]);
+									':reg_year' => date('Y') - 6],
+									'points DESC, reg_year DESC', 1);
 	}
 
 	public function __destruct()

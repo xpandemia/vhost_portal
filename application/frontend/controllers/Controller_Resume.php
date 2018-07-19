@@ -82,7 +82,6 @@ class Controller_Resume extends Controller
 		$this->form = $this->model->setAddressReg($this->form);
 		$this->form = $this->model->setAddressRes($this->form);
 		$this->form = $this->model->setForeignLangs($this->form);
-		//file_put_contents("/var/www/html/vhost_test/log.log", var_export($this->model,TRUE)."\n",FILE_APPEND);
 		return $this->view->generate('resume.php', 'form.php', RESUME['hdr'], $this->form);
 	}
 
@@ -146,10 +145,8 @@ class Controller_Resume extends Controller
 				$this->form = $this->model->setAddressReg($this->form);
 				$this->form = $this->model->setAddressRes($this->form);
 			}
-			//if(!256==$_SESSION[APP_CODE]['user_id']||!7 == $_SESSION[APP_CODE]['user_id']) //TODO Чех в шоке, но это снимает пятисотку. B и да, я вообще не понимаю, каково предназначение этого метода. Зачем его вызывают, и что он даёт.
-			///$this->form = $this->model->unsetScans($this->form); //TODO вернуть
-
 		}
+		$this->form = $this->model->unsetScans($this->form);
 		$this->form = $this->model->setForeignLangs($this->form);
 		return $this->view->generate('resume.php', 'form.php', RESUME['hdr'], $this->form);
 	}

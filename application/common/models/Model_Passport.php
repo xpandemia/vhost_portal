@@ -3,10 +3,8 @@
 namespace common\models;
 
 use tinyframe\core\helpers\Db_Helper as Db_Helper;
-//TODO временно заменил Паша, знаю про константу. Но здесь нужно было так
-//define('UNITNAME_HELP', 'Наименование подразделения должно содержать <strong>'.MSG_INFO_RUS.'</strong>, и быть не более <b>100</b> символов длиной.');
-define('UNITNAME_HELP', 'Наименование подразделения должно содержать <strong>только русские буквы, цифры  и пробелы</strong> и быть не более <b>100</b> символов длиной.');
 
+define('UNITNAME_HELP', 'Наименование подразделения должно содержать <strong>только русские буквы, цифры  и пробелы</strong> и быть не более <b>100</b> символов длиной.');
 define('UNITNAME_PLC', 'Наименование подразделения');
 
 class Model_Passport extends Db_Helper

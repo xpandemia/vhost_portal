@@ -38,12 +38,12 @@ define('MSG_ALPHA_NUMB_RUS', 'только русские буквы и цифр
 // letters and numbers
 define('PATTERN_ALPHA_NUMB_ALL', '/^[a-zA-ZёЁа-яА-Я0-9\s\-\.\,\_\/]*$/u');
 define('MSG_ALPHA_NUMB_ALL', 'только буквы, цифры, пробелы, нижнее подчёркивание, пробелы и знаки препинания');
-// letters ENG, numbers, "-", spaces
-define('PATTERN_SPEC', '/^[a-zA-Z0-9-\s]*$/u');
-define('MSG_SPEC', 'только латинские буквы, цифры, тире и пробелы');
-// letters RUS, numbers, "-", spaces
-define('PATTERN_SPEC_RUS', '/^[ёЁа-яА-Я0-9-\s\.\,\'\_\«\»]*$/u');
-define('MSG_SPEC_RUS', 'только русские буквы, цифры, тире и пробелы');
+// letters ENG, numbers, "-", spaces, ".", ",", "'", "«", "»"
+define('PATTERN_SPEC', '/^[a-zA-Z0-9-\s\.\,\'\«\»]*$/u');
+define('MSG_SPEC', 'только латинские буквы, цифры, пробелы и знаки препинания');
+// letters RUS, numbers, "-", spaces, ".", ",", "'", "«", "»"
+define('PATTERN_SPEC_RUS', '/^[ёЁа-яА-Я0-9-\s\.\,\'\«\»]*$/u');
+define('MSG_SPEC_RUS', 'только русские буквы, цифры, пробелы и знаки препинания');
 // email light
 define('PATTERN_EMAIL_LIGHT', '/^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9_\-.]+$/');
 define('MSG_EMAIL_LIGHT', 'в формате user@domain');
@@ -61,7 +61,6 @@ define('MSG_DATE_LIGHT', 'в формате ДД.ММ.ГГГГ');
 // date DD.MM.YYYY strong
 define('PATTERN_DATE_STRONG', '/^(?:(?:0[1-9]|1[0-9]|2[0-9]).(?:0[1-9]|1[0-2])|(?:(?:30).(?!02)(?:0[1-9]|1[0-2]))|(?:31.(?:0[13578]|1[02]))).(?:19|20)[0-9]{2}$/');
 define('MSG_DATE_STRONG', 'в формате ДД.ММ.ГГГГ и только 20-го, 21-го вв');
-//TODO правлено Чехом
 
 class Form_Helper
 {
@@ -91,174 +90,168 @@ class Form_Helper
     */
 	public function validate($form, $rules)
 	{
-		//file_put_contents("/var/www/html/vhost_test/log.log", var_export($rules,TRUE)."\n",FILE_APPEND);
-//		ini_set('error_reporting', E_ALL);
-//		ini_set('display_errors', 1);
-			$validate = TRUE;
-			// RULES loop
-			foreach ($rules as $field_name => $rule_name_arr) {
-				//file_put_contents("/var/www/html/vhost_test/log.log", "$field_name\n",FILE_APPEND);
-				if ($form[$field_name . '_vis'] === TRUE) {
-					foreach ($rule_name_arr as $rule_name => $rule_var_arr) {
-						// RULE processing
-						switch ($rule_name) {
-							// required check
-							case 'required':
-								switch ($rules[$field_name]['type']) {
-									case 'checkbox':
-										if ($form[$field_name] != 'checked') {
-											$validate = FALSE;
+		$validate = true;
+		// RULES loop
+		foreach ($rules as $field_name => $rule_name_arr) {
+			if ($form[$field_name . '_vis'] === true) {
+				foreach ($rule_name_arr as $rule_name => $rule_var_arr) {
+					// RULE processing
+					switch ($rule_name) {
+						// required check
+						case 'required':
+							switch ($rules[$field_name]['type']) {
+								case 'checkbox':
+									if ($form[$field_name] != 'checked') {
+										$validate = false;
+										$form[$field_name . '_err'] = $rule_var_arr['msg'];
+									}
+									break;
+								case 'radio':
+									if (!$form[$field_name] && $form[$field_name] != '0') {
+										$validate = false;
+										$form[$field_name . '_err'] = $rule_var_arr['msg'];
+									}
+									break;
+								default:
+									if (empty($form[$field_name])) {
+										if (!empty($rule_var_arr['default'])) {
+											$form[$field_name] = $rule_var_arr['default'];
+											$form[$field_name . '_err'] = '';
+										}
+										else {
+											$validate = false;
+											$form[$field_name . '_err'] = $rule_var_arr['msg'];
+										}
+									}
+							}
+							break;
+						// pattern check
+						case 'pattern':
+							if (!empty($rule_var_arr['value']) && !empty($form[$field_name]) && empty($form[$field_name . '_err'])) {
+								if (!preg_match($rule_var_arr['value'], $form[$field_name])) {
+									$validate = false;
+									$form[$field_name . '_err'] = $rule_var_arr['msg'];
+								}
+							}
+							break;
+						// width check
+						case 'width':
+							if (!empty($form[$field_name]) && empty($form[$field_name . '_err'])) {
+								// format
+								switch ($rule_var_arr['format']) {
+									case 'string':
+										if (mb_strlen($form[$field_name]) < $rule_var_arr['min'] || mb_strlen($form[$field_name]) > $rule_var_arr['max']) {
+											$validate = false;
 											$form[$field_name . '_err'] = $rule_var_arr['msg'];
 										}
 										break;
-									case 'radio':
-										if (!$form[$field_name] && $form[$field_name] != '0') {
-											$validate = FALSE;
+									case 'numb':
+										if ($form[$field_name] < $rule_var_arr['min'] || $form[$field_name] > $rule_var_arr['max']) {
+											$validate = false;
 											$form[$field_name . '_err'] = $rule_var_arr['msg'];
 										}
 										break;
-									default:
-										if (empty($form[$field_name])) {
-											if (!empty($rule_var_arr['default'])) {
-												$form[$field_name] = $rule_var_arr['default'];
-												$form[$field_name . '_err'] = '';
-											}
-											else {
-												$validate = FALSE;
-												$form[$field_name . '_err'] = $rule_var_arr['msg'];
-											}
+								}
+							}
+							break;
+						// unique check
+						case 'unique':
+							if (!empty($form[$field_name]) && empty($form[$field_name . '_err'])) {
+								// using model
+								$model = new $rule_var_arr['class'];
+								// using model properties
+								$model->$field_name = $form[$field_name];
+								// using model method
+								$method = $rule_var_arr['method'];
+								if ($model->$method()) {
+									$validate = false;
+									$form[$field_name . '_err'] = $rule_var_arr['msg'];
+								}
+							}
+							break;
+						// comparison check
+						case 'compared':
+							if (!empty($rule_var_arr['value']) && !empty($form[$field_name]) && empty($form[$field_name . '_err'])) {
+								if ($rules[$field_name]['type'] == 'date') {
+									$field_value = date('Y-m-d', strtotime($form[$field_name]));
+									$test_value = date('Y-m-d', strtotime($rule_var_arr['value']));
+								}
+								else {
+									$field_value = $form[$field_name];
+									$test_value = $rule_var_arr['value'];
+								}
+								switch ($rule_var_arr['type']) {
+									case '==':
+										if ($field_value != $test_value) {
+											$validate = false;
+											$form[$field_name . '_err'] = $rule_var_arr['msg'];
 										}
+										break;
+									case '>':
+										if ($field_value <= $test_value) {
+											$validate = false;
+											$form[$field_name . '_err'] = $rule_var_arr['msg'];
+										}
+										break;
+									case '<':
+										if ($field_value >= $test_value) {
+											$validate = false;
+											$form[$field_name . '_err'] = $rule_var_arr['msg'];
+										}
+										break;
+									case '>=':
+										if ($field_value < $test_value) {
+											$validate = false;
+											$form[$field_name . '_err'] = $rule_var_arr['msg'];
+										}
+										break;
+									case '<=':
+										if ($field_value > $test_value) {
+											$validate = false;
+											$form[$field_name . '_err'] = $rule_var_arr['msg'];
+										}
+										break;
 								}
-								break;
-							// pattern check
-							case 'pattern':
-								if (!empty($rule_var_arr['value']) && !empty($form[$field_name]) && empty($form[$field_name . '_err'])) {
-									if (!preg_match($rule_var_arr['value'], $form[$field_name])) {
-										$validate = FALSE;
-										$form[$field_name . '_err'] = $rule_var_arr['msg'];
-									}
+							}
+							break;
+						// file size check
+						case 'size':
+							if ($rules[$field_name]['type'] == 'file' && isset($form[$field_name . '_size'])) {
+								if (Files_Helper::getSize($form[$field_name . '_size'], FILES_SIZE['size']) > FILES_SIZE['value']) {
+									unset($form[$field_name]);
+									unset($form[$field_name . '_name']);
+									unset($form[$field_name . '_type']);
+									unset($form[$field_name . '_size']);
+									$validate = false;
+									$form[$field_name . '_err'] = $rule_var_arr['msg'];
 								}
-								break;
-							// width check
-							case 'width':
-								if (!empty($form[$field_name]) && empty($form[$field_name . '_err'])) {
-									// format
-									switch ($rule_var_arr['format']) {
-										case 'string':
-											if (mb_strlen($form[$field_name]) < $rule_var_arr['min'] || mb_strlen($form[$field_name]) > $rule_var_arr['max']) {
-												$validate = FALSE;
-												$form[$field_name . '_err'] = $rule_var_arr['msg'];
-											}
-											break;
-										case 'numb':
-											if ($form[$field_name] < $rule_var_arr['min'] || $form[$field_name] > $rule_var_arr['max']) {
-												$validate = FALSE;
-												$form[$field_name . '_err'] = $rule_var_arr['msg'];
-											}
-											break;
-									}
+							}
+							break;
+						// file extension check
+						case 'ext':
+							if ($rules[$field_name]['type'] == 'file' && isset($form[$field_name . '_type'])) {
+								if (!in_array($form[$field_name . '_type'], FILES_EXT_SCANS)) {
+									unset($form[$field_name]);
+									unset($form[$field_name . '_name']);
+									unset($form[$field_name . '_type']);
+									unset($form[$field_name . '_size']);
+									$validate = false;
+									$form[$field_name . '_err'] = $rule_var_arr['msg'];
 								}
-								break;
-							// unique check
-							case 'unique':
-								if (!empty($form[$field_name]) && empty($form[$field_name . '_err'])) {
-									// using model
-									$model = new $rule_var_arr['class'];
-									// using model properties
-									$model->$field_name = $form[$field_name];
-									// using model method
-									$method = $rule_var_arr['method'];
-									if ($model->$method()) {
-										$validate = FALSE;
-										$form[$field_name . '_err'] = $rule_var_arr['msg'];
-									}
-								}
-								break;
-							// comparison check
-							case 'compared':
-								if (!empty($rule_var_arr['value']) && !empty($form[$field_name]) && empty($form[$field_name . '_err'])) {
-									if ($rules[$field_name]['type'] == 'date') {
-										$field_value = date('Y-m-d', strtotime($form[$field_name]));
-										$test_value = date('Y-m-d', strtotime($rule_var_arr['value']));
-									}
-									else {
-										$field_value = $form[$field_name];
-										$test_value = $rule_var_arr['value'];
-									}
-									switch ($rule_var_arr['type']) {
-										case '==':
-											if ($field_value != $test_value) {
-												$validate = FALSE;
-												$form[$field_name . '_err'] = $rule_var_arr['msg'];
-											}
-											break;
-										case '>':
-											if ($field_value <= $test_value) {
-												$validate = FALSE;
-												$form[$field_name . '_err'] = $rule_var_arr['msg'];
-											}
-											break;
-										case '<':
-											if ($field_value >= $test_value) {
-												$validate = FALSE;
-												$form[$field_name . '_err'] = $rule_var_arr['msg'];
-											}
-											break;
-										case '>=':
-											if ($field_value < $test_value) {
-												$validate = FALSE;
-												$form[$field_name . '_err'] = $rule_var_arr['msg'];
-											}
-											break;
-										case '<=':
-											if ($field_value > $test_value) {
-												$validate = FALSE;
-												$form[$field_name . '_err'] = $rule_var_arr['msg'];
-											}
-											break;
-									}
-								}
-								break;
-							// file size check
-							case 'size':
-								if ($rules[$field_name]['type'] == 'file' && isset($form[$field_name . '_size'])) {
-									if (Files_Helper::getSize($form[$field_name . '_size'], FILES_SIZE['size']) > FILES_SIZE['value']) {
-										unset($form[$field_name]);
-										unset($form[$field_name . '_name']);
-										unset($form[$field_name . '_type']);
-										unset($form[$field_name . '_size']);
-										$validate = FALSE;
-										$form[$field_name . '_err'] = $rule_var_arr['msg'];
-									}
-								}
-								break;
-							// file extension check
-							case 'ext':
-								if ($rules[$field_name]['type'] == 'file' && isset($form[$field_name . '_type'])) {
-									if (!in_array($form[$field_name . '_type'], FILES_EXT_SCANS)) {
-										unset($form[$field_name]);
-										unset($form[$field_name . '_name']);
-										unset($form[$field_name . '_type']);
-										unset($form[$field_name . '_size']);
-										$validate = FALSE;
-										$form[$field_name . '_err'] = $rule_var_arr['msg'];
-									}
-								}
-								break;
-						}
-					}
-					// setting up CSS class
-					if (empty($form[$field_name . '_err'])) {
-						$form[$field_name . '_cls'] = $rules[$field_name]['class'] . ' is-valid';
-					}
-					else {
-						$form[$field_name . '_cls'] = $rules[$field_name]['class'] . ' is-invalid';
+							}
+							break;
 					}
 				}
+				// setting up CSS class
+				if (empty($form[$field_name . '_err'])) {
+					$form[$field_name . '_cls'] = $rules[$field_name]['class'] . ' is-valid';
+				}
+				else {
+					$form[$field_name . '_cls'] = $rules[$field_name]['class'] . ' is-invalid';
+				}
 			}
-			$form['validate'] = $validate;
-
-//		file_put_contents("/var/www/html/vhost_test/log.log", var_export($form,TRUE)."\n",FILE_APPEND);
+		}
+		$form['validate'] = $validate;
 		return $form;
 	}
 

@@ -120,10 +120,11 @@ class Controller_ApplicationSpec extends Controller
 				return $this->view->generate('application-edit.php', 'main.php', 'Заявление', $this->form);
 			}
 		} else {
-			$this->form['error_msg'] = '<strong>Ошибка при проверке данных заявления!</strong> Пожалуйста, проверьте все поля ввода.';
+			if (empty($this->form['error_msg'])) {
+				$this->form['error_msg'] = '<strong>Ошибка при проверке данных заявления!</strong> Пожалуйста, проверьте все поля ввода.';
+			}
 		}
-	//	if(!256==$_SESSION[APP_CODE]['user_id']||!7 == $_SESSION[APP_CODE]['user_id']) //TODO Чех в шоке, но это снимает пятисотку. B и да, я вообще не понимаю, каково предназначение этого метода. Зачем его вызывают, и что он даёт.
-	//	$this->form = $this->model->unsetScans($this->form); //TODO вернуть
+		$this->form = $this->model->unsetScans($this->form);
 		return $this->view->generate('application-edit.php', 'main.php', 'Заявление', $this->form);
 	}
 

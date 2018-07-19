@@ -51,7 +51,7 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 												'success' => $data['doc_type_scs'],
 												'error' => $data['doc_type_err']]);
 		// series
-		echo Form_Helper::setFormInput(['label' => 'Серия*', //да, я знаю что колхоз, но зависимости вывода звёздочки от required нет
+		echo Form_Helper::setFormInput(['label' => 'Серия',
 										'control' => 'series',
 										'type' => 'text',
 										'class' => $data['series_cls'],
@@ -59,7 +59,6 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 										'value' => $data['series'],
 										'success' => $data['series_scs'],
 										'error' => $data['series_err']
-			                            ,'help' => "Если серия документа отсутствует, введите пробел в это поле"//Да колхоз, да добавил Паша
         ]);
 		// numb
 		echo Form_Helper::setFormInput(['label' => 'Номер',
@@ -80,9 +79,7 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 										'required_style' => 'StarUp',
 										'value' => $data['school'],
 										'success' => $data['school_scs'],
-										'error' => $data['school_err']
-                                        ,'help' => "Это поле может содержать <b>только буквы, цифры, пробелы и знак №</b> и быть не более <b>60</b> символов длиной"//Да колхоз, да опять добавил Паша
-        ]);
+										'error' => $data['school_err']]);
 		// dt_issue
 		echo Form_Helper::setFormInput(['label' => 'Дата выдачи',
 										'control' => 'dt_issue',
@@ -124,9 +121,8 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 										'required' => 'no',
 										'value' => $data['speciality'],
 										'success' => $data['speciality_scs'],
-										'error' => $data['speciality_err']
-										,'help' => 'Наименование специальности должно содержать <strong>только русские буквы, цифры, знаки препинания  и пробелы</strong> и быть не более <b>50</b> символов длиной.' //TODO убртаь, добавил Паша
-										]);
+										'error' => $data['speciality_err'],
+										'help' => 'Наименование специальности должно содержать '.MSG_SPEC_RUS.' и быть не более 50 символов длиной.']);
 		/* change_name */
 		echo Form_Helper::setFormCheckbox(['label' => 'На момент получения документа об образовании мои фамилия, имя или отчество были другими',
 												'control' => 'change_name_flag',

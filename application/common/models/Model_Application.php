@@ -264,7 +264,7 @@ class Model_Application extends Db_Helper
 									'application.id_user = :id_user AND application.active = :active',
 									[':id_user' => $_SESSION[APP_CODE]['user_id'],
 									':active' => 1],
-									'admission_campaign.description, application.numb');
+									'admission_campaign.description ASC, application.numb ASC');
 	}
 
 	/**

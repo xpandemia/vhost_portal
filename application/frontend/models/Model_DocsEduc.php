@@ -44,7 +44,7 @@ class Model_DocsEduc extends Model
                             'type' => 'text',
                             'class' => 'form-control',
                             'pattern' => ['value' => PATTERN_ALPHA_NUMB_ALL, 'msg' => 'Для серии можно использовать '.MSG_ALPHA_NUMB_ALL.'!'],
-                            'width' => ['format' => 'string', 'min' => 0, 'max' => 10, 'msg' => 'Слишком длинная серия!'], //TODO может убрать пашины правки ?min (стало) 0 => 1 (было)
+                            'width' => ['format' => 'string', 'min' => 1, 'max' => 10, 'msg' => 'Слишком длинная серия!'],
                             'success' => 'Серия заполнена верно.'
                            ],
                 'numb' => [

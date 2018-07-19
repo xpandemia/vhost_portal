@@ -146,12 +146,11 @@ class Controller_DocsEduc extends Controller
 			}
 		}
 		else {
-
 			if (empty($this->form['error_msg'])) {
 				$this->form['error_msg'] = '<strong>Ошибка при проверке данных документа об образовании!</strong> Пожалуйста, проверьте все поля ввода.';
 			}
-			$this->form = $this->model->unsetScans($this->form);
 		}
+		$this->form = $this->model->unsetScans($this->form);
 		return $this->view->generate('docs-educ-add.php', 'form.php', DOCS_EDUC['hdr'], $this->form);
 	}
 

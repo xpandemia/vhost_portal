@@ -106,6 +106,8 @@ use frontend\models\Model_Application as Model_Application;
 					<tr>
 						<th class="align-text-top">Предмет</th>
 						<th class="align-text-top">Тип испытания</th>
+						<th class="align-text-top">Кол-во баллов</th>
+						<th class="align-text-top">Год сдачи</th>
 					</tr>
 			    </thead>
 			<?php
@@ -136,7 +138,7 @@ use frontend\models\Model_Application as Model_Application;
 												$test_row['description'].
 												'</option>';
 										}
-										echo '</select></td>';
+										echo '</select>';
 									}
 								}
 							} elseif ($place->getByAppForMagister() || $place->getByAppForSpecial()) {
@@ -149,7 +151,7 @@ use frontend\models\Model_Application as Model_Application;
 											(($exams_row['code'] === $test_row['code']) ? ' selected' : '').'>'.
 											$test_row['description'].
 											'</option>';
-										echo '</select></td>';
+										echo '</select>';
 								}
 							} elseif ($place->getByAppForClinical()) {
 								// attending physicians
@@ -161,9 +163,11 @@ use frontend\models\Model_Application as Model_Application;
 											(($exams_row['code'] === $test_row['code']) ? ' selected' : '').'>'.
 											$test_row['description'].
 											'</option>';
-										echo '</select></td>';
+										echo '</select>';
 								}
 							}
+						echo '<td>'.$exams_row['points'].'</td>';
+						echo '<td>'.$exams_row['reg_year'].'</td>';
 						echo '</tr>';
 					}
 				}

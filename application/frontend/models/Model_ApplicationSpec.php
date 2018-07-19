@@ -213,7 +213,7 @@ class Model_ApplicationSpec extends Model
 					$spec_row = $spec->getById();
 					if ($spec_row) {
 						$place = $spec_row['speciality_code'].((!empty($spec_row['profil_code'])) ? $spec_row['profil_code'] : '');
-						array_push($spec_arr, [$spec_row['id'], $spec_row['campaign_code'], $spec_row['curriculum_code'], $spec_row['group_code'], $spec_row['edulevel_code']]);
+						array_push($spec_arr, [$spec_row['id'], $spec_row['campaign_code'], $spec_row['curriculum_code'], $spec_row['group_code'], $spec_row['edulevel_code'], $spec_row['eduform_code']]);
 						if (array_search($place, $spec_unique_arr) === false) {
 							array_push($spec_unique_arr, $place);
 						}
@@ -236,7 +236,7 @@ class Model_ApplicationSpec extends Model
 					$id = $places->save();
 					if ($id > 0) {
 						// get entrance exams
-						// bachelor, specialist, magisters, attending physicians
+						// bachelors, specialists, magisters, attending physicians
 						if ($spec_row[4] == '000000001' || $spec_row[4] == '000000002' || $spec_row[4] == '000000003' || $spec_row[4] == '000000005') {
 							$exams = new Model_DictEntranceExams();
 							$exams->campaign_code = $spec_row[1];
@@ -259,24 +259,65 @@ class Model_ApplicationSpec extends Model
 											case '000000001':
 											// specialists
 											case '000000002':
+												$ege = new Model_EgeDisciplines();
+												if ($exams_row['exam_code'] == '000000021') {
+													// foreign language
+													$langs = new DictForeignLangs();
+													if (!empty($app_row['id_lang'])) {
+														$langs->id = $app_row['id_lang'];
+														$langs_row = $langs->get();
+														$ege->code_discipline = $langs_row['code'];
+													} else {
+														$form['error_msg'] = 'Вы не изучали иностранный язык!';
+														$places->clearByApplication();
+														return $form;
+													}
+												} else {
+													// others
+													$ege->code_discipline = $exams_row['exam_code'];
+												}
+												$ege_arr = $ege->checkDiscipline();
 												if ($citizenship['code'] != '643') {
-													// foreigners - exam only
-													$test_row = $test->getExam();
+													// foreigners - full-time ege only, not full-time - ege or exam
+													if ($ege_arr) {
+														$test_row = $test->getEge();
+														$enter->points = $ege_arr['points'];
+														$enter->reg_year = $ege_arr['reg_year'];
+													} else {
+														if ($spec_row[5] == '000000001') {
+															$form['error_msg'] = 'Нет подходящих результатов ЕГЭ по дисциплине "'.$exams_row['exam_name'].'"!';
+															$places->clearByApplication();
+															return $form;
+														} else {
+															$test_row = $test->getExam();
+															$enter->points = null;
+															$enter->reg_year = null;
+														}
+													}
 												} else {
 													if ($citizenship['code'] == '643' && $app->checkCertificate()) {
 														// russia with certificate - ege only
-														$test_row = $test->getEge();
+														if ($ege_arr) {
+															$test_row = $test->getEge();
+															$enter->points = $ege_arr['points'];
+															$enter->reg_year = $ege_arr['reg_year'];
+														} else {
+															$form['error_msg'] = 'Нет подходящих результатов ЕГЭ по дисциплине "'.$exams_row['exam_name'].'"!';
+															$places->clearByApplication();
+															return $form;
+														}
 													} else {
 														// russia without certificate - ege or exam
-														$ege = new Model_EgeDisciplines();
-														$ege->code_discipline = $exams_row['exam_code'];
-														$ege_row = $ege->checkDiscipline();
-														if ($ege_row) {
+														if ($ege_arr) {
 															// ege
 															$test_row = $test->getEge();
+															$enter->points = $ege_arr['points'];
+															$enter->reg_year = $ege_arr['reg_year'];
 														} else {
 															// exam
 															$test_row = $test->getExam();
+															$enter->points = null;
+															$enter->reg_year = null;
 														}
 													}
 												}
@@ -284,10 +325,14 @@ class Model_ApplicationSpec extends Model
 											// magisters
 											case '000000003':
 												$test_row = $test->getExam();
+												$enter->points = null;
+												$enter->reg_year = null;
 												break;
 											// attending physicians
 											case '000000005':
 												$test_row = $test->getTest();
+												$enter->points = null;
+												$enter->reg_year = null;
 												break;
 										}
 									} else {
@@ -296,16 +341,19 @@ class Model_ApplicationSpec extends Model
 									$enter->id_test = $test_row['id'];
 									if ($enter->save() == 0) {
 										$form['error_msg'] = 'Ошибка сохранения вступительного испытания с ID '.$enter->id_discipline.' для направления подготовки с ID '.$id.'!';
+										$places->clearByApplication();
 										return $form;
 									}
 								}
 							} else {
 								$form['error_msg'] = 'Ошибка при получении вступительных испытаний направления подготовки с ID '.$value.'!';
+								$places->clearByApplication();
 								return $form;
 							}
 						}
 					} else {
 						$form['error_msg'] = 'Ошибка при сохранении направления подготовки с ID '.$spec_row[0].'!';
+						$places->clearByApplication();
 						return $form;
 					}
 				}
@@ -584,7 +632,7 @@ class Model_ApplicationSpec extends Model
 	        $data = $this->setCampusForPdf($data, $app_row['campus']);
 			$data['docsship_personal'] = 'On';
 	        $data = $this->setIaForPdf($data, $id);
-			$pdf->create($data, 'application_2018', 'заявление'.$app_row['numb']);
+			$pdf->create($data, 'application_bachelor', 'заявление'.$app_row['numb']);
 		} elseif ($place->getByAppForMagister()) {
 			// magisters
 			$data = $this->setAppForPdf($data, $app_row);
@@ -596,7 +644,7 @@ class Model_ApplicationSpec extends Model
 			$data = $this->setCampusForPdf($data, $app_row['campus']);
 			$data['docsship_personal'] = 'On';
 			$data = $this->setIaForPdf($data, $id);
-			$pdf->create($data, 'application_magistrature_2018', 'заявление'.$app_row['numb']);
+			$pdf->create($data, 'application_magistrature', 'заявление'.$app_row['numb']);
 		} elseif ($place->getByAppForSpecial()) {
 			// specials
 			$data = $this->setAppForPdf($data, $app_row);
@@ -611,7 +659,7 @@ class Model_ApplicationSpec extends Model
 				$data['special_first_no'] = 'On';
 			}
 			$data = $this->setCampusForPdf($data, $app_row['campus']);
-			$pdf->create($data, 'application_special_2018', 'заявление'.$app_row['numb']);
+			$pdf->create($data, 'application_special', 'заявление'.$app_row['numb']);
 		} elseif ($place->getByAppForClinical()) {
 			// attending physicians
 			$data = $this->setAppForPdf($data, $app_row);
@@ -622,7 +670,7 @@ class Model_ApplicationSpec extends Model
 			$data = $this->setCampusForPdf($data, $app_row['campus']);
 			$data['docsship_personal'] = 'On';
 			$data = $this->setIaForPdf($data, $id);
-			$pdf->create($data, 'application_clinical_2018', 'заявление'.$app_row['numb']);
+			$pdf->create($data, 'application_clinical', 'заявление'.$app_row['numb']);
 		} elseif ($place->getByAppForTraineeship()) {
 			// trainees
 			$data = $this->setAppForPdf($data, $app_row);
@@ -630,7 +678,7 @@ class Model_ApplicationSpec extends Model
 			$data = $this->setPlacesForPdf($data, $id, 4);
 			$data = $this->setEducForPdf($data, $app_row['id_docseduc'], 'trainee');
 			$data = $this->setForeignLangForPdf($data, $app_row['id_lang']);
-			$pdf->create($data, 'application_traineeship_2018', 'заявление'.$app_row['numb']);
+			$pdf->create($data, 'application_traineeship', 'заявление'.$app_row['numb']);
 		} else {
 			$resume = new Resume();
 			$resume_row = $resume->getByUser();
@@ -737,6 +785,41 @@ class Model_ApplicationSpec extends Model
 				switch ($exams_row['description']) {
 					case 'ЕГЭ':
 						$data['exams_ege'] = 'On';
+							switch ($exams_row['discipline_name']) {
+								case 'Русский язык':
+									$data['ege_rus_'.$exams_row['reg_year']] = $exams_row['points'];
+									break;
+								case 'Математика':
+									$data['ege_math_'.$exams_row['reg_year']] = $exams_row['points'];
+									break;
+								case 'Иностранный язык':
+									$data['ege_lang_'.$exams_row['reg_year']] = $exams_row['points'];
+									break;
+								case 'Обществознание':
+									$data['ege_social_'.$exams_row['reg_year']] = $exams_row['points'];
+									break;
+								case 'История':
+									$data['ege_history_'.$exams_row['reg_year']] = $exams_row['points'];
+									break;
+								case 'Информатика и ИКТ':
+									$data['ege_computer_'.$exams_row['reg_year']] = $exams_row['points'];
+									break;
+								case 'Физика':
+									$data['ege_physics_'.$exams_row['reg_year']] = $exams_row['points'];
+									break;
+								case 'Химия':
+									$data['ege_chemistry_'.$exams_row['reg_year']] = $exams_row['points'];
+									break;
+								case 'Биология':
+									$data['ege_biology_'.$exams_row['reg_year']] = $exams_row['points'];
+									break;
+								case 'Литература':
+									$data['ege_literature_'.$exams_row['reg_year']] = $exams_row['points'];
+									break;
+								case 'География':
+									$data['ege_geography_'.$exams_row['reg_year']] = $exams_row['points'];
+									break;
+							}
 						break;
 					case 'Экзамен':
 						if (strripos($exams_row['discipline_name'], 'Профессиональное испытание') === false && strripos($exams_row['discipline_name'], 'Творческое испытание') === false && strripos($exams_row['discipline_name'], 'Теория физической культуры') === false) {

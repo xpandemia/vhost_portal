@@ -126,7 +126,9 @@ class Model_EductypesDoctypes extends Db_Helper
 		return $this->rowSelectAll("eductypes_doctypes.id, dict_eductypes.description as educ_type, dict_doctypes.description as doc_type, date_format(dt_created, '%d.%m.%Y') as dt_created",
 									'eductypes_doctypes INNER JOIN dict_eductypes ON eductypes_doctypes.id_eductype = dict_eductypes.id'.
 									' INNER JOIN dict_doctypes ON eductypes_doctypes.id_doctype = dict_doctypes.id',
-									null, null, 'dict_eductypes.description, dict_doctypes.description');
+									null,
+									null,
+									'dict_eductypes.description ASC, dict_doctypes.description ASC');
 	}
 
 	/**

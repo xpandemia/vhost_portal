@@ -188,15 +188,15 @@ class Db_Helper
      *
      * @return array
      */
-	public function rowSelectAll($fields, $tables, $conds = null, $params = null, $order = null, $desc = 0, $limit = 0)
+	public function rowSelectAll($fields, $tables, $conds = null, $params = null, $order = null, $limit = 0)
 	{
 		try {
 			self::$pdo->beginTransaction();
 			if (!empty($conds) && (!empty($params))) {
-				$sql = self::$pdo->prepare('SELECT '.$fields.' FROM '.$tables.' WHERE '.$conds.((!empty($order)) ? ' ORDER BY '.$order.(($desc == 1) ? ' DESC' : ' ASC') : '').(($limit > 0) ? ' LIMIT '.$limit : ''));
+				$sql = self::$pdo->prepare('SELECT '.$fields.' FROM '.$tables.' WHERE '.$conds.((!empty($order)) ? ' ORDER BY '.$order : '').(($limit > 0) ? ' LIMIT '.$limit : ''));
 				$sql->execute($params);
 			} else {
-				$sql = self::$pdo->prepare('SELECT '.$fields.' FROM '.$tables.((!empty($order)) ? ' ORDER BY '.$order.(($desc == 1) ? ' DESC' : ' ASC') : '').(($limit > 0) ? ' LIMIT '.$limit : ''));
+				$sql = self::$pdo->prepare('SELECT '.$fields.' FROM '.$tables.((!empty($order)) ? ' ORDER BY '.$order : '').(($limit > 0) ? ' LIMIT '.$limit : ''));
 				$sql->execute();
 			}
 			if ($limit == 1) {

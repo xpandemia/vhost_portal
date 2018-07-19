@@ -137,7 +137,9 @@ class Model_EduclevelsDoctypes extends Db_Helper
 		return $this->rowSelectAll("educlevels_doctypes.id, dict_educlevels.description as educ_level, dict_doctypes.description as doc_type, if(pay = 0, 'Нет', 'Да') as pay, date_format(dt_created, '%d.%m.%Y') as dt_created",
 									'educlevels_doctypes INNER JOIN dict_educlevels ON educlevels_doctypes.id_educlevel = dict_educlevels.id'.
 									' INNER JOIN dict_doctypes ON educlevels_doctypes.id_doctype = dict_doctypes.id',
-									null, null, 'dict_educlevels.description, dict_doctypes.description');
+									null,
+									null,
+									'dict_educlevels.description ASC, dict_doctypes.description ASC');
 	}
 
 	/**

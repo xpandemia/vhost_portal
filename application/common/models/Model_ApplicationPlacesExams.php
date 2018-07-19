@@ -17,6 +17,8 @@ class Model_ApplicationPlacesExams extends Db_Helper
 	public $id_user;
 	public $id_test;
 	public $id_discipline;
+	public $points;
+	public $reg_year;
 	public $dt_created;
 
 	public $db;
@@ -64,6 +66,18 @@ class Model_ApplicationPlacesExams extends Db_Helper
 									'update' => 0,
 									'value' => $this->id_discipline
 									],
+				'points' => [
+							'required' => 0,
+							'insert' => 1,
+							'update' => 1,
+							'value' => $this->points
+							],
+				'reg_year' => [
+								'required' => 0,
+								'insert' => 1,
+								'update' => 1,
+								'value' => $this->reg_year
+								],
 				'dt_created' => [
 								'required' => 1,
 								'insert' => 1,
@@ -107,13 +121,13 @@ class Model_ApplicationPlacesExams extends Db_Helper
      */
 	public function getExamsByApplication()
 	{
-		return $this->rowSelectAll('DISTINCT dict_testing_scopes.code, dict_testing_scopes.description, dict_discipline.code as discipline_code, dict_discipline.discipline_name',
+		return $this->rowSelectAll('DISTINCT dict_testing_scopes.code, dict_testing_scopes.description, dict_discipline.code as discipline_code, dict_discipline.discipline_name, application_places_exams.points, application_places_exams.reg_year',
 									'application_places_exams INNER JOIN application_places ON application_places_exams.pid = application_places.id'.
 									' INNER JOIN dict_testing_scopes ON application_places_exams.id_test = dict_testing_scopes.id'.
 									' INNER JOIN dict_discipline ON application_places_exams.id_discipline = dict_discipline.id',
 									'application_places.pid = :pid',
 									[':pid' => $this->pid],
-									'dict_discipline.discipline_name');
+									'dict_discipline.discipline_name ASC');
 	}
 
 	/**

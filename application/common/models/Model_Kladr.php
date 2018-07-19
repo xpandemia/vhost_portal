@@ -53,7 +53,7 @@ class Model_Kladr extends Db_Helper
 										'level = :level AND relevance = :relevance',
 										[':level' => self::REGION,
 										':relevance' => '0'],
-										'kladr_name');
+										'kladr_name ASC');
 		return $region;
 	}
 
@@ -74,7 +74,7 @@ class Model_Kladr extends Db_Helper
 										[':level' => self::AREA,
 										':code_region' => $code_region,
 										':relevance' => '0'],
-										'kladr_name');
+										'kladr_name ASC');
 		return $area;
 	}
 
@@ -96,7 +96,7 @@ class Model_Kladr extends Db_Helper
 										':code_region' => $code_region,
 										':code_area' => '0',
 										':relevance' => '0'],
-										'kladr_name');
+										'kladr_name ASC');
 		return $city;
 	}
 
@@ -119,7 +119,7 @@ class Model_Kladr extends Db_Helper
 										':code_region' => $code_region,
 										':code_area' => $code_area,
 										':relevance' => '0'],
-										'kladr_name');
+										'kladr_name ASC');
 		return $city;
 	}
 
@@ -142,7 +142,7 @@ class Model_Kladr extends Db_Helper
 											':code_area' => '0',
 											':code_city' => '0',
 											':relevance' => '0'],
-											'kladr_name');
+											'kladr_name ASC');
 		return $location;
 	}
 
@@ -165,7 +165,7 @@ class Model_Kladr extends Db_Helper
 											':code_region' => $code_region,
 											':code_area' => $code_area,
 											':relevance' => '0'],
-											'kladr_name');
+											'kladr_name ASC');
 		return $location;
 	}
 
@@ -190,7 +190,7 @@ class Model_Kladr extends Db_Helper
 											':code_area' => $code_area,
 											':code_city' => $code_city,
 											':relevance' => '0'],
-											'kladr_name');
+											'kladr_name ASC');
 		return $location;
 	}
 
@@ -214,7 +214,7 @@ class Model_Kladr extends Db_Helper
 										':code_city' => '0',
 										':code_location' => '0',
 										':relevance' => '0'],
-										'kladr_name');
+										'kladr_name ASC');
 		return $street;
 	}
 
@@ -240,7 +240,7 @@ class Model_Kladr extends Db_Helper
 										':code_city' => $code_city,
 										':code_location' => '0',
 										':relevance' => '0'],
-										'kladr_name');
+										'kladr_name ASC');
 		return $street;
 	}
 
@@ -265,7 +265,7 @@ class Model_Kladr extends Db_Helper
 										':code_area' => $code_area,
 										':code_location' => $code_location,
 										':relevance' => '0'],
-										'kladr_name');
+										'kladr_name ASC');
 		return $street;
 	}
 }
