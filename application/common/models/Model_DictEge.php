@@ -76,6 +76,19 @@ class Model_DictEge extends Db_Helper
 	}
 
 	/**
+     * Gets dictionary ege by description.
+     *
+     * @return array
+     */
+	public function getByDescription()
+	{
+		return $this->rowSelectOne('*',
+								self::TABLE_NAME,
+								'description = :description',
+								[':description' => $this->description]);
+	}
+
+	/**
      * Saves dictionary ege data to database.
      *
      * @return integer

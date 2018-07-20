@@ -71,13 +71,13 @@ class Model_IndAchievs extends Db_Helper
 							'value' => $this->numb
 							],
 				'company' => [
-							'required' => 1,
+							'required' => 0,
 							'insert' => 1,
 							'update' => 1,
 							'value' => $this->company
 							],
 				'dt_issue' => [
-								'required' => 1,
+								'required' => 0,
 								'insert' => 1,
 								'update' => 1,
 								'value' => $this->dt_issue

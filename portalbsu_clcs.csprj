@@ -8,15 +8,15 @@
 </treenode>
 <treenode node="ACTION;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\bootstrap.php;f8;113;14;113;;;;vpos;;v;;r$actionName;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="ADRREG;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_.php;f8;6;14;6;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Address.php;f8;6;14;6;;;;vpos;;v;;rarray(&#10;     &apos;name&apos; =&gt; &apos;Адрес регистрации&apos;,&#10;     &apos;plc&apos; =&gt; &apos;Индекс, Область, Район, Город или Населённый пункт, Улица, Дом, Корпус, Квартира&apos;,&#10;     &apos;help&apos; =&gt; &apos;Адрес регистрации должно содержать &lt;strong&gt;&apos;.MSG_INFO_RUS.&apos;&lt;/strong&gt;, и быть не более &lt;strong&gt;255&lt;/strong&gt; символов длиной.&apos;;;d-1,-1;;b0,0;;m">
+<treenode node="ADRREG;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_.php;f8;6;14;6;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Address.php;f8;6;14;6;;;;vpos;;v;;rarray(&#10;					&apos;name&apos; =&gt; &apos;Адрес регистрации&apos;,&#10;					&apos;plc&apos; =&gt; &apos;Индекс, Область, Район, Город или Населённый пункт, Улица, Дом, Корпус, Квартира&apos;,&#10;					&apos;help&apos; =&gt; &apos;Адрес регистрации должно содержать &lt;strong&gt;&apos;.MSG_INFO_RUS.&apos;&lt;/strong&gt;, и быть не более &lt;strong&gt;255&lt;/strong&gt; символов длиной.&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="ADRRES;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Address.php;f8;10;14;10;;;;vpos;;v;;rarray(&#10;     &apos;name&apos; =&gt; &apos;Адрес проживания&apos;,&#10;     &apos;plc&apos; =&gt; &apos;Индекс, Область, Район, Город или Населённый пункт, Улица, Дом, Корпус, Квартира&apos;,&#10;     &apos;help&apos; =&gt; &apos;Адрес проживания должно содержать &lt;strong&gt;&apos;.MSG_INFO_RUS.&apos;&lt;/strong&gt;, и быть не более &lt;strong&gt;255&lt;/strong&gt; символов длиной.&apos;;;d-1,-1;;b0,0;;m">
+<treenode node="ADRRES;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Address.php;f8;10;14;10;;;;vpos;;v;;rarray(&#10;					&apos;name&apos; =&gt; &apos;Адрес проживания&apos;,&#10;					&apos;plc&apos; =&gt; &apos;Индекс, Область, Район, Город или Населённый пункт, Улица, Дом, Корпус, Квартира&apos;,&#10;					&apos;help&apos; =&gt; &apos;Адрес проживания должно содержать &lt;strong&gt;&apos;.MSG_INFO_RUS.&apos;&lt;/strong&gt;, и быть не более &lt;strong&gt;255&lt;/strong&gt; символов длиной.&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
 <treenode node="APP;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\form_config.php;f8;69;11;69;;;;vpos;;v;;rarray(&#10;					&apos;id&apos; =&gt; &apos;form_app&apos;,&#10;					&apos;hdr&apos; =&gt; &apos;Заявление&apos;,&#10;					&apos;ctr&apos; =&gt; &apos;Application&apos;,&#10;					&apos;act&apos; =&gt; &apos;Save&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
 <treenode node="APP_CODE;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\index_new.php;f8;3;16;3;;C:\wamp\wamp64\www\vhost_portalbsu\index_old.php;f8;3;16;3;;C:\wamp\wamp64\www\vhost_portalbsu\index.php;f8;3;16;3;;;;vpos;;v;;r&apos;portalbsu&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="APP_DATA;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\index_old.php;f8;5;16;5;;C:\wamp\wamp64\www\vhost_portalbsu\index.php;f8;5;16;5;;;;vpos;;v;;r&apos;main&apos;;;d-1,-1;;b0,0;;m">
+<treenode node="APP_DATA;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\index_old.php;f8;5;16;5;;C:\wamp\wamp64\www\vhost_portalbsu\index.php;f8;5;16;5;;;;vpos;;v;;r&apos;local&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
 <treenode node="APP_DEVELOPER;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\index_new.php;f8;5;21;5;;;;vpos;;v;;r&apos;Никитин Олег Сергеевич&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
@@ -26,7 +26,7 @@
 </treenode>
 <treenode node="APP_NAME;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\index_new.php;f8;2;16;2;;C:\wamp\wamp64\www\vhost_portalbsu\index_old.php;f8;2;16;2;;C:\wamp\wamp64\www\vhost_portalbsu\index.php;f8;2;16;2;;;;vpos;;v;;r&apos;Личный кабинет абитуриента&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="APP_VERSION;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\index_new.php;f8;4;19;4;;C:\wamp\wamp64\www\vhost_portalbsu\index_old.php;f8;4;19;4;;C:\wamp\wamp64\www\vhost_portalbsu\index.php;f8;4;19;4;;;;vpos;;v;;r&apos;0.4.2&apos;;;d-1,-1;;b0,0;;m">
+<treenode node="APP_VERSION;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\index_new.php;f8;4;19;4;;C:\wamp\wamp64\www\vhost_portalbsu\index_old.php;f8;4;19;4;;C:\wamp\wamp64\www\vhost_portalbsu\index.php;f8;4;19;4;;;;vpos;;v;;r&apos;0.4.4&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
 <treenode node="avitsena159;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\1c_config.php;f25;22;36;22;;;;vpos;;v;;r&apos;avitsena159&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
@@ -138,11 +138,11 @@
 </treenode>
 <treenode node="CAS_VERSION_3_0;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\vendors\cas\source\CAS.php;f8;81;23;81;;;;vpos;;v;;r&#10;Description&#10;     CAS version 3.0;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="CONTACT_EMAIL;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Contacts.php;f8;6;21;6;;;;vpos;;v;;rarray(&#10;       &apos;name&apos; =&gt; &apos;Адрес эл. почты&apos;,&#10;       &apos;plc&apos; =&gt; &apos;user@domain&apos;,&#10;       &apos;help&apos; =&gt; &apos;Адрес электронной почты должен быть &lt;strong&gt;&apos;.MSG_EMAIL_LIGHT.&apos;&lt;/strong&gt;, содержать &lt;strong&gt;&apos;.MSG_ALPHA.&apos;&lt;/strong&gt; и не более &lt;b&gt;45&lt;/b&gt; символов длиной.&apos;;;d-1,-1;;b0,0;;m">
+<treenode node="CONTACT_EMAIL;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Contacts.php;f8;6;21;6;;;;vpos;;v;;rarray(&#10;							&apos;name&apos; =&gt; &apos;Адрес эл. почты&apos;,&#10;							&apos;plc&apos; =&gt; &apos;user@domain&apos;,&#10;							&apos;help&apos; =&gt; &apos;Адрес электронной почты должен быть &lt;strong&gt;&apos;.MSG_EMAIL_LIGHT.&apos;&lt;/strong&gt;, содержать &lt;strong&gt;&apos;.MSG_ALPHA.&apos;&lt;/strong&gt; и не более &lt;b&gt;45&lt;/b&gt; символов длиной.&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="CONTACT_PHONE_ADD;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Contacts.php;f8;14;25;14;;;;vpos;;v;;rarray(&#10;         &apos;name&apos; =&gt; &apos;Номер дополнительного телефона&apos;,&#10;         &apos;plc&apos; =&gt; &apos;89031234567 Папа, 89101234567 Мама&apos;,&#10;         &apos;help&apos; =&gt; &apos;Номер дополнительного телефона должен содержать &lt;strong&gt;&apos;.MSG_PHONE_ADD.&apos;&lt;/strong&gt; и быть не более &lt;strong&gt;45&lt;/strong&gt; символов длиной.&apos;;;d-1,-1;;b0,0;;m">
+<treenode node="CONTACT_PHONE_ADD;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Contacts.php;f8;14;25;14;;;;vpos;;v;;rarray(&#10;									&apos;name&apos; =&gt; &apos;Номер дополнительного телефона&apos;,&#10;									&apos;plc&apos; =&gt; &apos;89031234567 Папа, 89101234567 Мама&apos;,&#10;									&apos;help&apos; =&gt; &apos;Номер дополнительного телефона должен содержать &lt;strong&gt;&apos;.MSG_PHONE_ADD.&apos;&lt;/strong&gt; и быть не более &lt;strong&gt;45&lt;/strong&gt; символов длиной.&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="CONTACT_PHONE_HOME;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Contacts.php;f8;10;26;10;;;;vpos;;v;;rarray(&#10;         &apos;name&apos; =&gt; &apos;Номер домашнего телефона&apos;,&#10;         &apos;plc&apos; =&gt; &apos;код города12345&apos;,&#10;         &apos;help&apos; =&gt; &apos;Номер домашнего телефона должен содержать &lt;strong&gt;&apos;.MSG_NUMB.&apos;&lt;/strong&gt; и быть не более &lt;strong&gt;45&lt;/strong&gt; символов длиной.&apos;;;d-1,-1;;b0,0;;m">
+<treenode node="CONTACT_PHONE_HOME;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Contacts.php;f8;10;26;10;;;;vpos;;v;;rarray(&#10;									&apos;name&apos; =&gt; &apos;Номер домашнего телефона&apos;,&#10;									&apos;plc&apos; =&gt; &apos;код города12345&apos;,&#10;									&apos;help&apos; =&gt; &apos;Номер домашнего телефона должен содержать &lt;strong&gt;&apos;.MSG_NUMB.&apos;&lt;/strong&gt; и быть не более &lt;strong&gt;45&lt;/strong&gt; символов длиной.&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
 <treenode node="CONTROLLER;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\bootstrap.php;f8;107;18;107;;;;vpos;;v;;r$controllerName;;d-1,-1;;b0,0;;m">
 </treenode>
@@ -180,7 +180,7 @@
 </treenode>
 <treenode node="ENVIRONMENT;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\bootstrap.php;f8;65;19;65;;;;vpos;;v;;r$environment;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="FILES_EXT_SCANS;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\files_config.php;f8;13;23;13;;;;vpos;;v;;r[&#10;							&apos;jpg&apos; =&gt; &apos;image/jpeg&apos;,&#10;							&apos;png&apos; =&gt; &apos;image/png&apos;,&#10;							&apos;gif&apos; =&gt; &apos;image/gif&apos;;;d-1,-1;;b0,0;;m">
+<treenode node="FILES_EXT_SCANS;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\files_config.php;f8;13;23;13;;;;vpos;;v;;r[&#10;       &apos;jpg&apos; =&gt; &apos;image/jpeg&apos;,&#10;       &apos;png&apos; =&gt; &apos;image/png&apos;,&#10;       &apos;gif&apos; =&gt; &apos;image/gif&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
 <treenode node="FILES_SIZE;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\files_config.php;f8;12;18;12;;;;vpos;;v;;r[&apos;size&apos; =&gt; &apos;MB&apos;, &apos;value&apos; =&gt; 2;;d-1,-1;;b0,0;;m">
 </treenode>
@@ -262,9 +262,9 @@
 </treenode>
 <treenode node="MSG_PHONE_HOME;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;53;22;53;;;;vpos;;v;;r&apos;только цифры и круглые скобки&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="MSG_SPEC;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;42;16;42;;;;vpos;;v;;r&apos;только латинские буквы, цифры, тире и пробелы&apos;;;d-1,-1;;b0,0;;m">
+<treenode node="MSG_SPEC;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;42;16;42;;;;vpos;;v;;r&apos;только латинские буквы, цифры, пробелы и знаки препинания&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="MSG_SPEC_RUS;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;45;20;45;;;;vpos;;v;;r&apos;только русские буквы, цифры, тире и пробелы&apos;;;d-1,-1;;b0,0;;m">
+<treenode node="MSG_SPEC_RUS;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;45;20;45;;;;vpos;;v;;r&apos;только русские буквы, цифры, пробелы и знаки препинания&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
 <treenode node="MSG_TEXT;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;21;16;21;;;;vpos;;v;;r&apos;только латинские буквы, тире, точки, запятые и пробелы&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
@@ -306,9 +306,9 @@
 </treenode>
 <treenode node="PATTERN_PHONE_HOME;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;52;26;52;;;;vpos;;v;;r&apos;/^[0-9-()]*$/u&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="PATTERN_SPEC;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;41;20;41;;;;vpos;;v;;r&apos;/^[a-zA-Z0-9-\s]*$/u&apos;;;d-1,-1;;b0,0;;m">
+<treenode node="PATTERN_SPEC;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;41;20;41;;;;vpos;;v;;r&apos;/^[a-zA-Z0-9-\s\.\,\&apos;\«\»]*$/u&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="PATTERN_SPEC_RUS;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;44;24;44;;;;vpos;;v;;r&apos;/^[ёЁа-яА-Я0-9-\s\.\,\&apos;\_\«\»]*$/u&apos;;;d-1,-1;;b0,0;;m">
+<treenode node="PATTERN_SPEC_RUS;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;44;24;44;;;;vpos;;v;;r&apos;/^[ёЁа-яА-Я0-9-\s\.\,\&apos;\«\»]*$/u&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
 <treenode node="PATTERN_TEXT;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;20;20;20;;;;vpos;;v;;r&apos;/^[a-zA-Z-\.\,\s]*$/u&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
@@ -404,9 +404,9 @@
 </treenode>
 <treenode node="tO3wypyz;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\1c_config.php;f25;28;33;28;;;;vpos;;v;;r&apos;tO3wypyz&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="UNITNAME_HELP;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Passport.php;f8;7;21;7;;;;vpos;;v;;r&apos;Наименование подразделения должно содержать &lt;strong&gt;только русские буквы, цифры  и пробелы&lt;/strong&gt; и быть не более &lt;b&gt;100&lt;/b&gt; символов длиной.&apos;;;d-1,-1;;b0,0;;m">
+<treenode node="UNITNAME_HELP;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Passport.php;f8;6;21;6;;;;vpos;;v;;r&apos;Наименование подразделения должно содержать &lt;strong&gt;только русские буквы, цифры  и пробелы&lt;/strong&gt; и быть не более &lt;b&gt;100&lt;/b&gt; символов длиной.&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="UNITNAME_PLC;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Passport.php;f8;9;20;9;;;;vpos;;v;;r&apos;Наименование подразделения&apos;;;d-1,-1;;b0,0;;m">
+<treenode node="UNITNAME_PLC;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Passport.php;f8;7;20;7;;;;vpos;;v;;r&apos;Наименование подразделения&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
 <treenode node="USER;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\form_config.php;f8;77;12;77;;;;vpos;;v;;rarray(&#10;					&apos;id&apos; =&gt; &apos;form_user&apos;,&#10;					&apos;hdr&apos; =&gt; &apos;Пользователи&apos;,&#10;					&apos;ctr&apos; =&gt; &apos;User&apos;,&#10;					&apos;act&apos; =&gt; &apos;Save&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
@@ -1304,10 +1304,10 @@
 <treenode node="actionSave;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_App.php;f8;62;2;73;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Application.php;f8;129;2;144;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionSave()&#10;&#10;Description&#10;     Saves application.;;d1,130;;b1,0;;m">
 </treenode>
 </treenode>
-<treenode node="Controller_ApplicationSpec;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ApplicationPlaces.php;f0;9;1;87;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ApplicationSpec.php;f0;12;1;216;;;;vpos;;vController;;c;;r;;d0,13;;b0,0;;m">
+<treenode node="Controller_ApplicationSpec;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ApplicationPlaces.php;f0;9;1;87;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ApplicationSpec.php;f0;12;1;217;;;;vpos;;vController;;c;;r;;d0,13;;b0,0;;m">
 <treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ApplicationPlaces.php;f8;17;2;21;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ApplicationSpec.php;f8;20;2;24;;;;vpos;;v;;r;;d1,21;;b1,0;;m">
 </treenode>
-<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ApplicationPlaces.php;f8;82;2;86;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ApplicationSpec.php;f8;211;2;215;;;;vpos;;v;;r;;d1,212;;b1,0;;m">
+<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ApplicationPlaces.php;f8;82;2;86;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ApplicationSpec.php;f8;212;2;216;;;;vpos;;v;;r;;d1,213;;b1,0;;m">
 </treenode>
 <treenode node="actionAddPlaces;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ApplicationPlaces.php;f8;28;2;38;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ApplicationSpec.php;f8;60;2;70;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionAddPlaces()&#10;&#10;Description&#10;     Displays application places add page.;;d1,61;;b1,0;;m">
 </treenode>
@@ -1315,17 +1315,17 @@
 </treenode>
 <treenode node="actionCancelPlaces;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ApplicationSpec.php;f8;77;2;85;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionCancelPlaces()&#10;&#10;Description&#10;     Cancels application places add page.;;d1,78;;b1,0;;m">
 </treenode>
-<treenode node="actionChange;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ApplicationSpec.php;f8;153;2;165;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionChange()&#10;&#10;Description&#10;     Changes application.;;d1,154;;b1,0;;m">
+<treenode node="actionChange;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ApplicationSpec.php;f8;154;2;166;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionChange()&#10;&#10;Description&#10;     Changes application.;;d1,155;;b1,0;;m">
 </treenode>
-<treenode node="actionRecall;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ApplicationSpec.php;f8;172;2;184;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionRecall()&#10;&#10;Description&#10;     Recalls application.;;d1,173;;b1,0;;m">
+<treenode node="actionRecall;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ApplicationSpec.php;f8;173;2;185;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionRecall()&#10;&#10;Description&#10;     Recalls application.;;d1,174;;b1,0;;m">
 </treenode>
-<treenode node="actionSave;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ApplicationPlaces.php;f8;60;2;80;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ApplicationSpec.php;f8;107;2;127;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionSave()&#10;&#10;Description&#10;     Saves application spec.;;d1,108;;b1,0;;m">
+<treenode node="actionSave;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ApplicationPlaces.php;f8;60;2;80;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ApplicationSpec.php;f8;107;2;128;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionSave()&#10;&#10;Description&#10;     Saves application spec.;;d1,108;;b1,0;;m">
 </treenode>
-<treenode node="actionSavePdf;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ApplicationSpec.php;f8;191;2;209;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionSavePdf()&#10;&#10;Description&#10;     Saves application spec as PDF.;;d1,192;;b1,0;;m">
+<treenode node="actionSavePdf;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ApplicationSpec.php;f8;192;2;210;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionSavePdf()&#10;&#10;Description&#10;     Saves application spec as PDF.;;d1,193;;b1,0;;m">
 </treenode>
 <treenode node="actionSavePlaces;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ApplicationPlaces.php;f8;45;2;53;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ApplicationSpec.php;f8;92;2;100;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionSavePlaces()&#10;&#10;Description&#10;     Saves application spec places.;;d1,93;;b1,0;;m">
 </treenode>
-<treenode node="actionSend;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ApplicationSpec.php;f8;134;2;146;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionSend()&#10;&#10;Description&#10;     Sends application.;;d1,135;;b1,0;;m">
+<treenode node="actionSend;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ApplicationSpec.php;f8;135;2;147;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionSend()&#10;&#10;Description&#10;     Sends application.;;d1,136;;b1,0;;m">
 </treenode>
 <treenode node="actionSyncIa;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ApplicationSpec.php;f8;31;2;43;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionSyncIa()&#10;&#10;Description&#10;     Synchronizes individual achievments for application.;;d1,32;;b1,0;;m">
 </treenode>
@@ -1366,10 +1366,10 @@
 <treenode node="actionRenew;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_DictManager.php;f8;40;2;48;;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_DictionaryManager.php;f8;40;2;48;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionRenew()&#10;&#10;Description&#10;     Renews dictionary.;;d1,41;;b1,0;;m">
 </treenode>
 </treenode>
-<treenode node="Controller_DocsEduc;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_.php;f0;8;1;40;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_DocsEduc.php;f0;12;1;180;;;;vpos;;vController;;c;;r;;d0,13;;b0,0;;m">
+<treenode node="Controller_DocsEduc;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_.php;f0;8;1;40;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_DocsEduc.php;f0;12;1;171;;;;vpos;;vController;;c;;r;;d0,13;;b0,0;;m">
 <treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_.php;f8;16;2;20;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_App.php;f8;17;2;21;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\NewFile.php;f8;17;2;21;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_DocsEduc.php;f8;21;2;45;;;;vpos;;v;;r;;d1,22;;b1,0;;m">
 </treenode>
-<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_.php;f8;35;2;39;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_App.php;f8;121;2;125;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\NewFile.php;f8;121;2;125;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_DocsEduc.php;f8;175;2;179;;;;vpos;;v;;r;;d1,176;;b1,0;;m">
+<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_.php;f8;35;2;39;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_App.php;f8;121;2;125;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\NewFile.php;f8;121;2;125;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_DocsEduc.php;f8;166;2;170;;;;vpos;;v;;r;;d1,167;;b1,0;;m">
 </treenode>
 <treenode node="actionAdd;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_App.php;f8;49;2;55;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\NewFile.php;f8;49;2;55;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_DocsEduc.php;f8;73;2;79;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionAdd()&#10;&#10;Description&#10;     Displays education documents add page.;;d1,74;;b1,0;;m">
 </treenode>
@@ -1377,7 +1377,7 @@
 </treenode>
 <treenode node="actionDeleteConfirm;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_App.php;f8;79;2;82;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\NewFile.php;f8;79;2;82;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_DocsEduc.php;f8;106;2;109;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionDeleteConfirm()&#10;&#10;Description&#10;     Calls to education document delete confirm.;;d1,107;;b1,0;;m">
 </treenode>
-<treenode node="actionDiplomasByUserCampaignJSON;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_DocsEduc.php;f8;170;2;173;;;;vpos;;vvoid;;r&#10;Definition&#10;    actionDiplomasByUserCampaignJSON()&#10;&#10;Description&#10;     Prints education documents by user campaign JSON.;;d1,171;;b1,0;;m">
+<treenode node="actionDiplomasByUserCampaignJSON;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_DocsEduc.php;f8;161;2;164;;;;vpos;;vvoid;;r&#10;Definition&#10;    actionDiplomasByUserCampaignJSON()&#10;&#10;Description&#10;     Prints education documents by user campaign JSON.;;d1,162;;b1,0;;m">
 </treenode>
 <treenode node="actionEdit;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_App.php;f8;62;2;72;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\NewFile.php;f8;62;2;72;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_DocsEduc.php;f8;86;2;99;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionEdit()&#10;&#10;Description&#10;     Shows education document.;;d1,87;;b1,0;;m">
 </treenode>
@@ -1385,7 +1385,7 @@
 </treenode>
 <treenode node="actionReset;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_App.php;f8;38;2;42;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\NewFile.php;f8;38;2;42;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_DocsEduc.php;f8;62;2;66;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionReset()&#10;&#10;Description&#10;     Resets education documents add page.;;d1,63;;b1,0;;m">
 </treenode>
-<treenode node="actionSave;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_App.php;f8;107;2;119;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\NewFile.php;f8;107;2;119;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_DocsEduc.php;f8;134;2;163;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionSave()&#10;&#10;Description&#10;     Saves education document.;;d0,135;;b1,0;;m">
+<treenode node="actionSave;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_App.php;f8;107;2;119;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\NewFile.php;f8;107;2;119;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_DocsEduc.php;f8;134;2;154;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionSave()&#10;&#10;Description&#10;     Saves education document.;;d0,135;;b1,0;;m">
 </treenode>
 </treenode>
 <treenode node="Controller_EduclevelsDoctypes;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_EduclevelsDoctypes.php;f0;9;1;115;;;;vpos;;vController;;c;;r;;d0,10;;b0,0;;m">
@@ -1486,14 +1486,14 @@
 <treenode node="actionSave;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\NewFile.php;f8;107;2;119;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionSave()&#10;&#10;Description&#10;     Saves education document.;;d1,108;;b1,0;;m">
 </treenode>
 </treenode>
-<treenode node="Controller_IndAchievs;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_IndAchiev.php;f0;9;1;126;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_IndAchievs.php;f0;10;1;153;;;;vpos;;vController;;c;;r;;d0,11;;b0,0;;m">
+<treenode node="Controller_IndAchievs;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_IndAchiev.php;f0;9;1;126;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_IndAchievs.php;f0;10;1;152;;;;vpos;;vController;;c;;r;;d0,11;;b0,0;;m">
 <treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_IndAchiev.php;f8;17;2;21;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_IndAchievs.php;f8;18;2;32;;;;vpos;;v;;r;;d1,19;;b1,0;;m">
 </treenode>
-<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_IndAchiev.php;f8;121;2;125;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_IndAchievs.php;f8;148;2;152;;;;vpos;;v;;r;;d1,149;;b1,0;;m">
+<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_IndAchiev.php;f8;121;2;125;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_IndAchievs.php;f8;147;2;151;;;;vpos;;v;;r;;d1,148;;b1,0;;m">
 </treenode>
 <treenode node="actionAdd;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_IndAchiev.php;f8;49;2;55;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_IndAchievs.php;f8;60;2;66;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionAdd()&#10;&#10;Description&#10;     Displays individual achievments add page.;;d1,61;;b1,0;;m">
 </treenode>
-<treenode node="actionCancel;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_IndAchievs.php;f8;143;2;146;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionCancel()&#10;&#10;Description&#10;     Cancels individual achievment.;;d1,144;;b1,0;;m">
+<treenode node="actionCancel;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_IndAchievs.php;f8;142;2;145;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionCancel()&#10;&#10;Description&#10;     Cancels individual achievment.;;d1,143;;b1,0;;m">
 </treenode>
 <treenode node="actionDelete;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_IndAchiev.php;f8;89;2;100;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_IndAchievs.php;f8;100;2;111;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionDelete()&#10;&#10;Description&#10;     Deletes education document.;;d1,101;;b1,0;;m">
 </treenode>
@@ -1505,7 +1505,7 @@
 </treenode>
 <treenode node="actionReset;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_IndAchiev.php;f8;38;2;42;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_IndAchievs.php;f8;49;2;53;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionReset()&#10;&#10;Description&#10;     Resets individual achievments add page.;;d1,50;;b1,0;;m">
 </treenode>
-<treenode node="actionSave;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_IndAchiev.php;f8;107;2;119;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_IndAchievs.php;f8;118;2;136;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionSave()&#10;&#10;Description&#10;     Saves individual achievment.;;d1,119;;b1,0;;m">
+<treenode node="actionSave;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_IndAchiev.php;f8;107;2;119;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_IndAchievs.php;f8;118;2;135;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionSave()&#10;&#10;Description&#10;     Saves individual achievment.;;d1,119;;b1,0;;m">
 </treenode>
 </treenode>
 <treenode node="Controller_Kladr;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Kladr.php;f0;7;1;152;;;;vpos;;vController;;c;;r;;d0,8;;b0,0;;m">
@@ -1606,20 +1606,20 @@
 <treenode node="actionSendEmail;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwdRequest.php;f8;52;2;64;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionSendEmail()&#10;&#10;Description&#10;     Sends email reset password request.;;d1,53;;b1,0;;m">
 </treenode>
 </treenode>
-<treenode node="Controller_Resume;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Resume.php;f0;13;1;214;;;;vpos;;vController;;c;;r;;d0,14;;b0,0;;m">
+<treenode node="Controller_Resume;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Resume.php;f0;13;1;211;;;;vpos;;vController;;c;;r;;d0,14;;b0,0;;m">
 <treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Resume.php;f8;22;2;40;;;;vpos;;v;;r;;d1,23;;b1,0;;m">
 </treenode>
-<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Resume.php;f8;208;2;213;;;;vpos;;v;;r;;d1,209;;b1,0;;m">
+<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Resume.php;f8;205;2;210;;;;vpos;;v;;r;;d1,206;;b1,0;;m">
 </treenode>
-<treenode node="actionIndex;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Resume.php;f8;47;2;86;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionIndex()&#10;&#10;Description&#10;     Displays resume page.;;d1,48;;b1,0;;m">
+<treenode node="actionIndex;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Resume.php;f8;47;2;85;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionIndex()&#10;&#10;Description&#10;     Displays resume page.;;d1,48;;b1,0;;m">
 </treenode>
-<treenode node="actionRecall;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Resume.php;f8;187;2;206;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionRecall()&#10;&#10;Description&#10;     Recalls resume.;;d1,188;;b1,0;;m">
+<treenode node="actionRecall;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Resume.php;f8;184;2;203;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionRecall()&#10;&#10;Description&#10;     Recalls resume.;;d1,185;;b1,0;;m">
 </treenode>
-<treenode node="actionReset;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Resume.php;f8;93;2;109;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionReset()&#10;&#10;Description&#10;     Resets resume page.;;d1,94;;b1,0;;m">
+<treenode node="actionReset;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Resume.php;f8;92;2;108;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionReset()&#10;&#10;Description&#10;     Resets resume page.;;d1,93;;b1,0;;m">
 </treenode>
-<treenode node="actionResume;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Resume.php;f8;116;2;154;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionResume()&#10;&#10;Description&#10;     Makes resume changes.;;d1,117;;b1,0;;m">
+<treenode node="actionResume;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Resume.php;f8;115;2;151;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionResume()&#10;&#10;Description&#10;     Makes resume changes.;;d1,116;;b1,0;;m">
 </treenode>
-<treenode node="actionSend;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Resume.php;f8;161;2;180;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionSend()&#10;&#10;Description&#10;     Sends resume.;;d1,162;;b1,0;;m">
+<treenode node="actionSend;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Resume.php;f8;158;2;177;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionSend()&#10;&#10;Description&#10;     Sends resume.;;d1,159;;b1,0;;m">
 </treenode>
 </treenode>
 <treenode node="Controller_Scans;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Scans.php;f0;9;1;114;;;;vpos;;vController;;c;;r;;d0,10;;b0,0;;m">
@@ -1650,12 +1650,14 @@
 <treenode node="actionSignup;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Signup.php;f8;65;2;80;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionSignup()&#10;&#10;Description&#10;     Signs user up.;;d1,66;;b1,0;;m">
 </treenode>
 </treenode>
-<treenode node="Controller_User;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\NewFile.php;f0;8;1;37;;;;vpos;;vController;;c;;r;;d0,9;;b0,0;;m">
-<treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\NewFile.php;f8;16;2;20;;;;vpos;;v;;r;;d1,17;;b1,0;;m">
+<treenode node="Controller_User;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\NewFile.php;f0;8;1;37;;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_User.php;f0;9;1;50;;;;vpos;;vController;;c;;r;;d0,10;;b0,0;;m">
+<treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\NewFile.php;f8;16;2;20;;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_User.php;f8;17;2;21;;;;vpos;;v;;r;;d1,18;;b1,0;;m">
 </treenode>
-<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\NewFile.php;f8;32;2;36;;;;vpos;;v;;r;;d1,33;;b1,0;;m">
+<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\NewFile.php;f8;32;2;36;;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_User.php;f8;45;2;49;;;;vpos;;v;;r;;d1,46;;b1,0;;m">
 </treenode>
-<treenode node="actionIndex;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\NewFile.php;f8;27;2;30;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionIndex()&#10;&#10;Description&#10;     Displays users page.;;d1,28;;b1,0;;m">
+<treenode node="actionIndex;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\NewFile.php;f8;27;2;30;;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_User.php;f8;28;2;31;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionIndex()&#10;&#10;Description&#10;     Displays users page.;;d1,29;;b1,0;;m">
+</treenode>
+<treenode node="actionMask;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_User.php;f8;38;2;43;;;;vpos;;vmixed;;r&#10;Definition&#10;    actionMask()&#10;&#10;Description&#10;     Login as user.;;d1,39;;b1,0;;m">
 </treenode>
 </treenode>
 <treenode node="DataFields;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\php-pdftk\src\DataFields.php;f0;14;1;165;;;;vpos;;vArrayObject;;c;;r&#10;Definition&#10;    class DataFields extends ArrayObject&#10;&#10;Description&#10;     This class is an array representation of the dump_data_fields output of pdftk.;;d0,15;;b0,0;;m">
@@ -1676,16 +1678,16 @@
 <treenode node="testDataFieldParsing;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\php-pdftk\tests\DataFieldsTest.php;f11;5;5;9;;;;vpos;;v;;r;;d4,6;;b1,0;;m">
 </treenode>
 </treenode>
-<treenode node="Db_Helper;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f0;7;1;361;;;;vpos;;v;;r;;d0,8;;b0,0;;m">
+<treenode node="Db_Helper;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f0;7;1;334;;;;vpos;;v;;r;;d0,8;;b0,0;;m">
 <treenode node="__clone;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f12;38;5;40;;;;vpos;;vvoid;;r&#10;Definition&#10;    __clone()&#10;&#10;Description&#10;     Private clone method to prevent cloning of the instance of the Db_Helper instance.;;d4,39;;b3,0;;m">
 </treenode>
 <treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f11;19;2;30;;;;vpos;;vvoid;;r&#10;Definition&#10;    __construct()&#10;&#10;Description&#10;     Protected constructor to prevent creating a new instance of the Db_Helper via the &apos;new&apos; operator from outside of this class.;;d1,20;;b2,0;;m">
 </treenode>
 <treenode node="__wakeup;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f12;48;5;50;;;;vpos;;vvoid;;r&#10;Definition&#10;    __wakeup()&#10;&#10;Description&#10;     Private unserialize method to prevent unserializing of the Db_Helper instance.;;d4,49;;b3,0;;m">
 </treenode>
-<treenode node="checkHash;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f8;357;2;360;;;;vpos;;vboolean;;r&#10;Definition&#10;    checkHash($pwd, $hash)&#10;&#10;Description&#10;     Verifies string to HASH.;;d1,358;;b1,0;;mpwd;;phash;;p">
+<treenode node="checkHash;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f8;330;2;333;;;;vpos;;vboolean;;r&#10;Definition&#10;    checkHash($pwd, $hash)&#10;&#10;Description&#10;     Verifies string to HASH.;;d1,331;;b1,0;;mpwd;;phash;;p">
 </treenode>
-<treenode node="getHash;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f8;347;2;350;;;;vpos;;vstring;;r&#10;Definition&#10;    getHash($str)&#10;&#10;Description&#10;     Gets string HASH.;;d1,348;;b1,0;;mstr;;p">
+<treenode node="getHash;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f8;320;2;323;;;;vpos;;vstring;;r&#10;Definition&#10;    getHash($str)&#10;&#10;Description&#10;     Gets string HASH.;;d1,321;;b1,0;;mstr;;p">
 </treenode>
 <treenode node="getInstance;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f18;60;5;67;;;;vpos;;vDb_Helper;;r&#10;Definition&#10;    getInstance()&#10;&#10;Description&#10;     Returns the Db_Helper instance.&#10;&#10;Return:&#10;   instance;;d4,61;;b1,5;;m">
 </treenode>
@@ -1693,15 +1695,15 @@
 </treenode>
 <treenode node="prepareUpdate;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f8;124;2;151;;;;vpos;;varray;;r&#10;Definition&#10;    prepareUpdate($table_name, $rules)&#10;&#10;Description&#10;     Prepares update query.;;d1,125;;b1,0;;mtable_name;;prules;;p">
 </treenode>
-<treenode node="rowDelete;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f8;321;2;340;;;;vpos;;vinteger;;r&#10;Definition&#10;    rowDelete($tables, $conds = null, $params = null)&#10;&#10;Description&#10;     Deletes table row.;;d1,322;;b1,0;;mtables;;pconds;;pparams;;p">
+<treenode node="rowDelete;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f8;294;2;313;;;;vpos;;vinteger;;r&#10;Definition&#10;    rowDelete($tables, $conds = null, $params = null)&#10;&#10;Description&#10;     Deletes table row.;;d1,295;;b1,0;;mtables;;pconds;;pparams;;p">
 </treenode>
-<treenode node="rowInsert;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f8;249;2;278;;;;vpos;;vinteger;;r&#10;Definition&#10;    rowInsert($fields, $tables, $conds, $params)&#10;&#10;Description&#10;     Inserts table row.;;d1,250;;b1,0;;mfields;;ptables;;pconds;;pparams;;p">
+<treenode node="rowInsert;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f8;222;2;251;;;;vpos;;vinteger;;r&#10;Definition&#10;    rowInsert($fields, $tables, $conds, $params)&#10;&#10;Description&#10;     Inserts table row.;;d1,223;;b1,0;;mfields;;ptables;;pconds;;pparams;;p">
 </treenode>
-<treenode node="rowSelectAll;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f8;217;2;242;;;;vpos;;varray;;r&#10;Definition&#10;    rowSelectAll($fields, $tables, $conds = null, $params = null, $order = null, $desc = 0, $limit = 0)&#10;&#10;Description&#10;     Gets table row.;;d1,218;;b1,0;;mfields;;ptables;;pconds;;pparams;;porder;;pdesc;;plimit;;p">
+<treenode node="rowSelectAll;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f8;190;2;215;;;;vpos;;varray;;r&#10;Definition&#10;    rowSelectAll($fields, $tables, $conds = null, $params = null, $order = null, $limit = 0)&#10;&#10;Description&#10;     Gets table row.;;d1,191;;b1,0;;mfields;;ptables;;pconds;;pparams;;porder;;plimit;;p">
 </treenode>
-<treenode node="rowSelectOne;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f8;158;2;210;;;;vpos;;varray;;r&#10;Definition&#10;    rowSelectOne($fields, $tables, $conds = null, $params = null)&#10;&#10;Description&#10;     Gets table row.;;d1,159;;b1,0;;mfields;;ptables;;pconds;;pparams;;p">
+<treenode node="rowSelectOne;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f8;158;2;183;;;;vpos;;varray;;r&#10;Definition&#10;    rowSelectOne($fields, $tables, $conds = null, $params = null)&#10;&#10;Description&#10;     Gets table row.;;d1,159;;b1,0;;mfields;;ptables;;pconds;;pparams;;p">
 </treenode>
-<treenode node="rowUpdate;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f8;285;2;314;;;;vpos;;vboolean;;r&#10;Definition&#10;    rowUpdate($tables, $fields, $params, $conds = null)&#10;&#10;Description&#10;     Updates table row.;;d1,286;;b1,0;;mtables;;pfields;;pparams;;pconds;;p">
+<treenode node="rowUpdate;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php;f8;258;2;287;;;;vpos;;vboolean;;r&#10;Definition&#10;    rowUpdate($tables, $fields, $params, $conds = null)&#10;&#10;Description&#10;     Updates table row.;;d1,259;;b1,0;;mtables;;pfields;;pparams;;pconds;;p">
 </treenode>
 </treenode>
 <treenode node="Exception;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\Exception.php;f0;27;1;38;;;;vpos;;vException;;c;;r&#10;Definition&#10;    class Exception extends \Exception&#10;&#10;Description&#10;     PHPMailer exception handler.;;d0,28;;b0,0;;m">
@@ -1758,36 +1760,36 @@
 <treenode node="testCanSaveFileAs;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\php-pdftk\vendor\mikehaertl\php-tmpfile\tests\FileTest.php;f11;50;5;66;;;;vpos;;v;;r;;d4,51;;b1,0;;m">
 </treenode>
 </treenode>
-<treenode node="Form_Helper;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f0;65;1;803;;;;vpos;;v;;r;;d0,66;;b0,0;;m">
-<treenode node="setFormBegin;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f15;270;2;291;;;;vpos;;vstring;;r&#10;Definition&#10;    setFormBegin($controller, $action, $id, $legend, $home = 0, $logo = null)&#10;&#10;Description&#10;     Creates form begin. $home: 0 - no, 1 - setHrefButton, 2 - setHrefButtonIcon;;d1,271;;b1,5;;mcontroller;;paction;;pid;;plegend;;phome;;plogo;;p">
+<treenode node="Form_Helper;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f0;64;1;796;;;;vpos;;v;;r;;d0,65;;b0,0;;m">
+<treenode node="setFormBegin;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f15;263;2;284;;;;vpos;;vstring;;r&#10;Definition&#10;    setFormBegin($controller, $action, $id, $legend, $home = 0, $logo = null)&#10;&#10;Description&#10;     Creates form begin. $home: 0 - no, 1 - setHrefButton, 2 - setHrefButtonIcon;;d1,264;;b1,5;;mcontroller;;paction;;pid;;plegend;;phome;;plogo;;p">
 </treenode>
-<treenode node="setFormCaptcha;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f15;735;2;749;;;;vpos;;vstring;;r&#10;Definition&#10;    setFormCaptcha($rules) : string&#10;&#10;Description&#10;     Creates form CAPTCHA.;;d1,736;;b1,5;;mrules;;p">
+<treenode node="setFormCaptcha;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f15;728;2;742;;;;vpos;;vstring;;r&#10;Definition&#10;    setFormCaptcha($rules) : string&#10;&#10;Description&#10;     Creates form CAPTCHA.;;d1,729;;b1,5;;mrules;;p">
 </treenode>
-<treenode node="setFormCheckbox;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f15;416;2;429;;;;vpos;;vstring;;r&#10;Definition&#10;    setFormCheckbox($rules) : string&#10;&#10;Description&#10;     Creates form checkbox.;;d1,417;;b1,5;;mrules;;p">
+<treenode node="setFormCheckbox;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f15;409;2;422;;;;vpos;;vstring;;r&#10;Definition&#10;    setFormCheckbox($rules) : string&#10;&#10;Description&#10;     Creates form checkbox.;;d1,410;;b1,5;;mrules;;p">
 </treenode>
-<treenode node="setFormEnd;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f15;799;2;802;;;;vpos;;vstring;;r&#10;Definition&#10;    setFormEnd() : string&#10;&#10;Description&#10;     Creates form end.;;d1,800;;b1,5;;m">
+<treenode node="setFormEnd;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f15;792;2;795;;;;vpos;;vstring;;r&#10;Definition&#10;    setFormEnd() : string&#10;&#10;Description&#10;     Creates form end.;;d1,793;;b1,5;;m">
 </treenode>
-<treenode node="setFormFile;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f18;584;2;629;;;;vpos;;vstring;;r&#10;Definition&#10;    setFormFile($rules) : string&#10;&#10;Description&#10;     Creates form file.;;d4,585;;b1,5;;mrules;;p">
+<treenode node="setFormFile;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f18;577;2;622;;;;vpos;;vstring;;r&#10;Definition&#10;    setFormFile($rules) : string&#10;&#10;Description&#10;     Creates form file.;;d4,578;;b1,5;;mrules;;p">
 </treenode>
-<treenode node="setFormFileListDB;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f18;653;2;721;;;;vpos;;vstring;;r&#10;Definition&#10;    setFormFileListDB($rules) : string&#10;&#10;Description&#10;     Creates form file list based on SQL-query.;;d4,654;;b1,5;;mrules;;p">
+<treenode node="setFormFileListDB;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f18;646;2;714;;;;vpos;;vstring;;r&#10;Definition&#10;    setFormFileListDB($rules) : string&#10;&#10;Description&#10;     Creates form file list based on SQL-query.;;d4,647;;b1,5;;mrules;;p">
 </treenode>
-<treenode node="setFormHeaderSub;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f15;756;2;759;;;;vpos;;vstring;;r&#10;Definition&#10;    setFormHeaderSub($header)&#10;&#10;Description&#10;     Creates form sub header.;;d1,757;;b1,5;;mheader;;p">
+<treenode node="setFormHeaderSub;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f15;749;2;752;;;;vpos;;vstring;;r&#10;Definition&#10;    setFormHeaderSub($header)&#10;&#10;Description&#10;     Creates form sub header.;;d1,750;;b1,5;;mheader;;p">
 </treenode>
-<treenode node="setFormInput;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f15;311;2;332;;;;vpos;;vstring;;r&#10;Definition&#10;    setFormInput($rules) : string&#10;&#10;Description&#10;     Creates form input.;;d1,312;;b1,5;;mrules;;p">
+<treenode node="setFormInput;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f15;304;2;325;;;;vpos;;vstring;;r&#10;Definition&#10;    setFormInput($rules) : string&#10;&#10;Description&#10;     Creates form input.;;d1,305;;b1,5;;mrules;;p">
 </treenode>
-<treenode node="setFormInputText;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f15;344;2;356;;;;vpos;;vstring;;r&#10;Definition&#10;    setFormInputText($rules) : string&#10;&#10;Description&#10;     Creates form input text.;;d1,345;;b1,5;;mrules;;p">
+<treenode node="setFormInputText;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f15;337;2;349;;;;vpos;;vstring;;r&#10;Definition&#10;    setFormInputText($rules) : string&#10;&#10;Description&#10;     Creates form input text.;;d1,338;;b1,5;;mrules;;p">
 </treenode>
-<treenode node="setFormLabelStyle;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f15;771;2;792;;;;vpos;;vstring;;r&#10;Definition&#10;    setFormLabelStyle($required, $required_style, $value) : array&#10;&#10;Description&#10;     Creates form label style.;;d1,772;;b1,5;;mrequired;;prequired_style;;pvalue;;p">
+<treenode node="setFormLabelStyle;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f15;764;2;785;;;;vpos;;vstring;;r&#10;Definition&#10;    setFormLabelStyle($required, $required_style, $value) : array&#10;&#10;Description&#10;     Creates form label style.;;d1,765;;b1,5;;mrequired;;prequired_style;;pvalue;;p">
 </treenode>
-<treenode node="setFormRadio;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f15;374;2;401;;;;vpos;;vstring;;r&#10;Definition&#10;    setFormRadio($rules) : string&#10;&#10;Description&#10;     Creates form radio.;;d1,375;;b1,5;;mrules;;p">
+<treenode node="setFormRadio;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f15;367;2;394;;;;vpos;;vstring;;r&#10;Definition&#10;    setFormRadio($rules) : string&#10;&#10;Description&#10;     Creates form radio.;;d1,368;;b1,5;;mrules;;p">
 </treenode>
-<treenode node="setFormSelectListBlank;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f15;440;2;452;;;;vpos;;vstring;;r&#10;Definition&#10;    setFormSelectListBlank($rules) : string&#10;&#10;Description&#10;     Creates form select list blank.;;d1,441;;b1,5;;mrules;;p">
+<treenode node="setFormSelectListBlank;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f15;433;2;445;;;;vpos;;vstring;;r&#10;Definition&#10;    setFormSelectListBlank($rules) : string&#10;&#10;Description&#10;     Creates form select list blank.;;d1,434;;b1,5;;mrules;;p">
 </treenode>
-<treenode node="setFormSelectListDB;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f15;475;2;516;;;;vpos;;vstring;;r&#10;Definition&#10;    setFormSelectListDB($rules) : string&#10;&#10;Description&#10;     Creates form select list based on SQL-query.;;d1,476;;b1,5;;mrules;;p">
+<treenode node="setFormSelectListDB;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f15;468;2;509;;;;vpos;;vstring;;r&#10;Definition&#10;    setFormSelectListDB($rules) : string&#10;&#10;Description&#10;     Creates form select list based on SQL-query.;;d1,469;;b1,5;;mrules;;p">
 </treenode>
-<treenode node="setFormSelectListKladr;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f15;532;2;564;;;;vpos;;vstring;;r&#10;Definition&#10;    setFormSelectListKladr($rules) : string&#10;&#10;Description&#10;     Creates form select list KLADR.;;d1,533;;b1,5;;mrules;;p">
+<treenode node="setFormSelectListKladr;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f15;525;2;557;;;;vpos;;vstring;;r&#10;Definition&#10;    setFormSelectListKladr($rules) : string&#10;&#10;Description&#10;     Creates form select list KLADR.;;d1,526;;b1,5;;mrules;;p">
 </treenode>
-<treenode node="validate;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;91;2;262;;;;vpos;;vboolean;;r&#10;Definition&#10;    validate($form, $rules)&#10;&#10;Description&#10;     Validates form.;;d1,92;;b1,0;;mform;;prules;;p">
+<treenode node="validate;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php;f8;90;2;255;;;;vpos;;vboolean;;r&#10;Definition&#10;    validate($form, $rules)&#10;&#10;Description&#10;     Validates form.;;d1,91;;b1,0;;mform;;prules;;p">
 </treenode>
 </treenode>
 <treenode node="Help_Helper;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\NewFile.php;f0;4;1;115;;C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\help_helper.php;f0;6;1;132;;;;vpos;;v;;r;;d0,7;;b0,0;;m">
@@ -2170,88 +2172,88 @@
 <treenode node="TablesSpecs;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationPlaces.php;f8;586;2;591;;;;vpos;;vstring;;r&#10;Definition&#10;    TablesSpecs() : string&#10;&#10;Description&#10;     Returns tables for specs.;;d1,587;;b1,0;;m">
 </treenode>
 </treenode>
-<treenode node="Model_ApplicationPlacesExams;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationPlacesExams.php;f0;6;1;168;;;;vpos;;vDb_Helper;;c;;r;;d0,7;;b0,0;;m">
+<treenode node="Model_ApplicationPlacesExams;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationPlacesExams.php;f0;6;1;182;;;;vpos;;vDb_Helper;;c;;r;;d0,7;;b0,0;;m">
 <treenode node="TABLE_NAME;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationPlacesExams.php;f6;12;17;12;;;;vpos;;v;;r&apos;application_places_exams&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationPlacesExams.php;f8;23;2;26;;;;vpos;;v;;r;;d1,24;;b1,0;;m">
+<treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationPlacesExams.php;f8;25;2;28;;;;vpos;;v;;r;;d1,26;;b1,0;;m">
 </treenode>
-<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationPlacesExams.php;f8;164;2;167;;;;vpos;;v;;r;;d1,165;;b1,0;;m">
+<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationPlacesExams.php;f8;178;2;181;;;;vpos;;v;;r;;d1,179;;b1,0;;m">
 </treenode>
-<treenode node="changeTest;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationPlacesExams.php;f8;156;2;162;;;;vpos;;vboolean;;r&#10;Definition&#10;    changeTest()&#10;&#10;Description&#10;     Changes testing scope.;;d1,157;;b1,0;;m">
+<treenode node="changeTest;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationPlacesExams.php;f8;170;2;176;;;;vpos;;vboolean;;r&#10;Definition&#10;    changeTest()&#10;&#10;Description&#10;     Changes testing scope.;;d1,171;;b1,0;;m">
 </treenode>
-<treenode node="existsExams;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationPlacesExams.php;f8;123;2;136;;;;vpos;;vboolean;;r&#10;Definition&#10;    existsExams()&#10;&#10;Description&#10;     Checks if exams exists.;;d1,124;;b1,0;;m">
+<treenode node="existsExams;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationPlacesExams.php;f8;137;2;150;;;;vpos;;vboolean;;r&#10;Definition&#10;    existsExams()&#10;&#10;Description&#10;     Checks if exams exists.;;d1,138;;b1,0;;m">
 </treenode>
-<treenode node="getExamsByApplication;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationPlacesExams.php;f8;107;2;116;;;;vpos;;varray;;r&#10;Definition&#10;    getExamsByApplication()&#10;&#10;Description&#10;     Gets exams by application.;;d1,108;;b1,0;;m">
+<treenode node="getExamsByApplication;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationPlacesExams.php;f8;121;2;130;;;;vpos;;varray;;r&#10;Definition&#10;    getExamsByApplication()&#10;&#10;Description&#10;     Gets exams by application.;;d1,122;;b1,0;;m">
 </treenode>
-<treenode node="getExamsByPlace;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationPlacesExams.php;f8;80;2;87;;;;vpos;;varray;;r&#10;Definition&#10;    getExamsByPlace()&#10;&#10;Description&#10;     Gets exams by place.;;d1,81;;b1,0;;m">
+<treenode node="getExamsByPlace;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationPlacesExams.php;f8;94;2;101;;;;vpos;;varray;;r&#10;Definition&#10;    getExamsByPlace()&#10;&#10;Description&#10;     Gets exams by place.;;d1,95;;b1,0;;m">
 </treenode>
-<treenode node="getExamsByPlaceFull;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationPlacesExams.php;f8;94;2;100;;;;vpos;;varray;;r&#10;Definition&#10;    getExamsByPlaceFull()&#10;&#10;Description&#10;     Gets full exams by place.;;d1,95;;b1,0;;m">
+<treenode node="getExamsByPlaceFull;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationPlacesExams.php;f8;108;2;114;;;;vpos;;varray;;r&#10;Definition&#10;    getExamsByPlaceFull()&#10;&#10;Description&#10;     Gets full exams by place.;;d1,109;;b1,0;;m">
 </treenode>
-<treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationPlacesExams.php;f8;33;2;73;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Application places exams rules.;;d1,34;;b1,0;;m">
+<treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationPlacesExams.php;f8;35;2;87;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Application places exams rules.;;d1,36;;b1,0;;m">
 </treenode>
-<treenode node="save;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationPlacesExams.php;f8;143;2;149;;;;vpos;;vinteger;;r&#10;Definition&#10;    save()&#10;&#10;Description&#10;     Saves application places exams data to database.;;d1,144;;b1,0;;m">
+<treenode node="save;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationPlacesExams.php;f8;157;2;163;;;;vpos;;vinteger;;r&#10;Definition&#10;    save()&#10;&#10;Description&#10;     Saves application places exams data to database.;;d1,158;;b1,0;;m">
 </treenode>
 </treenode>
-<treenode node="Model_ApplicationSpec;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationPlaces.php;f0;21;1;242;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f0;29;1;897;;;;vpos;;vModel;;c;;r;;d0,30;;b0,0;;m">
-<treenode node="change;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;479;2;511;;;;vpos;;varray;;r&#10;Definition&#10;    change($form)&#10;&#10;Description&#10;     Changes application spec data.;;d1,480;;b1,0;;mform;;p">
+<treenode node="Model_ApplicationSpec;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationPlaces.php;f0;21;1;242;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f0;29;1;980;;;;vpos;;vModel;;c;;r;;d0,30;;b0,0;;m">
+<treenode node="change;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;527;2;559;;;;vpos;;varray;;r&#10;Definition&#10;    change($form)&#10;&#10;Description&#10;     Changes application spec data.;;d1,528;;b1,0;;mform;;p">
 </treenode>
-<treenode node="check;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationPlaces.php;f8;216;2;241;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;379;2;438;;;;vpos;;varray;;r&#10;Definition&#10;    check($form)&#10;&#10;Description&#10;     Checks application spec data.;;d1,380;;b1,0;;mform;;p">
+<treenode node="check;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationPlaces.php;f8;216;2;241;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;427;2;486;;;;vpos;;varray;;r&#10;Definition&#10;    check($form)&#10;&#10;Description&#10;     Checks application spec data.;;d1,428;;b1,0;;mform;;p">
 </treenode>
-<treenode node="checkPlaces;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationPlaces.php;f8;117;2;209;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;187;2;333;;;;vpos;;varray;;r&#10;Definition&#10;    checkPlaces($post)&#10;&#10;Description&#10;     Checks application places data.;;d1,188;;b1,0;;mpost;;p">
+<treenode node="checkPlaces;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationPlaces.php;f8;117;2;209;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;187;2;381;;;;vpos;;varray;;r&#10;Definition&#10;    checkPlaces($post)&#10;&#10;Description&#10;     Checks application places data.;;d1,188;;b1,0;;mpost;;p">
 </treenode>
 <treenode node="get;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationPlaces.php;f8;42;2;47;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;95;2;100;;;;vpos;;varray;;r&#10;Definition&#10;    get($id)&#10;&#10;Description&#10;     Gets application spec data from database.;;d1,96;;b1,0;;mid;;p">
 </treenode>
 <treenode node="getExams;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationPlaces.php;f8;54;2;62;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;107;2;115;;;;vpos;;varray;;r&#10;Definition&#10;    getExams($form)&#10;&#10;Description&#10;     Gets application places exams.;;d1,108;;b1,0;;mform;;p">
 </treenode>
-<treenode node="recall;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;518;2;557;;;;vpos;;varray;;r&#10;Definition&#10;    recall($form)&#10;&#10;Description&#10;     Recalls application spec data.;;d1,519;;b1,0;;mform;;p">
+<treenode node="recall;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;566;2;605;;;;vpos;;varray;;r&#10;Definition&#10;    recall($form)&#10;&#10;Description&#10;     Recalls application spec data.;;d1,567;;b1,0;;mform;;p">
 </treenode>
 <treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationPlaces.php;f8;32;2;35;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;40;2;61;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Application spec rules.;;d1,41;;b1,0;;m">
 </treenode>
 <treenode node="saveExams;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;122;2;151;;;;vpos;;varray;;r&#10;Definition&#10;    saveExams($form)&#10;&#10;Description&#10;     Saves application spec exams data.;;d1,123;;b1,0;;mform;;p">
 </treenode>
-<treenode node="savePdf;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;564;2;647;;;;vpos;;vmixed;;r&#10;Definition&#10;    savePdf($id)&#10;&#10;Description&#10;     Saves application spec data as PDF.;;d1,565;;b1,0;;mid;;p">
+<treenode node="savePdf;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;612;2;695;;;;vpos;;vmixed;;r&#10;Definition&#10;    savePdf($id)&#10;&#10;Description&#10;     Saves application spec data as PDF.;;d1,613;;b1,0;;mid;;p">
 </treenode>
-<treenode node="send;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;445;2;472;;;;vpos;;varray;;r&#10;Definition&#10;    send($form)&#10;&#10;Description&#10;     Sends application spec data.;;d1,446;;b1,0;;mform;;p">
+<treenode node="send;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;493;2;520;;;;vpos;;varray;;r&#10;Definition&#10;    send($form)&#10;&#10;Description&#10;     Sends application spec data.;;d1,494;;b1,0;;mform;;p">
 </treenode>
-<treenode node="setAppForPdf;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;654;2;667;;;;vpos;;varray;;r&#10;Definition&#10;    setAppForPdf($data, $app_row) : array&#10;&#10;Description&#10;     Sets application data for PDF.;;d1,655;;b1,0;;mdata;;papp_row;;p">
+<treenode node="setAppForPdf;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;702;2;715;;;;vpos;;varray;;r&#10;Definition&#10;    setAppForPdf($data, $app_row) : array&#10;&#10;Description&#10;     Sets application data for PDF.;;d1,703;;b1,0;;mdata;;papp_row;;p">
 </treenode>
-<treenode node="setCampusForPdf;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;826;2;834;;;;vpos;;varray;;r&#10;Definition&#10;    setCampusForPdf($data, $campus) : array&#10;&#10;Description&#10;     Sets campus data for PDF.;;d1,827;;b1,0;;mdata;;pcampus;;p">
+<treenode node="setCampusForPdf;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;909;2;917;;;;vpos;;varray;;r&#10;Definition&#10;    setCampusForPdf($data, $campus) : array&#10;&#10;Description&#10;     Sets campus data for PDF.;;d1,910;;b1,0;;mdata;;pcampus;;p">
 </treenode>
-<treenode node="setEducForPdf;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;768;2;805;;;;vpos;;varray;;r&#10;Definition&#10;    setEducForPdf($data, $id_docseduc, $edulevel) : array&#10;&#10;Description&#10;     Sets education data for PDF.;;d1,769;;b1,0;;mdata;;pid_docseduc;;pedulevel;;p">
+<treenode node="setEducForPdf;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;851;2;888;;;;vpos;;varray;;r&#10;Definition&#10;    setEducForPdf($data, $id_docseduc, $edulevel) : array&#10;&#10;Description&#10;     Sets education data for PDF.;;d1,852;;b1,0;;mdata;;pid_docseduc;;pedulevel;;p">
 </treenode>
-<treenode node="setExamsForPdf;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;727;2;761;;;;vpos;;varray;;r&#10;Definition&#10;    setExamsForPdf($data, $app) : array&#10;&#10;Description&#10;     Sets exams data for PDF.;;d1,728;;b1,0;;mdata;;papp;;p">
+<treenode node="setExamsForPdf;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;775;2;844;;;;vpos;;varray;;r&#10;Definition&#10;    setExamsForPdf($data, $app) : array&#10;&#10;Description&#10;     Sets exams data for PDF.;;d1,776;;b1,0;;mdata;;papp;;p">
 </treenode>
-<treenode node="setForeignLangForPdf;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;812;2;819;;;;vpos;;varray;;r&#10;Definition&#10;    setForeignLangForPdf($data, $id_lang) : array&#10;&#10;Description&#10;     Sets foreign language for PDF.;;d1,813;;b1,0;;mdata;;pid_lang;;p">
+<treenode node="setForeignLangForPdf;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;895;2;902;;;;vpos;;varray;;r&#10;Definition&#10;    setForeignLangForPdf($data, $id_lang) : array&#10;&#10;Description&#10;     Sets foreign language for PDF.;;d1,896;;b1,0;;mdata;;pid_lang;;p">
 </treenode>
-<treenode node="setIaForPdf;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;841;2;896;;;;vpos;;varray;;r&#10;Definition&#10;    setIaForPdf($data, $app) : array&#10;&#10;Description&#10;     Sets individual achievments data for PDF.;;d1,842;;b1,0;;mdata;;papp;;p">
+<treenode node="setIaForPdf;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;924;2;979;;;;vpos;;varray;;r&#10;Definition&#10;    setIaForPdf($data, $app) : array&#10;&#10;Description&#10;     Sets individual achievments data for PDF.;;d1,925;;b1,0;;mdata;;papp;;p">
 </treenode>
-<treenode node="setPlacesForPdf;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;703;2;720;;;;vpos;;varray;;r&#10;Definition&#10;    setPlacesForPdf($data, $app, $limit) : array&#10;&#10;Description&#10;     Sets places data for PDF.;;d1,704;;b1,0;;mdata;;papp;;plimit;;p">
+<treenode node="setPlacesForPdf;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;751;2;768;;;;vpos;;varray;;r&#10;Definition&#10;    setPlacesForPdf($data, $app, $limit) : array&#10;&#10;Description&#10;     Sets places data for PDF.;;d1,752;;b1,0;;mdata;;papp;;plimit;;p">
 </treenode>
-<treenode node="setResumeForPdf;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;674;2;696;;;;vpos;;varray;;r&#10;Definition&#10;    setResumeForPdf($data) : array&#10;&#10;Description&#10;     Sets resume data for PDF.;;d1,675;;b1,0;;mdata;;p">
+<treenode node="setResumeForPdf;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;722;2;744;;;;vpos;;varray;;r&#10;Definition&#10;    setResumeForPdf($data) : array&#10;&#10;Description&#10;     Sets resume data for PDF.;;d1,723;;b1,0;;mdata;;p">
 </treenode>
-<treenode node="syncIa;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;340;2;372;;;;vpos;;varray;;r&#10;Definition&#10;    syncIa($form)&#10;&#10;Description&#10;     Synchronizes individual achievments for application.;;d1,341;;b1,0;;mform;;p">
+<treenode node="syncIa;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;388;2;420;;;;vpos;;varray;;r&#10;Definition&#10;    syncIa($form)&#10;&#10;Description&#10;     Synchronizes individual achievments for application.;;d1,389;;b1,0;;mform;;p">
 </treenode>
 <treenode node="unsetScans;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationPlaces.php;f8;69;2;110;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;158;2;180;;;;vpos;;varray;;r&#10;Definition&#10;    unsetScans($form)&#10;&#10;Description&#10;     Unsets application spec files.;;d1,159;;b1,0;;mform;;p">
 </treenode>
 <treenode node="validateFormAdvanced;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php;f8;68;2;88;;;;vpos;;varray;;r&#10;Definition&#10;    validateFormAdvanced($form)&#10;&#10;Description&#10;     Validates resume advanced.;;d1,69;;b1,0;;mform;;p">
 </treenode>
 </treenode>
-<treenode node="Model_ApplicationStatus;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationStatus.php;f0;7;1;145;;;;vpos;;vDb_Helper;;c;;r;;d0,8;;b0,0;;m">
+<treenode node="Model_ApplicationStatus;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationStatus.php;f0;7;1;144;;;;vpos;;vDb_Helper;;c;;r;;d0,8;;b0,0;;m">
 <treenode node="TABLE_NAME;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationStatus.php;f6;13;17;13;;;;vpos;;v;;r&apos;application_status&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
 <treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationStatus.php;f8;25;2;28;;;;vpos;;v;;r;;d1,26;;b1,0;;m">
 </treenode>
-<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationStatus.php;f8;141;2;144;;;;vpos;;v;;r;;d1,142;;b1,0;;m">
+<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationStatus.php;f8;140;2;143;;;;vpos;;v;;r;;d1,141;;b1,0;;m">
 </treenode>
-<treenode node="clear;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationStatus.php;f8;136;2;139;;;;vpos;;vinteger;;r&#10;Definition&#10;    clear()&#10;&#10;Description&#10;     Removes application log.;;d1,137;;b1,0;;m">
+<treenode node="clear;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationStatus.php;f8;135;2;138;;;;vpos;;vinteger;;r&#10;Definition&#10;    clear()&#10;&#10;Description&#10;     Removes application log.;;d1,136;;b1,0;;m">
 </treenode>
-<treenode node="create;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationStatus.php;f8;104;2;117;;;;vpos;;vinteger;;r&#10;Definition&#10;    create()&#10;&#10;Description&#10;     Creates application status log data.;;d1,105;;b1,0;;m">
+<treenode node="create;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationStatus.php;f8;103;2;116;;;;vpos;;vinteger;;r&#10;Definition&#10;    create()&#10;&#10;Description&#10;     Creates application status log data.;;d1,104;;b1,0;;m">
 </treenode>
-<treenode node="getLast;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationStatus.php;f8;88;2;97;;;;vpos;;vinteger;;r&#10;Definition&#10;    getLast()&#10;&#10;Description&#10;     Gets the last application status log data.;;d1,89;;b1,0;;m">
+<treenode node="getLast;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationStatus.php;f8;88;2;96;;;;vpos;;vinteger;;r&#10;Definition&#10;    getLast()&#10;&#10;Description&#10;     Gets the last application status log data.;;d1,89;;b1,0;;m">
 </treenode>
 <treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationStatus.php;f8;35;2;81;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Application rules.;;d1,36;;b1,0;;m">
 </treenode>
-<treenode node="save;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationStatus.php;f8;124;2;129;;;;vpos;;vinteger;;r&#10;Definition&#10;    save()&#10;&#10;Description&#10;     Saves application status log data to database.;;d1,125;;b1,0;;m">
+<treenode node="save;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationStatus.php;f8;123;2;128;;;;vpos;;vinteger;;r&#10;Definition&#10;    save()&#10;&#10;Description&#10;     Saves application status log data to database.;;d1,124;;b1,0;;m">
 </treenode>
 </treenode>
 <treenode node="Model_Contacts;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Contacts.php;f0;19;1;228;;;;vpos;;vDb_Helper;;c;;r;;d0,20;;b0,0;;m">
@@ -2824,7 +2826,7 @@
 <treenode node="getByCode;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;26;2;32;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Docs.php;f8;28;2;34;;;;vpos;;varray;;r&#10;Definition&#10;    getByCode()&#10;&#10;Description&#10;     Gets doc by code.;;d1,29;;b1,0;;m">
 </treenode>
 </treenode>
-<treenode node="Model_DocsEduc;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DocsEduc.php;f0;7;1;449;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_DocsEduc.php;f0;16;1;299;;;;vpos;;vModel;;c;;r;;d0,17;;b0,0;;m">
+<treenode node="Model_DocsEduc;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_DocsEduc.php;f0;16;1;298;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DocsEduc.php;f0;7;1;449;;;;vpos;;vDb_Helper;;c;;r;;d0,8;;b0,0;;m">
 <treenode node="CERTIFICATES;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DocsEduc.php;f6;29;19;29;;;;vpos;;v;;r[&apos;000000026&apos;, &apos;000000088&apos;];;d-1,-1;;b0,0;;m">
 </treenode>
 <treenode node="CLASSES_11;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DocsEduc.php;f6;36;17;36;;;;vpos;;v;;r[&apos;000000026&apos;];;d-1,-1;;b0,0;;m">
@@ -2853,7 +2855,7 @@
 </treenode>
 <treenode node="changeAll;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DocsEduc.php;f8;425;2;430;;;;vpos;;vboolean;;r&#10;Definition&#10;    changeAll()&#10;&#10;Description&#10;     Changes all education document data.;;d1,426;;b1,0;;m">
 </treenode>
-<treenode node="check;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_DocsEduc.php;f8;197;2;278;;;;vpos;;varray;;r&#10;Definition&#10;    check($form)&#10;&#10;Description&#10;     Checks education document data.;;d1,198;;b1,0;;mform;;p">
+<treenode node="check;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_DocsEduc.php;f8;196;2;277;;;;vpos;;varray;;r&#10;Definition&#10;    check($form)&#10;&#10;Description&#10;     Checks education document data.;;d1,197;;b1,0;;mform;;p">
 </treenode>
 <treenode node="clear;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DocsEduc.php;f8;437;2;443;;;;vpos;;vinteger;;r&#10;Definition&#10;    clear()&#10;&#10;Description&#10;     Removes education document.;;d1,438;;b1,0;;m">
 </treenode>
@@ -2861,7 +2863,7 @@
 </treenode>
 <treenode node="existsAppGo;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DocsEduc.php;f8;391;2;404;;;;vpos;;vboolean;;r&#10;Definition&#10;    existsAppGo() : bool&#10;&#10;Description&#10;     Checks if education document used in applications &quot;GO&quot;.;;d1,392;;b1,0;;m">
 </treenode>
-<treenode node="get;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DocsEduc.php;f8;184;2;227;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_DocsEduc.php;f8;143;2;148;;;;vpos;;varray;;r&#10;Definition&#10;    get($id)&#10;&#10;Description&#10;     Gets education document from database.;;d1,144;;b1,0;;mid;;p">
+<treenode node="get;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_DocsEduc.php;f8;143;2;148;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DocsEduc.php;f8;184;2;227;;;;vpos;;varray;;r&#10;Definition&#10;    get()&#10;&#10;Description&#10;     Gets education document by ID.;;d1,185;;b1,0;;m">
 </treenode>
 <treenode node="getByNumb;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DocsEduc.php;f8;347;2;361;;;;vpos;;varray;;r&#10;Definition&#10;    getByNumb()&#10;&#10;Description&#10;     Gets education document by series/numb.;;d1,348;;b1,0;;m">
 </treenode>
@@ -2875,7 +2877,7 @@
 </treenode>
 <treenode node="getByUserSlCampaign;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DocsEduc.php;f8;310;2;326;;;;vpos;;varray;;r&#10;Definition&#10;    getByUserSlCampaign($campaign_code)&#10;&#10;Description&#10;     Gets campaign education documents by user for SelectList.;;d1,311;;b1,0;;mcampaign_code;;p">
 </treenode>
-<treenode node="getDiplomasByUserCampaignJSON;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_DocsEduc.php;f8;285;2;298;;;;vpos;;vJSON;;r&#10;Definition&#10;    getDiplomasByUserCampaignJSON($campaign_code) : string&#10;&#10;Description&#10;     Gets education documents by user campaign JSON.;;d1,286;;b1,0;;mcampaign_code;;p">
+<treenode node="getDiplomasByUserCampaignJSON;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_DocsEduc.php;f8;284;2;297;;;;vpos;;vJSON;;r&#10;Definition&#10;    getDiplomasByUserCampaignJSON($campaign_code) : string&#10;&#10;Description&#10;     Gets education documents by user campaign JSON.;;d1,285;;b1,0;;mcampaign_code;;p">
 </treenode>
 <treenode node="getForField;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DocsEduc.php;f8;270;2;276;;;;vpos;;varray;;r&#10;Definition&#10;    getForField()&#10;&#10;Description&#10;     Gets education documents by ID for single field.;;d1,271;;b1,0;;m">
 </treenode>
@@ -2883,11 +2885,11 @@
 </treenode>
 <treenode node="grid;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DocsEduc.php;f8;141;2;177;;;;vpos;;varray;;r&#10;Definition&#10;    grid()&#10;&#10;Description&#10;     Education documents grid.;;d1,142;;b1,0;;m">
 </treenode>
-<treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DocsEduc.php;f8;52;2;134;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_DocsEduc.php;f8;27;2;109;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Education documents rules.;;d1,28;;b1,0;;m">
+<treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_DocsEduc.php;f8;27;2;109;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DocsEduc.php;f8;52;2;134;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Education documents rules.;;d1,53;;b1,0;;m">
 </treenode>
 <treenode node="save;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DocsEduc.php;f8;411;2;418;;;;vpos;;vinteger;;r&#10;Definition&#10;    save()&#10;&#10;Description&#10;     Saves education document data to database.;;d1,412;;b1,0;;m">
 </treenode>
-<treenode node="unsetScans;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_DocsEduc.php;f8;179;2;190;;;;vpos;;varray;;r&#10;Definition&#10;    unsetScans($form)&#10;&#10;Description&#10;     Unsets education document files.;;d1,180;;b1,0;;mform;;p">
+<treenode node="unsetScans;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_DocsEduc.php;f8;179;2;189;;;;vpos;;varray;;r&#10;Definition&#10;    unsetScans($form)&#10;&#10;Description&#10;     Unsets education document files.;;d1,180;;b1,0;;mform;;p">
 </treenode>
 <treenode node="validateFormAdvanced;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_DocsEduc.php;f8;116;2;136;;;;vpos;;varray;;r&#10;Definition&#10;    validateFormAdvanced($form)&#10;&#10;Description&#10;     Validates education document advanced.;;d1,117;;b1,0;;mform;;p">
 </treenode>
@@ -2924,37 +2926,37 @@
 <treenode node="save;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;186;2;191;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EduclevelsDoctypes.php;f8;208;2;213;;;;vpos;;vinteger;;r&#10;Definition&#10;    save()&#10;&#10;Description&#10;     Saves educlevels doctypes data to database.;;d1,209;;b1,0;;m">
 </treenode>
 </treenode>
-<treenode node="Model_EductypesDoctypes;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EductypesDoctypes.php;f0;6;1;210;;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_EductypesDoctypes.php;f0;9;1;117;;;;vpos;;vModel;;c;;r;;d0,10;;b0,0;;m">
+<treenode node="Model_EductypesDoctypes;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_EductypesDoctypes.php;f0;9;1;117;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EductypesDoctypes.php;f0;6;1;212;;;;vpos;;vDb_Helper;;c;;r;;d0,7;;b0,0;;m">
 <treenode node="TABLE_NAME;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f6;12;17;12;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EductypesDoctypes.php;f6;12;17;12;;;;vpos;;v;;r&apos;eductypes_doctypes&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
 <treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;21;2;24;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EductypesDoctypes.php;f8;21;2;24;;;;vpos;;v;;r;;d1,22;;b1,0;;m">
 </treenode>
-<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;206;2;209;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EductypesDoctypes.php;f8;206;2;209;;;;vpos;;v;;r;;d1,207;;b1,0;;m">
+<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;206;2;209;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EductypesDoctypes.php;f8;208;2;211;;;;vpos;;v;;r;;d1,209;;b1,0;;m">
 </treenode>
-<treenode node="changeAll;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;187;2;194;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EductypesDoctypes.php;f8;187;2;194;;;;vpos;;vboolean;;r&#10;Definition&#10;    changeAll()&#10;&#10;Description&#10;     Changes all eductypes doctypes data.;;d1,188;;b1,0;;m">
+<treenode node="changeAll;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;187;2;194;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EductypesDoctypes.php;f8;189;2;196;;;;vpos;;vboolean;;r&#10;Definition&#10;    changeAll()&#10;&#10;Description&#10;     Changes all eductypes doctypes data.;;d1,190;;b1,0;;m">
 </treenode>
 <treenode node="check;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\NewFile.php;f8;76;2;115;;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_EductypesDoctypes.php;f8;76;2;116;;;;vpos;;varray;;r&#10;Definition&#10;    check($form)&#10;&#10;Description&#10;     Checks eductypes doctypes data.;;d1,77;;b1,0;;mform;;p">
 </treenode>
-<treenode node="clear;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;201;2;204;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EductypesDoctypes.php;f8;201;2;204;;;;vpos;;vinteger;;r&#10;Definition&#10;    clear()&#10;&#10;Description&#10;     Removes eductypes doctypes.;;d1,202;;b1,0;;m">
+<treenode node="clear;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;201;2;204;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EductypesDoctypes.php;f8;203;2;206;;;;vpos;;vinteger;;r&#10;Definition&#10;    clear()&#10;&#10;Description&#10;     Removes eductypes doctypes.;;d1,204;;b1,0;;m">
 </treenode>
 <treenode node="delete;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\NewFile.php;f8;60;2;69;;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_EductypesDoctypes.php;f8;60;2;69;;;;vpos;;vboolean;;r&#10;Definition&#10;    delete($form)&#10;&#10;Description&#10;     Deletes eductypes doctypes from database.;;d1,61;;b1,0;;mform;;p">
 </treenode>
-<treenode node="exists;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;136;2;148;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EductypesDoctypes.php;f8;136;2;148;;;;vpos;;vboolean;;r&#10;Definition&#10;    exists()&#10;&#10;Description&#10;     Checks if eductypes doctypes exists.;;d1,137;;b1,0;;m">
+<treenode node="exists;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;136;2;148;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EductypesDoctypes.php;f8;138;2;150;;;;vpos;;vboolean;;r&#10;Definition&#10;    exists()&#10;&#10;Description&#10;     Checks if eductypes doctypes exists.;;d1,139;;b1,0;;m">
 </treenode>
-<treenode node="existsExcept;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;155;2;168;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EductypesDoctypes.php;f8;155;2;168;;;;vpos;;vboolean;;r&#10;Definition&#10;    existsExcept()&#10;&#10;Description&#10;     Checks if eductypes doctypes exists except this ID.;;d1,156;;b1,0;;m">
+<treenode node="existsExcept;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;155;2;168;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EductypesDoctypes.php;f8;157;2;170;;;;vpos;;vboolean;;r&#10;Definition&#10;    existsExcept()&#10;&#10;Description&#10;     Checks if eductypes doctypes exists except this ID.;;d1,158;;b1,0;;m">
 </treenode>
-<treenode node="get;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;93;2;116;;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\NewFile.php;f8;48;2;53;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EductypesDoctypes.php;f8;93;2;116;;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_EductypesDoctypes.php;f8;48;2;53;;;;vpos;;varray;;r&#10;Definition&#10;    get($id)&#10;&#10;Description&#10;     Gets eductypes doctypes from database.;;d1,49;;b1,0;;mid;;p">
+<treenode node="get;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;93;2;116;;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\NewFile.php;f8;48;2;53;;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_EductypesDoctypes.php;f8;48;2;53;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EductypesDoctypes.php;f8;93;2;116;;;;vpos;;varray;;r&#10;Definition&#10;    get()&#10;&#10;Description&#10;     Gets eductypes doctypes by ID.;;d1,94;;b1,0;;m">
 </treenode>
-<treenode node="getGrid;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;123;2;129;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EductypesDoctypes.php;f8;123;2;129;;;;vpos;;varray;;r&#10;Definition&#10;    getGrid()&#10;&#10;Description&#10;     Gets eductypes doctypes for GRID.;;d1,124;;b1,0;;m">
+<treenode node="getGrid;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;123;2;129;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EductypesDoctypes.php;f8;123;2;131;;;;vpos;;varray;;r&#10;Definition&#10;    getGrid()&#10;&#10;Description&#10;     Gets eductypes doctypes for GRID.;;d1,124;;b1,0;;m">
 </treenode>
 <treenode node="grid;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;66;2;86;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EductypesDoctypes.php;f8;66;2;86;;;;vpos;;varray;;r&#10;Definition&#10;    grid()&#10;&#10;Description&#10;     Eductypes doctypes grid.;;d1,67;;b1,0;;m">
 </treenode>
-<treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;31;2;59;;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\NewFile.php;f8;20;2;41;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EductypesDoctypes.php;f8;31;2;59;;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_EductypesDoctypes.php;f8;20;2;41;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Eductypes doctypes rules.;;d1,21;;b1,0;;m">
+<treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;31;2;59;;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\NewFile.php;f8;20;2;41;;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_EductypesDoctypes.php;f8;20;2;41;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EductypesDoctypes.php;f8;31;2;59;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Eductypes doctypes rules.;;d1,32;;b1,0;;m">
 </treenode>
-<treenode node="save;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;175;2;180;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EductypesDoctypes.php;f8;175;2;180;;;;vpos;;vinteger;;r&#10;Definition&#10;    save()&#10;&#10;Description&#10;     Saves eductypes doctypes data to database.;;d1,176;;b1,0;;m">
+<treenode node="save;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;175;2;180;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EductypesDoctypes.php;f8;177;2;182;;;;vpos;;vinteger;;r&#10;Definition&#10;    save()&#10;&#10;Description&#10;     Saves eductypes doctypes data to database.;;d1,178;;b1,0;;m">
 </treenode>
 </treenode>
-<treenode node="Model_Ege;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Ege.php;f0;6;1;206;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Ege.php;f0;8;1;104;;;;vpos;;vModel;;c;;r;;d0,9;;b0,0;;m">
+<treenode node="Model_Ege;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Ege.php;f0;8;1;104;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Ege.php;f0;6;1;206;;;;vpos;;vDb_Helper;;c;;r;;d0,7;;b0,0;;m">
 <treenode node="TABLE_NAME;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f6;12;17;12;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f6;12;17;12;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Ege.php;f6;12;17;12;;;;vpos;;v;;r&apos;ege&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
 <treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f8;24;2;27;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;23;2;26;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Ege.php;f8;23;2;26;;;;vpos;;v;;r;;d1,24;;b1,0;;m">
@@ -2973,7 +2975,7 @@
 </treenode>
 <treenode node="existsRegyear;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;138;2;150;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Ege.php;f8;139;2;151;;;;vpos;;vboolean;;r&#10;Definition&#10;    existsRegyear()&#10;&#10;Description&#10;     Checks if reg_year exists.;;d1,140;;b1,0;;m">
 </treenode>
-<treenode node="get;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\NewFile.php;f8;85;2;90;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;102;2;105;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Ege.php;f8;103;2;106;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Ege.php;f8;55;2;60;;;;vpos;;varray;;r&#10;Definition&#10;    get($id)&#10;&#10;Description&#10;     Gets ege from database.;;d1,56;;b1,0;;mid;;p">
+<treenode node="get;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\NewFile.php;f8;85;2;90;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;102;2;105;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Ege.php;f8;55;2;60;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Ege.php;f8;103;2;106;;;;vpos;;varray;;r&#10;Definition&#10;    get()&#10;&#10;Description&#10;     Gets ege by ID.;;d1,104;;b1,0;;m">
 </treenode>
 <treenode node="getByUser;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f8;123;2;129;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;112;2;118;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Ege.php;f8;113;2;119;;;;vpos;;varray;;r&#10;Definition&#10;    getByUser()&#10;&#10;Description&#10;     Gets ege by user.;;d1,114;;b1,0;;m">
 </treenode>
@@ -2983,7 +2985,7 @@
 </treenode>
 <treenode node="grid_disciplines;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;101;2;116;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f8;101;2;116;;;;vpos;;varray;;r&#10;Definition&#10;    grid_disciplines()&#10;&#10;Description&#10;     Ege disciplines grid.;;d1,99;;b1,0;;m">
 </treenode>
-<treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f8;34;2;80;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\NewFile.php;f8;17;2;44;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_EgeDisciplines.php;f8;17;2;44;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;33;2;73;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Ege.php;f8;33;2;73;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Ege.php;f8;19;2;33;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Ege rules.;;d1,20;;b1,0;;m">
+<treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f8;34;2;80;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\NewFile.php;f8;17;2;44;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_EgeDisciplines.php;f8;17;2;44;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;33;2;73;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Ege.php;f8;19;2;33;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Ege.php;f8;33;2;73;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Ege rules.;;d1,34;;b1,0;;m">
 </treenode>
 <treenode node="save;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f8;149;2;155;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\NewFile.php;f8;157;2;163;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Ege.php;f8;158;2;165;;;;vpos;;vinteger;;r&#10;Definition&#10;    save()&#10;&#10;Description&#10;     Saves ege data to database.;;d1,159;;b1,0;;m">
 </treenode>
@@ -2992,36 +2994,36 @@
 <treenode node="validateFormAdvanced;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Ege.php;f8;40;2;48;;;;vpos;;varray;;r&#10;Definition&#10;    validateFormAdvanced($form)&#10;&#10;Description&#10;     Validates resume advanced.;;d1,41;;b1,0;;mform;;p">
 </treenode>
 </treenode>
-<treenode node="Model_EgeDisciplines;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f0;6;1;233;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_EgeDisciplines.php;f0;8;1;120;;;;vpos;;vModel;;c;;r;;d0,9;;b0,0;;m">
+<treenode node="Model_EgeDisciplines;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_EgeDisciplines.php;f0;8;1;120;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f0;6;1;235;;;;vpos;;vDb_Helper;;c;;r;;d0,7;;b0,0;;m">
 <treenode node="TABLE_NAME;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f6;12;17;12;;;;vpos;;v;;r&apos;ege_disciplines&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
 <treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f8;26;2;29;;;;vpos;;v;;r;;d1,27;;b1,0;;m">
 </treenode>
-<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f8;229;2;232;;;;vpos;;v;;r;;d1,230;;b1,0;;m">
+<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f8;231;2;234;;;;vpos;;v;;r;;d1,232;;b1,0;;m">
 </treenode>
-<treenode node="changeAll;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f8;196;2;201;;;;vpos;;vboolean;;r&#10;Definition&#10;    changeAll()&#10;&#10;Description&#10;     Changes all ege discipline data.;;d1,197;;b1,0;;m">
+<treenode node="changeAll;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f8;197;2;202;;;;vpos;;vboolean;;r&#10;Definition&#10;    changeAll()&#10;&#10;Description&#10;     Changes all ege discipline data.;;d1,198;;b1,0;;m">
 </treenode>
 <treenode node="check;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_EgeDisciplines.php;f8;73;2;119;;;;vpos;;varray;;r&#10;Definition&#10;    check($form)&#10;&#10;Description&#10;     Checks ege discipline data.;;d1,74;;b1,0;;mform;;p">
 </treenode>
-<treenode node="checkDiscipline;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f8;218;2;227;;;;vpos;;vboolean;;r&#10;Definition&#10;    checkDiscipline()&#10;&#10;Description&#10;     Checks discipline.;;d1,219;;b1,0;;m">
+<treenode node="checkDiscipline;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f8;219;2;229;;;;vpos;;vboolean;;r&#10;Definition&#10;    checkDiscipline()&#10;&#10;Description&#10;     Checks discipline.;;d1,220;;b1,0;;m">
 </treenode>
-<treenode node="clear;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f8;208;2;211;;;;vpos;;vinteger;;r&#10;Definition&#10;    clear()&#10;&#10;Description&#10;     Removes ege discipline.;;d1,209;;b1,0;;m">
+<treenode node="clear;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f8;209;2;212;;;;vpos;;vinteger;;r&#10;Definition&#10;    clear()&#10;&#10;Description&#10;     Removes ege discipline.;;d1,210;;b1,0;;m">
 </treenode>
 <treenode node="delete;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_EgeDisciplines.php;f8;55;2;66;;;;vpos;;vboolean;;r&#10;Definition&#10;    delete($form)&#10;&#10;Description&#10;     Deletes ege discipline from database.;;d1,56;;b1,0;;mform;;p">
 </treenode>
-<treenode node="exists;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f8;143;2;155;;;;vpos;;vboolean;;r&#10;Definition&#10;    exists()&#10;&#10;Description&#10;     Checks if discipline exists.;;d1,144;;b1,0;;m">
+<treenode node="exists;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f8;144;2;156;;;;vpos;;vboolean;;r&#10;Definition&#10;    exists()&#10;&#10;Description&#10;     Checks if discipline exists.;;d1,145;;b1,0;;m">
 </treenode>
-<treenode node="existsExcept;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f8;162;2;175;;;;vpos;;vboolean;;r&#10;Definition&#10;    existsExcept()&#10;&#10;Description&#10;     Checks if discipline exists except this ID.;;d1,163;;b1,0;;m">
+<treenode node="existsExcept;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f8;163;2;176;;;;vpos;;vboolean;;r&#10;Definition&#10;    existsExcept()&#10;&#10;Description&#10;     Checks if discipline exists except this ID.;;d1,164;;b1,0;;m">
 </treenode>
-<treenode node="get;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f8;108;2;123;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_EgeDisciplines.php;f8;43;2;48;;;;vpos;;varray;;r&#10;Definition&#10;    get($id)&#10;&#10;Description&#10;     Gets ege discipline from database.;;d1,44;;b1,0;;mid;;p">
+<treenode node="get;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_EgeDisciplines.php;f8;43;2;48;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f8;108;2;123;;;;vpos;;varray;;r&#10;Definition&#10;    get()&#10;&#10;Description&#10;     Gets ege discipline by ID.;;d1,109;;b1,0;;m">
 </treenode>
-<treenode node="getGrid;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f8;130;2;136;;;;vpos;;varray;;r&#10;Definition&#10;    getGrid()&#10;&#10;Description&#10;     Gets ege disciplines for GRID.;;d1,131;;b1,0;;m">
+<treenode node="getGrid;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f8;130;2;137;;;;vpos;;varray;;r&#10;Definition&#10;    getGrid()&#10;&#10;Description&#10;     Gets ege disciplines for GRID.;;d1,131;;b1,0;;m">
 </treenode>
 <treenode node="grid;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f8;89;2;101;;;;vpos;;varray;;r&#10;Definition&#10;    grid()&#10;&#10;Description&#10;     Ege disciplines grid.;;d1,90;;b1,0;;m">
 </treenode>
-<treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f8;36;2;82;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_EgeDisciplines.php;f8;19;2;36;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Ege disciplines rules.;;d1,20;;b1,0;;m">
+<treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_EgeDisciplines.php;f8;19;2;36;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f8;36;2;82;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Ege disciplines rules.;;d1,37;;b1,0;;m">
 </treenode>
-<treenode node="save;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f8;182;2;189;;;;vpos;;vinteger;;r&#10;Definition&#10;    save()&#10;&#10;Description&#10;     Saves ege discipline data to database.;;d1,183;;b1,0;;m">
+<treenode node="save;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php;f8;183;2;190;;;;vpos;;vinteger;;r&#10;Definition&#10;    save()&#10;&#10;Description&#10;     Saves ege discipline data to database.;;d1,184;;b1,0;;m">
 </treenode>
 </treenode>
 <treenode node="Model_ForeignLangs;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ForeignLanguages.php;f0;6;1;180;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ForeignLangs.php;f0;6;1;228;;;;vpos;;vDb_Helper;;c;;r;;d0,7;;b0,0;;m">
@@ -3110,18 +3112,18 @@
 <treenode node="unsetScans;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_IndAchiev.php;f8;102;2;105;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_IndAchievs.php;f8;111;2;114;;;;vpos;;varray;;r&#10;Definition&#10;    unsetScans($form)&#10;&#10;Description&#10;     Unsets individual achievment files.;;d1,112;;b1,0;;mform;;p">
 </treenode>
 </treenode>
-<treenode node="Model_Kladr;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Kladr.php;f0;6;1;270;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Kladr.php;f0;7;1;402;;;;vpos;;vDb_Helper;;c;;r;;d0,8;;b0,0;;m">
-<treenode node="AREA;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Kladr.php;f6;13;11;13;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Kladr.php;f6;14;11;14;;;;vpos;;v;;r2;;d-1,-1;;b0,0;;m">
+<treenode node="Model_Kladr;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Kladr.php;f0;7;1;402;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Kladr.php;f0;6;1;270;;;;vpos;;vDb_Helper;;c;;r;;d0,7;;b0,0;;m">
+<treenode node="AREA;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Kladr.php;f6;14;11;14;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Kladr.php;f6;13;11;13;;;;vpos;;v;;r2;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="CITY;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Kladr.php;f6;14;11;14;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Kladr.php;f6;15;11;15;;;;vpos;;v;;r3;;d-1,-1;;b0,0;;m">
+<treenode node="CITY;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Kladr.php;f6;15;11;15;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Kladr.php;f6;14;11;14;;;;vpos;;v;;r3;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="LOCATION;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Kladr.php;f6;15;15;15;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Kladr.php;f6;16;15;16;;;;vpos;;v;;r4;;d-1,-1;;b0,0;;m">
+<treenode node="LOCATION;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Kladr.php;f6;16;15;16;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Kladr.php;f6;15;15;15;;;;vpos;;v;;r4;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="REGION;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Kladr.php;f6;12;13;12;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Kladr.php;f6;13;13;13;;;;vpos;;v;;r1;;d-1,-1;;b0,0;;m">
+<treenode node="REGION;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Kladr.php;f6;13;13;13;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Kladr.php;f6;12;13;12;;;;vpos;;v;;r1;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="STREET;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Kladr.php;f6;16;13;16;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Kladr.php;f6;17;13;17;;;;vpos;;v;;r5;;d-1,-1;;b0,0;;m">
+<treenode node="STREET;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Kladr.php;f6;17;13;17;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Kladr.php;f6;16;13;16;;;;vpos;;v;;r5;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Kladr.php;f8;25;2;28;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Kladr.php;f8;22;2;26;;;;vpos;;v;;r;;d1,23;;b1,0;;m">
+<treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Kladr.php;f8;22;2;26;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Kladr.php;f8;25;2;28;;;;vpos;;v;;r;;d1,26;;b1,0;;m">
 </treenode>
 <treenode node="getAreaByRegion;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Kladr.php;f8;64;2;78;;;;vpos;;varray;;r&#10;Definition&#10;    getAreaByRegion() : array&#10;&#10;Description&#10;     Gets areas by region.;;d1,65;;b1,0;;m">
 </treenode>
@@ -3198,26 +3200,26 @@
 <treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\NewFile.php;f8;18;2;38;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\NewFile.php;f8;19;2;39;;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_Login.php;f8;19;2;39;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Login.php;f8;19;2;39;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Login rules.;;d1,20;;b1,0;;m">
 </treenode>
 </treenode>
-<treenode node="Model_Main;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Main.php;f0;8;1;83;;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_Main.php;f0;8;1;67;;;;vpos;;vModel;;c;;r;;d0,9;;b0,0;;m">
-<treenode node="checkUser;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Main.php;f8;19;2;57;;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_Main.php;f8;19;2;41;;;;vpos;;vvoid;;r&#10;Definition&#10;    checkUser()&#10;&#10;Description&#10;     Checks user.;;d1,20;;b1,0;;m">
+<treenode node="Model_Main;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_Main.php;f0;8;1;67;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Main.php;f0;8;1;83;;;;vpos;;vModel;;c;;r;;d0,9;;b0,0;;m">
+<treenode node="checkUser;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_Main.php;f8;19;2;41;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Main.php;f8;19;2;57;;;;vpos;;vvoid;;r&#10;Definition&#10;    checkUser()&#10;&#10;Description&#10;     Checks user.;;d1,20;;b1,0;;m">
 </treenode>
-<treenode node="logout;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Main.php;f8;64;2;82;;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_Main.php;f8;48;2;66;;;;vpos;;vvoid;;r&#10;Definition&#10;    logout()&#10;&#10;Description&#10;     Logs user out.;;d1,49;;b1,0;;m">
+<treenode node="logout;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_Main.php;f8;48;2;66;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Main.php;f8;64;2;82;;;;vpos;;vvoid;;r&#10;Definition&#10;    logout()&#10;&#10;Description&#10;     Logs user out.;;d1,65;;b1,0;;m">
 </treenode>
 </treenode>
-<treenode node="Model_Passport;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Passport.php;f0;11;1;172;;;;vpos;;vDb_Helper;;c;;r;;d0,12;;b0,0;;m">
-<treenode node="TABLE_NAME;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Passport.php;f6;17;17;17;;;;vpos;;v;;r&apos;passport&apos;;;d-1,-1;;b0,0;;m">
+<treenode node="Model_Passport;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Passport.php;f0;9;1;170;;;;vpos;;vDb_Helper;;c;;r;;d0,10;;b0,0;;m">
+<treenode node="TABLE_NAME;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Passport.php;f6;15;17;15;;;;vpos;;v;;r&apos;passport&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
-<treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Passport.php;f8;35;2;38;;;;vpos;;v;;r;;d1,36;;b1,0;;m">
+<treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Passport.php;f8;33;2;36;;;;vpos;;v;;r;;d1,34;;b1,0;;m">
 </treenode>
-<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Passport.php;f8;168;2;171;;;;vpos;;v;;r;;d1,169;;b1,0;;m">
+<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Passport.php;f8;166;2;169;;;;vpos;;v;;r;;d1,167;;b1,0;;m">
 </treenode>
-<treenode node="changeAll;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Passport.php;f8;161;2;166;;;;vpos;;vboolean;;r&#10;Definition&#10;    changeAll()&#10;&#10;Description&#10;     Changes all passport data.;;d1,162;;b1,0;;m">
+<treenode node="changeAll;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Passport.php;f8;159;2;164;;;;vpos;;vboolean;;r&#10;Definition&#10;    changeAll()&#10;&#10;Description&#10;     Changes all passport data.;;d1,160;;b1,0;;m">
 </treenode>
-<treenode node="getByResume;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Passport.php;f8;134;2;140;;;;vpos;;varray;;r&#10;Definition&#10;    getByResume()&#10;&#10;Description&#10;     Gets passport by resume.;;d1,135;;b1,0;;m">
+<treenode node="getByResume;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Passport.php;f8;132;2;138;;;;vpos;;varray;;r&#10;Definition&#10;    getByResume()&#10;&#10;Description&#10;     Gets passport by resume.;;d1,133;;b1,0;;m">
 </treenode>
-<treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Passport.php;f8;45;2;127;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Passport rules.;;d1,46;;b1,0;;m">
+<treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Passport.php;f8;43;2;125;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Passport rules.;;d1,44;;b1,0;;m">
 </treenode>
-<treenode node="save;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Passport.php;f8;147;2;154;;;;vpos;;vinteger;;r&#10;Definition&#10;    save()&#10;&#10;Description&#10;     Saves passport data to database.;;d1,148;;b1,0;;m">
+<treenode node="save;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Passport.php;f8;145;2;152;;;;vpos;;vinteger;;r&#10;Definition&#10;    save()&#10;&#10;Description&#10;     Saves passport data to database.;;d1,146;;b1,0;;m">
 </treenode>
 </treenode>
 <treenode node="Model_Personal;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Personal.php;f0;16;1;237;;;;vpos;;vDb_Helper;;c;;r;;d0,17;;b0,0;;m">
@@ -3256,7 +3258,7 @@
 <treenode node="sendEmail;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwdRequest.php;f8;39;2;74;;;;vpos;;varray;;r&#10;Definition&#10;    sendEmail($form)&#10;&#10;Description&#10;     Sets password token and sends confirmation email.;;d1,40;;b1,0;;mform;;p">
 </treenode>
 </treenode>
-<treenode node="Model_Resume;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Resume.php;f0;9;1;328;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Resume.php;f0;27;1;1393;;;;vpos;;vModel;;c;;r;;d0,28;;b0,0;;m">
+<treenode node="Model_Resume;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Resume.php;f0;27;1;1393;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Resume.php;f0;9;1;324;;;;vpos;;vDb_Helper;;c;;r;;d0,10;;b0,0;;m">
 <treenode node="STATUS_APPROVED;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Resume.php;f9;23;25;23;;;;vpos;;v;;r3;;d-1,-1;;b0,0;;m">
 </treenode>
 <treenode node="STATUS_APPROVED_NAME;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Resume.php;f9;24;30;24;;;;vpos;;v;;r&apos;Принята&apos;;;d-1,-1;;b0,0;;m">
@@ -3281,15 +3283,15 @@
 </treenode>
 <treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Resume.php;f8;40;2;43;;;;vpos;;v;;r;;d1,41;;b1,0;;m">
 </treenode>
-<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Resume.php;f8;324;2;327;;;;vpos;;v;;r;;d1,325;;b1,0;;m">
+<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Resume.php;f8;320;2;323;;;;vpos;;v;;r;;d1,321;;b1,0;;m">
 </treenode>
-<treenode node="changeApp;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Resume.php;f8;302;2;309;;;;vpos;;vboolean;;r&#10;Definition&#10;    changeApp()&#10;&#10;Description&#10;     Changes resume app.;;d1,303;;b1,0;;m">
+<treenode node="changeApp;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Resume.php;f8;298;2;305;;;;vpos;;vboolean;;r&#10;Definition&#10;    changeApp()&#10;&#10;Description&#10;     Changes resume app.;;d1,299;;b1,0;;m">
 </treenode>
-<treenode node="changeStatus;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Resume.php;f8;288;2;295;;;;vpos;;vboolean;;r&#10;Definition&#10;    changeStatus()&#10;&#10;Description&#10;     Changes resume status.;;d1,289;;b1,0;;m">
+<treenode node="changeStatus;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Resume.php;f8;284;2;291;;;;vpos;;vboolean;;r&#10;Definition&#10;    changeStatus()&#10;&#10;Description&#10;     Changes resume status.;;d1,285;;b1,0;;m">
 </treenode>
 <treenode node="check;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Resume.php;f8;849;2;1323;;;;vpos;;varray;;r&#10;Definition&#10;    check($form)&#10;&#10;Description&#10;     Checks resume data.;;d1,850;;b1,0;;mform;;p">
 </treenode>
-<treenode node="checkByUser;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Resume.php;f8;316;2;322;;;;vpos;;varray;;r&#10;Definition&#10;    checkByUser()&#10;&#10;Description&#10;     Checks resume by user.;;d1,317;;b1,0;;m">
+<treenode node="checkByUser;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Resume.php;f8;312;2;318;;;;vpos;;varray;;r&#10;Definition&#10;    checkByUser()&#10;&#10;Description&#10;     Checks resume by user.;;d1,313;;b1,0;;m">
 </treenode>
 <treenode node="checkCertificateBirth;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Resume.php;f8;837;2;842;;;;vpos;;varray;;r&#10;Definition&#10;    checkCertificateBirth($form)&#10;&#10;Description&#10;     Checks birth certificate files.;;d1,838;;b1,0;;mform;;p">
 </treenode>
@@ -3309,11 +3311,11 @@
 </treenode>
 <treenode node="getAddressRes;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Resume.php;f8;639;2;665;;;;vpos;;varray;;r&#10;Definition&#10;    getAddressRes($form)&#10;&#10;Description&#10;     Gets residential address.;;d1,640;;b1,0;;mform;;p">
 </treenode>
-<treenode node="getByUser;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Resume.php;f8;128;2;251;;;;vpos;;varray;;r&#10;Definition&#10;    getByUser()&#10;&#10;Description&#10;     Gets resume by user.;;d1,129;;b1,0;;m">
+<treenode node="getByUser;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Resume.php;f8;128;2;247;;;;vpos;;varray;;r&#10;Definition&#10;    getByUser()&#10;&#10;Description&#10;     Gets resume by user.;;d1,129;;b1,0;;m">
 </treenode>
 <treenode node="getForeignLangs;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Resume.php;f8;707;2;717;;;;vpos;;varray;;r&#10;Definition&#10;    getForeignLangs($form)&#10;&#10;Description&#10;     Gets foreign languages.;;d1,708;;b1,0;;mform;;p">
 </treenode>
-<treenode node="getStatusByUser;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Resume.php;f8;258;2;265;;;;vpos;;varray;;r&#10;Definition&#10;    getStatusByUser()&#10;&#10;Description&#10;     Gets status by user.;;d1,259;;b1,0;;m">
+<treenode node="getStatusByUser;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Resume.php;f8;254;2;261;;;;vpos;;varray;;r&#10;Definition&#10;    getStatusByUser()&#10;&#10;Description&#10;     Gets status by user.;;d1,255;;b1,0;;m">
 </treenode>
 <treenode node="recall;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Resume.php;f8;1364;2;1392;;;;vpos;;varray;;r&#10;Definition&#10;    recall($form)&#10;&#10;Description&#10;     Recalls resume data.;;d1,1365;;b1,0;;mform;;p">
 </treenode>
@@ -3323,9 +3325,9 @@
 </treenode>
 <treenode node="resetForeignLangs;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Resume.php;f8;690;2;700;;;;vpos;;varray;;r&#10;Definition&#10;    resetForeignLangs($form)&#10;&#10;Description&#10;     Resets foreign languages.;;d1,691;;b1,0;;mform;;p">
 </treenode>
-<treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Resume.php;f8;50;2;108;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Resume.php;f8;38;2;281;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Resume rules.;;d1,39;;b1,0;;m">
+<treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Resume.php;f8;38;2;281;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Resume.php;f8;50;2;108;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     Contacts rules.;;d1,51;;b1,0;;m">
 </treenode>
-<treenode node="save;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Resume.php;f8;272;2;281;;;;vpos;;vinteger;;r&#10;Definition&#10;    save()&#10;&#10;Description&#10;     Saves resume data to database.;;d1,273;;b1,0;;m">
+<treenode node="save;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Resume.php;f8;268;2;277;;;;vpos;;vinteger;;r&#10;Definition&#10;    save()&#10;&#10;Description&#10;     Saves resume data to database.;;d1,269;;b1,0;;m">
 </treenode>
 <treenode node="send;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Resume.php;f8;1330;2;1357;;;;vpos;;varray;;r&#10;Definition&#10;    send($form)&#10;&#10;Description&#10;     Sends resume data.;;d1,1331;;b1,0;;mform;;p">
 </treenode>
@@ -3348,7 +3350,7 @@
 <treenode node="validatePassportOld;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Resume.php;f8;449;2;485;;;;vpos;;varray;;r&#10;Definition&#10;    validatePassportOld($form)&#10;&#10;Description&#10;     Validates old passport.;;d1,450;;b1,0;;mform;;p">
 </treenode>
 </treenode>
-<treenode node="Model_Scans;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Scans.php;f0;14;1;249;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Scans.php;f0;6;1;256;;;;vpos;;vDb_Helper;;c;;r;;d0,7;;b0,0;;m">
+<treenode node="Model_Scans;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Scans.php;f0;14;1;255;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Scans.php;f0;6;1;256;;;;vpos;;vDb_Helper;;c;;r;;d0,7;;b0,0;;m">
 <treenode node="TABLE_NAME;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Scans.php;f6;12;17;12;;;;vpos;;v;;r&apos;scans&apos;;;d-1,-1;;b0,0;;m">
 </treenode>
 <treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Scans.php;f8;27;2;30;;;;vpos;;v;;r;;d1,28;;b1,0;;m">
@@ -3361,15 +3363,15 @@
 </treenode>
 <treenode node="createRules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Scans.php;f15;25;2;53;;;;vpos;;varray;;r&#10;Definition&#10;    createRules($doc_code)&#10;&#10;Description&#10;     Creates scan rules.;;d1,26;;b1,5;;mdoc_code;;p">
 </treenode>
-<treenode node="delete;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Scans.php;f8;190;2;248;;;;vpos;;vboolean;;r&#10;Definition&#10;    delete($form)&#10;&#10;Description&#10;     Deletes scan from database.;;d1,191;;b1,0;;mform;;p">
+<treenode node="delete;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Scans.php;f8;196;2;254;;;;vpos;;vboolean;;r&#10;Definition&#10;    delete($form)&#10;&#10;Description&#10;     Deletes scan from database.;;d1,197;;b1,0;;mform;;p">
 </treenode>
 <treenode node="get;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Scans.php;f8;60;2;65;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Scans.php;f8;108;2;111;;;;vpos;;varray;;r&#10;Definition&#10;    get()&#10;&#10;Description&#10;     Gets scan by ID.;;d1,109;;b1,0;;m">
-</treenode>
-<treenode node="getByDoc;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Scans.php;f8;131;2;139;;;;vpos;;varray;;r&#10;Definition&#10;    getByDoc()&#10;&#10;Description&#10;     Gets scan by document.;;d1,132;;b1,0;;m">
 </treenode>
 <treenode node="getByDocrow;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Scans.php;f8;162;2;169;;;;vpos;;varray;;r&#10;Definition&#10;    getByDocrow($doc_code)&#10;&#10;Description&#10;     Gets scans by document row.;;d1,163;;b1,0;;mdoc_code;;p">
 </treenode>
 <treenode node="getByDocrowFull;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Scans.php;f8;176;2;200;;;;vpos;;varray;;r&#10;Definition&#10;    getByDocrowFull($doc_code, $id_row)&#10;&#10;Description&#10;     Gets scans by document row FULL.;;d1,177;;b1,0;;mdoc_code;;pid_row;;p">
+</treenode>
+<treenode node="getByDocRowScan;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Scans.php;f8;131;2;139;;;;vpos;;varray;;r&#10;Definition&#10;    getByDocRowScan()&#10;&#10;Description&#10;     Gets scan by document row.;;d1,132;;b1,0;;m">
 </treenode>
 <treenode node="getByDocScan;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Scans.php;f8;146;2;155;;;;vpos;;varray;;r&#10;Definition&#10;    getByDocScan($doc_code, $doc_id, $scan_code)&#10;&#10;Description&#10;     Gets scan by document/scan.;;d1,147;;b1,0;;mdoc_code;;pdoc_id;;pscan_code;;p">
 </treenode>
@@ -3383,7 +3385,7 @@
 </treenode>
 <treenode node="unpush;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Scans.php;f15;126;2;144;;;;vpos;;varray;;r&#10;Definition&#10;    unpush($doc_code, $scan_code, $form)&#10;&#10;Description&#10;     Unpushes scan.;;d1,127;;b1,5;;mdoc_code;;pscan_code;;pform;;p">
 </treenode>
-<treenode node="unsets;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Scans.php;f15;151;2;183;;;;vpos;;varray;;r&#10;Definition&#10;    unsets($doc_code, $form)&#10;&#10;Description&#10;     Unsets scans.;;d1,152;;b1,5;;mdoc_code;;pform;;p">
+<treenode node="unsets;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Scans.php;f15;151;2;189;;;;vpos;;varray;;r&#10;Definition&#10;    unsets($doc_code, $form)&#10;&#10;Description&#10;     Unsets scans.;;d1,152;;b1,5;;mdoc_code;;pform;;p">
 </treenode>
 </treenode>
 <treenode node="Model_Signup;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Signup.php;f0;9;1;153;;;;vpos;;vModel;;c;;r;;d0,10;;b0,0;;m">
@@ -3394,7 +3396,7 @@
 <treenode node="signup;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\NewFile.php;f8;71;2;110;;C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Signup.php;f8;74;2;126;;;;vpos;;varray;;r&#10;Definition&#10;    signup($form)&#10;&#10;Description&#10;     Saves user data.;;d1,75;;b1,0;;mform;;p">
 </treenode>
 </treenode>
-<treenode node="Model_User;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\NewFile.php;f0;6;1;11;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f0;16;1;324;;;;vpos;;vDb_Helper;;c;;r;;d0,17;;b0,0;;m">
+<treenode node="Model_User;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\NewFile.php;f0;6;1;11;;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_User.php;f0;7;1;41;;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f0;16;1;334;;;;vpos;;vDb_Helper;;c;;r;;d0,17;;b0,0;;m">
 <treenode node="ROLE_ADMIN;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f6;28;17;28;;;;vpos;;v;;r2;;d-1,-1;;b0,0;;m">
 </treenode>
 <treenode node="ROLE_ADMIN_NAME;PHP:PHP Word;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f6;29;22;29;;;;vpos;;v;;r&apos;Администратор&apos;;;d-1,-1;;b0,0;;m">
@@ -3423,33 +3425,37 @@
 </treenode>
 <treenode node="__construct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;50;2;53;;;;vpos;;v;;r;;d1,51;;b1,0;;m">
 </treenode>
-<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;320;2;323;;;;vpos;;v;;r;;d1,321;;b1,0;;m">
+<treenode node="__destruct;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;330;2;333;;;;vpos;;v;;r;;d1,331;;b1,0;;m">
 </treenode>
-<treenode node="changePwd;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;267;2;274;;;;vpos;;vboolean;;r&#10;Definition&#10;    changePwd()&#10;&#10;Description&#10;     Changes user password.;;d1,268;;b1,0;;m">
+<treenode node="changePwd;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;277;2;284;;;;vpos;;vboolean;;r&#10;Definition&#10;    changePwd()&#10;&#10;Description&#10;     Changes user password.;;d1,278;;b1,0;;m">
 </treenode>
-<treenode node="changePwdToken;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;253;2;260;;;;vpos;;vboolean;;r&#10;Definition&#10;    changePwdToken()&#10;&#10;Description&#10;     Changes user password token.;;d1,254;;b1,0;;m">
+<treenode node="changePwdToken;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;263;2;270;;;;vpos;;vboolean;;r&#10;Definition&#10;    changePwdToken()&#10;&#10;Description&#10;     Changes user password token.;;d1,264;;b1,0;;m">
 </treenode>
-<treenode node="changeStatus;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;239;2;246;;;;vpos;;vboolean;;r&#10;Definition&#10;    changeStatus()&#10;&#10;Description&#10;     Changes user status.;;d1,240;;b1,0;;m">
+<treenode node="changeStatus;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;249;2;256;;;;vpos;;vboolean;;r&#10;Definition&#10;    changeStatus()&#10;&#10;Description&#10;     Changes user status.;;d1,250;;b1,0;;m">
 </treenode>
-<treenode node="existsEmail;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;211;2;219;;;;vpos;;vboolean;;r&#10;Definition&#10;    existsEmail()&#10;&#10;Description&#10;     Checks if email exists.;;d1,212;;b1,0;;m">
+<treenode node="existsEmail;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;221;2;229;;;;vpos;;vboolean;;r&#10;Definition&#10;    existsEmail()&#10;&#10;Description&#10;     Checks if email exists.;;d1,222;;b1,0;;m">
 </treenode>
-<treenode node="existsUsername;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;196;2;204;;;;vpos;;vboolean;;r&#10;Definition&#10;    existsUsername()&#10;&#10;Description&#10;     Checks if username exists.;;d1,197;;b1,0;;m">
+<treenode node="existsUsername;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;206;2;214;;;;vpos;;vboolean;;r&#10;Definition&#10;    existsUsername()&#10;&#10;Description&#10;     Checks if username exists.;;d1,207;;b1,0;;m">
 </treenode>
-<treenode node="getByEmail;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;186;2;189;;;;vpos;;varray;;r&#10;Definition&#10;    getByEmail()&#10;&#10;Description&#10;     Gets user by email.;;d1,187;;b1,0;;m">
+<treenode node="get;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;176;2;179;;;;vpos;;varray;;r&#10;Definition&#10;    get()&#10;&#10;Description&#10;     Gets user by ID.;;d1,177;;b1,0;;m">
 </treenode>
-<treenode node="getByUsername;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;176;2;179;;;;vpos;;varray;;r&#10;Definition&#10;    getByUsername()&#10;&#10;Description&#10;     Gets user by name.;;d1,177;;b1,0;;m">
+<treenode node="getByEmail;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;196;2;199;;;;vpos;;varray;;r&#10;Definition&#10;    getByEmail()&#10;&#10;Description&#10;     Gets user by email.;;d1,197;;b1,0;;m">
+</treenode>
+<treenode node="getByUsername;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;186;2;189;;;;vpos;;varray;;r&#10;Definition&#10;    getByUsername()&#10;&#10;Description&#10;     Gets user by name.;;d1,187;;b1,0;;m">
 </treenode>
 <treenode node="getGrid;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;166;2;169;;;;vpos;;varray;;r&#10;Definition&#10;    getGrid()&#10;&#10;Description&#10;     Gets users for GRID.;;d1,167;;b1,0;;m">
 </treenode>
 <treenode node="grid;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;131;2;159;;;;vpos;;varray;;r&#10;Definition&#10;    grid()&#10;&#10;Description&#10;     User grid.;;d1,132;;b1,0;;m">
 </treenode>
+<treenode node="mask;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_User.php;f8;18;2;40;;;;vpos;;vboolean;;r&#10;Definition&#10;    mask() : bool&#10;&#10;Description&#10;     Logins as user.;;d1,19;;b1,0;;m">
+</treenode>
 <treenode node="rules;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;60;2;124;;;;vpos;;varray;;r&#10;Definition&#10;    rules()&#10;&#10;Description&#10;     User rules.;;d1,61;;b1,0;;m">
 </treenode>
-<treenode node="save;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;226;2;232;;;;vpos;;vinteger;;r&#10;Definition&#10;    save()&#10;&#10;Description&#10;     Saves user data to database.;;d1,227;;b1,0;;m">
+<treenode node="save;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;236;2;242;;;;vpos;;vinteger;;r&#10;Definition&#10;    save()&#10;&#10;Description&#10;     Saves user data to database.;;d1,237;;b1,0;;m">
 </treenode>
-<treenode node="setUser;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;281;2;304;;;;vpos;;vvoid;;r&#10;Definition&#10;    setUser()&#10;&#10;Description&#10;     Sets user session.;;d1,282;;b1,0;;m">
+<treenode node="setUser;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;291;2;314;;;;vpos;;vvoid;;r&#10;Definition&#10;    setUser()&#10;&#10;Description&#10;     Sets user session.;;d1,292;;b1,0;;m">
 </treenode>
-<treenode node="unsetUser;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;311;2;318;;;;vpos;;vvoid;;r&#10;Definition&#10;    unsetUser()&#10;&#10;Description&#10;     Unsets user session.;;d1,312;;b1,0;;m">
+<treenode node="unsetUser;PHP:Function Name;C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php;f8;321;2;328;;;;vpos;;vvoid;;r&#10;Definition&#10;    unsetUser()&#10;&#10;Description&#10;     Unsets user session.;;d1,322;;b1,0;;m">
 </treenode>
 </treenode>
 <treenode node="Pdf;PHP:Class Name;C:\wamp\wamp64\www\vhost_portalbsu\vendors\php-pdftk\src\Pdf.php;f0;16;1;601;;;;vpos;;v;;r&#10;Definition&#10;    class Pdf&#10;&#10;Description&#10;     Pdf;;d0,17;;b0,0;;m">

@@ -24,6 +24,7 @@ use common\models\Model_EgeDisciplines as Model_EgeDisciplines;
 use common\models\Model_DictTestingScopes as Model_DictTestingScopes;
 use common\models\Model_Resume as Resume;
 use common\models\Model_DictForeignLangs as DictForeignLangs;
+use common\models\Model_DictEge as DictEge;
 
 include ROOT_DIR.'/application/frontend/models/Model_Scans.php';
 
@@ -266,7 +267,10 @@ class Model_ApplicationSpec extends Model
 													if (!empty($app_row['id_lang'])) {
 														$langs->id = $app_row['id_lang'];
 														$langs_row = $langs->get();
-														$ege->code_discipline = $langs_row['code'];
+														$egedict = new DictEge();
+														$egedict->description = $langs_row['description'].' язык';
+														$egedict_row = $egedict->getByDescription();
+														$ege->code_discipline = $egedict_row['code'];
 													} else {
 														$form['error_msg'] = 'Вы не изучали иностранный язык!';
 														$places->clearByApplication();
