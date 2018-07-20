@@ -86,6 +86,11 @@ define('DICT_MANAGER', array(
 							'hdr' => 'Управление справочниками',
 							'ctr' => 'DictionaryManager',
 							'act' => 'Renew'));
+define('DICT_EGE', array(
+						'id' => 'form_dict_ege',
+						'hdr' => 'Дисциплина ЕГЭ',
+						'ctr' => 'DictEge',
+						'act' => 'Save'));
 // Educlevels doctypes
 define('EDUCLEVELS_DOCTYPES', array(
 									'id' => 'form_educlevels_doctypes',

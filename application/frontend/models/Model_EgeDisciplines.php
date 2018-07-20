@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use tinyframe\core\Model as Model;
+use common\models\Model_Application as Application;
 use common\models\Model_DictEge as Model_DictEge;
 use common\models\Model_EgeDisciplines as EgeDisciplines;
 
@@ -51,19 +52,23 @@ class Model_EgeDisciplines extends Model
 	/**
      * Deletes ege discipline from database.
      *
-     * @return boolean
+     * @return array
      */
 	public function delete($form)
 	{
 		$egedsp = new EgeDisciplines();
 		$egedsp->id = $form['id'];
-		if ($egedsp->clear() > 0) {
-			$_SESSION[APP_CODE]['error_msg'] = null;
-			$_SESSION[APP_CODE]['success_msg'] = 'Удалена дисциплина ЕГЭ.';
-			return true;
+		if ($egedsp->existsAppGo()) {
+			$app = new Application();
+			$form['error_msg'] = 'Удалять дисциплины ЕГЭ, которые используются в заявлениях с состоянием: <strong>'.mb_convert_case($app::STATUS_SENDED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_APPROVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong> нельзя!';
 		} else {
-			return false;
+			if ($egedsp->clear() > 0) {
+				$form['success_msg'] = 'Дисциплина ЕГЭ № '.$egedsp->id.' удалена.';
+			} else {
+				$form['error_msg'] = 'Ошибка удаления дисциплины ЕГЭ № '.$egedsp->id.'! Свяжитесь с администратором.';
+			}
 		}
+		return $form;
 	}
 
 	/**
@@ -92,6 +97,10 @@ class Model_EgeDisciplines extends Model
 			$egedsp_row = $egedsp->existsExcept();
 			if ($egedsp_row) {
 				$form['error_msg'] = 'Такая дисциплина ЕГЭ уже есть!';
+				return $form;
+			} elseif ($egedsp->existsAppGo()) {
+				$app = new Application();
+				$form['error_msg'] = 'Изменять дисциплины ЕГЭ, которые используются в заявлениях с состоянием: <strong>'.mb_convert_case($app::STATUS_SENDED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_APPROVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong> нельзя!';
 				return $form;
 			} else {
 				if ($egedsp->changeAll()) {

@@ -2,7 +2,7 @@
 
 define('APP_NAME', 'Личный кабинет абитуриента');
 define('APP_CODE', 'portalbsu'); // MUST BE UNIQUE
-define('APP_VERSION', '0.4.4');
+define('APP_VERSION', '0.4.5');
 define('APP_DATA', 'main');
 
 # Личный кабинет абитуриента
@@ -28,7 +28,7 @@ header("Pragma: no-cache"); // HTTP/1.0
 #      1
 #
 
-$log = 0;
+$log = 1;
 
 if ($log == 1) {
 	function error_processor($errno, $errstr, $errfile, $errline, $errcontext)

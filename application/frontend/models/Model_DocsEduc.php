@@ -230,6 +230,7 @@ class Model_DocsEduc extends Model
 			} elseif ($docs->existsAppGo()) {
 				$app = new Application();
 				$form['error_msg'] = 'Изменять документы об образовании, которые используются в заявлениях с состоянием: <strong>'.mb_convert_case($app::STATUS_SENDED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_APPROVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong> нельзя!';
+				return $form;
 			} else {
 				if ($docs->changeAll()) {
 					$form['success_msg'] = 'Изменён документ об образовании № '.$form['id'].'.';

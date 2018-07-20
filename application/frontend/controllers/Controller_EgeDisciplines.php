@@ -110,15 +110,15 @@ class Controller_EgeDisciplines extends Controller
      */
 	public function actionDelete()
 	{
-		$this->form['id'] = htmlspecialchars($_POST['id']);
-		$this->form['pid'] = htmlspecialchars($_POST['pid']);
-		$this->form['hdr'] = htmlspecialchars($_POST['hdr']);
-		$this->form['ctr'] = htmlspecialchars($_POST['ctr']);
-		if ($this->model->delete($this->form)) {
-			return Basic_Helper::redirect('Дисциплины ЕГЭ', 200, EGE_DSP['ctr'], 'Index/?pid='.$this->form['pid']);
+		if (isset($_POST['id']) && isset($_POST['pid']) && isset($_POST['hdr']) && isset($_POST['ctr'])) {
+			$this->form['id'] = htmlspecialchars($_POST['id']);
+			$this->form['pid'] = htmlspecialchars($_POST['pid']);
+			$this->form['hdr'] = htmlspecialchars($_POST['hdr']);
+			$this->form['ctr'] = htmlspecialchars($_POST['ctr']);
+			$this->form = $this->model->delete($this->form);
+			return Basic_Helper::redirect($this->form['hdr'], 200, $this->form['ctr'], 'Index/?pid='.$this->form['pid'], $this->form['success_msg'], $this->form['error_msg']);
 		} else {
-			$this->form['error_msg'] = 'Ошибка удаления записи '.$this->form['ctr'].'! Свяжитесь с администратором.';
-			return $this->view->generate('delete-confirm.php', 'form.php', 'Удаление записи '.$this->form['ctr'], $this->form);
+			return Basic_Helper::redirect('Документы об образовании', 200, EGE['ctr'], 'Index', null, 'Ошибка удаления дисциплины ЕГЭ!');
 		}
 	}
 
@@ -146,8 +146,8 @@ class Controller_EgeDisciplines extends Controller
 			if (empty($this->form['error_msg'])) {
 				$this->form['error_msg'] = '<strong>Ошибка при проверке данных дисциплин ЕГЭ!</strong> Пожалуйста, проверьте все поля ввода.';
 			}
-			return $this->view->generate('ege-disciplines-add.php', 'form.php', EGE_DSP['hdr'], $this->form);
 		}
+		return $this->view->generate('ege-disciplines-add.php', 'form.php', EGE_DSP['hdr'], $this->form);
 	}
 
 	/**

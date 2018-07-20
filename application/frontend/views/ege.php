@@ -21,6 +21,8 @@ use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 		</div>
 	</div>
 	<?php
+		echo HTML_Helper::setAlert($_SESSION[APP_CODE]['success_msg'], 'alert-success');
+		echo HTML_Helper::setAlert($_SESSION[APP_CODE]['error_msg'], 'alert-danger');
 		echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
 		echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
 		echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nЧтобы добавить <strong>результаты ЕГЭ</strong>, нажмите <i class=\"far fa-file\"></i>\nЧтобы добавить/изменить/удалить <strong>дисциплины ЕГЭ</strong>, нажмите <i class=\"far fa-edit\"></i> на нужных результатах ЕГЭ."), 'alert-warning');

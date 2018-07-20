@@ -3,6 +3,7 @@
 namespace common\models;
 
 use tinyframe\core\helpers\Db_Helper as Db_Helper;
+use common\models\Model_Application as Application;
 
 class Model_EgeDisciplines extends Db_Helper
 {
@@ -170,6 +171,32 @@ class Model_EgeDisciplines extends Db_Helper
 									':id_discipline' => $this->id_discipline,
 									':id' => $this->id]);
 		if (!empty($row)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+     * Checks if ege discipline used in applications "GO".
+     *
+     * @return boolean
+     */
+	public function existsAppGo() : bool
+	{
+		$app_arr = $this->rowSelectAll('application.id',
+										'application INNER JOIN application_places ON application.id = application_places.pid'.
+										' INNER JOIN application_places_exams ON application_places.id = application_places_exams.pid'.
+										' INNER JOIN dict_testing_scopes ON application_places_exams.id_test = dict_testing_scopes.id'.
+										' INNER JOIN dict_discipline ON application_places_exams.id_discipline = dict_discipline.id'.
+										' INNER JOIN dict_ege ON dict_discipline.code = dict_ege.code'.
+										' INNER JOIN ege_disciplines ON dict_ege.id = ege_disciplines.id_discipline',
+										'ege_disciplines.id = :id AND application.status in (:status1, :status2) AND dict_testing_scopes.code = :test',
+										[':id' => $this->id,
+										':status1' => Application::STATUS_SENDED,
+										':status2' => Application::STATUS_APPROVED,
+										':test' => '000000001']);
+		if ($app_arr) {
 			return true;
 		} else {
 			return false;

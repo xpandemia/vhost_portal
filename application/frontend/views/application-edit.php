@@ -130,16 +130,16 @@ use frontend\models\Model_Application as Model_Application;
 									} else {
 										$disabled = 0;
 									}
-									if ($test_arr) {
-										echo '<td><select class="form-control" id="exam'.$exams_row['discipline_code'].'" name="exam'.$exams_row['discipline_code'].'"'.(($disabled == 1) ? ' disabled' : '').'>';
-										foreach ($test_arr as $test_row) {
-											echo '<option value="'.$test_row['code'].'"'.
-												(($exams_row['code'] === $test_row['code']) ? ' selected' : '').'>'.
-												$test_row['description'].
-												'</option>';
-										}
-										echo '</select>';
+								}
+								if ($test_arr) {
+									echo '<td><select class="form-control" id="exam'.$exams_row['discipline_code'].'" name="exam'.$exams_row['discipline_code'].'"'.(($disabled == 1) ? ' disabled' : '').'>';
+									foreach ($test_arr as $test_row) {
+										echo '<option value="'.$test_row['code'].'"'.
+											(($exams_row['code'] === $test_row['code']) ? ' selected' : '').'>'.
+											$test_row['description'].
+											'</option>';
 									}
+									echo '</select>';
 								}
 							} elseif ($place->getByAppForMagister() || $place->getByAppForSpecial()) {
 								// magisters, specials

@@ -84,6 +84,16 @@ class Model_DictDiscipline extends Db_Helper
 	}
 
 	/**
+     * Gets unique disciplines.
+     *
+     * @return array
+     */
+	public function getUnique()
+	{
+		return $this->rowSelectAll('DISTINCT code, discipline_name', self::TABLE_NAME);
+	}
+
+	/**
      * Gets one discipline.
      *
      * @return array
@@ -95,6 +105,19 @@ class Model_DictDiscipline extends Db_Helper
 								'code = :code AND campaign_code = :campaign_code',
 								[':code' => $this->code,
 								':campaign_code' => $this->campaign_code]);
+	}
+
+	/**
+     * Gets discipline discipline_name by code.
+     *
+     * @return array
+     */
+	public function getDescriptionByCode()
+	{
+		return $this->rowSelectOne('DISTINCT discipline_name',
+									self::TABLE_NAME,
+									'code = :code',
+									[':code' => $this->code]);
 	}
 
 	/**

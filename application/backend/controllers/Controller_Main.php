@@ -57,6 +57,16 @@ class Controller_Main extends Controller
 	}
 
 	/**
+     * Calls to dictionary ege.
+     *
+     * @return void
+     */
+	function actionDictEge() : void
+	{
+		Basic_Helper::redirect(DICT_EGE['hdr'], 202, DICT_EGE['ctr'], 'Index');
+	}
+
+	/**
      * Calls to educlevels doctypes.
      *
      * @return void

@@ -53,13 +53,59 @@ class Model_DictEge extends Db_Helper
 	}
 
 	/**
+     * Educlevels doctypes grid.
+     *
+     * @return array
+     */
+	public function grid()
+	{
+		return [
+				'id' => [
+						'name' => '№',
+						'type' => 'int'
+						],
+				'code' => [
+							'name' => 'Код',
+							'type' => 'string'
+							],
+				'description' => [
+								'name' => 'Наименование',
+								'type' => 'string'
+								]
+				];
+	}
+
+	/**
+     * Gets all dictionary ege for GRID.
+     *
+     * @return array
+     */
+	public function getGrid()
+	{
+		return $this->rowSelectAll('*', self::TABLE_NAME, null, null, 'id ASC');
+	}
+
+	/**
      * Gets all dictionary ege.
      *
      * @return array
      */
 	public function getAll()
 	{
-		return $this->rowSelectAll('*', self::TABLE_NAME, null, null, 'description');
+		return $this->rowSelectAll('*', self::TABLE_NAME, null, null, 'description ASC');
+	}
+
+	/**
+     * Gets dictionary ege by ID.
+     *
+     * @return array
+     */
+	public function get()
+	{
+		return $this->rowSelectOne('*',
+									self::TABLE_NAME,
+									'id = :id',
+									[':id' => $this->id]);
 	}
 
 	/**
@@ -70,9 +116,9 @@ class Model_DictEge extends Db_Helper
 	public function getByCode()
 	{
 		return $this->rowSelectOne('*',
-								self::TABLE_NAME,
-								'code = :code',
-								[':code' => $this->code]);
+									self::TABLE_NAME,
+									'code = :code',
+									[':code' => $this->code]);
 	}
 
 	/**
@@ -83,9 +129,48 @@ class Model_DictEge extends Db_Helper
 	public function getByDescription()
 	{
 		return $this->rowSelectOne('*',
-								self::TABLE_NAME,
-								'description = :description',
-								[':description' => $this->description]);
+									self::TABLE_NAME,
+									'description = :description',
+									[':description' => $this->description]);
+	}
+
+	/**
+     * Checks if dictionary ege exists.
+     *
+     * @return boolean
+     */
+	public function exists()
+	{
+		$row = $this->rowSelectOne('id',
+									self::TABLE_NAME,
+									'code = :code AND description = :description',
+									[':code' => $this->code,
+									':description' => $this->description]);
+		if (!empty($row)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+     * Checks if dictionary ege exists except this ID.
+     *
+     * @return boolean
+     */
+	public function existsExcept()
+	{
+		$row = $this->rowSelectOne('id',
+									self::TABLE_NAME,
+									'code = :code AND description = :description and id <> :id',
+									[':code' => $this->code,
+									':description' => $this->description,
+									':id' => $this->id]);
+		if (!empty($row)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -121,6 +206,16 @@ class Model_DictEge extends Db_Helper
 	public function clearAll()
 	{
 		return $this->rowDelete(self::TABLE_NAME);
+	}
+
+	/**
+     * Removes dictionary ege.
+     *
+     * @return integer
+     */
+	public function clear()
+	{
+		return $this->rowDelete(self::TABLE_NAME, 'id = :id', [':id' => $this->id]);
 	}
 
 	public function __destruct()
