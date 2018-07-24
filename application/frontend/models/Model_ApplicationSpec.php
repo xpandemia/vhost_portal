@@ -43,6 +43,13 @@ class Model_ApplicationSpec extends Model
 	public function rules()
 	{
 		$rules = [
+				'inila' => [
+                            'type' => 'text',
+                            'class' => 'form-control',
+                            'pattern' => ['value' => PATTERN_INILA, 'msg' => 'Для СНИЛС можно использовать '.MSG_INILA.'!'],
+                            'width' => ['format' => 'string', 'min' => 1, 'max' => 14, 'msg' => 'Слишком длинный СНИЛС!'],
+                            'success' => 'СНИЛС заполнен верно.'
+                           ],
 				'campus' => [
 							'type' => 'checkbox',
 	                        'class' => 'form-check-input',
@@ -86,6 +93,13 @@ class Model_ApplicationSpec extends Model
 		if ($place->getByAppForMedicalA1() || $place->getByAppForMedicalA2() || $place->getByAppForMedicalB1() || $place->getByAppForMedicalC1()) {
 			$form = $this->setFormErrorFile($form, 'medical_certificate_face', 'Скан-копия "Медицинская справка (лицевая сторона)" обязательна для заполнения!');
 			$form = $this->setFormErrorFile($form, 'medical_certificate_back', 'Скан-копия "Медицинская справка (оборотная сторона)" обязательна для заполнения!');
+		}
+		// inila
+		if ($place->getByAppForClinical()) {
+			if (empty($form['inila'])) {
+				$form = $this->setFormErrorField($form, 'inila', 'СНИЛС обязателен для заполнения!');
+			}
+			$form = $this->setFormErrorFile($form, 'inila_face', 'Скан-копия "СНИЛС (лицевая сторона)" обязательна для заполнения!');
 		}
 		return $form;
 	}
@@ -178,6 +192,10 @@ class Model_ApplicationSpec extends Model
 		if ($place->getByAppForMedicalA1() || $place->getByAppForMedicalA2() || $place->getByAppForMedicalB1() || $place->getByAppForMedicalC1()) {
 			$form = $this->setFormErrorFile($form, 'medical_certificate_face', 'Скан-копия "Медицинская справка (лицевая сторона)" обязательна для заполнения!');
 			$form = $this->setFormErrorFile($form, 'medical_certificate_back', 'Скан-копия "Медицинская справка (оборотная сторона)" обязательна для заполнения!');
+		}
+		// inila
+		if ($place->getByAppForClinical()) {
+			$form = $this->setFormErrorFile($form, 'inila_face', 'Скан-копия "СНИЛС (лицевая сторона)" обязательна для заполнения!');
 		}
 		return $form;
 	}
@@ -469,6 +487,8 @@ class Model_ApplicationSpec extends Model
 		$app->id_lang = $app_row['id_lang'];
 		$app->status = $app::STATUS_SAVED;
 		// additional info
+		// check inila
+		$app->inila = ((empty($form['inila'])) ? null : $form['inila']);
 		$app->campus = (($form['campus'] == 'checked') ? 1 : 0);
 		$app->conds = (($form['conds'] == 'checked') ? 1 : 0);
 		// check remote
@@ -688,6 +708,7 @@ class Model_ApplicationSpec extends Model
 			$data = $this->setPlacesForPdf($data, $id, 4);
 			$data = $this->setEducForPdf($data, $app_row['id_docseduc'], 'attending_physician');
 			$data = $this->setForeignLangForPdf($data, $app_row['id_lang']);
+			$data['inila'] = $app_row['inila'];
 			$data = $this->setCampusForPdf($data, $app_row['campus']);
 			$data['docsship_personal'] = 'On';
 			$data = $this->setIaForPdf($data, $id);

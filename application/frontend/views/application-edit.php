@@ -52,6 +52,12 @@ use frontend\models\Model_Application as Model_Application;
 	} else {
 		$medical_certificate = 0;
 	}
+	// inila
+	if ($place->getByAppForClinical()) {
+		$inila = 1;
+	} else {
+		$inila = 0;
+	}
 ?>
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
 	<h2>Заявление № <?php echo $app_row['numb']; ?></h2>
@@ -98,6 +104,7 @@ use frontend\models\Model_Application as Model_Application;
 			<input type="hidden" id="application_2_required" name="application_2_required" value="<?php echo $application_2; ?>"/>
 			<input type="hidden" id="photo3x4_required" name="photo3x4_required" value="<?php echo $photo3x4; ?>"/>
 			<input type="hidden" id="medical_certificate_required" name="medical_certificate_required" value="<?php echo $medical_certificate; ?>"/>
+			<input type="hidden" id="inila_required" name="inila_required" value="<?php echo $inila; ?>"/>
 		</div>
 		<div class="form-group">
 			<h5>Вступительные испытания</h5><br>
@@ -210,6 +217,15 @@ use frontend\models\Model_Application as Model_Application;
 			<?php
 				/* additional info */
 				echo Form_Helper::setFormHeaderSub('Дополнительная информация');
+				// inila
+				echo Form_Helper::setFormInput(['label' => 'СНИЛС',
+												'control' => 'inila',
+												'type' => 'text',
+												'class' => $data['inila_cls'],
+												'required' => 'no',
+												'value' => $data['inila'],
+												'success' => $data['inila_scs'],
+												'error' => $data['inila_err']]);
 				// campus
 				echo Form_Helper::setFormCheckbox(['label' => 'Нуждаюсь в общежитии',
 													'control' => 'campus',
@@ -234,9 +250,9 @@ use frontend\models\Model_Application as Model_Application;
 				/* save application as PDF */
 				echo '<p></p>';
 				echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nПожалуйста, не вносите изменения в печатную форму заявления.\nПросто распечатайте её, подпишите, отсканируйте и загрузите в электронное заявление."), 'alert-warning');
-				echo "<H1 style='color:red'>"; //добавил Паша
+				echo "<h1 style='color:red'>";
 				echo HTML_Helper::setHrefButtonIconToNewPage    ('ApplicationSpec', 'SavePdf/?pid='.$data['id'], 'font-weight-bold', 'fas fa-print fa-3x', 'Сформировать заявление');
-				echo " Сформировать заявление</H1>";
+				echo " Сформировать заявление</h1>";
 				/* scans */
 				echo Form_Helper::setFormHeaderSub('Скан-копии');
 				echo Form_Helper::setFormFileListDB(['required' => 'required',
@@ -300,6 +316,14 @@ use frontend\models\Model_Application as Model_Application;
 			$("label[for='medical_certificate_face']").html('Медицинская справка (лицевая сторона)');
 			$("label[for='medical_certificate_back']").html('Медицинская справка (оборотная сторона)');
 		}
+		// inila required
+		if ($('#inila_required').val() == 1) {
+			$("label[for='inila']").html('СНИЛС*');
+			$("label[for='inila_face']").html('СНИЛС (лицевая сторона)*');
+		} else {
+			$("label[for='inila']").html('СНИЛС');
+			$("label[for='inila_face']").html('СНИЛС (лицевая сторона)');
+		}
 	}
 </script>
 
@@ -328,4 +352,10 @@ use frontend\models\Model_Application as Model_Application;
 			$("select[name^='exam']").prop('disabled', false);
 		});
 	}
+</script>
+
+<script>
+	$(function(){
+	  $("#inila").mask("999-999-999-99");
+	});
 </script>

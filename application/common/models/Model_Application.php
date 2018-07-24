@@ -54,6 +54,7 @@ class Model_Application extends Db_Helper
 	public $status;
 	public $numb;
 	public $numb1s;
+	public $inila;
 	public $campus;
 	public $conds;
 	public $remote;
@@ -147,6 +148,12 @@ class Model_Application extends Db_Helper
 							'insert' => 1,
 							'update' => 1,
 							'value' => $this->numb1s
+							],
+				'inila' => [
+							'required' => 0,
+							'insert' => 1,
+							'update' => 1,
+							'value' => $this->inila
 							],
 				'campus' => [
 							'required' => 1,

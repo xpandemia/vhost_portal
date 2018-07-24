@@ -8,6 +8,9 @@ use PHPMailer\PHPMailer\Exception;
 // numbers
 define('PATTERN_NUMB', '/^[0-9]*$/u');
 define('MSG_NUMB', 'только цифры');
+// numbers, "-"
+define('PATTERN_INILA', '/^[0-9-]*$/u');
+define('MSG_INILA', 'только цифры и тире');
 // letters ENG
 define('PATTERN_ALPHA', '/^[a-zA-Z]*$/u');
 define('MSG_ALPHA', 'только латинские буквы');
@@ -95,6 +98,9 @@ class Form_Helper
 		foreach ($rules as $field_name => $rule_name_arr) {
 			if ($form[$field_name . '_vis'] === true) {
 				foreach ($rule_name_arr as $rule_name => $rule_var_arr) {
+					if (!isset($form[$field_name])) {
+						continue;
+					}
 					// RULE processing
 					switch ($rule_name) {
 						// required check
@@ -250,13 +256,23 @@ class Form_Helper
 						// file extension check
 						case 'ext':
 							if ($rules[$field_name]['type'] == 'file' && isset($form[$field_name . '_type']) && isset($form[$field_name])) {
-								if (!in_array($form[$field_name . '_type'], $rule_var_arr['value']) || !in_array(mime_content_type($form[$field_name]), $rule_var_arr['value'])) {
+								if (!in_array($form[$field_name . '_type'], $rule_var_arr['value'])) {
 									unset($form[$field_name]);
 									unset($form[$field_name . '_name']);
 									unset($form[$field_name . '_type']);
 									unset($form[$field_name . '_size']);
 									$validate = false;
 									$form[$field_name . '_err'] = $rule_var_arr['msg'];
+								} elseif (empty($form[$field_name . '_id'])) {
+									// file format check
+									if (!in_array(mime_content_type($form[$field_name]), $rule_var_arr['value'])) {
+										unset($form[$field_name]);
+										unset($form[$field_name . '_name']);
+										unset($form[$field_name . '_type']);
+										unset($form[$field_name . '_size']);
+										$validate = false;
+										$form[$field_name . '_err'] = $rule_var_arr['msg'];
+									}
 								}
 							}
 							break;
