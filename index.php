@@ -2,8 +2,8 @@
 
 define('APP_NAME', 'Личный кабинет абитуриента');
 define('APP_CODE', 'portalbsu'); // MUST BE UNIQUE
-define('APP_VERSION', '0.4.5');
-define('APP_DATA', 'main');
+define('APP_VERSION', '0.4.6');
+define('APP_DATA', 'local');
 
 # Личный кабинет абитуриента
 # Build with curiosity by Fiben on Tinyframe 0.2.1
@@ -28,7 +28,7 @@ header("Pragma: no-cache"); // HTTP/1.0
 #      1
 #
 
-$log = 1;
+$log = 0;
 
 if ($log == 1) {
 	function error_processor($errno, $errstr, $errfile, $errline, $errcontext)

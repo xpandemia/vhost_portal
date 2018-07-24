@@ -174,6 +174,24 @@ class Model_DictEge extends Db_Helper
 	}
 
 	/**
+     * Checks if dictionary ege used in ege.
+     *
+     * @return boolean
+     */
+	public function existsEge()
+	{
+		$arr = $this->rowSelectAll('id',
+									'ege_discipline INNER JOIN dict_ege ON ege_discipline.id_discipline = dict_ege.id',
+									'dict_ege.id = :id',
+									[':id' => $this->id]);
+		if (!empty($arr)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
      * Saves dictionary ege data to database.
      *
      * @return integer

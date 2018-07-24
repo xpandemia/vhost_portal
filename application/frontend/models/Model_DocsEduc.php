@@ -100,6 +100,8 @@ class Model_DocsEduc extends Model
 	            'change_name' => [
 									'type' => 'file',
 									'class' => 'form-control',
+									'class' => 'form-control',
+									'name' => ['value' => FILES_NAME, 'msg' => 'Имя файла скан-копии "Свидетельство о перемене имени" превышает '.FILES_NAME.' знаков!'],
 									'size' => ['value' => FILES_SIZE['value'], 'msg' => 'Размер скан-копии "Свидетельство о перемене имени" превышает '.FILES_SIZE['value'].' '.FILES_SIZE['size'].' !'],
 									'ext' => ['value' => FILES_EXT_SCANS, 'msg' => 'Недопустимый тип скан-копии "Свидетельство о перемене имени"!'],
 									'success' => 'Скан-копия "Свидетельство о перемене имени" заполнена верно.'

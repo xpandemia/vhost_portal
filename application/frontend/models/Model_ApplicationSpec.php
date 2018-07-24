@@ -25,6 +25,7 @@ use common\models\Model_DictTestingScopes as Model_DictTestingScopes;
 use common\models\Model_Resume as Resume;
 use common\models\Model_DictForeignLangs as DictForeignLangs;
 use common\models\Model_DictEge as DictEge;
+use common\models\Model_DictCountries as DictCountries;
 
 include ROOT_DIR.'/application/frontend/models/Model_Scans.php';
 
@@ -198,6 +199,7 @@ class Model_ApplicationSpec extends Model
 		// get citizenship
 		$personal = new Personal();
 		$citizenship = $personal->getCitizenshipByUser();
+		$country = new DictCountries();
 		// get max_spec
 		$adm = new Model_AdmissionCampaign();
 		$adm->id = $app_row['id_campaign'];
@@ -281,49 +283,62 @@ class Model_ApplicationSpec extends Model
 													$ege->code_discipline = $exams_row['exam_code'];
 												}
 												$ege_arr = $ege->checkDiscipline();
-												if ($citizenship['code'] != '643') {
-													// foreigners - full-time ege only, not full-time - ege or exam
-													if ($ege_arr) {
-														$test_row = $test->getEge();
-														$enter->points = $ege_arr['points'];
-														$enter->reg_year = $ege_arr['reg_year'];
-													} else {
-														if ($spec_row[5] == '000000001') {
-															$form['error_msg'] = 'Нет подходящих результатов ЕГЭ по дисциплине "'.$exams_row['exam_name'].'"!';
-															$places->clearByApplication();
-															return $form;
+												switch ($citizenship['abroad']) {
+													case $country::ABROAD_HOME:
+														if ($app->checkCertificate()) {
+															// russia with certificate - ege only
+															if ($ege_arr) {
+																$test_row = $test->getEge();
+																$enter->points = $ege_arr['points'];
+																$enter->reg_year = $ege_arr['reg_year'];
+															} else {
+																$form['error_msg'] = 'Нет подходящих результатов ЕГЭ по дисциплине "'.$exams_row['exam_name'].'"!';
+																$places->clearByApplication();
+																return $form;
+															}
 														} else {
-															$test_row = $test->getExam();
-															$enter->points = null;
-															$enter->reg_year = null;
+															// russia without certificate - ege or exam
+															if ($ege_arr) {
+																// ege
+																$test_row = $test->getEge();
+																$enter->points = $ege_arr['points'];
+																$enter->reg_year = $ege_arr['reg_year'];
+															} else {
+																// exam
+																$test_row = $test->getExam();
+																$enter->points = null;
+																$enter->reg_year = null;
+															}
 														}
-													}
-												} else {
-													if ($citizenship['code'] == '643' && $app->checkCertificate()) {
-														// russia with certificate - ege only
+														break;
+													case $country::ABROAD_NEAR:
+														// close foreigners: full-time - ege only, not full-time - ege or exam
 														if ($ege_arr) {
 															$test_row = $test->getEge();
 															$enter->points = $ege_arr['points'];
 															$enter->reg_year = $ege_arr['reg_year'];
 														} else {
-															$form['error_msg'] = 'Нет подходящих результатов ЕГЭ по дисциплине "'.$exams_row['exam_name'].'"!';
-															$places->clearByApplication();
-															return $form;
+															if ($spec_row[5] == '000000001') {
+																$form['error_msg'] = 'Нет подходящих результатов ЕГЭ по дисциплине "'.$exams_row['exam_name'].'"!';
+																$places->clearByApplication();
+																return $form;
+															} else {
+																$test_row = $test->getExam();
+																$enter->points = null;
+																$enter->reg_year = null;
+															}
 														}
-													} else {
-														// russia without certificate - ege or exam
-														if ($ege_arr) {
-															// ege
-															$test_row = $test->getEge();
-															$enter->points = $ege_arr['points'];
-															$enter->reg_year = $ege_arr['reg_year'];
-														} else {
-															// exam
-															$test_row = $test->getExam();
-															$enter->points = null;
-															$enter->reg_year = null;
-														}
-													}
+														break;
+													case $country::ABROAD_FAR:
+														// far foreigners: exam only
+														$test_row = $test->getExam();
+														$enter->points = null;
+														$enter->reg_year = null;
+														break;
+													default:
+														$form['error_msg'] = 'Зарубежье '.$citizenship['abroad'].' не описано!';
+														$places->clearByApplication();
+														return $form;
 												}
 												break;
 											// magisters
@@ -341,6 +356,8 @@ class Model_ApplicationSpec extends Model
 										}
 									} else {
 										$test_row = $test->getExam();
+										$enter->points = null;
+										$enter->reg_year = null;
 									}
 									$enter->id_test = $test_row['id'];
 									if ($enter->save() == 0) {

@@ -104,7 +104,7 @@ class Controller_Main extends Controller
      */
 	function actionIndAchievs()
 	{
-		return Basic_Helper::redirect(IND_ACHIEVS['hdr'], 202, IND_ACHIEVS['ctr'], 'Index');
+		return Basic_Helper::redirect('Индивидуальные достижения', 202, IND_ACHIEVS['ctr'], 'Index');
 	}
 
 	/**

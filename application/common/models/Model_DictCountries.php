@@ -12,10 +12,24 @@ class Model_DictCountries extends Db_Helper
 
 	const TABLE_NAME = 'dict_countries';
 
+	const ABROAD_HOME = 0;
+	const ABROAD_HOME_NAME = 'Нет';
+	const ABROAD_NEAR = 1;
+	const ABROAD_NEAR_NAME = 'Ближнее';
+	const ABROAD_FAR = 2;
+	const ABROAD_FAR_NAME = 'Дальнее';
+
+	const ABROAD_LIST = [
+						['code' => 0, 'description' => 'Нет'],
+						['code' => 1, 'description' => 'Ближнее'],
+						['code' => 2, 'description' => 'Дальнее']
+						];
+
 	public $id;
 	public $code;
 	public $description;
 	public $fullname;
+	public $abroad;
 	public $code_alpha2;
 	public $code_alpha3;
 	public $guid;
@@ -59,6 +73,12 @@ class Model_DictCountries extends Db_Helper
 								'update' => 1,
 								'value' => $this->fullname
 								],
+				'abroad' => [
+							'required' => 0,
+							'insert' => 1,
+							'update' => 1,
+							'value' => $this->abroad
+							],
 				'code_alpha2' => [
 								'required' => 1,
 								'insert' => 1,
@@ -81,6 +101,51 @@ class Model_DictCountries extends Db_Helper
 	}
 
 	/**
+     * Countries grid.
+     *
+     * @return array
+     */
+	public function grid()
+	{
+		return [
+				'id' => [
+						'name' => '№',
+						'type' => 'int'
+						],
+				'description' => [
+								'name' => 'Наименование',
+								'type' => 'string'
+								],
+				'fullname' => [
+								'name' => 'Полное наименование',
+								'type' => 'string'
+								],
+				'abroad' => [
+							'name' => 'Зарубежье',
+							'type' => 'string'
+							],
+				'code_alpha2' => [
+								'name' => 'Альфа-2',
+								'type' => 'string'
+								],
+				'code_alpha3' => [
+								'name' => 'Альфа-3',
+								'type' => 'string'
+								]
+				];
+	}
+
+	/**
+     * Gets all countries for GRID.
+     *
+     * @return array
+     */
+	public function getGrid()
+	{
+		return $this->rowSelectAll('id, description, fullname, getCountryAbroadName(abroad) as abroad, code_alpha2, code_alpha3', self::TABLE_NAME, null, null, 'description ASC');
+	}
+
+	/**
      * Gets all countries.
      *
      * @return array
@@ -88,6 +153,19 @@ class Model_DictCountries extends Db_Helper
 	public function getAll()
 	{
 		return $this->rowSelectAll('*', self::TABLE_NAME, null, null, 'description');
+	}
+
+	/**
+     * Gets country by ID.
+     *
+     * @return array
+     */
+	public function get()
+	{
+		return $this->rowSelectOne('*',
+								self::TABLE_NAME,
+								'id = :id',
+								[':id' => $this->id]);
 	}
 
 	/**
@@ -117,6 +195,150 @@ class Model_DictCountries extends Db_Helper
 	}
 
 	/**
+     * Checks if GUID exists.
+     *
+     * @return boolean
+     */
+	public function existsGuid()
+	{
+		$row = $this->rowSelectOne('id',
+									self::TABLE_NAME,
+									'guid = :guid',
+									[':guid' => $this->guid]);
+		if (!empty($row)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+     * Checks if GUID exists except this ID.
+     *
+     * @return boolean
+     */
+	public function existsGuidExcept()
+	{
+		$row = $this->rowSelectOne('id',
+									self::TABLE_NAME,
+									'guid = :guid AND id <> :id',
+									[':guid' => $this->guid, ':id' => $this->id]);
+		if (!empty($row)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+     * Checks if code exists.
+     *
+     * @return boolean
+     */
+	public function existsCode()
+	{
+		$row = $this->rowSelectOne('id',
+									self::TABLE_NAME,
+									'code = :code',
+									[':code' => $this->code]);
+		if (!empty($row)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+     * Checks if code exists except this ID.
+     *
+     * @return boolean
+     */
+	public function existsCodeExcept()
+	{
+		$row = $this->rowSelectOne('id',
+									self::TABLE_NAME,
+									'code = :code AND id <> :id',
+									[':code' => $this->code, ':id' => $this->id]);
+		if (!empty($row)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+     * Checks if description exists.
+     *
+     * @return boolean
+     */
+	public function existsDescription()
+	{
+		$row = $this->rowSelectOne('id',
+									self::TABLE_NAME,
+									'description = :description',
+									[':description' => $this->description]);
+		if (!empty($row)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+     * Checks if description exists except this ID.
+     *
+     * @return boolean
+     */
+	public function existsDescriptionExcept()
+	{
+		$row = $this->rowSelectOne('id',
+									self::TABLE_NAME,
+									'description = :description AND id <> :id',
+									[':description' => $this->description, ':id' => $this->id]);
+		if (!empty($row)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+     * Checks if country used in citizenship.
+     *
+     * @return boolean
+     */
+	public function existsCitizenship()
+	{
+		$arr = $this->rowSelectAll('dict_countries.id',
+									'personal INNER JOIN dict_countries ON personal.citizenship = dict_countries.id',
+									'dict_countries.id = :id',
+									[':id' => $this->id]);
+		if (!empty($arr)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+     * Checks if country used in address.
+     *
+     * @return boolean
+     */
+	public function existsAddress()
+	{
+		$arr = $this->rowSelectAll('dict_countries.id',
+									'address INNER JOIN dict_countries ON address.id_country = dict_countries.id',
+									'dict_countries.id = :id',
+									[':id' => $this->id]);
+		if (!empty($arr)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
      * Saves country data to database.
      *
      * @return integer
@@ -125,6 +347,17 @@ class Model_DictCountries extends Db_Helper
 	{
 		$prepare = $this->prepareInsert(self::TABLE_NAME, $this->rules());
 		return $this->rowInsert($prepare['fields'], self::TABLE_NAME, $prepare['conds'], $prepare['params']);
+	}
+
+	/**
+     * Changes all country data.
+     *
+     * @return boolean
+     */
+	public function changeAll()
+	{
+		$prepare = $this->prepareUpdate(self::TABLE_NAME, $this->rules());
+		return $this->rowUpdate(self::TABLE_NAME, $prepare['fields'], $prepare['params'], ['id' => $this->id]);
 	}
 
 	/**
@@ -167,6 +400,19 @@ class Model_DictCountries extends Db_Helper
 	}
 
 	/**
+     * Changes abroad.
+     *
+     * @return boolean
+     */
+	public function changeAbroad()
+	{
+		return $this->rowUpdate(self::TABLE_NAME,
+								'abroad = :abroad',
+								[':abroad' => $this->abroad],
+								['id' => $this->id]);
+	}
+
+	/**
      * Changes code alpha2.
      *
      * @return boolean
@@ -200,6 +446,16 @@ class Model_DictCountries extends Db_Helper
 	public function clearAll()
 	{
 		return $this->rowDelete(self::TABLE_NAME);
+	}
+
+	/**
+     * Removes country.
+     *
+     * @return integer
+     */
+	public function clear()
+	{
+		return $this->rowDelete(self::TABLE_NAME, 'id = :id', [':id' => $this->id]);
 	}
 
 	/**

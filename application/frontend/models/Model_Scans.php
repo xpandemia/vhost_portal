@@ -35,6 +35,7 @@ class Model_Scans extends Model
 													'type' => 'file',
 													'class' => 'form-control',
 													'required' => ['default' => '', 'msg' => 'Скан-копия "'.ucfirst($scans_row['scan_name']).'" обязательна для заполнения!'],
+													'name' => ['value' => FILES_NAME, 'msg' => 'Имя файла скан-копии "'.ucfirst($scans_row['scan_name']).'" превышает '.FILES_NAME.' знаков!'],
 													'size' => ['value' => FILES_SIZE['value'], 'msg' => 'Размер скан-копии "'.ucfirst($scans_row['scan_name']).'" превышает '.FILES_SIZE['value'].' '.FILES_SIZE['size'].' !'],
 													'ext' => ['value' => FILES_EXT_SCANS, 'msg' => 'Недопустимый тип скан-копии "'.ucfirst($scans_row['scan_name']).'"!'],
 													'success' => 'Скан-копия "'.ucfirst($scans_row['scan_name']).'" заполнена верно.'
@@ -43,6 +44,7 @@ class Model_Scans extends Model
 					$rules[$scans_row['scan_code']] = [
 													'type' => 'file',
 													'class' => 'form-control',
+													'name' => ['value' => FILES_NAME, 'msg' => 'Имя файла скан-копии "'.ucfirst($scans_row['scan_name']).'" превышает '.FILES_NAME.' знаков!'],
 													'size' => ['value' => FILES_SIZE['value'], 'msg' => 'Размер скан-копии "'.ucfirst($scans_row['scan_name']).'" превышает '.FILES_SIZE['value'].' '.FILES_SIZE['size'].' !'],
 													'ext' => ['value' => FILES_EXT_SCANS, 'msg' => 'Недопустимый тип скан-копии "'.ucfirst($scans_row['scan_name']).'"!'],
 													'success' => 'Скан-копия "'.ucfirst($scans_row['scan_name']).'" заполнена верно.'

@@ -43,7 +43,7 @@ class Controller_Main extends Controller
      */
 	function actionUser() : void
 	{
-		Basic_Helper::redirect(USER['hdr'], 202, USER['ctr'], 'Index');
+		Basic_Helper::redirect('Пользователи', 202, USER['ctr'], 'Index');
 	}
 
 	/**
@@ -57,13 +57,23 @@ class Controller_Main extends Controller
 	}
 
 	/**
+     * Calls to dictionary countries.
+     *
+     * @return void
+     */
+	function actionDictCountries() : void
+	{
+		Basic_Helper::redirect('Страны мира', 202, DICT_COUNTRIES['ctr'], 'Index');
+	}
+
+	/**
      * Calls to dictionary ege.
      *
      * @return void
      */
 	function actionDictEge() : void
 	{
-		Basic_Helper::redirect(DICT_EGE['hdr'], 202, DICT_EGE['ctr'], 'Index');
+		Basic_Helper::redirect('Дисциплины ЕГЭ', 202, DICT_EGE['ctr'], 'Index');
 	}
 
 	/**

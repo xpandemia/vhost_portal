@@ -45,17 +45,24 @@ class Model_DictEge extends Model
 	/**
      * Deletes dictionary ege from database.
      *
-     * @return boolean
+     * @return array
      */
-	public function delete($form)
+	public function delete($form) : array
 	{
+		$form['success_msg'] = null;
+		$form['error_msg'] = null;
 		$ed = new DictEge();
 		$ed->id = $form['id'];
-		if ($ed->clear() > 0) {
-			return true;
+		if ($ed->existsEge()) {
+			$form['error_msg'] = 'Удалять дисциплины ЕГЭ, которые используются в результатах ЕГЭ, нельзя!';
 		} else {
-			return false;
+			if ($ed->clear() > 0) {
+				$form['success_msg'] = 'Дисциплина ЕГЭ № '.$docs->id.' удалена.';
+			} else {
+				$form['error_msg'] = 'Ошибка удаления дисциплины ЕГЭ № '.$docs->id.'! Свяжитесь с администратором.';
+			}
 		}
+		return $form;
 	}
 
 	/**
@@ -74,7 +81,9 @@ class Model_DictEge extends Model
 		if (isset($form['id']) && !empty($form['id'])) {
 			// update
 			$de->id = $form['id'];
-			if ($de->existsExcept()) {
+			if ($ed->existsEge()) {
+				$form['error_msg'] = 'Удалять дисциплины ЕГЭ, которые используются в результатах ЕГЭ, нельзя!';
+			} elseif ($de->existsExcept()) {
 				$form['error_msg'] = 'Такая дисциплина ЕГЭ уже есть!';
 				return $form;
 			} else {

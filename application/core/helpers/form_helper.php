@@ -113,7 +113,7 @@ class Form_Helper
 									}
 									break;
 								default:
-									if (empty($form[$field_name])) {
+									if (!$form[$field_name] && $form[$field_name] != '0') {
 										if (!empty($rule_var_arr['default'])) {
 											$form[$field_name] = $rule_var_arr['default'];
 											$form[$field_name . '_err'] = '';
@@ -214,10 +214,30 @@ class Form_Helper
 								}
 							}
 							break;
+						// file name check
+						case 'name':
+							if ($rules[$field_name]['type'] == 'file' && isset($form[$field_name . '_name'])) {
+								if (mb_strlen($form[$field_name . '_name']) > $rule_var_arr['value']) {
+									unset($form[$field_name]);
+									unset($form[$field_name . '_name']);
+									unset($form[$field_name . '_type']);
+									unset($form[$field_name . '_size']);
+									$validate = false;
+									$form[$field_name . '_err'] = $rule_var_arr['msg'];
+								}
+							}
+							break;
 						// file size check
 						case 'size':
 							if ($rules[$field_name]['type'] == 'file' && isset($form[$field_name . '_size'])) {
-								if (Files_Helper::getSize($form[$field_name . '_size'], FILES_SIZE['size']) > FILES_SIZE['value']) {
+								if ($form[$field_name . '_size'] === 0) {
+									unset($form[$field_name]);
+									unset($form[$field_name . '_name']);
+									unset($form[$field_name . '_type']);
+									unset($form[$field_name . '_size']);
+									$validate = false;
+									$form[$field_name . '_err'] = 'Выбран пустой файл!';
+								} elseif (Files_Helper::getSize($form[$field_name . '_size'], FILES_SIZE['size']) > $rule_var_arr['value']) {
 									unset($form[$field_name]);
 									unset($form[$field_name . '_name']);
 									unset($form[$field_name . '_type']);
@@ -229,8 +249,8 @@ class Form_Helper
 							break;
 						// file extension check
 						case 'ext':
-							if ($rules[$field_name]['type'] == 'file' && isset($form[$field_name . '_type'])) {
-								if (!in_array($form[$field_name . '_type'], FILES_EXT_SCANS)) {
+							if ($rules[$field_name]['type'] == 'file' && isset($form[$field_name . '_type']) && isset($form[$field_name])) {
+								if (!in_array($form[$field_name . '_type'], $rule_var_arr['value']) || !in_array(mime_content_type($form[$field_name]), $rule_var_arr['value'])) {
 									unset($form[$field_name]);
 									unset($form[$field_name . '_name']);
 									unset($form[$field_name . '_type']);
@@ -419,6 +439,58 @@ class Form_Helper
 					</div>';
 		} else {
 			return '<p class="text-danger">Form_Helper.setFormCheckbox - На входе не массив!</p>';
+		}
+	}
+
+	/**
+     * Creates form select list.
+     *
+     * @return string
+     */
+    /* RULES (+ required)
+		+ 'label' => {SELECTLIST_NAME},
+		+ 'control' => {SELECTLIST_ID},
+		+ 'class' => {SELECTLIST_CLASS},
+		+ 'required' => yes/no,
+		'required_style' => {SELECTLIST_STYLE}
+		+ 'source' => {SELECTLIST_SOURCE} : ['code' => code, 'description' => description],
+		+ 'value' => {SELECTLIST_VALUE},
+		+ 'success' => {SELECTLIST_SUCCESS_MESSAGE},
+		+ 'error' => {SELECTLIST_ERROR_MESSAGE}
+    */
+	public static function setFormSelectList($rules) : string
+	{
+		if (isset($rules) && is_array($rules)) {
+			$label = self::setFormLabelStyle($rules['required'], (isset($rules['required_style'])) ? $rules['required_style'] : null, $rules['label']);
+			$result = '<div class="form-group row" id="'.$rules['control'].'_div">'.
+						HTML_Helper::setLabel($label['class'], $rules['control'], $label['value']).
+						'<div class="col">'.
+						'<select class="'.$rules['class'].'" id="'.$rules['control'].'" name="'.$rules['control'].'">';
+			if (isset($rules['source']) && is_array($rules['source'])) {
+				// making select list
+				$result .= '<option value=""'.(empty($rules['value']) ? ' selected' : '').'></option>';
+				foreach ($rules['source'] as $row) {
+					if (isset($row['code'])) {
+						$result .= '<option value="'.$row['code'].'"'.
+									(($rules['value'] == $row['code']) ? ' selected' : '').'>'.
+									((isset($row['description'])) ? $row['description'] : $row['code']).
+									'</option>';
+					} else {
+						return '<p class="text-danger">Form_Helper.setFormSelectList - В источнике не указан код!</p>';
+					}
+				}
+			} else {
+				// making blank select list
+				$result .= '<option value=""'.(empty($rules['value']) ? ' selected' : '').'></option>';
+			}
+			$result .= '</select>'.
+						HTML_Helper::setValidFeedback($rules['error'], $rules['success']).
+						HTML_Helper::setInvalidFeedback($rules['error']).
+						'</div>'.
+						'</div>';
+			return $result;
+		} else {
+			return '<p class="text-danger">Form_Helper.setFormSelectList - На входе не массив!</p>';
 		}
 	}
 

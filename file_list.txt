@@ -8,6 +8,8 @@ PORTALBSU
 |   |   
 |   +---backend- админка
 |   |   +---controllers - контроллеры (админка)
+|   |   |       Controller_DictCountries.php - контроллер справочника стран мира (админка)
+|   |   |       Controller_DictEge.php - контроллер справочника ЕГЭ (админка)
 |   |   |       Controller_DictionaryManager.php - контроллер управления справочниками (админка)
 |   |   |       Controller_EduclevelsDoctypes.php - контроллер настройки связи уровней подготовки с типами документов (админка)
 |   |   |       Controller_EductypesDoctypes.php - контроллер настройки связи видов образования с типами документов (админка)
@@ -16,6 +18,8 @@ PORTALBSU
 |   |   |       Controller_User.php - контроллер пользователей (админка)
 |   |   |
 |   |   +---models - модели (админка)
+|   |   |       Model_DictCountries.php - модель справочника стран мира (админка)
+|   |   |       Model_DictEge.php - модель справочника ЕГЭ (админка)
 |   |   |       Model_DictionaryManager.php - модель управления справочниками (админка)
 |   |   |       Model_EduclevelsDoctypes.php - модель настройки связи уровней подготовки с типами документов (админка)
 |   |   |       Model_EductypesDoctypes.php - модель настройки связи видов образования с типами документов (админка)
@@ -25,6 +29,10 @@ PORTALBSU
 |   |   |
 |   |   +---views - представления/формы (админка)
 |   |   |   |   delete-confirm.php - форма подтверждения удаления (админка)
+|   |   |   |   dict-countries-add.php - форма справочника стран мира (админка)
+|   |   |   |   dict-countries.php - справочник стран мира (админка)
+|   |   |   |   dict-ege-add.php - форма справочника ЕГЭ (админка)
+|   |   |   |   dict-ege.php - справочник ЕГЭ (админка)
 |   |   |   |   dictionary-manager.php - форма управления справочниками (админка)
 |   |   |   |   educlevels-doctypes-add.php - форма связи уровней подготовки с типами документов (админка)
 |   |   |   |   educlevels-doctypes.php - связи уровней подготовки с типами документов (админка)

@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project name="C:\wamp\wamp64\www\vhost_portalbsu\portalbsu.clpprj">
 	<settings><PM_URL><![CDATA[http://portalbsu.bsu.edu.ru]]></PM_URL><PM_HOME_URL><![CDATA[http://portalbsu.bsu.edu.ru]]></PM_HOME_URL><PM_LIBS><![CDATA[]]></PM_LIBS><PM_FTP_CONNECTION><![CDATA[]]></PM_FTP_CONNECTION><PM_FTP_DIR><![CDATA[]]></PM_FTP_DIR><PM_FTP_UPLOAD_ON_SAVE><![CDATA[INT:0]]></PM_FTP_UPLOAD_ON_SAVE></settings><removed value=";"/><added value=""/><lastopfiles>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\index.php"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\db_config.php"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DictCountries.php"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\layouts\main.php"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\form_config.php"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_Main.php"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_DictCountries.php"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\dict-countries.php"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_DictCountries.php"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\dict-countries-add.php"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Scans.php"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\files_config.php"/>
 	</lastopfiles>
 	<todoblock>
 		<todofile name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\basic_helper.php">
@@ -9,11 +23,6 @@
 		<todofile name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\html_helper.php">
 			<todo name="TODO добавил паша, то же самое, но открывает на новой вкладке" pos="2;132"/>
 			<todo name="TODO Паша добавил обработку для красного текста (состояние)" pos="8;212"/>
-		</todofile>
-		<todofile name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_IndAchievs.php">
-			<todo name="TODO Пашины правки min (стало) 0 =&gt; 1 (было)" pos="126;37"/>
-			<todo name="TODO Пашины правки PATTERN (стало) _INFO_RUS =&gt; _NUMB (было)" pos="134;44"/>
-			<todo name="TODO Пашины правки PATTERN (стало) _INFO_RUS =&gt; _NUMB (было)" pos="151;52"/>
 		</todofile>
 		<todofile name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php">
 			<todo name="@TODO would be nice to use php://temp streams here" pos="17;2598"/>
@@ -114,7 +123,7 @@
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\web\.htaccess" crc="1526567834"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\layouts\main.php" crc="1529582285"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\layouts\form.php" crc="1528895462"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\signup.php" crc="1524901861"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\signup.php" crc="1532336489"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\scans-show.php" crc="1527080880"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\scans-delete.php" crc="1527080846"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\resume.php" crc="1531817054"/>
@@ -123,8 +132,8 @@
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\main.php" crc="1529423146"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\login.php" crc="1524902053"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\ind-achievs.php" crc="1529423051"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\ind-achievs-add.php" crc="1531122834"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\ege.php" crc="1529423051"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\ind-achievs-add.php" crc="1532076760"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\ege.php" crc="1532092937"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\ege-disciplines.php" crc="1527080625"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\ege-disciplines-add.php" crc="1528984208"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\ege-add.php" crc="1528984080"/>
@@ -133,23 +142,23 @@
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\delete-confirm.php" crc="1528203691"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\application.php" crc="1529423051"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\application-places-add.php" crc="1529572607"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\application-edit.php" crc="1531999973"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\application-edit.php" crc="1532095368"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\application-add.php" crc="1530605162"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Signup.php" crc="1529580471"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Scans.php" crc="1531988562"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Scans.php" crc="1532357288"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Resume.php" crc="1531825153"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwdRequest.php" crc="1529580509"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwd.php" crc="1529580545"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Main.php" crc="1531902602"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Login.php" crc="1529580610"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Kladr.php" crc="1529395339"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_IndAchievs.php" crc="1531488429"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_EgeDisciplines.php" crc="1529580069"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_IndAchievs.php" crc="1532076851"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_EgeDisciplines.php" crc="1532098952"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Ege.php" crc="1529580046"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_DocsEduc.php" crc="1532003526"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_DocsEduc.php" crc="1532090916"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_DictForeignLangs.php" crc="1527058654"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_DictDoctypes.php" crc="1529391067"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php" crc="1532012426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php" crc="1532352758"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Application.php" crc="1531985130"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_AdmissionCampaign.php" crc="1527058820"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Signup.php" crc="1524903225"/>
@@ -157,11 +166,11 @@
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Resume.php" crc="1531991417"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwdRequest.php" crc="1521444280"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwd.php" crc="1522843597"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Main.php" crc="1531902602"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Main.php" crc="1532331581"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Login.php" crc="1520923381"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Kladr.php" crc="1529327923"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_IndAchievs.php" crc="1531990810"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_EgeDisciplines.php" crc="1529579316"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_EgeDisciplines.php" crc="1532093127"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Ege.php" crc="1529579178"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_DocsEduc.php" crc="1531990965"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_DictForeignLangs.php" crc="1526635220"/>
@@ -178,7 +187,7 @@
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\mail_helper.php" crc="1519981033"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\html_helper.php" crc="1531918283"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\help_helper.php" crc="1531818019"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php" crc="1532003458"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\form_helper.php" crc="1532358140"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\files_helper.php" crc="1522838219"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\db_helper.php" crc="1532008405"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\captcha_helper.php" crc="1519980683"/>
@@ -186,9 +195,9 @@
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\basic_helper.php" crc="1531384852"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\exceptions\upload_exceptions.php" crc="1523279968"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\mail_config.php" crc="1525346049"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\form_config.php" crc="1531907735"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\files_config.php" crc="1526640842"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\db_config.php" crc="1532013495"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\form_config.php" crc="1532332444"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\files_config.php" crc="1532357288"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\db_config.php" crc="1532099235"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\cas_config.php" crc="1525346255"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\1c_config.php" crc="1528529386"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\view.php" crc="1519981069"/>
@@ -198,13 +207,13 @@
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php" crc="1531983949"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Scans.php" crc="1531988562"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Resume.php" crc="1532013071"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Personal.php" crc="1529580998"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Personal.php" crc="1532351840"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Passport.php" crc="1531991898"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_KladrAbbrs.php" crc="1524146372"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Kladr.php" crc="1532013027"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_IndAchievs.php" crc="1529048932"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_IndAchievs.php" crc="1532076652"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ForeignLangs.php" crc="1529077083"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php" crc="1532012922"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EgeDisciplines.php" crc="1532091901"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Ege.php" crc="1527776616"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EductypesDoctypes.php" crc="1532012878"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_EduclevelsDoctypes.php" crc="1532012888"/>
@@ -221,14 +230,14 @@
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DictForeignLangs.php" crc="1529413637"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DictFinances.php" crc="1529413547"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DictEntranceExams.php" crc="1529564794"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DictEge.php" crc="1526387504"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DictEge.php" crc="1532338319"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DictEductypes.php" crc="1529413443"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DictEduclevels.php" crc="1529413377"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DictEducforms.php" crc="1529413300"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DictDoctypes.php" crc="1529413240"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DictDocships.php" crc="1529413160"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DictDiscipline.php" crc="1526981582"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DictCountries.php" crc="1526377551"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DictDiscipline.php" crc="1532097858"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_DictCountries.php" crc="1532353654"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Contacts.php" crc="1529581191"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationStatus.php" crc="1532012715"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationPlacesExams.php" crc="1532012660"/>
@@ -239,7 +248,7 @@
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Address.php" crc="1531810798"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\web\index.php" crc="1524899656"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\web\.htaccess" crc="1526567822"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\layouts\main.php" crc="1531907735"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\layouts\main.php" crc="1532331434"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\layouts\form.php" crc="1527845948"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\user.php" crc="1531920450"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\main.php" crc="1527845717"/>
@@ -249,6 +258,10 @@
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\educlevels-doctypes.php" crc="1527778858"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\educlevels-doctypes-add.php" crc="1527846376"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\dictionary-manager.php" crc="1531988893"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\dict-ege.php" crc="1532096364"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\dict-ege-add.php" crc="1532098326"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\dict-countries.php" crc="1532332503"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\dict-countries-add.php" crc="1532348248"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\delete-confirm.php" crc="1527836173"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_User.php" crc="1531983949"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_Main.php" crc="1531903307"/>
@@ -256,18 +269,22 @@
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_EductypesDoctypes.php" crc="1530104360"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_EduclevelsDoctypes.php" crc="1528102630"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_DictionaryManager.php" crc="1527778154"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_DictEge.php" crc="1532352967"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_DictCountries.php" crc="1532353776"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_User.php" crc="1531984158"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_Main.php" crc="1531914206"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_Main.php" crc="1532332529"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_Login.php" crc="1520865508"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_EductypesDoctypes.php" crc="1531825544"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_EduclevelsDoctypes.php" crc="1527838926"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_EductypesDoctypes.php" crc="1532337341"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_EduclevelsDoctypes.php" crc="1532337353"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_DictionaryManager.php" crc="1520945301"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_DictEge.php" crc="1532337071"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_DictCountries.php" crc="1532350116"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\bootstrap.php" crc="1529332077"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\todo.txt" crc="1532013410"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\todo.txt" crc="1532098899"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\road_map.txt" crc="1528277879"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\index.php" crc="1532013863"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\index.php" crc="1532099235"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\file_list.txt" crc="1531988945"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\change_log.txt" crc="1532013853"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\change_log.txt" crc="1532356666"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\.htaccess" crc="1526567802"/>
 	</filescache>
 </project>

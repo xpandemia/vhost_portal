@@ -80,6 +80,7 @@ class Model_Resume extends Model
                 'agreement' => [
 								'type' => 'file',
 								'class' => 'form-control',
+								'name' => ['value' => FILES_NAME, 'msg' => 'Имя файла скан-копии "Согласие родителей/опекунов" превышает '.FILES_NAME.' знаков!'],
 								'size' => ['value' => FILES_SIZE['value'], 'msg' => 'Размер скан-копии "Согласие родителей/опекунов" превышает '.FILES_SIZE['value'].' '.FILES_SIZE['size'].' !'],
 									'ext' => ['value' => FILES_EXT_SCANS, 'msg' => 'Недопустимый тип скан-копии "Согласие родителей/опекунов"!'],
 								'success' => 'Скан-копия "Согласие родителей/опекунов" заполнена верно.'
@@ -231,6 +232,7 @@ class Model_Resume extends Model
 	            'passport_old' => [
 									'type' => 'file',
 									'class' => 'form-control',
+									'name' => ['value' => FILES_NAME, 'msg' => 'Имя файла скан-копии "Сведения о ранее выданных паспортах" превышает '.FILES_NAME.' знаков!'],
 									'size' => ['value' => FILES_SIZE['value'], 'msg' => 'Размер скан-копии "Сведения о ранее выданных паспортах" превышает '.FILES_SIZE['value'].' '.FILES_SIZE['size'].' !'],
 									'ext' => ['value' => FILES_EXT_SCANS, 'msg' => 'Недопустимый тип скан-копии "Сведения о ранее выданных паспортах"!'],
 									'success' => 'Скан-копия "Сведения о ранее выданных паспортах" заполнена верно.'

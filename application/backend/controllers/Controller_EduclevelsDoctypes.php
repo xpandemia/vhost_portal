@@ -84,7 +84,7 @@ class Controller_EduclevelsDoctypes extends Controller
 		if ($this->model->delete($this->form)) {
 			Basic_Helper::redirect($this->form['hdr'], 200, $this->form['ctr'], 'Index');
 		} else {
-			$this->form['error_msg'] = 'Ошибка удаления документа "'.$this->form['hdr'].'"!';
+			$this->form['error_msg'] = 'Ошибка удаления связи документов с уровнями подготовки!';
 			return $this->view->generate('delete-confirm.php', 'form.php', 'Удаление документа "'.$this->form['hdr'].'"', $this->form);
 		}
 	}

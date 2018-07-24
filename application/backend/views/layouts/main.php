@@ -54,8 +54,13 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 					</a>
 			    </li>
 			    <li class="nav-item">
+					<a class="nav-link" href="<?php echo Basic_Helper::appUrl('Main', DICT_COUNTRIES['ctr']); ?>">
+						<span data-toggle="tooltip" data-placement="auto" title="Страны мира"><i class="fas fa-globe fa-2x"></i></span>
+					</a>
+			    </li>
+			    <li class="nav-item">
 					<a class="nav-link" href="<?php echo Basic_Helper::appUrl('Main', DICT_EGE['ctr']); ?>">
-						<span data-toggle="tooltip" data-placement="auto" title="<?php echo DICT_EGE['hdr']; ?>"><i class="fas fa-table fa-2x"></i></span>
+						<span data-toggle="tooltip" data-placement="auto" title="Дисциплины ЕГЭ"><i class="fas fa-table fa-2x"></i></span>
 					</a>
 			    </li>
 			    <li class="nav-item">

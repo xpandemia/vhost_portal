@@ -77,7 +77,7 @@ define('APP', array(
 // Users
 define('USER', array(
 					'id' => 'form_user',
-					'hdr' => 'Пользователи',
+					'hdr' => 'Пользователь',
 					'ctr' => 'User',
 					'act' => 'Save'));
 // Dictionary manager
@@ -86,6 +86,11 @@ define('DICT_MANAGER', array(
 							'hdr' => 'Управление справочниками',
 							'ctr' => 'DictionaryManager',
 							'act' => 'Renew'));
+define('DICT_COUNTRIES', array(
+								'id' => 'form_dict_countries',
+								'hdr' => 'Страна мира',
+								'ctr' => 'DictCountries',
+								'act' => 'Save'));
 define('DICT_EGE', array(
 						'id' => 'form_dict_ege',
 						'hdr' => 'Дисциплина ЕГЭ',
