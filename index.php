@@ -2,7 +2,7 @@
 
 define('APP_NAME', 'Личный кабинет абитуриента');
 define('APP_CODE', 'portalbsu'); // MUST BE UNIQUE
-define('APP_VERSION', '0.4.7');
+define('APP_VERSION', '0.4.8');
 define('APP_DATA', 'main');
 
 # Личный кабинет абитуриента
@@ -134,7 +134,9 @@ if ($logon == 'cas') {
 	phpCAS::forceAuthentication();
 
 	// set session user
-	$_SESSION[APP_CODE]['user_name'] = phpCAS::getUser();
+	if (!isset($_SESSION[APP_CODE]['user_name']) || empty($_SESSION[APP_CODE]['user_name'])) {
+		$_SESSION[APP_CODE]['user_name'] = phpCAS::getUser();
+	}
 }
 
 # ---------------------------------------------------------------

@@ -365,6 +365,88 @@ class Model_ApplicationPlaces extends Db_Helper
 	{
 		$conds = $this->CondsHighEducSecond($pay);
 		$params = $this->ParamsHighEducSecond($pay);
+		var_dump($params);
+		exit();
+		return $this->rowSelectAll('DISTINCT edulevel_code, edulevel_name',
+									$this->TablesSpecs(),
+									$conds,
+									$params,
+									'edulevel_name');
+	}
+
+	/**
+     * Gets second high magister specialities for application.
+     *
+     * @return array
+     */
+	public function getSpecsSecondMagisterForApp($pay)
+	{
+		$conds = $this->CondsHighEducSecondMagister($pay);
+		$params = $this->ParamsHighEducSecondMagister($pay);
+		return $this->rowSelectAll('dict_speciality.id, speciality_name, profil_name, finance_name, eduform_name, edulevel_name',
+									$this->TablesSpecs(),
+									$conds,
+									$params,
+									'speciality_name, profil_name');
+	}
+
+	/**
+     * Gets second high magister specialities UNIQUE for application.
+     *
+     * @return array
+     */
+	public function getSpecialitySecondMagisterForApp($pay)
+	{
+		$conds = $this->CondsHighEducSecondMagister($pay);
+		$params = $this->ParamsHighEducSecondMagister($pay);
+		return $this->rowSelectAll('DISTINCT speciality_code, speciality_name, profil_code, profil_name',
+									$this->TablesSpecs(),
+									$conds,
+									$params,
+									'speciality_name');
+	}
+
+	/**
+     * Gets second high magister finances UNIQUE for application.
+     *
+     * @return array
+     */
+	public function getFinanceSecondMagisterForApp($pay)
+	{
+		$conds = $this->CondsHighEducSecondMagister($pay);
+		$params = $this->ParamsHighEducSecondMagister($pay);
+		return $this->rowSelectAll('DISTINCT finance_code, finance_name',
+									$this->TablesSpecs(),
+									$conds,
+									$params,
+									'finance_name');
+	}
+
+	/**
+     * Gets second high magister eduforms UNIQUE for application.
+     *
+     * @return array
+     */
+	public function getEduformSecondMagisterForApp($pay)
+	{
+		$conds = $this->CondsHighEducSecondMagister($pay);
+		$params = $this->ParamsHighEducSecondMagister($pay);
+		return $this->rowSelectAll('DISTINCT eduform_code, eduform_name',
+									$this->TablesSpecs(),
+									$conds,
+									$params,
+									'eduform_name');
+	}
+
+	/**
+     * Gets second high magister edulevels UNIQUE for application.
+     *
+     * @return array
+     */
+	public function getEdulevelSecondMagisterForApp($pay)
+	{
+		$conds = $this->CondsHighEducSecondMagister($pay);
+		$params = $this->ParamsHighEducSecondMagister($pay);
 		return $this->rowSelectAll('DISTINCT edulevel_code, edulevel_name',
 									$this->TablesSpecs(),
 									$conds,
@@ -634,6 +716,20 @@ class Model_ApplicationPlaces extends Db_Helper
 	}
 
 	/**
+     * Returns conditions for the second high magister education.
+     *
+     * @return string
+     */
+	public function CondsHighEducSecondMagister($pay) : string
+	{
+		if ($pay == 1) {
+			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr = :finance AND (stage_numb = :stage_numb OR stage_numb is null) AND group_name not like (:group_name) AND :dt between stage_dt_begin and stage_dt_end';
+		} else {
+			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr <> :finance AND (stage_numb = :stage_numb OR stage_numb is null) AND group_name not like (:group_name) AND :dt between stage_dt_begin and stage_dt_end';
+		}
+	}
+
+	/**
      * Returns parameters for special education based on 9 classes.
      *
      * @return array
@@ -703,6 +799,30 @@ class Model_ApplicationPlaces extends Db_Helper
 					':group_beneficiary' => 0,
 					':finance' => self::PURPOSE,
 					':eduprogram_name' => 'Высшее',
+					':stage_numb' => 1,
+					':group_name' => '%(англ)',
+					':dt' => date('Y-m-d H:i:s')];
+		}
+	}
+
+	/**
+     * Returns parameters for the second high magister education.
+     *
+     * @return array
+     */
+	public function ParamsHighEducSecondMagister($pay) : array
+	{
+		if ($pay == 1) {
+			return [':pid' => $this->pid,
+					':group_beneficiary' => 0,
+					':finance' => self::PAY,
+					':stage_numb' => 1,
+					':group_name' => '%(англ)',
+					':dt' => date('Y-m-d H:i:s')];
+		} else {
+			return [':pid' => $this->pid,
+					':group_beneficiary' => 0,
+					':finance' => self::PURPOSE,
 					':stage_numb' => 1,
 					':group_name' => '%(англ)',
 					':dt' => date('Y-m-d H:i:s')];

@@ -40,11 +40,27 @@ class Model_DictScans extends Db_Helper
 	public function getByDocument()
 	{
 		return $this->rowSelectAll(self::TABLE_NAME.'.id, scan_code, scan_name, required',
-								self::TABLE_NAME.' INNER JOIN docs ON '.self::TABLE_NAME.'.id_doc = docs.id',
-								'doc_code = :doc_code AND main = :main',
-								[':doc_code' => $this->doc_code,
-								':main' => 1],
-								'numb');
+									self::TABLE_NAME.' INNER JOIN docs ON '.self::TABLE_NAME.'.id_doc = docs.id',
+									'doc_code = :doc_code AND main = :main',
+									[':doc_code' => $this->doc_code,
+									':main' => 1],
+									'numb');
+	}
+
+	/**
+     * Gets required scans by document.
+     *
+     * @return array
+     */
+	public function getByDocumentRequired()
+	{
+		return $this->rowSelectAll(self::TABLE_NAME.'.id, scan_code, scan_name, required',
+									self::TABLE_NAME.' INNER JOIN docs ON '.self::TABLE_NAME.'.id_doc = docs.id',
+									'doc_code = :doc_code AND required = :required AND main = :main',
+									[':doc_code' => $this->doc_code,
+									':required' => 1,
+									':main' => 1],
+									'numb');
 	}
 
 	/**

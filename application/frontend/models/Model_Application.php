@@ -12,8 +12,10 @@ use common\models\Model_AdmissionCampaign as Model_AdmissionCampaign;
 use common\models\Model_DictDocships as Model_DictDocships;
 use common\models\Model_DictForeignLangs as DictForeignLangs;
 use common\models\Model_ForeignLangs as ForeignLangs;
-use common\models\Model_IndAchievs as Model_IndAchievs;
-use common\models\Model_ApplicationAchievs as Model_ApplicationAchievs;
+use common\models\Model_IndAchievs as IndAchievs;
+use common\models\Model_ApplicationAchievs as ApplicationAchievs;
+
+include ROOT_DIR.'/application/frontend/models/Model_Scans.php';
 
 class Model_Application extends Model
 {
@@ -141,7 +143,7 @@ class Model_Application extends Model
 	}
 
 	/**
-     * Checks education document data.
+     * Checks application data.
      *
      * @return array
      */
@@ -176,6 +178,25 @@ class Model_Application extends Model
 				return $form;
 			}
 		$app->id_docseduc = $form['docs_educ'];
+		// check education document scans
+		if (Model_Scans::existsRequired('docs_educ', $app->id_docseduc) === false) {
+			$form['error_msg'] = 'В документ об образовании загружены не все обязательные скан-копии!';
+			return $form;
+		}
+		// check individual achievments scans
+		$ia = new IndAchievs();
+		$ia->campaign_code = $form['campaign'];
+		$ia_arr = $ia->getByUserCampaign();
+		if ($ia_arr) {
+			$appia = new ApplicationAchievs();
+			$appia->pid = $app->id;
+			foreach ($ia_arr as $ia_row) {
+				if (Model_Scans::existsRequired('ind_acievs', $ia_row['id']) === false) {
+					$form['error_msg'] = 'В индивидуальное достижение № '.$ia_row['id'].' загружены не все обязательные скан-копии!';
+					return $form;
+				}
+			}
+		}
 			$docship = new Model_DictDocships();
 			$docship->code = '000000001';
 			$docship_row = $docship->getByCode();
@@ -233,11 +254,11 @@ class Model_Application extends Model
 			$applog->id_application = $app->id;
 			$applog->create();
 			// set individual achievments
-			$ia = new Model_IndAchievs();
+			$ia = new IndAchievs();
 			$ia->campaign_code = $form['campaign'];
 			$ia_arr = $ia->getByUserCampaign();
 			if ($ia_arr) {
-				$appia = new Model_ApplicationAchievs();
+				$appia = new ApplicationAchievs();
 				$appia->pid = $app->id;
 				foreach ($ia_arr as $ia_row) {
 					$appia->id_achiev = $ia_row['id'];

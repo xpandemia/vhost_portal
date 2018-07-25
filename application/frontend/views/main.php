@@ -34,7 +34,7 @@ include ROOT_DIR.'/application/frontend/models/Model_Resume.php';
 	$personal_row = $personal->getCode1sByUser();
 	if (!empty($personal_row['code1s'])) {
 		echo '<div class="row">';
-		echo '<div class="col"><h5>Ваш идентификатор абитуриента <a href="http://abitur.bsu.edu.ru/abitur/exam/sched/" target="_blank">для просмотра расписания вступительных испытаний на сайте</a>: <strong>'.$personal_row['code1s'].'</strong></h5></div>';
+		echo '<div class="col"><h5>Ваш идентификатор абитуриента <a href="http://abitur.bsu.edu.ru/abitur/exam/sched/?request=personal_schedule&AID=\''.$personal_row['code1s'].'\'" target="_blank">для просмотра расписания вступительных испытаний на сайте</a>: <strong>'.$personal_row['code1s'].'</strong></h5></div>';
 		echo '</div>';
 	}
 ?>

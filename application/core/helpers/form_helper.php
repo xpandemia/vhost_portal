@@ -98,9 +98,6 @@ class Form_Helper
 		foreach ($rules as $field_name => $rule_name_arr) {
 			if ($form[$field_name . '_vis'] === true) {
 				foreach ($rule_name_arr as $rule_name => $rule_var_arr) {
-					if (!isset($form[$field_name])) {
-						continue;
-					}
 					// RULE processing
 					switch ($rule_name) {
 						// required check
@@ -116,6 +113,18 @@ class Form_Helper
 									if (!$form[$field_name] && $form[$field_name] != '0') {
 										$validate = false;
 										$form[$field_name . '_err'] = $rule_var_arr['msg'];
+									}
+									break;
+								case 'file':
+									if (!isset($form[$field_name])) {
+										if (!empty($rule_var_arr['default'])) {
+											$form[$field_name] = $rule_var_arr['default'];
+											$form[$field_name . '_err'] = '';
+										}
+										else {
+											$validate = false;
+											$form[$field_name . '_err'] = $rule_var_arr['msg'];
+										}
 									}
 									break;
 								default:
@@ -283,6 +292,7 @@ class Form_Helper
 					$form[$field_name . '_cls'] = $rules[$field_name]['class'] . ' is-valid';
 				}
 				else {
+					$form[$field_name . '_scs'] = null;
 					$form[$field_name . '_cls'] = $rules[$field_name]['class'] . ' is-invalid';
 				}
 			}
@@ -692,7 +702,7 @@ class Form_Helper
 				$result .= '<input type="hidden" id="'.$field.'_id" name="'.$field.'_id" value="'.$rules['data'][$field.'_id'].'"/>'.
 							'<span style="padding-left:10px;"> </span><img class="img-fluid" src="data:'.$rules['data'][$field.'_type'].';base64,'.base64_encode( $rules['data'][$field] ).'" width="80" height="100">'.
 							'<span style="padding-left:10px;"> </span>'.
-							HTML_Helper::setHrefButtonIcon('Scans', 'Show/?id='.$rules['data'][$field.'_id'].'&ctr='.$rules['home_ctr'].'&act='.$rules['home_act'], 'font-weight-bold', 'far fa-file-image fa-2x', 'Просмотреть файл').
+							HTML_Helper::setHrefButtonIcon('Scans', 'Show/?id='.$rules['data'][$field.'_id'].((isset($rules['home_id']) && !empty($rules['home_id'])) ? '&pid='.$rules['home_id'] : '').'&hdr='.$rules['home_hdr'].'&ctr='.$rules['home_ctr'].'&act='.$rules['home_act'], 'font-weight-bold', 'far fa-file-image fa-2x', 'Просмотреть файл').
 							'<span style="padding-left:10px;"> </span>'.
 							HTML_Helper::setHrefButtonIcon('Scans', 'DeleteConfirm/?id='.$rules['data'][$field.'_id'].((isset($rules['home_id']) && !empty($rules['home_id'])) ? '&pid='.$rules['home_id'] : '').'&hdr='.$rules['home_hdr'].'&ctr='.$rules['home_ctr'].'&act='.$rules['home_act'], 'text-danger font-weight-bold', 'fas fa-times fa-2x', 'Удалить файл');
 			} else {

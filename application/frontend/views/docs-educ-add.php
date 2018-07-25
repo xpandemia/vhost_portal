@@ -168,7 +168,7 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 				} else {
 					echo HTML_Helper::setHrefButton(DOCS_EDUC['ctr'], 'Reset', 'btn btn-danger', 'Очистить', 'Обнуляет форму ввода');
 				}
-				echo HTML_Helper::setHrefButton(DOCS_EDUC['ctr'], 'Index', 'btn btn-warning', 'Отмена');
+				echo HTML_Helper::setHrefButton(DOCS_EDUC['ctr'], 'Cancel', 'btn btn-warning', 'Отмена');
 			?>
 		</div>
 	</div>

@@ -155,6 +155,16 @@ class Controller_DocsEduc extends Controller
 	}
 
 	/**
+     * Cancels education document.
+     *
+     * @return mixed
+     */
+	public function actionCancel()
+	{
+		return Basic_Helper::redirect(DOCS_EDUC['hdr'], 200, DOCS_EDUC['ctr'], 'Index');
+	}
+
+	/**
      * Prints education documents by user campaign JSON.
      *
      * @return void

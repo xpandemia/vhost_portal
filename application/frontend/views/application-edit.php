@@ -4,6 +4,7 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 use tinyframe\core\helpers\Form_Helper as Form_Helper;
 use common\models\Model_DocsEduc as DocsEduc;
+use common\models\Model_DictForeignLangs as DictForeignLangs;
 use common\models\Model_Personal as Personal;
 use common\models\Model_Application as Application;
 use common\models\Model_ApplicationStatus as ApplicationStatus;
@@ -26,6 +27,10 @@ use frontend\models\Model_Application as Model_Application;
 	$docs = new DocsEduc();
 	$docs->id = $app_row['id_docseduc'];
 	$docs_row = $docs->getForField();
+	// get foreign language
+	$langs = new DictForeignLangs();
+	$langs->id = $app_row['id_lang'];
+	$langs_row = $langs->get();
 	// get citizenship
 	$personal = new Personal();
 	$citizenship = $personal->getCitizenshipByUser();
@@ -67,9 +72,15 @@ use frontend\models\Model_Application as Model_Application;
 		echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
 		echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
 		/* type */
+		echo '<div class="row">';
+		echo '<div class="col">';
 		echo Model_Application::showType($app_row['type']);
+		echo '</div>';
 		/* status */
+		echo '<div class="col">';
 		echo Model_Application::showStatus($app_row['status']);
+		echo '</div>';
+		echo '</div>';
 		/* comment */
 		if ($app_row['status'] == $app::STATUS_REJECTED) {
 			$applog = new ApplicationStatus();
@@ -79,6 +90,9 @@ use frontend\models\Model_Application as Model_Application;
 		}
 		/* education document */
 		echo HTML_Helper::setAlert('Документ об образовании: <strong>'.$docs_row['docs_educ'].'</strong>', 'alert-info');
+		/* foreign language */
+		echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nЧтобы изменить изучаемый иностранный язык необходимо удалить текущее заявление и создать новое."), 'alert-warning');
+		echo HTML_Helper::setAlert('Изучаемый иностранный язык: <strong>'.$langs_row['description'].'</strong>', 'alert-info');
 	?>
 	<hr><h5>Направления подготовки</h5><br>
 	<?php

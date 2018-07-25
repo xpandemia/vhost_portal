@@ -75,6 +75,8 @@ use common\models\Model_DocsEduc as DocsEduc;
 						} else {
 							if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
 								$speciality_arr = $specs->getSpecialityFirstForApp($app_row['pay']);
+							} elseif ($app->checkMagistratureSecond()) {
+								$speciality_arr = $specs->getSpecialitySecondMagisterForApp($app_row['pay']);
 							} else {
 								$speciality_arr = $specs->getSpecialitySecondForApp($app_row['pay']);
 							}
@@ -106,6 +108,8 @@ use common\models\Model_DocsEduc as DocsEduc;
 						} else {
 							if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
 								$finance_arr = $specs->getFinanceFirstForApp($app_row['pay']);
+							} elseif ($app->checkMagistratureSecond()) {
+								$finance_arr = $specs->getFinanceSecondMagisterForApp($app_row['pay']);
 							} else {
 								$finance_arr = $specs->getFinanceSecondForApp($app_row['pay']);
 							}
@@ -133,6 +137,8 @@ use common\models\Model_DocsEduc as DocsEduc;
 						} else {
 							if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
 								$eduform_arr = $specs->getEduformFirstForApp($app_row['pay']);
+							} elseif ($app->checkMagistratureSecond()) {
+								$eduform_arr = $specs->getEduformSecondMagisterForApp($app_row['pay']);
 							} else {
 								$eduform_arr = $specs->getEduformSecondForApp($app_row['pay']);
 							}
@@ -160,6 +166,8 @@ use common\models\Model_DocsEduc as DocsEduc;
 						} else {
 							if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
 								$edulevel_arr = $specs->getEdulevelFirstForApp($app_row['pay']);
+							} elseif ($app->checkMagistratureSecond()) {
+								$edulevel_arr = $specs->getEdulevelSecondMagisterForApp($app_row['pay']);
 							} else {
 								$edulevel_arr = $specs->getEdulevelSecondForApp($app_row['pay']);
 							}
@@ -211,6 +219,8 @@ use common\models\Model_DocsEduc as DocsEduc;
 				} else {
 					if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
 						$specs_arr = $specs->getSpecsFirstForApp($app_row['pay']);
+					} elseif ($app->checkMagistratureSecond()) {
+						$specs_arr = $specs->getSpecsSecondMagisterForApp($app_row['pay']);
 					} else {
 						$specs_arr = $specs->getSpecsSecondForApp($app_row['pay']);
 					}

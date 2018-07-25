@@ -255,4 +255,27 @@ class Model_Scans extends Model
 		}
 		return $form;
 	}
+
+	/**
+     * Checks required scans for document row.
+     *
+     * @return boolean
+     */
+	public static function existsRequired($doc_code, $id_row)
+	{
+		$dict_scans = new Model_DictScans();
+		$dict_scans->doc_code = $doc_code;
+		$dict_scans_arr = $dict_scans->getByDocumentRequired();
+		if ($dict_scans_arr) {
+			$scans = new Scans();
+			foreach ($dict_scans_arr as $dict_scans_row) {
+				if (!$scans->getByDocScan($doc_code, $id_row, $dict_scans_row['scan_code'])) {
+					return false;
+				}
+			}
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

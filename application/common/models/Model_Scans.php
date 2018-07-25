@@ -108,7 +108,10 @@ class Model_Scans extends Db_Helper
      */
 	public function get()
 	{
-		return $this->rowSelectOne('*', self::TABLE_NAME, 'id = :id', [':id' => $this->id]);
+		return $this->rowSelectOne('*',
+									self::TABLE_NAME,
+									'id = :id',
+									[':id' => $this->id]);
 	}
 
 	/**

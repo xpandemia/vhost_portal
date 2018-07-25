@@ -26,8 +26,7 @@ use common\models\Model_Resume as Resume;
 use common\models\Model_DictForeignLangs as DictForeignLangs;
 use common\models\Model_DictEge as DictEge;
 use common\models\Model_DictCountries as DictCountries;
-
-include ROOT_DIR.'/application/frontend/models/Model_Scans.php';
+use common\models\Model_ForeignLangs as ForeignLangs;
 
 class Model_ApplicationSpec extends Model
 {
@@ -287,6 +286,11 @@ class Model_ApplicationSpec extends Model
 													if (!empty($app_row['id_lang'])) {
 														$langs->id = $app_row['id_lang'];
 														$langs_row = $langs->get();
+														if ($langs_row['description'] == 'Не изучал(а)') {
+															$form['error_msg'] = 'Вы не изучали иностранный язык!';
+															$places->clearByApplication();
+															return $form;
+														}
 														$egedict = new DictEge();
 														$egedict->description = $langs_row['description'].' язык';
 														$egedict_row = $egedict->getByDescription();
@@ -481,13 +485,29 @@ class Model_ApplicationSpec extends Model
 			$form['error_msg'] = 'Сохранять можно только заявления с состоянием: <strong>'.mb_convert_case($app::STATUS_CREATED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_SAVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($app::STATUS_CHANGED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!';
 			return $form;
 		}
+		/* check education document scans */
+		if (Model_Scans::existsRequired('docs_educ', $app_row['id_docseduc']) === false) {
+			$form['error_msg'] = 'В документ об образовании загружены не все обязательные скан-копии!';
+			return $form;
+		}
+		/* check individual achievments scans */
+		$ia = new ApplicationAchievs();
+		$ia->pid = $app->id;
+		$ia_arr = $ia->getByApp();
+		if ($ia_arr) {
+			foreach ($ia_arr as $ia_row) {
+				if (Model_Scans::existsRequired('ind_acievs', $ia_row['id']) === false) {
+					$form['error_msg'] = 'В индивидуальное достижение № '.$ia_row['id_achiev'].' загружены не все обязательные скан-копии!';
+					return $form;
+				}
+			}
+		}
 		/* application */
 		$app->id_docseduc = $app_row['id_docseduc'];
 		$app->id_docship = $app_row['id_docship'];
 		$app->id_lang = $app_row['id_lang'];
 		$app->status = $app::STATUS_SAVED;
 		// additional info
-		// check inila
 		$app->inila = ((empty($form['inila'])) ? null : $form['inila']);
 		$app->campus = (($form['campus'] == 'checked') ? 1 : 0);
 		$app->conds = (($form['conds'] == 'checked') ? 1 : 0);

@@ -45,7 +45,7 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 			<ul class="navbar-nav">
 				<li class="nav-item">
 					<a class="nav-link" href="<?php echo Basic_Helper::appUrl('Main', USER['ctr']); ?>">
-						<span data-toggle="tooltip" data-placement="auto" title="<?php echo USER['hdr']; ?>"><i class="fas fa-users fa-2x"></i></span>
+						<span data-toggle="tooltip" data-placement="auto" title="Пользователи"><i class="fas fa-users fa-2x"></i></span>
 					</a>
 			    </li>
 			    <li class="nav-item">

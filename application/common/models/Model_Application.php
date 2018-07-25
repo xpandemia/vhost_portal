@@ -421,15 +421,15 @@ class Model_Application extends Db_Helper
 	}
 
 	/**
-     * Changes application numb.
+     * Changes application foreign language.
      *
      * @return boolean
      */
-	public function changeNumb()
+	public function changeLang()
 	{
 		return $this->rowUpdate(self::TABLE_NAME,
-								'numb = :numb',
-								[':numb' => $this->numb],
+								'id_lang = :id_lang',
+								[':id_lang' => $this->id_lang],
 								['id' => $this->id]);
 	}
 
@@ -456,6 +456,19 @@ class Model_Application extends Db_Helper
 		return $this->rowUpdate(self::TABLE_NAME,
 								'status = :status',
 								[':status' => $this->status],
+								['id' => $this->id]);
+	}
+
+	/**
+     * Changes application numb.
+     *
+     * @return boolean
+     */
+	public function changeNumb()
+	{
+		return $this->rowUpdate(self::TABLE_NAME,
+								'numb = :numb',
+								[':numb' => $this->numb],
 								['id' => $this->id]);
 	}
 
@@ -591,6 +604,28 @@ class Model_Application extends Db_Helper
 									':description' => 'Магистратура',
 									':doc_type1' => '000000022',
 									':doc_type2' => '000000025']);
+		if (!empty($row)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+     * Checks magistrature second.
+     *
+     * @return boolean
+     */
+	public function checkMagistratureSecond()
+	{
+		$row = $this->rowSelectOne('application.*',
+									'application INNER JOIN admission_campaign ON application.id_campaign = admission_campaign.id'.
+									' INNER JOIN docs_educ ON application.id_docseduc = docs_educ.id'.
+									' INNER JOIN dict_doctypes ON docs_educ.id_doctype = dict_doctypes.id',
+									'application.id = :id AND left(admission_campaign.description, 12) = :description AND dict_doctypes.code = :doc_type',
+									[':id' => $this->id,
+									':description' => 'Магистратура',
+									':doc_type' => '000000023']);
 		if (!empty($row)) {
 			return true;
 		} else {
