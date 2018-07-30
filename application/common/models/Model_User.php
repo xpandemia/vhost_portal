@@ -29,12 +29,21 @@ class Model_User extends Db_Helper
 	const ROLE_ADMIN = 2;
 	const ROLE_ADMIN_NAME = 'Администратор';
 
+	const ROLE_LIST = [
+						['code' => 0, 'description' => 'Гость'],
+						['code' => 1, 'description' => 'Модератор'],
+						['code' => 2, 'description' => 'Администратор']
+						];
+
 	const STATUS_NOTACTIVE = 0;
 	const STATUS_NOTACTIVE_NAME = 'Не активен';
     const STATUS_ACTIVE = 1;
     const STATUS_ACTIVE_NAME = 'Активен';
     const STATUS_DELETED = 2;
     const STATUS_DELETED_NAME = 'Удалён';
+
+    const LIMIT_ROWS = 10;
+    const LIMIT_PAGES = 20;
 
 	public $id;
 	public $username;
@@ -166,7 +175,63 @@ class Model_User extends Db_Helper
      */
 	public function getGrid()
 	{
-		return $this->rowSelectAll("id, username, email, getUserRoleName(role) as role, getUserStatusName(status) as status, date_format(dt_created, '%d.%m.%Y %h:%m:%s') as dt_created", self::TABLE_NAME);
+		return $this->rowSelectAll("id, username, email, getUserRoleName(role) as role, getUserStatusName(status) as status, date_format(dt_created, '%d.%m.%Y %H:%i:%s') as dt_created", self::TABLE_NAME);
+	}
+
+	/**
+     * Gets users pages.
+     *
+     * @return array
+     */
+	public function getPages()
+	{
+		return $this->rowSelectAll("id, username, email, getUserRoleName(role) as role, getUserStatusName(status) as status, date_format(dt_created, '%d.%m.%Y %H:%i:%s') as dt_created",
+									self::TABLE_NAME,
+									'id >= :id',
+									[':id' => $this->id],
+									'id ASC',
+									$this::LIMIT_ROWS * $this::LIMIT_PAGES);
+	}
+
+	/**
+     * Gets users pages count.
+     *
+     * @return int
+     */
+	public function getPagesCount() : int
+	{
+		$count = $this->rowSelectOne('count(*) as pages', self::TABLE_NAME);
+		return $count['pages'] / self::LIMIT_ROWS;
+	}
+
+	/**
+     * Gets users previous page.
+     *
+     * @return array
+     */
+	public function getPagePrev()
+	{
+		return $this->rowSelectAll("id, username, email, getUserRoleName(role) as role, getUserStatusName(status) as status, date_format(dt_created, '%d.%m.%Y %H:%i:%s') as dt_created",
+									self::TABLE_NAME,
+									'id <= :id',
+									[':id' => $this->id],
+									'id DESC',
+									$this::LIMIT_ROWS);
+	}
+
+	/**
+     * Gets users next page.
+     *
+     * @return array
+     */
+	public function getPageNext()
+	{
+		return $this->rowSelectAll("id, username, email, getUserRoleName(role) as role, getUserStatusName(status) as status, date_format(dt_created, '%d.%m.%Y %H:%i:%s') as dt_created",
+									self::TABLE_NAME,
+									'id >= :id',
+									[':id' => $this->id],
+									'id ASC',
+									$this::LIMIT_ROWS);
 	}
 
 	/**
@@ -177,6 +242,16 @@ class Model_User extends Db_Helper
 	public function get()
 	{
 		return $this->rowSelectOne('*', self::TABLE_NAME, 'id = :id', [':id' => $this->id]);
+	}
+
+	/**
+     * Gets min user.
+     *
+     * @return array
+     */
+	public function getMin()
+	{
+		return $this->rowSelectOne('min(id) as id', self::TABLE_NAME);
 	}
 
 	/**
@@ -215,6 +290,25 @@ class Model_User extends Db_Helper
 	}
 
 	/**
+     * Checks if username exists except this ID.
+     *
+     * @return boolean
+     */
+	public function existsUsernameExcept()
+	{
+		$row = $this->rowSelectOne('id',
+									self::TABLE_NAME,
+									'username = :username AND id <> :id',
+									[':username' => $this->username,
+									':id' => $this->id]);
+		if (!empty($row)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
      * Checks if email exists.
      *
      * @return boolean
@@ -230,6 +324,39 @@ class Model_User extends Db_Helper
 	}
 
 	/**
+     * Checks if email exists except this ID.
+     *
+     * @return boolean
+     */
+	public function existsEmailExcept()
+	{
+		$row = $this->rowSelectOne('id',
+									self::TABLE_NAME,
+									'email = :email AND id <> :id',
+									[':email' => $this->email,
+									':id' => $this->id]);
+		if (!empty($row)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+     * Searches users by username.
+     *
+     * @return array
+     */
+	public function searchByUsername($username)
+	{
+		return $this->rowSelectAll("id, username, email, getUserRoleName(role) as role, getUserStatusName(status) as status, date_format(dt_created, '%d.%m.%Y %H:%i:%s') as dt_created",
+									self::TABLE_NAME,
+									'username like (:username)',
+									[':username' => '%'.$username.'%'],
+									'id ASC');
+	}
+
+	/**
      * Saves user data to database.
      *
      * @return integer
@@ -240,6 +367,17 @@ class Model_User extends Db_Helper
 		$this->dt_updated = null;
 		$prepare = $this->prepareInsert(self::TABLE_NAME, $this->rules());
 		return $this->rowInsert($prepare['fields'], self::TABLE_NAME, $prepare['conds'], $prepare['params']);
+	}
+
+	/**
+     * Changes all user data.
+     *
+     * @return boolean
+     */
+	public function changeAll()
+	{
+		$prepare = $this->prepareUpdate(self::TABLE_NAME, $this->rules());
+		return $this->rowUpdate(self::TABLE_NAME, $prepare['fields'], $prepare['params'], ['id' => $this->id]);
 	}
 
 	/**

@@ -496,7 +496,7 @@ class Model_ApplicationSpec extends Model
 		$ia_arr = $ia->getByApp();
 		if ($ia_arr) {
 			foreach ($ia_arr as $ia_row) {
-				if (Model_Scans::existsRequired('ind_acievs', $ia_row['id']) === false) {
+				if (Model_Scans::existsRequired('ind_achievs', $ia_row['id_achiev']) === false) {
 					$form['error_msg'] = 'В индивидуальное достижение № '.$ia_row['id_achiev'].' загружены не все обязательные скан-копии!';
 					return $form;
 				}

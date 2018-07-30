@@ -2,7 +2,7 @@
 
 define('APP_NAME', 'Личный кабинет абитуриента');
 define('APP_CODE', 'portalbsu'); // MUST BE UNIQUE
-define('APP_VERSION', '0.4.8');
+define('APP_VERSION', '0.4.9');
 define('APP_DATA', 'main');
 
 # Личный кабинет абитуриента
@@ -15,6 +15,9 @@ header("Expires: Thu, 01 Jan 1970 00:00:01 GMT"); // Date in the past
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT"); // always modified
 header("Cache-Control: no-cache"); // HTTP/1.1
 header("Pragma: no-cache"); // HTTP/1.0
+
+// Set your time zone hear
+date_default_timezone_set('Europe/Moscow');
 
 # ---------------------------------------------------------------
 # LOG

@@ -4,7 +4,7 @@ namespace tinyframe\core\helpers;
 
 use PHPMailer\PHPMailer\Exception;
 
-// patterns
+/* PATTERNS */
 // numbers
 define('PATTERN_NUMB', '/^[0-9]*$/u');
 define('MSG_NUMB', 'только цифры');
@@ -20,33 +20,33 @@ define('MSG_ALPHA_RUS', 'только русские буквы');
 // letters RUS, "-"
 define('PATTERN_FAMILY_RUS', '/^[ёЁа-яА-Я-]*$/u');
 define('MSG_FAMILY_RUS', 'только русские буквы и тире');
-// letters ENG, "-", ".", ",", spaces
-define('PATTERN_TEXT', '/^[a-zA-Z-\.\,\s]*$/u');
-define('MSG_TEXT', 'только латинские буквы, тире, точки, запятые и пробелы');
-// letters RUS, "-", ".", ",", spaces
-define('PATTERN_TEXT_RUS', '/^[ёЁа-яА-Я-.,\s]*$/u');
-define('MSG_TEXT_RUS', 'только русские буквы, тире, точки, запятые и пробелы');
-// letters ENG, numbers, "-", ".", ",", "#", spaces
-define('PATTERN_INFO', '/^[a-zA-Z0-9-\.\,\#\/\s]*$/u');
-define('MSG_INFO', 'только латинские буквы, цифры, тире, точки, запятые, символ # и пробелы');
-// letters RUS, numbers, "-", ".", ",", "№", spaces
-define('PATTERN_INFO_RUS', '/^[a-zA-ZёЁа-яА-Я0-9-.,\(\)№\/\s\«\»\'\"\:\;\_\-\#]*$/u');
-define('MSG_INFO_RUS', 'только русские буквы, цифры, тире, точки, запятые, символ № и пробелы');
-// letters ENG and numbers
+// letters ENG, "-", ".", ",", quotes, spaces
+define('PATTERN_TEXT', '/^[a-zA-Z-.,\&quot;\s]*$/u');
+define('MSG_TEXT', 'только латинские буквы, тире, точки, запятые, кавычки и пробелы');
+// letters RUS, "-", ".", ",", quotes, spaces
+define('PATTERN_TEXT_RUS', '/^[ёЁа-яА-Я-.,\&quot;\s]*$/u');
+define('MSG_TEXT_RUS', 'только русские буквы, тире, точки, запятые, кавычки и пробелы');
+// letters ENG, punctuation marks, "(", ")", "№", spaces
+define('PATTERN_INFO', '/^[a-zA-Z0-9-.,():;№_\«\»\'\&quot;\/\s]*$/u');
+define('MSG_INFO', 'только русские буквы, цифры, знаки препинания, круглые скобки, символ # и пробелы');
+// letters RUS, punctuation marks, "(", ")", "№", spaces
+define('PATTERN_INFO_RUS', '/^[ёЁа-яА-Я0-9-.,():;№_\«\»\'\&quot;\/\s]*$/u');
+define('MSG_INFO_RUS', 'только русские буквы, цифры, знаки препинания, круглые скобки, символ № и пробелы');
+// letters ENG, numbers
 define('PATTERN_ALPHA_NUMB', '/^[a-zA-Z0-9]*$/u');
 define('MSG_ALPHA_NUMB', 'только латинские буквы и цифры');
-// letters RUS and numbers
+// letters RUS, numbers
 define('PATTERN_ALPHA_NUMB_RUS', '/^[ёЁа-яА-Я0-9]*$/u');
 define('MSG_ALPHA_NUMB_RUS', 'только русские буквы и цифры');
-// letters and numbers
-define('PATTERN_ALPHA_NUMB_ALL', '/^[a-zA-ZёЁа-яА-Я0-9\s\-\.\,\_\/]*$/u');
-define('MSG_ALPHA_NUMB_ALL', 'только буквы, цифры, пробелы, нижнее подчёркивание, пробелы и знаки препинания');
-// letters ENG, numbers, "-", spaces, ".", ",", "'", "«", "»"
-define('PATTERN_SPEC', '/^[a-zA-Z0-9-\s\.\,\'\«\»]*$/u');
-define('MSG_SPEC', 'только латинские буквы, цифры, пробелы и знаки препинания');
-// letters RUS, numbers, "-", spaces, ".", ",", "'", "«", "»"
-define('PATTERN_SPEC_RUS', '/^[ёЁа-яА-Я0-9-\s\.\,\'\«\»]*$/u');
-define('MSG_SPEC_RUS', 'только русские буквы, цифры, пробелы и знаки препинания');
+// letters, numbers
+define('PATTERN_ALPHA_NUMB_ALL', '/^[a-zA-ZёЁа-яА-Я0-9]*$/u');
+define('MSG_ALPHA_NUMB_ALL', 'только буквы и цифры');
+// letters ENG, numbers, punctuation marks, spaces
+define('PATTERN_SPEC', '/^[a-zA-Z0-9-.,\«\»\'\&quot;\s]*$/u');
+define('MSG_SPEC', 'только латинские буквы, цифры, знаки препинания и пробелы');
+// letters RUS, numbers, punctuation marks, spaces
+define('PATTERN_SPEC_RUS', '/^[ёЁа-яА-Я0-9-.,\«\»\'\&quot;\s]*$/u');
+define('MSG_SPEC_RUS', 'только латинские буквы, цифры, знаки препинания и пробелы');
 // email light
 define('PATTERN_EMAIL_LIGHT', '/^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9_\-.]+$/');
 define('MSG_EMAIL_LIGHT', 'в формате user@domain');
@@ -55,9 +55,9 @@ define('PATTERN_EMAIL_STRONG', '/^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9_\-]+\.[a-zA-Z0-9_\
 // numbers, "(", ")"
 define('PATTERN_PHONE_HOME', '/^[0-9-()]*$/u');
 define('MSG_PHONE_HOME', 'только цифры и круглые скобки');
-// letters RUS, numbers, ",", spaces
-define('PATTERN_PHONE_ADD', '/^[ёЁа-яА-Я0-9,\s\;\.\/]*$/u');
-define('MSG_PHONE_ADD', 'только русские буквы, цифры, запятые и пробелы');
+// letters RUS, numbers, ",", ";", spaces
+define('PATTERN_PHONE_ADD', '/^[ёЁа-яА-Я0-9,;\s]*$/u');
+define('MSG_PHONE_ADD', 'только русские буквы, цифры, запятые, точки с запятой и пробелы');
 // date DD.MM.YYYY light
 define('PATTERN_DATE_LIGHT', '/^(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}$/');
 define('MSG_DATE_LIGHT', 'в формате ДД.ММ.ГГГГ');
@@ -231,7 +231,7 @@ class Form_Helper
 							break;
 						// file name check
 						case 'name':
-							if ($rules[$field_name]['type'] == 'file' && isset($form[$field_name . '_name'])) {
+							if ($rules[$field_name]['type'] == 'file' && !isset($form[$field_name.'_id']) && isset($form[$field_name . '_name'])) {
 								if (mb_strlen($form[$field_name . '_name']) > $rule_var_arr['value']) {
 									unset($form[$field_name]);
 									unset($form[$field_name . '_name']);
@@ -244,7 +244,7 @@ class Form_Helper
 							break;
 						// file size check
 						case 'size':
-							if ($rules[$field_name]['type'] == 'file' && isset($form[$field_name . '_size'])) {
+							if ($rules[$field_name]['type'] == 'file' && !isset($form[$field_name.'_id']) && isset($form[$field_name . '_size'])) {
 								if ($form[$field_name . '_size'] === 0) {
 									unset($form[$field_name]);
 									unset($form[$field_name . '_name']);
@@ -264,23 +264,25 @@ class Form_Helper
 							break;
 						// file extension check
 						case 'ext':
-							if ($rules[$field_name]['type'] == 'file' && isset($form[$field_name . '_type']) && isset($form[$field_name])) {
-								if (!in_array($form[$field_name . '_type'], $rule_var_arr['value'])) {
-									unset($form[$field_name]);
-									unset($form[$field_name . '_name']);
-									unset($form[$field_name . '_type']);
-									unset($form[$field_name . '_size']);
-									$validate = false;
-									$form[$field_name . '_err'] = $rule_var_arr['msg'];
-								} elseif (empty($form[$field_name . '_id'])) {
-									// file format check
-									if (!in_array(mime_content_type($form[$field_name]), $rule_var_arr['value'])) {
+							if (!isset($form[$field_name.'_id'])) {
+								if ($rules[$field_name]['type'] == 'file' && isset($form[$field_name . '_type']) && isset($form[$field_name])) {
+									if (!in_array($form[$field_name . '_type'], $rule_var_arr['value'])) {
 										unset($form[$field_name]);
 										unset($form[$field_name . '_name']);
 										unset($form[$field_name . '_type']);
 										unset($form[$field_name . '_size']);
 										$validate = false;
 										$form[$field_name . '_err'] = $rule_var_arr['msg'];
+									} elseif (empty($form[$field_name . '_id'])) {
+										// file format check
+										if (!in_array(mime_content_type($form[$field_name]), $rule_var_arr['value'])) {
+											unset($form[$field_name]);
+											unset($form[$field_name . '_name']);
+											unset($form[$field_name . '_type']);
+											unset($form[$field_name . '_size']);
+											$validate = false;
+											$form[$field_name . '_err'] = $rule_var_arr['msg'];
+										}
 									}
 								}
 							}

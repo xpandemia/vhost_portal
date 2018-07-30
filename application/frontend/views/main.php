@@ -155,9 +155,43 @@ include ROOT_DIR.'/application/frontend/models/Model_Resume.php';
 	<?php
 		$app = new Application();
 		$app->id_user = $_SESSION[APP_CODE]['user_id'];
-		$app_arr = $app->getByUser();
+		$app_arr = $app->getActiveByUser();
 		if ($app_arr) {
-			stepSuccess('заявлений', count($app_arr));
+			$created = 0;
+			$saved = 0;
+			$sended = 0;
+			$approved = 0;
+			$rejected = 0;
+			foreach ($app_arr as $app_row) {
+				switch ($app_row['status']) {
+					case $app::STATUS_CREATED:
+						$created++;
+						break;
+					case $app::STATUS_SAVED:
+						$saved++;
+						break;
+					case $app::STATUS_SENDED:
+						$sended++;
+						break;
+					case $app::STATUS_APPROVED:
+						$approved++;
+						break;
+					case $app::STATUS_REJECTED:
+						$rejected++;
+						break;
+				}
+			}
+			if ($rejected == count($app_arr)) {
+				echo '<div class="col col-sm-3 alert alert-warning"><h5>Состояние шага - частично пройден</h5></div>';
+				echo '<div class="col col-sm-3 alert alert-warning"><h5>Все заявления отклонены!</h5></div>';
+				echo '<div class="col col-sm-1"></div>';
+			} elseif ($sended === 0 && $approved === 0) {
+				echo '<div class="col col-sm-3 alert alert-warning"><h5>Состояние шага - частично пройден</h5></div>';
+				echo '<div class="col col-sm-3 alert alert-warning"><h5>Нет отправленных или принятых заявлений!</h5></div>';
+				echo '<div class="col col-sm-1"></div>';
+			} else {
+				stepSuccess('заявлений', count($app_arr));
+			}
 		} else {
 			stepError(1);
 		}

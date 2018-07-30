@@ -166,6 +166,7 @@ class Model_Application extends Model
 			// check campaign period
 			$campaign_row = $campaign->getPeriod();
 			$now = new \DateTime;
+			$now = \DateTime::CreateFromFormat('d.m.Y',$now->format('d.m.Y'));
 			$start = \DateTime::CreateFromFormat('d.m.Y',$campaign_row['dt_begin']);
 			$end = \DateTime::CreateFromFormat('d.m.Y',$campaign_row['dt_end']);
 			if ($campaign_row) {
@@ -191,7 +192,7 @@ class Model_Application extends Model
 			$appia = new ApplicationAchievs();
 			$appia->pid = $app->id;
 			foreach ($ia_arr as $ia_row) {
-				if (Model_Scans::existsRequired('ind_acievs', $ia_row['id']) === false) {
+				if (Model_Scans::existsRequired('ind_achievs', $ia_row['id']) === false) {
 					$form['error_msg'] = 'В индивидуальное достижение № '.$ia_row['id'].' загружены не все обязательные скан-копии!';
 					return $form;
 				}

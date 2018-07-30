@@ -200,7 +200,7 @@ class HTML_Helper
 			// fetching data
 			$table = $model->$method();
 			if ($table) {
-				foreach ($table as $row_key=>$table_row) {
+				foreach ($table as $table_row) {
 					$result .= '<tr>';
 					foreach ($model->$grid() as $key => $value) {
 						if ($value['type'] == 'lob') {
@@ -238,6 +238,85 @@ class HTML_Helper
 			return $result;
 		} else {
 			return '<p class="text-danger">HTML_Helper.setGridDB - На входе не массив!</p>';
+		}
+	}
+
+	/**
+     * Creates pagination.
+     *
+     * @return string
+     */
+     /* RULES (+ required)
+		+ 'model_class' => {MODEL_CLASS},
+		+ 'model_data_method' => {MODEL_DATA_METHOD},
+		+ 'model_count_method' => {MODEL_COUNT_METHOD},
+		'model_filter' => {MODEL_FILTER},
+		'model_filter_var' => {MODEL_FILTER_VAR},
+		+ 'page' => {PAGE_START},
+		+ 'id' => {ID_START},
+		+ 'rows' => {ROWS_LIMIT}
+    */
+	public static function setPagination($rules)
+	{
+		if (isset($rules) && is_array($rules)) {
+			// using model
+			$model = new $rules['model_class'];
+			// using model data method
+			$method_data = $rules['model_data_method'];
+			/* data */
+			// using model filter
+			if (isset($rules['model_filter']) && isset($rules['model_filter_var'])) {
+				$filter = $rules['model_filter'];
+				$model->$filter = $rules['model_filter_var'];
+			}
+			// fetching data
+			$table = $model->$method_data();
+			if ($table) {
+				if (isset($rules['page']) && !empty($rules['page'])) {
+					$page = $rules['page'];
+				} else {
+					return '<p class="text-danger">HTML_Helper.setPagination - Стартовая страница не указана!</p>';
+				}
+				if (isset($rules['id']) && !empty($rules['id'])) {
+					$id_min = $rules['id'];
+				} else {
+					return '<p class="text-danger">HTML_Helper.setPagination - Стартовый идентификатор не указан!</p>';
+				}
+				$result = '<ul class="pagination justify-content-center">';
+				$i = 0;
+				if ($page !== 1) {
+					$result .= '<li class="page-item"><a class="page-link" href="Index/?id='.$id_min.'&page='.($page - 1).'&step=prev">Previous</a></li>';
+				} else {
+					$result .= '<li class="page-item"><a class="page-link" href="Index/?id='.$id_min.'&page='.$page.'&step=prev">Previous</a></li>';
+				}
+				foreach ($table as $table_row) {
+					if ($i % $rules['rows'] === 0) {
+						if ($page === $rules['page']) {
+							$result .= '<li class="page-item active"><a class="page-link" href="Index/?id='.$table_row['id'].'&page='.$page.'&step=next">'.$page.'</a></li>';
+						} else {
+							$result .= '<li class="page-item"><a class="page-link" href="Index/?id='.$table_row['id'].'&page='.$page.'&step=next">'.$page.'</a></li>';
+						}
+						$page++;
+					}
+					if ($i === 0) {
+						$id_min = $table_row['id'];
+					} else {
+						$id_max = $table_row['id'];
+					}
+					$i++;
+				}
+				// using model count method
+				$method_count = $rules['model_count_method'];
+				if ($page !== $model->$method_count()) {
+					$result .= '<li class="page-item"><a class="page-link" href="Index/?id='.$id_max.'&page='.$page.'&step=next">Next</a></li>';
+				}
+				$result .= '</ul>';
+				return $result;
+			} else {
+				return '<p class="text-danger">HTML_Helper.setPagination - Нет данных для пагинации!</p>';
+			}
+		} else {
+			return '<p class="text-danger">HTML_Helper.setPagination - На входе не массив!</p>';
 		}
 	}
 

@@ -301,6 +301,20 @@ class Model_Application extends Db_Helper
 	}
 
 	/**
+     * Gets active applications by user.
+     *
+     * @return array
+     */
+	public function getActiveByUser()
+	{
+		return $this->rowSelectAll('*',
+									self::TABLE_NAME,
+									'id_user = :id_user and active = :active',
+									[':id_user' => $_SESSION[APP_CODE]['user_id'],
+									':active' => 1]);
+	}
+
+	/**
      * Gets application spec.
      *
      * @return array
