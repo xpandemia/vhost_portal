@@ -76,10 +76,20 @@ define('APP', array(
 /* Backend */
 // Users
 define('USER', array(
-					'id' => 'form_user',
-					'hdr' => 'Пользователь',
+					'id' => null,
+					'hdr' => 'Пользователи',
 					'ctr' => 'User',
-					'act' => 'Save'));
+					'act' => 'Index'));
+define('USER_ADD', array(
+						'id' => 'form_user_add',
+						'hdr' => 'Создание пользователя',
+						'ctr' => 'User',
+						'act' => 'Create'));
+define('USER_EDIT', array(
+						'id' => 'form_user_edit',
+						'hdr' => 'Изменение пользователя',
+						'ctr' => 'User',
+						'act' => 'Change'));
 // Dictionary manager
 define('DICT_MANAGER', array(
 							'id' => 'form_dict_manager',

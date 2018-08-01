@@ -12,11 +12,11 @@ class Model_User extends Model
 	*/
 
 	/**
-     * Users rules.
+     * Users add rules.
      *
      * @return array
      */
-	public function rules()
+	public function rules_add()
 	{
 		return [
                 'username' => [
@@ -25,6 +25,7 @@ class Model_User extends Model
                                 'required' => ['default' => '', 'msg' => 'Логин обязателен для заполнения!'],
                                 'pattern' => ['value' => PATTERN_ALPHA, 'msg' => 'Для логина можно использовать '.MSG_ALPHA.'!'],
                                 'width' => ['format' => 'string', 'min' => 1, 'max' => 45, 'msg' => 'Слишком длинный логин!'],
+                                'unique' => ['class' => 'common\\models\\Model_User', 'method' => 'ExistsUsername', 'msg' => 'Такой логин уже есть!'],
                                 'unique' => ['class' => 'common\\models\\Model_User', 'method' => 'ExistsUsername', 'msg' => 'Такой логин уже есть!'],
                                 'success' => 'Логин заполнен верно.'
                                ],
@@ -45,7 +46,48 @@ class Model_User extends Model
 	                        'width' => ['format' => 'string', 'min' => 6, 'max' => 10, 'msg' => 'Пароль должен быть 6-10 символов длиной!'],
 	                        'success' => 'Пароль заполнен верно.'
 	                       ],
+	            'pwd_confirm' => [
+	                            'type' => 'password',
+	                            'class' => 'form-control',
+	                            'required' => ['default' => '', 'msg' => 'Пароль обязателен для заполнения!'],
+	                            'pattern' => ['value' => PATTERN_ALPHA_NUMB, 'msg' => 'Для пароля можно использовать '.MSG_ALPHA_NUMB.'!'],
+	                            'width' => ['format' => 'string', 'min' => 6, 'max' => 10, 'msg' => 'Пароль должен быть 6-10 символов длиной!'],
+	                            'success' => 'Пароль заполнен верно.'
+	                           ],
 	            'role' => [
+							'type' => 'selectlist',
+                            'class' => 'form-control',
+                            'required' => ['default' => '', 'msg' => 'Роль обязательна для заполнения!'],
+							'success' => 'Роль заполнена верно.'
+                           ]
+            ];
+	}
+
+	/**
+     * Users edit rules.
+     *
+     * @return array
+     */
+	public function rules_edit()
+	{
+		return [
+                'username' => [
+                                'type' => 'text',
+                                'class' => 'form-control',
+                                'required' => ['default' => '', 'msg' => 'Логин обязателен для заполнения!'],
+                                'pattern' => ['value' => PATTERN_ALPHA, 'msg' => 'Для логина можно использовать '.MSG_ALPHA.'!'],
+                                'width' => ['format' => 'string', 'min' => 1, 'max' => 45, 'msg' => 'Слишком длинный логин!'],
+                                'success' => 'Логин заполнен верно.'
+                               ],
+                'email' => [
+                            'type' => 'email',
+                            'class' => 'form-control',
+                            'required' => ['default' => '', 'msg' => 'Адрес эл. почты обязателен для заполнения!'],
+                            'pattern' => ['value' => PATTERN_EMAIL_LIGHT, 'msg' => 'Адрес электронной почты должен быть '.MSG_EMAIL_LIGHT],
+                            'width' => ['format' => 'string', 'min' => 0, 'max' => 45, 'msg' => 'Слишком длинный адрес эл. почты!'],
+                            'success' => 'Адрес эл. почты заполнен верно.'
+                           ],
+                'role' => [
 							'type' => 'selectlist',
                             'class' => 'form-control',
                             'required' => ['default' => '', 'msg' => 'Роль обязательна для заполнения!'],
@@ -103,44 +145,64 @@ class Model_User extends Model
 	}
 
 	/**
-     * Checks user data.
+     * Gets user page number.
      *
      * @return array
      */
-	public function check($form)
+	public function getPageNumber($id)
 	{
 		$user = new User();
-		$user->username = $form['username'];
-		$user->email = $form['email'];
-		$user->pwd_hash = $user->GetHash($form['pwd']);
-		$user->role = $form['role'];
-		$user->status = $user::STATUS_ACTIVE;
-		if (isset($form['id']) && !empty($form['id'])) {
-			// update
-			$user->id = $form['id'];
-			$user_row = $user->get();
-			if ($user->existsUsernameExcept() && $user->existsEmailExcept()) {
-				$form['error_msg'] = 'Такой пользователь уже есть!';
-				return $form;
+		$user->id = $id;
+		return $user->getPageNumber();
+	}
+
+	/**
+     * Creates user data.
+     *
+     * @return array
+     */
+	public function create($form)
+	{
+		if ($form['pwd'] == $form['pwd_confirm']) {
+			$user = new User();
+			$user->username = $form['username'];
+			$user->email = $form['email'];
+			$user->pwd_hash = $user->GetHash($form['pwd']);
+			$user->role = $form['role'];
+			$user->status = $user::STATUS_ACTIVE;
+			$form['id'] = $user->save();
+			if ($form['id'] > 0) {
+				$form['success_msg'] = 'Создан пользователь № '.$form['id'].'.';
 			} else {
-				if ($user->changeAll()) {
-					$form['success_msg'] = 'Пользователь № '.$form['id'].' успешно изменён.';
-				} else {
-					$form['error_msg'] = 'Ошибка при изменении пользователя № '.$form['id'].'!';
-				}
+				$form['error_msg'] = 'Ошибка при создании пользователя!';
 			}
 		} else {
-			// insert
-			if ($user->existsUsername() && $user->existsEmail()) {
-				$form['error_msg'] = 'Такой пользователь уже есть!';
-				return $form;
+			$form['error_msg'] = 'Пароли не совпадают!';
+		}
+		return $form;
+	}
+
+	/**
+     * Changes user data.
+     *
+     * @return array
+     */
+	public function change($form)
+	{
+		$user = new User();
+		$user->id = $form['id'];
+		$user->username = $form['username'];
+		$user->email = $form['email'];
+		$user->role = $form['role'];
+		$user->status = $form['status'];
+		if ($user->existsUsernameExcept() && $user->existsEmailExcept()) {
+			$form['error_msg'] = 'Такой пользователь уже есть!';
+			return $form;
+		} else {
+			if ($user->changeAll()) {
+				$form['success_msg'] = 'Пользователь № '.$form['id'].' успешно изменён.';
 			} else {
-				$form['id'] = $user->save();
-				if ($form['id'] > 0) {
-					$form['success_msg'] = 'Создан пользователь № '.$form['id'].'.';
-				} else {
-					$form['error_msg'] = 'Ошибка при создании пользователя!';
-				}
+				$form['error_msg'] = 'Ошибка при изменении пользователя № '.$form['id'].'!';
 			}
 		}
 		return $form;
@@ -149,13 +211,39 @@ class Model_User extends Model
 	/**
      * Searches for user in database.
      *
-     * @return mixed
+     * @return array
      */
-	public function search($search)
+	public function search($form, $post) : array
 	{
-		$user = new User();
-		$user_arr = $user->searchByUsername($search);
-		return $user_arr;
+		if ((isset($post['search_username']) && !empty($post['search_username'])) || (isset($post['search_email']) && !empty($post['search_email']))) {
+			$conds = '';
+			$params = [];
+			// username
+			if (isset($post['search_username']) && !empty($post['search_username'])) {
+				$conds .= 'username like (:username)';
+				$params[':username'] = '%'.htmlspecialchars($post['search_username']).'%';
+			}
+			// email
+			if (isset($post['search_email']) && !empty($post['search_email'])) {
+				if ($conds == '') {
+					$conds .= 'email like (:email)';
+				} else {
+					$conds .= ' OR email like (:email)';
+				}
+				$params[':email'] = '%'.htmlspecialchars($post['search_email']).'%';
+			}
+			$user = new User();
+			$user_arr = $user->search($conds, $params);
+			if ($user_arr) {
+				return $user_arr;
+			} else {
+				$form['error_msg'] = 'Ничего не найдено!';
+				return $form;
+			}
+		} else {
+			$form['error_msg'] = 'Не указаны критерии поиска!';
+			return $form;
+		}
 	}
 
 	/**

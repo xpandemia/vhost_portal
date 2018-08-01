@@ -30,23 +30,22 @@ class Controller_User extends Controller
 	{
 		if (isset($_GET['id']) && !empty($_GET['id'])) {
 			$this->form['id'] = htmlspecialchars($_GET['id']);
-			if (isset($_GET['page']) && !empty($_GET['page'])) {
-				$this->form['page'] = htmlspecialchars($_GET['page']);
-			} else {
-				$this->form['page'] = 1;
-			}
 			if (isset($_GET['step']) && !empty($_GET['step'])) {
 				$this->form['step'] = htmlspecialchars($_GET['step']);
 			} else {
-				$this->form['step'] = 'next';
+				if ($this->model->getPageNumber($this->form['id']) === 1) {
+					$this->form['step'] = 'next';
+				} else {
+					$this->form['step'] = 'prev';
+				}
 			}
 		} else {
 			$this->form = $this->model->paginationStart();
 			if (empty($this->form)) {
-				return Basic_Helper::redirect(APP_NAME, 202, APP['ctr'], 'Index', null, 'Не могу открыть раздел "Пользователи"!');
+				return Basic_Helper::redirect(APP_NAME, 202, APP['ctr'], 'Index', null, 'Не могу открыть раздел "'.USER['hdr'].'"!');
 			}
 		}
-		return $this->view->generate('user.php', 'main.php', 'Пользователи',  $this->form);
+		return $this->view->generate('user.php', 'main.php', USER['hdr'],  $this->form);
 	}
 
 	/**
@@ -57,9 +56,10 @@ class Controller_User extends Controller
 	public function actionAdd()
 	{
 		if (!isset($this->form)) {
-			$this->form = $this->model->setForm($this->model->rules(), null);
+			$this->form = $this->model->setForm($this->model->rules_add(), null);
 		}
-		return $this->view->generate('user-add.php', 'form.php', USER['hdr'], $this->form);
+		Basic_Helper::msgReset();
+		return $this->view->generate('user-add.php', 'form.php', USER_ADD['hdr'], $this->form);
 	}
 
 	/**
@@ -72,11 +72,14 @@ class Controller_User extends Controller
 		if (isset($_GET['id']) && !empty($_GET['id'])) {
 			$id = htmlspecialchars($_GET['id']);
 		} else {
-			return Basic_Helper::redirect(APP_NAME, 202, USER['ctr'], 'Index', null, 'Отсутствует идент-р пользователя!');
+			return Basic_Helper::redirect(APP_NAME, 202, USER['ctr'], USER['act'], null, 'Отсутствует идент-р пользователя!');
 		}
-		$this->form = $this->model->setForm($this->model->rules(), $this->model->get($id));
+		$user_row = $this->model->get($id);
+		$this->form = $this->model->setForm($this->model->rules_edit(), $user_row);
 		$this->form['id'] = $id;
-		return $this->view->generate('user-add.php', 'form.php', USER['hdr'], $this->form);
+		$this->form['status'] = $user_row['status'];
+		Basic_Helper::msgReset();
+		return $this->view->generate('user-edit.php', 'form.php', USER_EDIT['hdr'], $this->form);
 	}
 
 	/**
@@ -101,29 +104,51 @@ class Controller_User extends Controller
 			$this->form['hdr'] = htmlspecialchars($_POST['hdr']);
 			$this->form['ctr'] = htmlspecialchars($_POST['ctr']);
 			$this->form = $this->model->delete($this->form);
-			return Basic_Helper::redirect($this->form['hdr'], 200, $this->form['ctr'], 'Index/?id='.$this->form['id'], $this->form['success_msg'], $this->form['error_msg']);
+			return Basic_Helper::redirect($this->form['hdr'], 200, $this->form['ctr'], USER['act'].'/?id='.$this->form['id'], $this->form['success_msg'], $this->form['error_msg']);
 		} else {
-			return Basic_Helper::redirect('Пользователи', 200, USER['ctr'], 'Index', null, 'Ошибка удаления пользователя!');
+			return Basic_Helper::redirect(USER['hdr'], 200, USER['ctr'], USER['act'], null, 'Ошибка удаления пользователя!');
 		}
 	}
 
 	/**
-     * Saves user.
+     * Creates user.
      *
      * @return mixed
      */
-	public function actionSave()
+	public function actionCreate()
 	{
-		$this->form = $this->model->getForm($this->model->rules(), $_POST);
-		$this->form['id'] = $id = htmlspecialchars($_POST['id']);
-		$this->form = $this->model->validateForm($this->form, $this->model->rules());
+		$this->form = $this->model->getForm($this->model->rules_add(), $_POST);
+		$this->form['id'] = htmlspecialchars($_POST['id']);
+		$this->form = $this->model->validateForm($this->form, $this->model->rules_add());
 		if ($this->form['validate']) {
-			$this->form = $this->model->check($this->form);
+			$this->form = $this->model->create($this->form);
 			if (!$this->form['error_msg']) {
-				return Basic_Helper::redirect('Пользователи', 200, USER['ctr'], 'Index/?id='.$this->form['id'], $this->form['success_msg']);
+				return Basic_Helper::redirect(USER['hdr'], 200, USER['ctr'], USER['act'].'/?id='.$this->form['id'], $this->form['success_msg']);
 			}
 		}
-		return $this->view->generate('user-add.php', 'form.php', USER['hdr'], $this->form);
+		Basic_Helper::msgReset();
+		return $this->view->generate('user-add.php', 'form.php', USER_ADD['hdr'], $this->form);
+	}
+
+	/**
+     * Changes user.
+     *
+     * @return mixed
+     */
+	public function actionChange()
+	{
+		$this->form = $this->model->getForm($this->model->rules_edit(), $_POST);
+		$this->form['id'] = htmlspecialchars($_POST['id']);
+		$this->form['status'] = htmlspecialchars($_POST['status']);
+		$this->form = $this->model->validateForm($this->form, $this->model->rules_edit());
+		if ($this->form['validate']) {
+			$this->form = $this->model->change($this->form);
+			if (!$this->form['error_msg']) {
+				return Basic_Helper::redirect(USER['hdr'], 200, USER['ctr'], USER['act'].'/?id='.$this->form['id'], $this->form['success_msg']);
+			}
+		}
+		Basic_Helper::msgReset();
+		return $this->view->generate('user-edit.php', 'form.php', USER_EDIT['hdr'], $this->form);
 	}
 
 	/**
@@ -133,15 +158,12 @@ class Controller_User extends Controller
      */
 	public function actionSearch()
 	{
-		if (isset($_POST['search']) && !empty($_POST['search'])) {
-			$this->form = $this->model->search(htmlspecialchars($_POST['search']));
-			if (empty($this->form)) {
-				return Basic_Helper::redirect(APP_NAME, 202, USER['ctr'], 'Index', null, 'Ничего не найдено!');
-			} else {
-				return $this->view->generate('user.php', 'main.php', 'Пользователи',  $this->form);
-			}
+		$this->form = $this->model->search($this->form, $_POST);
+		if (isset($this->form['error_msg']) && !empty($this->form['error_msg'])) {
+			return Basic_Helper::redirect(APP_NAME, 202, USER['ctr'], USER['act'], null, $this->form['error_msg']);
 		} else {
-			return Basic_Helper::redirect(APP_NAME, 202, USER['ctr'], 'Index', null, 'Не указан критерий поиска!');
+			Basic_Helper::msgReset();
+			return $this->view->generate('user.php', 'main.php', USER['hdr'],  $this->form);
 		}
 	}
 

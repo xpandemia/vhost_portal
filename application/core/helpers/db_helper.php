@@ -11,6 +11,8 @@ class Db_Helper
 
 	public static $pdo;
 
+	private static $_instance = null;
+
 	/**
      * Protected constructor to prevent creating a new instance of the
      * Db_Helper via the 'new' operator from outside of this class.
@@ -23,7 +25,11 @@ class Db_Helper
 	        self::$pdo = new PDO('mysql:host='.DB_HOST.';charset=utf8;dbname='.DB_NAME,
 								DB_USER,
 								DB_PASSWORD,
-								array(PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+								array(
+										PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'",
+										PDO::ATTR_PERSISTENT => true,
+										PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+									));
 	    } catch(\PDOException $pdo_err) {
 	        echo nl2br("Error MySQL: ".$pdo_err->getMessage()."\n");
 	        exit;
@@ -50,7 +56,6 @@ class Db_Helper
     {
     }
 
-
 	/**
      * Returns the Db_Helper instance.
      *
@@ -60,11 +65,10 @@ class Db_Helper
      */
     public static function getInstance()
     {
-        static $instance = null;
-        if (null === $instance) {
-            $instance = new static;
-        }
-        return $instance;
+        if (self::$_instance != null) {
+			return self::$_instance;
+		}
+		return new self;
     }
 
     /**

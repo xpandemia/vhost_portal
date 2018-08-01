@@ -207,8 +207,13 @@ class Model_Application extends Db_Helper
 							'type' => 'int'
 							],
 				'status' => [
-					'name' => 'Статус заявления',
-					'type' => 'string'
+							'name' => 'Статус заявления',
+							'type' => 'string'
+				],
+				'dt_status' => [
+								'name' => 'Дата изменения статуса',
+								'type' => 'date',
+								'format' => 'd.m.Y H:i:s'
 				],
 				'reason' => [
 							'name' => 'Основание',
@@ -230,6 +235,11 @@ class Model_Application extends Db_Helper
 				'docs_educ' => [
 								'name' => 'Документ об образовании',
 								'type' => 'string'
+								],
+				'dt_created' => [
+								'name' => 'Дата создания',
+								'type' => 'date',
+								'format' => 'd.m.Y H:i:s'
 								]
 				];
 	}
@@ -255,23 +265,45 @@ class Model_Application extends Db_Helper
      */
 	public function getByUserGrid()
 	{
-		return $this->rowSelectAll("application.id,".
-									" dict_university.code as university,".
-									" admission_campaign.description as campaign,".
-									" concat(dict_doctypes.description, ' № ', ifnull(concat(docs_educ.series, '-'), ''), docs_educ.numb, ' от ', date_format(dt_issue, '%d.%m.%Y')) as docs_educ,".
-									" reason.numb as reason,".
-									" getAppTypeName(application.type) as type,".
-									" getAppStatusName(application.status) as status,".
-									" application.numb",
-									'application INNER JOIN dict_university ON application.id_university = dict_university.id'.
-									' INNER JOIN admission_campaign ON application.id_campaign = admission_campaign.id'.
-									' INNER JOIN docs_educ ON application.id_docseduc = docs_educ.id'.
-									' INNER JOIN dict_doctypes ON docs_educ.id_doctype = dict_doctypes.id'.
-									' LEFT OUTER JOIN application reason ON application.id_app = reason.id',
-									'application.id_user = :id_user AND application.active = :active',
-									[':id_user' => $_SESSION[APP_CODE]['user_id'],
-									':active' => 1],
-									'admission_campaign.description ASC, application.numb ASC');
+		$app_arr = $this->rowSelectAll("application.id,".
+										" dict_university.code as university,".
+										" admission_campaign.description as campaign,".
+										" concat(dict_doctypes.description, ' № ', ifnull(concat(docs_educ.series, '-'), ''), docs_educ.numb, ' от ', date_format(dt_issue, '%d.%m.%Y')) as docs_educ,".
+										" reason.numb as reason,".
+										" getAppTypeName(application.type) as type,".
+										" getAppStatusName(application.status) as status,".
+										" application.numb,".
+										" application.dt_created",
+										'application INNER JOIN dict_university ON application.id_university = dict_university.id'.
+										' INNER JOIN admission_campaign ON application.id_campaign = admission_campaign.id'.
+										' INNER JOIN docs_educ ON application.id_docseduc = docs_educ.id'.
+										' INNER JOIN dict_doctypes ON docs_educ.id_doctype = dict_doctypes.id'.
+										' LEFT OUTER JOIN application reason ON application.id_app = reason.id',
+										'application.id_user = :id_user AND application.active = :active',
+										[':id_user' => $_SESSION[APP_CODE]['user_id'],
+										':active' => 1],
+										'admission_campaign.description ASC, application.numb ASC');
+		if ($app_arr) {
+			$result = [];
+			foreach ($app_arr as $app_row) {
+				$applog = new ApplicationStatus();
+				$applog->id_application = $app_row['id'];
+				$applog_row = $applog->getLast();
+				array_push($result, ['id' => $app_row['id'],
+									'university' => $app_row['university'],
+									'campaign' => $app_row['campaign'],
+									'docs_educ' => $app_row['docs_educ'],
+									'reason' => $app_row['reason'],
+									'type' => $app_row['type'],
+									'status' => $app_row['status'],
+									'dt_status' => $applog_row['dt_created'],
+									'numb' => $app_row['numb'],
+									'dt_created' => $app_row['dt_created']]);
+			}
+			return $result;
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -600,6 +632,27 @@ class Model_Application extends Db_Helper
 			}
 		}
 		return $this->id;
+	}
+
+	/**
+     * Checks bachelor.
+     *
+     * @return boolean
+     */
+	public function checkBachelor()
+	{
+		$row = $this->rowSelectOne('application.*',
+									'application INNER JOIN admission_campaign ON application.id_campaign = admission_campaign.id'.
+									' INNER JOIN docs_educ ON application.id_docseduc = docs_educ.id'.
+									' INNER JOIN dict_doctypes ON docs_educ.id_doctype = dict_doctypes.id',
+									'application.id = :id AND left(admission_campaign.description, 23) = :description',
+									[':id' => $this->id,
+									':description' => 'Бакалавриат/специалитет']);
+		if (!empty($row)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**

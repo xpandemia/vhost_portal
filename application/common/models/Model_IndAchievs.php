@@ -123,7 +123,8 @@ class Model_IndAchievs extends Db_Helper
 							],
 				'dt_issue' => [
 								'name' => 'Дата выдачи',
-								'type' => 'date'
+								'type' => 'date',
+								'format' => 'd.m.Y'
 							],
 				'company' => [
 							'name' => 'Организация',
@@ -193,7 +194,7 @@ class Model_IndAchievs extends Db_Helper
      */
 	public function getByUserGrid()
 	{
-		return $this->rowSelectAll("ind_achievs.id, dict_ind_achievs.description as achiev_type, series, ind_achievs.numb, date_format(dt_issue, '%d.%m.%Y') as dt_issue, company",
+		return $this->rowSelectAll("ind_achievs.id, dict_ind_achievs.description as achiev_type, series, ind_achievs.numb, dt_issue, company",
 									'ind_achievs INNER JOIN dict_ind_achievs ON ind_achievs.id_achiev = dict_ind_achievs.id',
 									'id_user = :id_user',
 									[':id_user' => $_SESSION[APP_CODE]['user_id']]);

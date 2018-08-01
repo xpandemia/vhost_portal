@@ -92,7 +92,8 @@ class Model_ApplicationStatus extends Db_Helper
 									self::TABLE_NAME,
 									'id_application = :id_application',
 									[':id_application' => $this->id_application],
-									'dt_created DESC', 1);
+									'dt_created DESC',
+									1);
 		return $res;
 	}
 

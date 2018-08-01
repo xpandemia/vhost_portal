@@ -15,7 +15,7 @@ class HTML_Helper
      *
      * @return string
      */
-	public static function setLabel($class, $control, $label)
+	public static function setLabel($class, $control, $label) : string
 	{
 		return '<label class="'.$class.'" for="'.$control.'">'.$label.'</label>';
 	}
@@ -25,7 +25,7 @@ class HTML_Helper
      *
      * @return string
      */
-	public static function setInput($type, $class, $control, $help, $placeholder, $value)
+	public static function setInput($type, $class, $control, $help, $placeholder, $value) : string
 	{
 		if (!empty($type) && !empty($class) && !empty($control)) {
 			return '<input type="'.$type.'" class="'.$class.'"'.
@@ -43,7 +43,7 @@ class HTML_Helper
      *
      * @return string
      */
-	public static function setSubmit($class, $id, $text, $tooltip = null)
+	public static function setSubmit($class, $id, $text, $tooltip = null) : string
 	{
 		if (!empty($class) && !empty($id) && !empty($text)) {
 			if (empty($tooltip)) {
@@ -61,7 +61,7 @@ class HTML_Helper
      *
      * @return string
      */
-	public static function setButton($class, $id, $text, $tooltip = null)
+	public static function setButton($class, $id, $text, $tooltip = null) : string
 	{
 		if (!empty($id) && !empty($text)) {
 			if (empty($tooltip)) {
@@ -79,7 +79,7 @@ class HTML_Helper
      *
      * @return string
      */
-	public static function setHrefText($controller, $action, $text, $tooltip = null)
+	public static function setHrefText($controller, $action, $text, $tooltip = null) : string
 	{
 		if (!empty($controller) && !empty($action) && !empty($text)) {
 			if (empty($tooltip)) {
@@ -97,7 +97,7 @@ class HTML_Helper
      *
      * @return string
      */
-	public static function setHrefButton($controller, $action, $class, $text, $tooltip = null)
+	public static function setHrefButton($controller, $action, $class, $text, $tooltip = null) : string
 	{
 		if (!empty($controller) && !empty($action) && !empty($class) && !empty($text)) {
 			if (empty($tooltip)) {
@@ -115,38 +115,25 @@ class HTML_Helper
      *
      * @return string
      */
-	public static function setHrefButtonIcon($controller, $action, $class, $icon, $tooltip = null)
+	public static function setHrefButtonIcon($controller, $action, $class, $icon, $tooltip = null, $new_page = 0) : string
 	{
 		if (!empty($controller) && !empty($action) && !empty($class) && !empty($icon)) {
-			return '<a data-toggle="tooltip" title="'.$tooltip.'" href="'.Basic_Helper::appUrl($controller, $action).'" class="'.$class.'"><i class="'.$icon.'"></i></a> ';
+			if ($new_page === 0) {
+				return '<a data-toggle="tooltip" title="'.$tooltip.'" href="'.Basic_Helper::appUrl($controller, $action).'" class="'.$class.'"><i class="'.$icon.'"></i></a> ';
+			} else {
+				return '<a data-toggle="tooltip" title="'.$tooltip.'" href="'.Basic_Helper::appUrl($controller, $action).'" class="'.$class.'" target="_blank"><i class="'.$icon.'"></i></a> ';
+			}
 		} else {
 			return '<p class="text-danger">HTML_Helper.setHrefButtonIcon - На входе недостаточно данных!</p>';
 		}
 	}
-
-
-	/**
-	 * Creates HREF as icon button.
-	 *
-	 * @return string
-	 */
-	//TODO добавил паша, то же самое, но открывает на новой вкладке
-	public static function setHrefButtonIconToNewPage($controller, $action, $class, $icon, $tooltip = null)
-	{
-		if (!empty($controller) && !empty($action) && !empty($class) && !empty($icon)) {
-			return '<a data-toggle="tooltip" title="'.$tooltip.'" href="'.Basic_Helper::appUrl($controller, $action).'" class="'.$class.'" target="_blank"><i class="'.$icon.'"></i></a> ';
-		} else {
-			return '<p class="text-danger">HTML_Helper.setHrefButtonIcon - На входе недостаточно данных!</p>';
-		}
-	}
-
 
 	/**
      * Creates image.
      *
      * @return string
      */
-	public static function setImageLOB($type, $lob, $width = null, $height = null)
+	public static function setImageLOB($type, $lob, $width = null, $height = null) : string
 	{
 		if (!empty($type) && !empty($lob)) {
 			return '<br><img class="img-fluid" src="data:'.$type.';base64,'.base64_encode($lob).'" width="'.((empty($width)) ? 460 : $width).'" height="'.((empty($height)) ? 345 : $height).'">';
@@ -172,7 +159,7 @@ class HTML_Helper
 		'action_delete' => {ACTION_DELETE},
 		+ 'home_hdr' => {HOME_HEADER}
     */
-	public static function setGridDB($rules)
+	public static function setGridDB($rules) : string
 	{
 		if (isset($rules) && is_array($rules)) {
 			// action create
@@ -203,19 +190,28 @@ class HTML_Helper
 				foreach ($table as $table_row) {
 					$result .= '<tr>';
 					foreach ($model->$grid() as $key => $value) {
-						if ($value['type'] == 'lob') {
-							if (!empty($table_row[$key])) {
-								$result .= '<td><img class="img-fluid" src="data:'.((isset($table_row['file_type'])) ? $table_row['file_type'] : '').';base64,'.base64_encode( $table_row[$key] ).'" width="80" height="100"></td>';
-							} else {
-								$result .= '<td>Файл не загружен</td>';
-							}
-						} else {
-							//TODO Паша добавил обработку для красного текста (состояние)
-							$style = "";
-							if($key == 'status') {
-								$style = "style =\"color:#ba0000; font-weight:bold;\"";
-							}
-							$result .= '<td '.$style.'>'.$table_row[$key].'</td>';
+						switch ($value['type']) {
+							case 'lob':
+								if (!empty($table_row[$key])) {
+									$result .= '<td><img class="img-fluid" src="data:'.((isset($table_row['file_type'])) ? $table_row['file_type'] : '').';base64,'.base64_encode( $table_row[$key] ).'" width="80" height="100"></td>';
+								} else {
+									$result .= '<td>Файл не загружен</td>';
+								}
+								break;
+							case 'date':
+								if (isset($value['format']) && !empty($value['format'])) {
+									$result .= '<td>'.date($value['format'], strtotime($table_row[$key])).'</td>';
+								} else {
+									$result .= '<td>'.$table_row[$key].'</td>';
+								}
+								break;
+							default:
+								//TODO Паша добавил обработку для красного текста (состояние)
+								$style = "";
+								if($key == 'status') {
+									$style = "style =\"color:#ba0000; font-weight:bold;\"";
+								}
+								$result .= '<td '.$style.'>'.$table_row[$key].'</td>';
 						}
 					}
 					// actions
@@ -242,6 +238,103 @@ class HTML_Helper
 	}
 
 	/**
+     * Creates table begin.
+     *
+     * @return string
+     */
+	public static function setTableBegin() : string
+	{
+		return '<table class="table table-bordered table-hover">';
+	}
+
+	/**
+     * Creates table header.
+     *
+     * @return string
+     */
+     /* RULES (+ required)
+		'class' => {HEADER_CLASS},
+		+ 'grid' => {GRID}
+    */
+	public static function setTableHeader($rules) : string
+	{
+		if (isset($rules) && is_array($rules)) {
+			if (isset($rules['grid']) && !empty($rules['grid']) && is_array($rules['grid'])) {
+				if (isset($rules['class']) && !empty($rules['class'])) {
+					$result = '<thead class="'.$rules['class'].'">';
+				} else {
+					$result = '<thead>';
+				}
+				$result .= '<tr>';
+				foreach ($rules['grid'] as $key => $value) {
+					$result .= '<th class="align-text-top">'.$value['name'].'</th>';
+				}
+				$result .= '</tr>';
+				$result .= '</thead>';
+				return $result;
+			} else {
+				return '<p class="text-danger">HTML_Helper.setTableHeader - Нет данных для создания заголовка!</p>';
+			}
+		} else {
+			return '<p class="text-danger">HTML_Helper.setTableHeader - На входе не массив!</p>';
+		}
+	}
+
+	/**
+     * Creates table row.
+     *
+     * @return string
+     */
+     /* RULES (+ required)
+		+ 'grid' => {GRID},
+		+ 'row' => {ROW}
+    */
+	public static function setTableRow($rules) : string
+	{
+		if (isset($rules) && is_array($rules)) {
+			if ((isset($rules['grid']) && !empty($rules['grid']) && is_array($rules['grid'])) || (isset($rules['row']) && !empty($rules['row']) && is_array($rules['row']))) {
+				$result = '<tr>';
+				foreach ($rules['grid'] as $key => $value) {
+					switch ($value['type']) {
+						case 'date':
+							if (isset($value['format']) && !empty($value['format'])) {
+								$result .= '<td>'.date($value['format'], strtotime($rules['row'][$key])).'</td>';
+							} else {
+								$result .= '<td>'.$rules['row'][$key].'</td>';
+							}
+							break;
+						default:
+							$result .= '<td>'.$rules['row'][$key].'</td>';
+					}
+				}
+				if (isset($rules['controls']) && !empty($rules['controls']) && is_array($rules['controls'])) {
+					$result .= '<td>';
+					foreach ($rules['controls'] as $control) {
+						$result .= HTML_Helper::setHrefButtonIcon($control['controller'], $control['action'], $control['class'], $control['icon'], $control['tooltip']);
+					}
+					$result .= '</td>';
+				}
+				$result .= '</tr>';
+				return $result;
+			} else {
+				return '<p class="text-danger">HTML_Helper.setTableRow - Нет данных для создания строки!</p>';
+			}
+		} else {
+			return '<p class="text-danger">HTML_Helper.setTableRow - На входе не массив!</p>';
+		}
+	}
+
+	/**
+     * Creates table end.
+     *
+     * @return string
+     */
+	public static function setTableEnd() : string
+	{
+		return '</table>';
+	}
+
+	/**
      * Creates pagination.
      *
      * @return string
@@ -249,14 +342,14 @@ class HTML_Helper
      /* RULES (+ required)
 		+ 'model_class' => {MODEL_CLASS},
 		+ 'model_data_method' => {MODEL_DATA_METHOD},
+		+ 'model_page_method' => {MODEL_PAGE_METHOD},
 		+ 'model_count_method' => {MODEL_COUNT_METHOD},
 		'model_filter' => {MODEL_FILTER},
 		'model_filter_var' => {MODEL_FILTER_VAR},
-		+ 'page' => {PAGE_START},
-		+ 'id' => {ID_START},
+		+ 'id' => {ID_CURRENT},
 		+ 'rows' => {ROWS_LIMIT}
     */
-	public static function setPagination($rules)
+	public static function setPagination($rules) : string
 	{
 		if (isset($rules) && is_array($rules)) {
 			// using model
@@ -272,34 +365,44 @@ class HTML_Helper
 			// fetching data
 			$table = $model->$method_data();
 			if ($table) {
-				if (isset($rules['page']) && !empty($rules['page'])) {
-					$page = $rules['page'];
-				} else {
-					return '<p class="text-danger">HTML_Helper.setPagination - Стартовая страница не указана!</p>';
+				if (!isset($rules['model_page_method']) || empty($rules['model_page_method'])) {
+					return '<p class="text-danger">HTML_Helper.setPagination - Метод определения страницы не указан!</p>';
 				}
 				if (isset($rules['id']) && !empty($rules['id'])) {
-					$id_min = $rules['id'];
+					$method_page = $rules['model_page_method'];
+					if (isset($filter) && !empty($filter)) {
+						$model->$filter = $rules['id'];
+					}
+					$page_current = $model->$method_page();
 				} else {
-					return '<p class="text-danger">HTML_Helper.setPagination - Стартовый идентификатор не указан!</p>';
+					return '<p class="text-danger">HTML_Helper.setPagination - Текущий идентификатор не указан!</p>';
 				}
 				$result = '<ul class="pagination justify-content-center">';
 				$i = 0;
-				if ($page !== 1) {
-					$result .= '<li class="page-item"><a class="page-link" href="Index/?id='.$id_min.'&page='.($page - 1).'&step=prev">Previous</a></li>';
-				} else {
-					$result .= '<li class="page-item"><a class="page-link" href="Index/?id='.$id_min.'&page='.$page.'&step=prev">Previous</a></li>';
-				}
 				foreach ($table as $table_row) {
+					// start page
+					if ($i === 0) {
+						$id_min = $table_row['id'];
+						if (isset($filter) && !empty($filter)) {
+							$model->$filter = $table_row['id'];
+						}
+						$page = $model->$method_page();
+						if ($page !== 1) {
+							$result .= '<li class="page-item"><a class="page-link" href="Index/?id='.$id_min.'&step=prev">Previous</a></li>';
+						}
+					}
+					// current page
 					if ($i % $rules['rows'] === 0) {
-						if ($page === $rules['page']) {
-							$result .= '<li class="page-item active"><a class="page-link" href="Index/?id='.$table_row['id'].'&page='.$page.'&step=next">'.$page.'</a></li>';
+						if ($page === $page_current) {
+							$result .= '<li class="page-item active"><a class="page-link" href="Index/?id='.$table_row['id'].'&step=next">'.$page.'</a></li>';
 						} else {
-							$result .= '<li class="page-item"><a class="page-link" href="Index/?id='.$table_row['id'].'&page='.$page.'&step=next">'.$page.'</a></li>';
+							$result .= '<li class="page-item"><a class="page-link" href="Index/?id='.$table_row['id'].'&step=next">'.$page.'</a></li>';
 						}
 						$page++;
 					}
 					if ($i === 0) {
 						$id_min = $table_row['id'];
+						$id_max = $table_row['id'];
 					} else {
 						$id_max = $table_row['id'];
 					}
@@ -308,7 +411,7 @@ class HTML_Helper
 				// using model count method
 				$method_count = $rules['model_count_method'];
 				if ($page !== $model->$method_count()) {
-					$result .= '<li class="page-item"><a class="page-link" href="Index/?id='.$id_max.'&page='.$page.'&step=next">Next</a></li>';
+					$result .= '<li class="page-item"><a class="page-link" href="Index/?id='.$id_max.'&step=next">Next</a></li>';
 				}
 				$result .= '</ul>';
 				return $result;
@@ -323,7 +426,7 @@ class HTML_Helper
 	/**
      * Creates alert.
      *
-     * @return string
+     * @return mixed
      */
 	public static function setAlert($msg, $class)
 	{
@@ -337,7 +440,7 @@ class HTML_Helper
 	/**
      * Creates invalid feedback.
      *
-     * @return string
+     * @return mixed
      */
 	public static function setInvalidFeedback($err)
 	{
@@ -351,7 +454,7 @@ class HTML_Helper
 	/**
      * Creates valid feedback.
      *
-     * @return string
+     * @return mixed
      */
 	public static function setValidFeedback($err, $msg)
 	{

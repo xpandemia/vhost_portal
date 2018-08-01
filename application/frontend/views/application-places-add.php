@@ -73,9 +73,9 @@ use common\models\Model_DocsEduc as DocsEduc;
 								$speciality_arr = $specs->getSpecialityFirstForApp($app_row['pay']);
 							}
 						} else {
-							if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
-								if ($app->checkMagistratureFirst()) {
-									$speciality_arr = $specs->getSpecialityFirstMagisterForApp($app_row['pay']);
+							if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkBachelor() || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
+								if ($app->checkBachelor()) {
+									$speciality_arr = $specs->getSpecialityFirstBachelorForApp($app_row['pay']);
 								} else {
 									$speciality_arr = $specs->getSpecialityFirstForApp($app_row['pay']);
 								}
@@ -110,9 +110,9 @@ use common\models\Model_DocsEduc as DocsEduc;
 								$finance_arr = $specs->getFinanceFirstForApp($app_row['pay']);
 							}
 						} else {
-							if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
-								if ($app->checkMagistratureFirst()) {
-									$finance_arr = $specs->getFinanceFirstMagisterForApp($app_row['pay']);
+							if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkBachelor() || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
+								if ($app->checkBachelor()) {
+									$finance_arr = $specs->getFinanceFirstBachelorForApp($app_row['pay']);
 								} else {
 									$finance_arr = $specs->getFinanceFirstForApp($app_row['pay']);
 								}
@@ -143,9 +143,9 @@ use common\models\Model_DocsEduc as DocsEduc;
 								$eduform_arr = $specs->getEduformFirstForApp($app_row['pay']);
 							}
 						} else {
-							if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
-								if ($app->checkMagistratureFirst()) {
-									$eduform_arr = $specs->getEduformFirstMagisterForApp($app_row['pay']);
+							if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkBachelor() || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
+								if ($app->checkBachelor()) {
+									$eduform_arr = $specs->getEduformFirstBachelorForApp($app_row['pay']);
 								} else {
 									$eduform_arr = $specs->getEduformFirstForApp($app_row['pay']);
 								}
@@ -176,9 +176,9 @@ use common\models\Model_DocsEduc as DocsEduc;
 								$edulevel_arr = $specs->getEdulevelFirstForApp($app_row['pay']);
 							}
 						} else {
-							if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
-								if ($app->checkMagistratureFirst()) {
-									$edulevel_arr = $specs->getEdulevelFirstMagisterForApp($app_row['pay']);
+							if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkBachelor() || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
+								if ($app->checkBachelor()) {
+									$edulevel_arr = $specs->getEdulevelFirstBachelorForApp($app_row['pay']);
 								} else {
 									$edulevel_arr = $specs->getEdulevelFirstForApp($app_row['pay']);
 								}
@@ -233,9 +233,9 @@ use common\models\Model_DocsEduc as DocsEduc;
 						$specs_arr = $specs->getSpecsFirstForApp($app_row['pay']);
 					}
 				} else {
-					if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
-						if ($app->checkMagistratureFirst()) {
-							$specs_arr = $specs->getSpecsFirstMagisterForApp($app_row['pay']);
+					if (in_array($docs_row['doc_type'], $docs::HIGH_BEFORE) || $app->checkBachelor() || $app->checkMagistratureFirst() || $app->checkHighAfter()) {
+						if ($app->checkBachelor()) {
+							$specs_arr = $specs->getSpecsFirstBachelorForApp($app_row['pay']);
 						} else {
 							$specs_arr = $specs->getSpecsFirstForApp($app_row['pay']);
 						}

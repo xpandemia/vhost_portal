@@ -122,7 +122,7 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 										'value' => $data['speciality'],
 										'success' => $data['speciality_scs'],
 										'error' => $data['speciality_err'],
-										'help' => 'Наименование специальности должно содержать '.MSG_SPEC_RUS.' и быть не более 50 символов длиной.']);
+										'help' => 'Наименование специальности должно содержать <strong>'.MSG_SPEC_RUS.'</strong> и быть не более <strong>50</strong> символов длиной.']);
 		/* change_name */
 		echo Form_Helper::setFormCheckbox(['label' => 'На момент получения документа об образовании мои фамилия, имя или отчество были другими',
 												'control' => 'change_name_flag',

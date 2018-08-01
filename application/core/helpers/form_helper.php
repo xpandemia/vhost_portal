@@ -46,7 +46,7 @@ define('PATTERN_SPEC', '/^[a-zA-Z0-9-.,\«\»\'\&quot;\s]*$/u');
 define('MSG_SPEC', 'только латинские буквы, цифры, знаки препинания и пробелы');
 // letters RUS, numbers, punctuation marks, spaces
 define('PATTERN_SPEC_RUS', '/^[ёЁа-яА-Я0-9-.,\«\»\'\&quot;\s]*$/u');
-define('MSG_SPEC_RUS', 'только латинские буквы, цифры, знаки препинания и пробелы');
+define('MSG_SPEC_RUS', 'только русские буквы, цифры, знаки препинания и пробелы');
 // email light
 define('PATTERN_EMAIL_LIGHT', '/^[a-zA-Z0-9_\-.]+@[a-zA-Z0-9_\-.]+$/');
 define('MSG_EMAIL_LIGHT', 'в формате user@domain');
@@ -75,7 +75,7 @@ class Form_Helper
 	/**
      * Validates form.
      *
-     * @return boolean
+     * @return array
      */
 
 	/* RULES (+ required)
@@ -91,7 +91,7 @@ class Form_Helper
 	    'ext' => ['value' => {FILE_EXTENSION}, 'msg' => 'File extension error message.'],
 	    +'success' => 'Success message.'
     */
-	public function validate($form, $rules)
+	public function validate($form, $rules) : array
 	{
 		$validate = true;
 		// RULES loop
@@ -309,7 +309,7 @@ class Form_Helper
      *
      * @return string
      */
-	public static function setFormBegin($controller, $action, $id, $legend, $home = 0, $logo = null)
+	public static function setFormBegin($controller, $action, $id, $legend, $home = 0, $logo = null) : string
 	{
 		switch ($home) {
 			case 1:
@@ -355,7 +355,9 @@ class Form_Helper
 		if (isset($rules) && is_array($rules)) {
 			$label = self::setFormLabelStyle($rules['required'], (isset($rules['required_style'])) ? $rules['required_style'] : null, $rules['label']);
 			return '<div class="form-group row" id="'.$rules['control'].'_div">'.
+						'<div class="">'.
 						HTML_Helper::setLabel($label['class'], $rules['control'], $label['value']).
+						'</div>'.
 						'<div class="col">'.
 							HTML_Helper::setInput($rules['type'],
 												$rules['class'],
@@ -366,8 +368,8 @@ class Form_Helper
 							HTML_Helper::setValidFeedback($rules['error'], $rules['success']).
 							HTML_Helper::setInvalidFeedback($rules['error']).
 							((isset($rules['help'])) ? '<p id="'.$rules['control'].'HelpBlock" class="form-text text-muted">'.$rules['help'].'</p>' : '').
-						'</div>
-					</div>';
+						'</div>'.
+					'</div>';
 		} else {
 			return '<p class="text-danger">Form_Helper.setFormInput - На входе не массив!</p>';
 		}
@@ -387,7 +389,9 @@ class Form_Helper
 	{
 		if (isset($rules) && is_array($rules)) {
 			return '<div class="form-group row">'.
+						'<div class="">'.
 						'<label class="font-weight-bold" for="'.$rules['control'].'">'.$rules['label'].'</label>'.
+						'</div>'.
 						'<div class="col">'.
 							'<input type="text" class="form-control" id="'.$rules['control'].'" name="'.$rules['control'].'" value="'.$rules['value'].'">'.
 						'</div>'.
@@ -417,8 +421,10 @@ class Form_Helper
 	{
 		if (isset($rules) && is_array($rules)) {
 			$label = self::setFormLabelStyle($rules['required'], (isset($rules['required_style'])) ? $rules['required_style'] : null, $rules['label']);
-			$result = '<div class="form-group">'.
+			$result = '<div class="form-group row">'.
+						'<div class="">'.
 						HTML_Helper::setLabel($label['class'], $rules['control'], $label['value']).
+						'</div>'.
 						'<div class="col">';
 			if (is_array($rules['radio'])) {
 				foreach ($rules['radio'] as $radio_id => $radio) {
@@ -433,6 +439,7 @@ class Form_Helper
 				if ($rules['error']) {
 					$result .= '<p class="text-danger">'.$rules['error'].'</p>';
 				}
+				$result .= '</div></div>';
 				return $result;
 			} else {
 				return '<p class="text-danger">Form_Helper.setFormRadio - Состав RADIO не массив!</p>';
@@ -491,7 +498,9 @@ class Form_Helper
 		if (isset($rules) && is_array($rules)) {
 			$label = self::setFormLabelStyle($rules['required'], (isset($rules['required_style'])) ? $rules['required_style'] : null, $rules['label']);
 			$result = '<div class="form-group row" id="'.$rules['control'].'_div">'.
+						'<div class="">'.
 						HTML_Helper::setLabel($label['class'], $rules['control'], $label['value']).
+						'</div>'.
 						'<div class="col">'.
 						'<select class="'.$rules['class'].'" id="'.$rules['control'].'" name="'.$rules['control'].'">';
 			if (isset($rules['source']) && is_array($rules['source'])) {
@@ -535,7 +544,9 @@ class Form_Helper
 	{
 		if (isset($rules) && is_array($rules)) {
 			return '<div class="form-group row">'.
+							'<div class="">'.
 							'<label class="font-weight-bold" for="'.$rules['control'].'">'.$rules['label'].'</label>'.
+							'</div>'.
 							'<div class="col">'.
 								'<select class="form-control" id="'.$rules['control'].'" name="'.$rules['control'].'"></select>'.
 							'</div>'.
@@ -571,7 +582,9 @@ class Form_Helper
 		if (isset($rules) && is_array($rules)) {
 			$label = self::setFormLabelStyle($rules['required'], (isset($rules['required_style'])) ? $rules['required_style'] : null, $rules['label']);
 			$result = '<div class="form-group row" id="'.$rules['control'].'_div">'.
+						'<div class="">'.
 						HTML_Helper::setLabel($label['class'], $rules['control'], $label['value']).
+						'</div>'.
 						'<div class="col">'.
 						'<select class="'.$rules['class'].'" id="'.$rules['control'].'" name="'.$rules['control'].'">';
 			if (isset($rules['model_class']) && !empty($rules['model_class']) && isset($rules['model_method']) && !empty($rules['model_method'])) {
@@ -627,7 +640,9 @@ class Form_Helper
 	{
 		if (isset($rules) && is_array($rules)) {
 			$result = '<div class="form-group row">'.
-						'<label class="font-weight-bold" for="'.$rules['control'].'">'.$rules['label'].'</label>'.
+							'<div class="">'.
+								'<label class="font-weight-bold" for="'.$rules['control'].'">'.$rules['label'].'</label>'.
+							'</div>'.
 							'<div class="col">'.
 							'<select class="form-control" id="'.$rules['control'].'" name="'.$rules['control'].'">';
 			// using model
@@ -683,7 +698,8 @@ class Form_Helper
 			// label
 			$label = self::setFormLabelStyle($rules['required'], (isset($rules['required_style'])) ? $rules['required_style'] : null, $rules['label']);
 			$result .= '<div class="col">'.
-						HTML_Helper::setLabel($label['class'], $field, $label['value']).'</div>';
+						HTML_Helper::setLabel($label['class'], $field, $label['value']).
+						'</div>';
 			// set limits
 			$result .= '<div class="col">'.
 							'<p class="font-weight-bold font-italic">Допустимый размер файла: '.FILES_SIZE['value'].' '.FILES_SIZE['size'].'</p>'.

@@ -22,11 +22,12 @@ use common\models\Model_User as User;
 					if (isset($data['step'])) {
 						echo '<div class=""><legend class="font-weight-bold">Пользователи</legend></div>';
 					} else {
-						echo '<div class=""><legend class="font-weight-bold">Найдены пользователи</legend></div>';
+						echo '<div class=""><legend class="font-weight-bold">Найдены пользователи: '.count($data).'</legend></div>';
 					}
 				?>
 				<div class="col">
-					<input type="text" placeholder="Найти..." id="search" name="search">
+					<input type="text" placeholder="Найти по логину..." id="search_username" name="search_username">
+					<input type="text" placeholder="Найти по эл. почте..." id="search_email" name="search_email">
 					<button type="submit" data-toggle="tooltip" title="Искать"><i class="fa fa-search"></i></button>
 				</div>
 			</div>
@@ -37,14 +38,9 @@ use common\models\Model_User as User;
 		echo HTML_Helper::setAlert($_SESSION[APP_CODE]['error_msg'], 'alert-danger');
 		$user = new User();
 		echo HTML_Helper::setHrefButtonIcon(USER['ctr'], 'Add', 'font-weight-bold', 'far fa-file fa-2x', 'Создать');
-		echo '<table class="table table-bordered table-hover">';
-		echo '<thead class="thead-dark">';
-		echo '<tr>';
-		foreach ($user->grid() as $key => $value) {
-			echo '<th class="align-text-top">'.$value['name'].'</th>';
-		}
-		echo '</tr>';
-		echo '</thead>';
+		echo HTML_Helper::setTableBegin();
+		echo HTML_Helper::setTableHeader(['class' => 'thead-dark',
+										'grid' => $user->grid()]);
 		if (isset($data['step'])) {
 			$user->id = $data['id'];
 			if ($data['step'] == 'prev') {
@@ -61,21 +57,16 @@ use common\models\Model_User as User;
 			$id_min = 0;
 			$id_max = 0;
 			foreach ($user_arr as $user_row) {
-				echo '<tr>';
-				echo '<td>'.$user_row['id'].'</td>';
-				echo '<td>'.$user_row['username'].'</td>';
-				echo '<td>'.$user_row['email'].'</td>';
-				echo '<td>'.$user_row['role'].'</td>';
-				echo '<td>'.$user_row['status'].'</td>';
-				echo '<td>'.$user_row['dt_created'].'</td>';
-				echo '<td>';
-				echo HTML_Helper::setHrefButtonIcon(USER['ctr'], 'Mask/?id='.$user_row['id'], 'font-weight-bold', 'fas fa-user-secret fa-2x', 'Войти как');
-				echo HTML_Helper::setHrefButtonIcon(USER['ctr'], 'Edit/?id='.$user_row['id'], 'font-weight-bold', 'far fa-edit fa-2x', 'Редактировать');
-				echo HTML_Helper::setHrefButtonIcon(USER['ctr'], 'DeleteConfirm/?id='.$user_row['id'].'&hdr=Пользователи&ctr='.USER['ctr'], 'text-danger font-weight-bold', 'fas fa-times fa-2x', 'Удалить');
-				echo '</td>';
-				echo '</tr>';
+				echo HTML_Helper::setTableRow(['grid' => $user->grid(),
+												'row' => $user_row,
+												'controls' => [
+																['controller' => USER['ctr'], 'action' => 'Mask/?id='.$user_row['id'], 'class' => 'font-weight-bold', 'icon' => 'fas fa-user-secret fa-2x', 'tooltip' => 'Войти как'],
+																['controller' => USER['ctr'], 'action' => 'Edit/?id='.$user_row['id'], 'class' => 'font-weight-bold', 'icon' => 'far fa-edit fa-2x', 'tooltip' => 'Редактировать'],
+																['controller' => USER['ctr'], 'action' => 'DeleteConfirm/?id='.$user_row['id'].'&hdr=Пользователи&ctr='.USER['ctr'], 'class' => 'text-danger font-weight-bold', 'icon' => 'fas fa-times fa-2x', 'tooltip' => 'Удалить']
+																]]);
 				if ($i === 0) {
 					$id_min = $user_row['id'];
+					$id_max = $user_row['id'];
 				} else {
 					$id_max = $user_row['id'];
 				}
@@ -83,15 +74,15 @@ use common\models\Model_User as User;
 			}
 			echo '</tbody>';
 		}
-		echo '</table>';
+		echo HTML_Helper::setTableEnd();
 		// set pagination
 		if (isset($data['step'])) {
 			echo HTML_Helper::setPagination(['model_class' => 'common\\models\\Model_User',
 											'model_data_method' => 'getPages',
+											'model_page_method' => 'getPageNumber',
 											'model_count_method' => 'getPagesCount',
 											'model_filter' => 'id',
 											'model_filter_var' => $data['id'],
-											'page' => $data['page'],
 											'id' => $id_min,
 											'rows' => $user::LIMIT_ROWS]);
 		}

@@ -265,7 +265,7 @@ use frontend\models\Model_Application as Model_Application;
 				echo '<p></p>';
 				echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nПожалуйста, не вносите изменения в печатную форму заявления.\nПросто распечатайте её, подпишите, отсканируйте и загрузите в электронное заявление."), 'alert-warning');
 				echo "<h1 style='color:red'>";
-				echo HTML_Helper::setHrefButtonIconToNewPage    ('ApplicationSpec', 'SavePdf/?pid='.$data['id'], 'font-weight-bold', 'fas fa-print fa-3x', 'Сформировать заявление');
+				echo HTML_Helper::setHrefButtonIcon('ApplicationSpec', 'SavePdf/?pid='.$data['id'], 'font-weight-bold', 'fas fa-print fa-3x', 'Сформировать заявление', 1);
 				echo " Сформировать заявление</h1>";
 				/* scans */
 				echo Form_Helper::setFormHeaderSub('Скан-копии');

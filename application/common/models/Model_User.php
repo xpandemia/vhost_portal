@@ -5,7 +5,7 @@ namespace common\models;
 use tinyframe\core\helpers\Db_Helper as Db_Helper;
 
 define('USERNAME_HELP', 'Логин должен содержать <strong>'.MSG_ALPHA.'</strong>, и быть не более <strong>45</strong> символов длиной.');
-define('EMAIL_HELP', 'Адрес электронной почты должен быть <strong>'.MSG_EMAIL_LIGHT.'<strong>, содержать <strong>'.MSG_ALPHA.'</strong> и не более <strong>45</strong> символов длиной.');
+define('EMAIL_HELP', 'Адрес электронной почты должен быть <strong>'.MSG_EMAIL_LIGHT.'</strong>, содержать <strong>'.MSG_ALPHA.'</strong> и не более <strong>45</strong> символов длиной.');
 define('PWD_HELP', 'Пароль должен содержать <strong>'.MSG_ALPHA_NUMB.'</strong>, и быть <strong>6-10</strong> символов длиной.');
 define('PWD_CONFIRM_HELP', 'Пароль должен содержать <strong>'.MSG_ALPHA_NUMB.'</strong>, и быть <strong>6-10</strong> символов длиной.');
 
@@ -54,6 +54,7 @@ class Model_User extends Db_Helper
 	public $role;
 	public $status;
 	public $dt_created;
+	public $dt_updated;
 
 	public $db;
 
@@ -163,7 +164,8 @@ class Model_User extends Db_Helper
 							],
 				'dt_created' => [
 								'name' => 'Дата создания',
-								'type' => 'date'
+								'type' => 'date',
+								'format' => 'd.m.Y H:i:s'
 								]
 				];
 	}
@@ -175,22 +177,48 @@ class Model_User extends Db_Helper
      */
 	public function getGrid()
 	{
-		return $this->rowSelectAll("id, username, email, getUserRoleName(role) as role, getUserStatusName(status) as status, date_format(dt_created, '%d.%m.%Y %H:%i:%s') as dt_created", self::TABLE_NAME);
+		return $this->rowSelectAll("id, username, email, getUserRoleName(role) as role, getUserStatusName(status) as status, dt_created", self::TABLE_NAME);
 	}
 
 	/**
      * Gets users pages.
      *
-     * @return array
+     * @return mixed
      */
 	public function getPages()
 	{
-		return $this->rowSelectAll("id, username, email, getUserRoleName(role) as role, getUserStatusName(status) as status, date_format(dt_created, '%d.%m.%Y %H:%i:%s') as dt_created",
+		$prev = $this->rowSelectAll("id, username, email, getUserRoleName(role) as role, getUserStatusName(status) as status, date_format(dt_created, '%d.%m.%Y %H:%i:%s') as dt_created",
+									self::TABLE_NAME,
+									'id < :id',
+									[':id' => $this->id],
+									'id DESC',
+									($this::LIMIT_ROWS * $this::LIMIT_PAGES) / 2);
+		$next = $this->rowSelectAll("id, username, email, getUserRoleName(role) as role, getUserStatusName(status) as status, date_format(dt_created, '%d.%m.%Y %H:%i:%s') as dt_created",
 									self::TABLE_NAME,
 									'id >= :id',
 									[':id' => $this->id],
 									'id ASC',
-									$this::LIMIT_ROWS * $this::LIMIT_PAGES);
+									($this::LIMIT_ROWS * $this::LIMIT_PAGES) / 2);
+		if ($prev && $next) {
+			$prev = array_reverse($prev);
+			return array_merge($prev, $next);
+		} elseif ($prev) {
+			return array_reverse($this->rowSelectAll("id, username, email, getUserRoleName(role) as role, getUserStatusName(status) as status, date_format(dt_created, '%d.%m.%Y %H:%i:%s') as dt_created",
+													self::TABLE_NAME,
+													'id < :id',
+													[':id' => $this->id],
+													'id DESC',
+													$this::LIMIT_ROWS * $this::LIMIT_PAGES));
+		} elseif ($next) {
+			return $this->rowSelectAll("id, username, email, getUserRoleName(role) as role, getUserStatusName(status) as status, date_format(dt_created, '%d.%m.%Y %H:%i:%s') as dt_created",
+										self::TABLE_NAME,
+										'id >= :id',
+										[':id' => $this->id],
+										'id ASC',
+										$this::LIMIT_ROWS * $this::LIMIT_PAGES);
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -200,8 +228,22 @@ class Model_User extends Db_Helper
      */
 	public function getPagesCount() : int
 	{
-		$count = $this->rowSelectOne('count(*) as pages', self::TABLE_NAME);
-		return $count['pages'] / self::LIMIT_ROWS;
+		$count = $this->rowSelectOne('count(*) as rows', self::TABLE_NAME);
+		return $count['rows'] / self::LIMIT_ROWS;
+	}
+
+	/**
+     * Gets users page number.
+     *
+     * @return int
+     */
+	public function getPageNumber() : int
+	{
+		$count = $this->rowSelectOne('count(*) as rows',
+									self::TABLE_NAME,
+									'id <= :id',
+									[':id' => $this->id]);
+		return ($count['rows'] / self::LIMIT_ROWS) + 1;
 	}
 
 	/**
@@ -347,12 +389,12 @@ class Model_User extends Db_Helper
      *
      * @return array
      */
-	public function searchByUsername($username)
+	public function search($conds, $params)
 	{
 		return $this->rowSelectAll("id, username, email, getUserRoleName(role) as role, getUserStatusName(status) as status, date_format(dt_created, '%d.%m.%Y %H:%i:%s') as dt_created",
 									self::TABLE_NAME,
-									'username like (:username)',
-									[':username' => '%'.$username.'%'],
+									$conds,
+									$params,
 									'id ASC');
 	}
 
@@ -376,6 +418,7 @@ class Model_User extends Db_Helper
      */
 	public function changeAll()
 	{
+		$this->dt_updated = date('Y-m-d H:i:s');
 		$prepare = $this->prepareUpdate(self::TABLE_NAME, $this->rules());
 		return $this->rowUpdate(self::TABLE_NAME, $prepare['fields'], $prepare['params'], ['id' => $this->id]);
 	}

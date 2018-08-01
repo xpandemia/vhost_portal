@@ -164,7 +164,8 @@ class Model_DocsEduc extends Db_Helper
 							],
 				'dt_issue' => [
 								'name' => 'Дата выдачи',
-								'type' => 'date'
+								'type' => 'date',
+								'format' => 'd.m.Y'
 							],
 				'school' => [
 							'name' => 'Учебное заведение',
@@ -333,7 +334,7 @@ class Model_DocsEduc extends Db_Helper
      */
 	public function getByUserGrid()
 	{
-		return $this->rowSelectAll("docs_educ.id, dict_eductypes.description as educ_type, dict_doctypes.description as doc_type, series, numb, date_format(dt_issue, '%d.%m.%Y') as dt_issue, school, end_year",
+		return $this->rowSelectAll("docs_educ.id, dict_eductypes.description as educ_type, dict_doctypes.description as doc_type, series, numb, dt_issue, school, end_year",
 									'docs_educ INNER JOIN dict_eductypes ON docs_educ.id_eductype = dict_eductypes.id'.
 									' INNER JOIN dict_doctypes ON docs_educ.id_doctype = dict_doctypes.id',
 									'id_user = :id_user',

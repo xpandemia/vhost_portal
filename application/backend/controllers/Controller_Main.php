@@ -43,7 +43,7 @@ class Controller_Main extends Controller
      */
 	function actionUser() : void
 	{
-		Basic_Helper::redirect('Пользователи', 202, USER['ctr'], 'Index');
+		Basic_Helper::redirect(USER['hdr'], 202, USER['ctr'], USER['act']);
 	}
 
 	/**
