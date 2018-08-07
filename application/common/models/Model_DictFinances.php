@@ -217,7 +217,6 @@ class Model_DictFinances extends Db_Helper
 		$result['error_msg'] = null;
 		$log = new Model_DictionaryManagerLog();
 		$log->id_dict = $id_dict;
-		$log->id_user = $_SESSION[APP_CODE]['user_id'];
 			if ($clear_load == 1) {
 				// clear
 				$rows_del = $this->$clear_load();

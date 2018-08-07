@@ -177,7 +177,33 @@ class Model_User extends Db_Helper
      */
 	public function getGrid()
 	{
-		return $this->rowSelectAll("id, username, email, getUserRoleName(role) as role, getUserStatusName(status) as status, dt_created", self::TABLE_NAME);
+		return $this->rowSelectAll("id, username, email, getUserRoleName(role) as role, getUserStatusName(status) as status, dt_created",
+									self::TABLE_NAME);
+	}
+
+	/**
+     * Gets users rows less count.
+     *
+     * @return int
+     */
+	public function getRowsCountLess() : int
+	{
+		$count = $this->rowSelectOne('count(*) as rows',
+									self::TABLE_NAME,
+									'id <= :id',
+									[':id' => $this->id]);
+		return $count['rows'];
+	}
+
+	/**
+     * Gets users rows count.
+     *
+     * @return int
+     */
+	public function getRowsCount() : int
+	{
+		$count = $this->rowSelectOne('count(*) as rows', self::TABLE_NAME);
+		return $count['rows'];
 	}
 
 	/**

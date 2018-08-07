@@ -205,8 +205,8 @@ use common\models\Model_DocsEduc as DocsEduc;
 	  var imgObj = $("#loadImg");
 	  imgObj.show();
 
-	  var centerY = $(window).scrollTop() + ($(window).height() + imgObj.height())/2;
-	  var centerX = $(window).scrollLeft() + ($(window).width() + imgObj.width())/2;
+	  var centerY = $(window).scrollTop() + ($(window).height() + imgObj.height()) / 2;
+	  var centerX = $(window).scrollLeft() + ($(window).width() + imgObj.width()) / 2;
 
 	  imgObj.offset({ top:centerY, left:centerX });
 	}

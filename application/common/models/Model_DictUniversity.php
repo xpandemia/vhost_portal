@@ -53,6 +53,29 @@ class Model_DictUniversity extends Db_Helper
 	}
 
 	/**
+     * Dictionary university grid.
+     *
+     * @return array
+     */
+	public function grid()
+	{
+		return [
+				'id' => [
+						'name' => '№',
+						'type' => 'int'
+						],
+				'code' => [
+							'name' => 'Код',
+							'type' => 'string'
+							],
+				'description' => [
+								'name' => 'Наименование',
+								'type' => 'string'
+								]
+				];
+	}
+
+	/**
      * Gets all dictionary university.
      *
      * @return array
@@ -60,6 +83,19 @@ class Model_DictUniversity extends Db_Helper
 	public function getAll()
 	{
 		return $this->rowSelectAll('*', self::TABLE_NAME);
+	}
+
+	/**
+     * Gets dictionary university by ID.
+     *
+     * @return array
+     */
+	public function get()
+	{
+		return $this->rowSelectOne('*',
+									self::TABLE_NAME,
+									'id = :id',
+									[':id' => $this->id]);
 	}
 
 	/**
@@ -73,6 +109,98 @@ class Model_DictUniversity extends Db_Helper
 								self::TABLE_NAME,
 								'code = :code',
 								[':code' => $this->code]);
+	}
+
+	/**
+     * Checks if dictionary university code exists.
+     *
+     * @return boolean
+     */
+	public function existsCode()
+	{
+		$row = $this->rowSelectOne('id',
+									self::TABLE_NAME,
+									'code = :code',
+									[':code' => $this->code]);
+		if (!empty($row)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+     * Checks if dictionary university code exists except this ID.
+     *
+     * @return boolean
+     */
+	public function existsCodeExcept()
+	{
+		$row = $this->rowSelectOne('id',
+									self::TABLE_NAME,
+									'code = :code AND id <> :id',
+									[':code' => $this->code,
+									':id' => $this->id]);
+		if (!empty($row)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+     * Checks if dictionary university description exists.
+     *
+     * @return boolean
+     */
+	public function existsDescription()
+	{
+		$row = $this->rowSelectOne('id',
+									self::TABLE_NAME,
+									'description = :description',
+									[':description' => $this->description]);
+		if (!empty($row)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+     * Checks if dictionary university description exists except this ID.
+     *
+     * @return boolean
+     */
+	public function existsDescriptionExcept()
+	{
+		$row = $this->rowSelectOne('id',
+									self::TABLE_NAME,
+									'description = :description AND id <> :id',
+									[':description' => $this->description,
+									':id' => $this->id]);
+		if (!empty($row)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+     * Checks if dictionary university used in applications.
+     *
+     * @return boolean
+     */
+	public function existsApplications()
+	{
+		$arr = $this->rowSelectAll('application.id',
+									'application INNER JOIN dict_university ON application.id_university = dict_university.id',
+									'dict_university.id = :id',
+									[':id' => $this->id]);
+		if (!empty($arr)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -108,6 +236,16 @@ class Model_DictUniversity extends Db_Helper
 	public function clearAll()
 	{
 		return $this->rowDelete(self::TABLE_NAME);
+	}
+
+	/**
+     * Removes dictionary university.
+     *
+     * @return integer
+     */
+	public function clear()
+	{
+		return $this->rowDelete(self::TABLE_NAME, 'id = :id', [':id' => $this->id]);
 	}
 
 	public function __destruct()

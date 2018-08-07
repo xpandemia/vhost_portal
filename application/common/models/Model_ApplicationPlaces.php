@@ -3,6 +3,8 @@
 namespace common\models;
 
 use tinyframe\core\helpers\Db_Helper as Db_Helper;
+use common\models\Model_Personal as Personal;
+use common\models\Model_DictCountries as DictCountries;
 
 class Model_ApplicationPlaces extends Db_Helper
 {
@@ -16,7 +18,8 @@ class Model_ApplicationPlaces extends Db_Helper
 	const PAY = 'Платная';
 	const PURPOSE = 'Целевой';
 
-	const BACHELOR_FREE_LIMIT = '26.07.2018';
+	const BACHELOR_LIMIT_START = '27.07.2018';
+	const BACHELOR_LIMIT_END = '01.08.2018';
 
 	public $id;
 	public $pid;
@@ -295,6 +298,86 @@ class Model_ApplicationPlaces extends Db_Helper
 	}
 
 	/**
+     * Gets magister specialities for application.
+     *
+     * @return array
+     */
+	public function getSpecsMagisterForApp($pay)
+	{
+		$conds = $this->CondsHighEducMagister($pay);
+		$params = $this->ParamsHighEducMagister($pay);
+		return $this->rowSelectAll('dict_speciality.id, speciality_name, profil_name, finance_name, eduform_name, edulevel_name',
+									$this->TablesSpecs(),
+									$conds,
+									$params,
+									'speciality_name, profil_name');
+	}
+
+	/**
+     * Gets magister specialities UNIQUE for application.
+     *
+     * @return array
+     */
+	public function getSpecialityMagisterForApp($pay)
+	{
+		$conds = $this->CondsHighEducMagister($pay);
+		$params = $this->ParamsHighEducMagister($pay);
+		return $this->rowSelectAll('DISTINCT speciality_code, speciality_name, profil_code, profil_name',
+									$this->TablesSpecs(),
+									$conds,
+									$params,
+									'speciality_name');
+	}
+
+	/**
+     * Gets magister finances UNIQUE for application.
+     *
+     * @return array
+     */
+	public function getFinanceMagisterForApp($pay)
+	{
+		$conds = $this->CondsHighEducMagister($pay);
+		$params = $this->ParamsHighEducMagister($pay);
+		return $this->rowSelectAll('DISTINCT finance_code, finance_name',
+									$this->TablesSpecs(),
+									$conds,
+									$params,
+									'finance_name');
+	}
+
+	/**
+     * Gets magister eduforms UNIQUE for application.
+     *
+     * @return array
+     */
+	public function getEduformMagisterForApp($pay)
+	{
+		$conds = $this->CondsHighEducMagister($pay);
+		$params = $this->ParamsHighEducMagister($pay);
+		return $this->rowSelectAll('DISTINCT eduform_code, eduform_name',
+									$this->TablesSpecs(),
+									$conds,
+									$params,
+									'eduform_name');
+	}
+
+	/**
+     * Gets magister edulevels UNIQUE for application.
+     *
+     * @return array
+     */
+	public function getEdulevelMagisterForApp($pay)
+	{
+		$conds = $this->CondsHighEducMagister($pay);
+		$params = $this->ParamsHighEducMagister($pay);
+		return $this->rowSelectAll('DISTINCT edulevel_code, edulevel_name',
+									$this->TablesSpecs(),
+									$conds,
+									$params,
+									'edulevel_name');
+	}
+
+	/**
      * Gets first high specialities for application.
      *
      * @return array
@@ -447,86 +530,6 @@ class Model_ApplicationPlaces extends Db_Helper
 	{
 		$conds = $this->CondsHighEducSecond($pay);
 		$params = $this->ParamsHighEducSecond($pay);
-		return $this->rowSelectAll('DISTINCT edulevel_code, edulevel_name',
-									$this->TablesSpecs(),
-									$conds,
-									$params,
-									'edulevel_name');
-	}
-
-	/**
-     * Gets second high magister specialities for application.
-     *
-     * @return array
-     */
-	public function getSpecsSecondMagisterForApp($pay)
-	{
-		$conds = $this->CondsHighEducSecondMagister($pay);
-		$params = $this->ParamsHighEducSecondMagister($pay);
-		return $this->rowSelectAll('dict_speciality.id, speciality_name, profil_name, finance_name, eduform_name, edulevel_name',
-									$this->TablesSpecs(),
-									$conds,
-									$params,
-									'speciality_name, profil_name');
-	}
-
-	/**
-     * Gets second high magister specialities UNIQUE for application.
-     *
-     * @return array
-     */
-	public function getSpecialitySecondMagisterForApp($pay)
-	{
-		$conds = $this->CondsHighEducSecondMagister($pay);
-		$params = $this->ParamsHighEducSecondMagister($pay);
-		return $this->rowSelectAll('DISTINCT speciality_code, speciality_name, profil_code, profil_name',
-									$this->TablesSpecs(),
-									$conds,
-									$params,
-									'speciality_name');
-	}
-
-	/**
-     * Gets second high magister finances UNIQUE for application.
-     *
-     * @return array
-     */
-	public function getFinanceSecondMagisterForApp($pay)
-	{
-		$conds = $this->CondsHighEducSecondMagister($pay);
-		$params = $this->ParamsHighEducSecondMagister($pay);
-		return $this->rowSelectAll('DISTINCT finance_code, finance_name',
-									$this->TablesSpecs(),
-									$conds,
-									$params,
-									'finance_name');
-	}
-
-	/**
-     * Gets second high magister eduforms UNIQUE for application.
-     *
-     * @return array
-     */
-	public function getEduformSecondMagisterForApp($pay)
-	{
-		$conds = $this->CondsHighEducSecondMagister($pay);
-		$params = $this->ParamsHighEducSecondMagister($pay);
-		return $this->rowSelectAll('DISTINCT eduform_code, eduform_name',
-									$this->TablesSpecs(),
-									$conds,
-									$params,
-									'eduform_name');
-	}
-
-	/**
-     * Gets second high magister edulevels UNIQUE for application.
-     *
-     * @return array
-     */
-	public function getEdulevelSecondMagisterForApp($pay)
-	{
-		$conds = $this->CondsHighEducSecondMagister($pay);
-		$params = $this->ParamsHighEducSecondMagister($pay);
 		return $this->rowSelectAll('DISTINCT edulevel_code, edulevel_name',
 									$this->TablesSpecs(),
 									$conds,
@@ -779,11 +782,34 @@ class Model_ApplicationPlaces extends Db_Helper
 		} else {
 			$now = new \DateTime;
 			$now = \DateTime::CreateFromFormat('d.m.Y',$now->format('d.m.Y'));
-			if ($now > \DateTime::CreateFromFormat('d.m.Y',self::BACHELOR_FREE_LIMIT)) {
-				return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr = :finance AND dict_speciality.eduprogram_name is null AND (stage_numb = :stage_numb OR stage_numb is null) AND group_name not like (:group_name) AND :dt between stage_dt_begin and stage_dt_end';
-			} else {
+			$personal = new Personal();
+			$citizenship = $personal->getCitizenshipByUser();
+			$country = new DictCountries();
+			if ($citizenship['abroad'] == $country::ABROAD_FAR) {
 				return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr <> :finance AND dict_speciality.eduprogram_name is null AND (stage_numb = :stage_numb OR stage_numb is null) AND group_name not like (:group_name) AND :dt between stage_dt_begin and stage_dt_end';
+			} else {
+				if ($now >= \DateTime::CreateFromFormat('d.m.Y',self::BACHELOR_LIMIT_START) && $now <= \DateTime::CreateFromFormat('d.m.Y',self::BACHELOR_LIMIT_END)) {
+					return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr = :finance AND dict_speciality.eduprogram_name is null AND (stage_numb = :stage_numb OR stage_numb is null) AND group_name not like (:group_name) AND :dt between stage_dt_begin and stage_dt_end';
+				} elseif ($now > \DateTime::CreateFromFormat('d.m.Y',self::BACHELOR_LIMIT_END)) {
+					return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND eduform_name = :eduform AND dict_finances.abbr <> :finance AND dict_speciality.eduprogram_name is null AND (stage_numb = :stage_numb OR stage_numb is null) AND group_name not like (:group_name) AND :dt between stage_dt_begin and stage_dt_end';
+				} else {
+					return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr <> :finance AND dict_speciality.eduprogram_name is null AND (stage_numb = :stage_numb OR stage_numb is null) AND group_name not like (:group_name) AND :dt between stage_dt_begin and stage_dt_end';
+				}
 			}
+		}
+	}
+
+	/**
+     * Returns conditions for the magister education.
+     *
+     * @return string
+     */
+	public function CondsHighEducMagister($pay) : string
+	{
+		if ($pay == 1) {
+			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr = :finance AND (stage_numb = :stage_numb OR stage_numb is null) AND group_name not like (:group_name) AND :dt between stage_dt_begin and stage_dt_end';
+		} else {
+			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr <> :finance AND (stage_numb = :stage_numb OR stage_numb is null) AND group_name not like (:group_name) AND :dt between stage_dt_begin and stage_dt_end';
 		}
 	}
 
@@ -812,20 +838,6 @@ class Model_ApplicationPlaces extends Db_Helper
 			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr = :finance AND dict_speciality.eduprogram_name = :eduprogram_name AND (stage_numb = :stage_numb OR stage_numb is null) AND group_name not like (:group_name) AND :dt between stage_dt_begin and stage_dt_end';
 		} else {
 			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr <> :finance AND dict_speciality.eduprogram_name = :eduprogram_name AND (stage_numb = :stage_numb OR stage_numb is null) AND group_name not like (:group_name) AND :dt between stage_dt_begin and stage_dt_end';
-		}
-	}
-
-	/**
-     * Returns conditions for the second high magister education.
-     *
-     * @return string
-     */
-	public function CondsHighEducSecondMagister($pay) : string
-	{
-		if ($pay == 1) {
-			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr = :finance AND (stage_numb = :stage_numb OR stage_numb is null) AND group_name not like (:group_name) AND :dt between stage_dt_begin and stage_dt_end';
-		} else {
-			return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr <> :finance AND (stage_numb = :stage_numb OR stage_numb is null) AND group_name not like (:group_name) AND :dt between stage_dt_begin and stage_dt_end';
 		}
 	}
 
@@ -872,21 +884,65 @@ class Model_ApplicationPlaces extends Db_Helper
 		} else {
 			$now = new \DateTime;
 			$now = \DateTime::CreateFromFormat('d.m.Y',$now->format('d.m.Y'));
-			if ($now > \DateTime::CreateFromFormat('d.m.Y',self::BACHELOR_FREE_LIMIT)) {
-				return [':pid' => $this->pid,
-						':group_beneficiary' => 0,
-						':finance' => self::PAY,
-						':stage_numb' => 1,
-						':group_name' => '%(англ)',
-						':dt' => date('Y-m-d')];
-			} else {
+			$personal = new Personal();
+			$citizenship = $personal->getCitizenshipByUser();
+			$country = new DictCountries();
+			if ($citizenship['abroad'] == $country::ABROAD_FAR) {
 				return [':pid' => $this->pid,
 						':group_beneficiary' => 0,
 						':finance' => self::PURPOSE,
 						':stage_numb' => 1,
 						':group_name' => '%(англ)',
 						':dt' => date('Y-m-d')];
+			} else {
+				if ($now >= \DateTime::CreateFromFormat('d.m.Y',self::BACHELOR_LIMIT_START) && $now <= \DateTime::CreateFromFormat('d.m.Y',self::BACHELOR_LIMIT_END)) {
+					return [':pid' => $this->pid,
+							':group_beneficiary' => 0,
+							':finance' => self::PAY,
+							':stage_numb' => 1,
+							':group_name' => '%(англ)',
+							':dt' => date('Y-m-d')];
+				} elseif ($now > \DateTime::CreateFromFormat('d.m.Y',self::BACHELOR_LIMIT_END)) {
+					return [':pid' => $this->pid,
+							':group_beneficiary' => 0,
+							':eduform' => 'Заочная',
+							':finance' => self::PURPOSE,
+							':stage_numb' => 1,
+							':group_name' => '%(англ)',
+							':dt' => date('Y-m-d')];
+				} else {
+					return [':pid' => $this->pid,
+							':group_beneficiary' => 0,
+							':finance' => self::PURPOSE,
+							':stage_numb' => 1,
+							':group_name' => '%(англ)',
+							':dt' => date('Y-m-d')];
+				}
 			}
+		}
+	}
+
+	/**
+     * Returns parameters for the magister education.
+     *
+     * @return array
+     */
+	public function ParamsHighEducMagister($pay) : array
+	{
+		if ($pay == 1) {
+			return [':pid' => $this->pid,
+					':group_beneficiary' => 0,
+					':finance' => self::PAY,
+					':stage_numb' => 1,
+					':group_name' => '%(англ)',
+					':dt' => date('Y-m-d')];
+		} else {
+			return [':pid' => $this->pid,
+					':group_beneficiary' => 0,
+					':finance' => self::PURPOSE,
+					':stage_numb' => 1,
+					':group_name' => '%(англ)',
+					':dt' => date('Y-m-d')];
 		}
 	}
 
@@ -934,30 +990,6 @@ class Model_ApplicationPlaces extends Db_Helper
 					':group_beneficiary' => 0,
 					':finance' => self::PURPOSE,
 					':eduprogram_name' => 'Высшее',
-					':stage_numb' => 1,
-					':group_name' => '%(англ)',
-					':dt' => date('Y-m-d')];
-		}
-	}
-
-	/**
-     * Returns parameters for the second high magister education.
-     *
-     * @return array
-     */
-	public function ParamsHighEducSecondMagister($pay) : array
-	{
-		if ($pay == 1) {
-			return [':pid' => $this->pid,
-					':group_beneficiary' => 0,
-					':finance' => self::PAY,
-					':stage_numb' => 1,
-					':group_name' => '%(англ)',
-					':dt' => date('Y-m-d')];
-		} else {
-			return [':pid' => $this->pid,
-					':group_beneficiary' => 0,
-					':finance' => self::PURPOSE,
 					':stage_numb' => 1,
 					':group_name' => '%(англ)',
 					':dt' => date('Y-m-d')];

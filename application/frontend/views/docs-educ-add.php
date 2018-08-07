@@ -275,8 +275,8 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 	  var imgObj = $("#loadImg");
 	  imgObj.show();
 
-	  var centerY = $(window).scrollTop() + ($(window).height() + imgObj.height())/2;
-	  var centerX = $(window).scrollLeft() + ($(window).width() + imgObj.width())/2;
+	  var centerY = $(window).scrollTop() + ($(window).height() + imgObj.height()) / 2;
+	  var centerX = $(window).scrollLeft() + ($(window).width() + imgObj.width()) / 2;
 
 	  imgObj.offset({ top:centerY, left:centerX });
 	}

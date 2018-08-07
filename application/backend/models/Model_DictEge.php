@@ -36,10 +36,10 @@ class Model_DictEge extends Model
      */
 	public function get($id)
 	{
-		$ed = new DictEge();
-		$ed->id = $id;
-		$ed_row = $ed->get();
-		return ['id' => $ed_row['id'], 'discipline' => $ed_row['code']];
+		$de = new DictEge();
+		$de->id = $id;
+		$de_row = $de->get();
+		return ['id' => $de_row['id'], 'discipline' => $de_row['code']];
 	}
 
 	/**
@@ -51,15 +51,15 @@ class Model_DictEge extends Model
 	{
 		$form['success_msg'] = null;
 		$form['error_msg'] = null;
-		$ed = new DictEge();
-		$ed->id = $form['id'];
-		if ($ed->existsEge()) {
+		$de = new DictEge();
+		$de->id = $form['id'];
+		if ($de->existsEge()) {
 			$form['error_msg'] = 'Удалять дисциплины ЕГЭ, которые используются в результатах ЕГЭ, нельзя!';
 		} else {
-			if ($ed->clear() > 0) {
-				$form['success_msg'] = 'Дисциплина ЕГЭ № '.$docs->id.' удалена.';
+			if ($de->clear() > 0) {
+				$form['success_msg'] = 'Дисциплина ЕГЭ № '.$de->id.' удалена.';
 			} else {
-				$form['error_msg'] = 'Ошибка удаления дисциплины ЕГЭ № '.$docs->id.'! Свяжитесь с администратором.';
+				$form['error_msg'] = 'Ошибка удаления дисциплины ЕГЭ № '.$de->id.'! Свяжитесь с администратором.';
 			}
 		}
 		return $form;
@@ -81,14 +81,14 @@ class Model_DictEge extends Model
 		if (isset($form['id']) && !empty($form['id'])) {
 			// update
 			$de->id = $form['id'];
-			if ($ed->existsEge()) {
+			if ($de->existsEge()) {
 				$form['error_msg'] = 'Удалять дисциплины ЕГЭ, которые используются в результатах ЕГЭ, нельзя!';
 			} elseif ($de->existsExcept()) {
 				$form['error_msg'] = 'Такая дисциплина ЕГЭ уже есть!';
 				return $form;
 			} else {
 				if ($de->changeAll()) {
-					$form['success_msg'] = 'Дисциплина ЕГЭ № '.$form['id'].' успешно изменена.';
+					$form['success_msg'] = 'Изменена дисциплина ЕГЭ № '.$form['id'].'.';
 				} else {
 					$form['error_msg'] = 'Ошибка при изменении дисциплины ЕГЭ № '.$form['id'].'!';
 				}

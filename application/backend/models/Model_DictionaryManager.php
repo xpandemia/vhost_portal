@@ -15,24 +15,121 @@ class Model_DictionaryManager extends Model
 	*/
 
 	/**
-     * Dictionary manager rules.
+     * Dictionary manager add rules.
      *
      * @return array
      */
-	public function rules()
+	public function rules_add()
+	{
+		return [
+                'dict_code' => [
+                            'type' => 'text',
+                            'class' => 'form-control',
+                            'required' => ['default' => '', 'msg' => 'Код обязателен для заполнения!'],
+                            'width' => ['format' => 'string', 'min' => 1, 'max' => 255, 'msg' => 'Слишком длинный код!'],
+                            'success' => 'Код заполнен верно.'
+                           ],
+                'dict_name' => [
+                                'type' => 'text',
+                                'class' => 'form-control',
+                                'required' => ['default' => '', 'msg' => 'Наименование обязательно для заполнения!'],
+                                'pattern' => ['value' => PATTERN_TEXT_RUS, 'msg' => 'Для наименования можно использовать '.MSG_TEXT_RUS.'!'],
+                                'width' => ['format' => 'string', 'min' => 1, 'max' => 100, 'msg' => 'Слишком длинное наименование!'],
+                                'success' => 'Наименование заполнено верно.'
+                               ],
+                'dict_filter' => [
+	                            'type' => 'text',
+	                            'class' => 'form-control',
+	                            'width' => ['format' => 'string', 'min' => 1, 'max' => 255, 'msg' => 'Слишком длинный фильтр!'],
+	                            'success' => 'Фильтр заполнен верно.'
+	                           ],
+	            'type' => [
+							'type' => 'selectlist',
+                            'class' => 'form-control',
+                            'required' => ['default' => '', 'msg' => 'Тип обязателен для заполнения!'],
+							'success' => 'Тип заполнен верно.'
+                           ],
+                'table_name' => [
+                                'type' => 'text',
+                                'class' => 'form-control',
+                                'required' => ['default' => '', 'msg' => 'Наименование таблицы обязательна для заполнения!'],
+                                'pattern' => ['value' => PATTERN_CODE, 'msg' => 'Для кода можно использовать '.MSG_CODE.'!'],
+                                'width' => ['format' => 'string', 'min' => 1, 'max' => 100, 'msg' => 'Слишком длинное наименование таблицы!'],
+                                'success' => 'Наименование таблицы заполнен верно.'
+                               ],
+                'model_class' => [
+                                'type' => 'text',
+                                'class' => 'form-control',
+                                'required' => ['default' => '', 'msg' => 'Наименование модели обязательно для заполнения!'],
+                                'pattern' => ['value' => PATTERN_PATH, 'msg' => 'Для наименования модели можно использовать '.MSG_PATH.'!'],
+                                'width' => ['format' => 'string', 'min' => 1, 'max' => 100, 'msg' => 'Слишком длинное наименование модели!'],
+                                'success' => 'Наименование модели заполнен верно.'
+                               ],
+                'clear_load' => [
+	                            'type' => 'text',
+	                            'class' => 'form-control',
+	                            'width' => ['format' => 'string', 'min' => 1, 'max' => 50, 'msg' => 'Слишком длинное наименование метода очистки!'],
+	                            'success' => 'Наименование метода очистки заполнено верно.'
+	                           ],
+	            'active' => [
+							'type' => 'radio',
+                            'class' => 'form-check-input',
+                            'required' => ['default' => '', 'msg' => 'Флаг активности обязателен для заполнения!'],
+							'success' => 'Флаг активности выбран.'
+                           ]
+            ];
+	}
+
+	/**
+     * Dictionary manager sync rules.
+     *
+     * @return array
+     */
+	public function rules_sync()
 	{
 		return [
                 'dictionary' => [
 								'type' => 'selectlist',
                                 'class' => 'form-control',
-                                'required' => ['default' => '', 'msg' => 'Выберите справочник!'],
+                                'required' => ['default' => '', 'msg' => 'Пожалуйста, выберите справочник!'],
 								'success' => 'Справочник выбран.'
                                ],
             ];
 	}
 
 	/**
-     * Renews dictionary manager data.
+     * Gets dictionary from database.
+     *
+     * @return array
+     */
+	public function get($id)
+	{
+		$dm = new DictionaryManager();
+		$dm->id = $id;
+		return $dm->getById();
+	}
+
+	/**
+     * Deletes dictionary from database.
+     *
+     * @return array
+     */
+	public function delete($form) : array
+	{
+		$form['success_msg'] = null;
+		$form['error_msg'] = null;
+		$dm = new DictionaryManager();
+		$dm->id = $form['id'];
+		if ($dm->clear() > 0) {
+			$form['success_msg'] = 'Справочник № '.$dm->id.' удалён.';
+		} else {
+			$form['error_msg'] = 'Ошибка удаления справочника № '.$dm->id.'! Свяжитесь с администратором.';
+		}
+		return $form;
+	}
+
+	/**
+     * Renews dictionary data.
      *
      * @return array
      */
@@ -81,6 +178,58 @@ class Model_DictionaryManager extends Model
 			}
 		} else {
 			$form['error_msg'] = 'Ошибка при получении параметров справочника!';
+		}
+		return $form;
+	}
+
+	/**
+     * Checks dictionary data.
+     *
+     * @return array
+     */
+	public function check($form)
+	{
+		$dm = new DictionaryManager();
+		$dm->dict_code = $form['dict_code'];
+		$dm->dict_name = $form['dict_name'];
+		$dm->dict_filter = (empty($form['dict_filter'])) ? null : $form['dict_filter'];
+		$dm->type = $form['type'];
+		$dm->table_name = $form['table_name'];
+		$dm->model_class = $form['model_class'];
+		$dm->clear_load = (empty($form['clear_load'])) ? null : $form['clear_load'];
+		$dm->active = $form['active'];
+		if (isset($form['id']) && !empty($form['id'])) {
+			// update
+			$dm->id = $form['id'];
+			if ($dm->existsCodeExcept()) {
+				$form['error_msg'] = 'Справочник с таким кодом уже есть!';
+				return $form;
+			} elseif ($dm->existsNameExcept()) {
+				$form['error_msg'] = 'Справочник с таким наименованием уже есть!';
+				return $form;
+			} else {
+				if ($dm->changeAll()) {
+					$form['success_msg'] = 'Изменён справочник № '.$form['id'].'.';
+				} else {
+					$form['error_msg'] = 'Ошибка при изменении справочника № '.$form['id'].'!';
+				}
+			}
+		} else {
+			// insert
+			if ($dm->existsCode()) {
+				$form['error_msg'] = 'Справочник с таким кодом уже есть!';
+				return $form;
+			} elseif ($dm->existsName()) {
+				$form['error_msg'] = 'Справочник с таким наименованием уже есть!';
+				return $form;
+			} else {
+				$form['id'] = $dm->save();
+				if ($form['id'] > 0) {
+					$form['success_msg'] = 'Создан справочник № '.$form['id'].'.';
+				} else {
+					$form['error_msg'] = 'Ошибка при создании справочника!';
+				}
+			}
 		}
 		return $form;
 	}

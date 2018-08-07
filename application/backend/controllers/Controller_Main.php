@@ -51,7 +51,7 @@ class Controller_Main extends Controller
      *
      * @return void
      */
-	function actionDictManager() : void
+	function actionDictionaryManager() : void
 	{
 		Basic_Helper::redirect(DICT_MANAGER['hdr'], 202, DICT_MANAGER['ctr'], 'Index');
 	}
@@ -64,6 +64,36 @@ class Controller_Main extends Controller
 	function actionDictCountries() : void
 	{
 		Basic_Helper::redirect('Страны мира', 202, DICT_COUNTRIES['ctr'], 'Index');
+	}
+
+	/**
+     * Calls to documents.
+     *
+     * @return void
+     */
+	function actionDocs() : void
+	{
+		Basic_Helper::redirect('Документы', 202, DOCS['ctr'], 'Index');
+	}
+
+	/**
+     * Calls to dictionary scans.
+     *
+     * @return void
+     */
+	function actionDictScans() : void
+	{
+		Basic_Helper::redirect('Скан-копии', 202, DICT_SCANS['ctr'], 'Index');
+	}
+
+	/**
+     * Calls to dictionary university.
+     *
+     * @return void
+     */
+	function actionDictUniversity() : void
+	{
+		Basic_Helper::redirect('Места поступления', 202, DICT_UNIVERSITY['ctr'], 'Index');
 	}
 
 	/**

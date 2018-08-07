@@ -656,43 +656,23 @@ class Model_Application extends Db_Helper
 	}
 
 	/**
-     * Checks magistrature first.
+     * Checks magistrature.
      *
      * @return boolean
      */
-	public function checkMagistratureFirst()
+	public function checkMagistrature()
 	{
 		$row = $this->rowSelectOne('application.*',
 									'application INNER JOIN admission_campaign ON application.id_campaign = admission_campaign.id'.
 									' INNER JOIN docs_educ ON application.id_docseduc = docs_educ.id'.
 									' INNER JOIN dict_doctypes ON docs_educ.id_doctype = dict_doctypes.id',
-									'application.id = :id AND left(admission_campaign.description, 12) = :description AND dict_doctypes.code in (:doc_type1, :doc_type2)',
+									'application.id = :id AND left(admission_campaign.description, 12) = :description AND dict_doctypes.code in (:doc_type1, :doc_type2, :doc_type3, :doc_type4)',
 									[':id' => $this->id,
 									':description' => 'Магистратура',
 									':doc_type1' => '000000022',
-									':doc_type2' => '000000025']);
-		if (!empty($row)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	/**
-     * Checks magistrature second.
-     *
-     * @return boolean
-     */
-	public function checkMagistratureSecond()
-	{
-		$row = $this->rowSelectOne('application.*',
-									'application INNER JOIN admission_campaign ON application.id_campaign = admission_campaign.id'.
-									' INNER JOIN docs_educ ON application.id_docseduc = docs_educ.id'.
-									' INNER JOIN dict_doctypes ON docs_educ.id_doctype = dict_doctypes.id',
-									'application.id = :id AND left(admission_campaign.description, 12) = :description AND dict_doctypes.code = :doc_type',
-									[':id' => $this->id,
-									':description' => 'Магистратура',
-									':doc_type' => '000000023']);
+									':doc_type2' => '000000023',
+									':doc_type3' => '000000024',
+									':doc_type4' => '000000025']);
 		if (!empty($row)) {
 			return true;
 		} else {

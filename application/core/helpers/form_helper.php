@@ -17,6 +17,12 @@ define('MSG_ALPHA', 'только латинские буквы');
 // letters RUS
 define('PATTERN_ALPHA_RUS', '/^[ёЁа-яА-Я]*$/u');
 define('MSG_ALPHA_RUS', 'только русские буквы');
+// letters ENG, numbers, "_"
+define('PATTERN_CODE', '/^[a-zA-Z0-9_]*$/u');
+define('MSG_CODE', 'только латинские буквы, цифры и символ _');
+// letters ENG, "\"
+define('PATTERN_PATH', '/^[a-zA-Z0-9_\\\]*$/u');
+define('MSG_PATH', 'только латинские буквы и символ \\');
 // letters RUS, "-"
 define('PATTERN_FAMILY_RUS', '/^[ёЁа-яА-Я-]*$/u');
 define('MSG_FAMILY_RUS', 'только русские буквы и тире');

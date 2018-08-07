@@ -140,7 +140,7 @@ class Model_DictCountries extends Model
 				return $form;
 			} else {
 				if ($dc->changeAll()) {
-					$form['success_msg'] = 'Страна № '.$form['id'].' успешно изменена.';
+					$form['success_msg'] = 'Изменена страна № '.$form['id'].'.';
 				} else {
 					$form['error_msg'] = 'Ошибка при изменении страны № '.$form['id'].'!';
 				}

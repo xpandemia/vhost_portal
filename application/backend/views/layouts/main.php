@@ -24,6 +24,15 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 	<link rel="stylesheet" href="/vendors/fontawesome/fontawesome-all.css">
 
 	<style>
+		.sticky_top {
+		    position: -webkit-sticky;
+		    position: sticky;
+		    top: 7%;
+		    padding-left: 2.5%;
+		    padding-top: 1.5%;
+		    padding-right: 2.5%;
+		    padding-bottom: 1.5%;
+		}
 		.footer {
 			position: fixed;
 			left: 0;
@@ -45,7 +54,7 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 			<ul class="navbar-nav">
 				<li class="nav-item">
 					<a class="nav-link" href="<?php echo Basic_Helper::appUrl('Main', USER['ctr']); ?>">
-						<span data-toggle="tooltip" data-placement="auto" title="Пользователи"><i class="fas fa-users fa-2x"></i></span>
+						<span data-toggle="tooltip" data-placement="auto" title="<?php echo USER['hdr']; ?>"><i class="fas fa-users fa-2x"></i></span>
 					</a>
 			    </li>
 			    <li class="nav-item">
@@ -56,6 +65,21 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 			    <li class="nav-item">
 					<a class="nav-link" href="<?php echo Basic_Helper::appUrl('Main', DICT_COUNTRIES['ctr']); ?>">
 						<span data-toggle="tooltip" data-placement="auto" title="Страны мира"><i class="fas fa-globe fa-2x"></i></span>
+					</a>
+			    </li>
+			    <li class="nav-item">
+					<a class="nav-link" href="<?php echo Basic_Helper::appUrl('Main', DOCS['ctr']); ?>">
+						<span data-toggle="tooltip" data-placement="auto" title="Документы"><i class="fas fa-file-alt fa-2x"></i></span>
+					</a>
+			    </li>
+			    <li class="nav-item">
+					<a class="nav-link" href="<?php echo Basic_Helper::appUrl('Main', DICT_SCANS['ctr']); ?>">
+						<span data-toggle="tooltip" data-placement="auto" title="Скан-копии"><i class="fas fa-file-image fa-2x"></i></span>
+					</a>
+			    </li>
+			    <li class="nav-item">
+					<a class="nav-link" href="<?php echo Basic_Helper::appUrl('Main', DICT_UNIVERSITY['ctr']); ?>">
+						<span data-toggle="tooltip" data-placement="auto" title="Места поступления"><i class="fas fa-university fa-2x"></i></span>
 					</a>
 			    </li>
 			    <li class="nav-item">

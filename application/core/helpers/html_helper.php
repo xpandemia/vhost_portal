@@ -148,6 +148,7 @@ class HTML_Helper
      * @return string
      */
      /* RULES (+ required)
+		'id' => {TABLE_ID},
 		+ 'model_class' => {MODEL_CLASS},
 		+ 'model_method' => {MODEL_METHOD},
 		'model_filter' => {MODEL_FILTER},
@@ -164,7 +165,11 @@ class HTML_Helper
 		if (isset($rules) && is_array($rules)) {
 			// action create
 			$result = HTML_Helper::setHrefButtonIcon($rules['controller'], $rules['action_add'], 'font-weight-bold', 'far fa-file fa-2x', 'Создать');
-			$result .= '<table class="table table-bordered table-hover">';
+			if (isset($rules['id']) && !empty($rules['id'])) {
+				$result .= '<table class="table table-bordered table-hover" id="'.$rules['id'].'" name="'.$rules['id'].'">';
+			} else {
+				$result .= '<table class="table table-bordered table-hover" id="gridDb" name="gridDb">';
+			}
 			// using model
 			$model = new $rules['model_class'];
 			// using model method
@@ -242,9 +247,13 @@ class HTML_Helper
      *
      * @return string
      */
-	public static function setTableBegin() : string
+	public static function setTableBegin($id = null) : string
 	{
-		return '<table class="table table-bordered table-hover">';
+		if (!empty($id)) {
+			return '<table class="table table-bordered table-hover" id="'.$id.'" name="'.$id.'">';
+		} else {
+			return '<table class="table table-bordered table-hover">';
+		}
 	}
 
 	/**
@@ -344,6 +353,8 @@ class HTML_Helper
 		+ 'model_data_method' => {MODEL_DATA_METHOD},
 		+ 'model_page_method' => {MODEL_PAGE_METHOD},
 		+ 'model_count_method' => {MODEL_COUNT_METHOD},
+		'model_rowsless_method' => {MODEL_ROWSLESS_METHOD},
+		'model_rows_method' => {MODEL_ROWS_METHOD},
 		'model_filter' => {MODEL_FILTER},
 		'model_filter_var' => {MODEL_FILTER_VAR},
 		+ 'id' => {ID_CURRENT},
@@ -377,7 +388,8 @@ class HTML_Helper
 				} else {
 					return '<p class="text-danger">HTML_Helper.setPagination - Текущий идентификатор не указан!</p>';
 				}
-				$result = '<ul class="pagination justify-content-center">';
+				$rows = '';
+				$pages = '<ul class="pagination justify-content-center">';
 				$i = 0;
 				foreach ($table as $table_row) {
 					// start page
@@ -388,15 +400,25 @@ class HTML_Helper
 						}
 						$page = $model->$method_page();
 						if ($page !== 1) {
-							$result .= '<li class="page-item"><a class="page-link" href="Index/?id='.$id_min.'&step=prev">Previous</a></li>';
+							$pages .= '<li class="page-item"><a class="page-link" href="Index/?id='.$id_min.'&step=prev">Previous</a></li>';
 						}
 					}
 					// current page
 					if ($i % $rules['rows'] === 0) {
 						if ($page === $page_current) {
-							$result .= '<li class="page-item active"><a class="page-link" href="Index/?id='.$table_row['id'].'&step=next">'.$page.'</a></li>';
+							// mark page active
+							$pages .= '<li class="page-item active"><a class="page-link" href="Index/?id='.$table_row['id'].'&step=next">'.$page.'</a></li>';
+							// create rows marker start
+							if (isset($rules['model_rowsless_method']) && !empty($rules['model_rowsless_method']) && isset($rules['model_rows_method']) && !empty($rules['model_rows_method'])) {
+								if (isset($filter) && !empty($filter)) {
+									$model->$filter = $rules['id'];
+								}
+								$method_rowsless = $rules['model_rowsless_method'];
+								$rows .= '<strong>'.$model->$method_rowsless().' - ';
+							}
 						} else {
-							$result .= '<li class="page-item"><a class="page-link" href="Index/?id='.$table_row['id'].'&step=next">'.$page.'</a></li>';
+							// mark page inactive
+							$pages .= '<li class="page-item"><a class="page-link" href="Index/?id='.$table_row['id'].'&step=next">'.$page.'</a></li>';
 						}
 						$page++;
 					}
@@ -408,13 +430,16 @@ class HTML_Helper
 					}
 					$i++;
 				}
+				// create rows marker end
+				$method_rows = $rules['model_rows_method'];
+				$rows .= $i.' из '.$model->$method_rows().'</strong>';
 				// using model count method
 				$method_count = $rules['model_count_method'];
-				if ($page !== $model->$method_count()) {
-					$result .= '<li class="page-item"><a class="page-link" href="Index/?id='.$id_max.'&step=next">Next</a></li>';
+				if ($page !== $model->$method_count() && ($page - 1) !== 1) {
+					$pages .= '<li class="page-item"><a class="page-link" href="Index/?id='.$id_max.'&step=next">Next</a></li>';
 				}
-				$result .= '</ul>';
-				return $result;
+				$pages .= '</ul>';
+				return $rows.$pages;
 			} else {
 				return '<p class="text-danger">HTML_Helper.setPagination - Нет данных для пагинации!</p>';
 			}

@@ -142,7 +142,11 @@ class Model_DictCountries extends Db_Helper
      */
 	public function getGrid()
 	{
-		return $this->rowSelectAll('id, description, fullname, getCountryAbroadName(abroad) as abroad, code_alpha2, code_alpha3', self::TABLE_NAME, null, null, 'description ASC');
+		return $this->rowSelectAll('id, description, fullname, getCountryAbroadName(abroad) as abroad, code_alpha2, code_alpha3',
+									self::TABLE_NAME,
+									null,
+									null,
+									'description ASC');
 	}
 
 	/**
@@ -469,7 +473,6 @@ class Model_DictCountries extends Db_Helper
 		$result['error_msg'] = null;
 		$log = new Model_DictionaryManagerLog();
 		$log->id_dict = $id_dict;
-		$log->id_user = $_SESSION[APP_CODE]['user_id'];
 			if ($clear_load == 1) {
 				// clear
 				$rows_del = $this->$clear_load();

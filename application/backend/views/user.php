@@ -52,10 +52,10 @@ use common\models\Model_User as User;
 			$user_arr = $data;
 		}
 		if ($user_arr) {
-			echo '<tbody>';
 			$i = 0;
 			$id_min = 0;
 			$id_max = 0;
+			echo '<tbody>';
 			foreach ($user_arr as $user_row) {
 				echo HTML_Helper::setTableRow(['grid' => $user->grid(),
 												'row' => $user_row,
@@ -81,6 +81,8 @@ use common\models\Model_User as User;
 											'model_data_method' => 'getPages',
 											'model_page_method' => 'getPageNumber',
 											'model_count_method' => 'getPagesCount',
+											'model_rowsless_method' => 'getRowsCountLess',
+											'model_rows_method' => 'getRowsCount',
 											'model_filter' => 'id',
 											'model_filter_var' => $data['id'],
 											'id' => $id_min,

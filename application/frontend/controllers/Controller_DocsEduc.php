@@ -92,6 +92,8 @@ class Controller_DocsEduc extends Controller
 			exit("<p><strong>Ошибка!</strong> Отсутствует идент-р документа об образовании!</p>");
 		}
 		$this->form = $this->model->setForm($this->model->rules(), $this->model->get($id));
+		var_dump($this->model->get($id));
+		exit();
 		$this->form['id'] = $id;
 		if (!empty($this->form['change_name_id'])) {
 			$this->form['change_name_flag'] = 'checked';

@@ -26,7 +26,6 @@ class Model_User extends Model
                                 'pattern' => ['value' => PATTERN_ALPHA, 'msg' => 'Для логина можно использовать '.MSG_ALPHA.'!'],
                                 'width' => ['format' => 'string', 'min' => 1, 'max' => 45, 'msg' => 'Слишком длинный логин!'],
                                 'unique' => ['class' => 'common\\models\\Model_User', 'method' => 'ExistsUsername', 'msg' => 'Такой логин уже есть!'],
-                                'unique' => ['class' => 'common\\models\\Model_User', 'method' => 'ExistsUsername', 'msg' => 'Такой логин уже есть!'],
                                 'success' => 'Логин заполнен верно.'
                                ],
                 'email' => [
@@ -200,7 +199,7 @@ class Model_User extends Model
 			return $form;
 		} else {
 			if ($user->changeAll()) {
-				$form['success_msg'] = 'Пользователь № '.$form['id'].' успешно изменён.';
+				$form['success_msg'] = 'Изменён пользователь № '.$form['id'].'.';
 			} else {
 				$form['error_msg'] = 'Ошибка при изменении пользователя № '.$form['id'].'!';
 			}

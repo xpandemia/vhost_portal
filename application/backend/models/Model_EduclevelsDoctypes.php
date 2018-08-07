@@ -94,7 +94,7 @@ class Model_EduclevelsDoctypes extends Model
 				return $form;
 			} else {
 				if ($ed->changeAll()) {
-					$form['success_msg'] = 'Связь № '.$form['id'].' успешно изменена.';
+					$form['success_msg'] = 'Изменена связь № '.$form['id'].'.';
 				} else {
 					$form['error_msg'] = 'Ошибка при изменении связи № '.$form['id'].'!';
 				}
