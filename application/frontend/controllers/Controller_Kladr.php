@@ -137,6 +137,16 @@ class Controller_Kladr extends Controller
 	}
 
 	/**
+     * Prints houses by street JSON.
+     *
+     * @return void
+     */
+	public function actionHouseByStreetJSON()
+	{
+		echo $this->model->getHouseByStreetJSON($this->code);
+	}
+
+	/**
      * Prints postcode by code JSON.
      *
      * @return void

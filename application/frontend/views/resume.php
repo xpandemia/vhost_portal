@@ -1064,336 +1064,54 @@ use frontend\models\Model_Resume as Model_Resume;
 
 		// contry_reg change
 		$('#country_reg').change(function() {
-			var country_reg = $('#country_reg').val();
-			var country_reg_name = $('#country_reg :selected').text();
-			if (country_reg == '643') {
-				// MOTHER LAND
-				$('#kladr_reg').show();
-				$('#house_reg').prop('disabled', true);
-				$('#house_reg').val('');
-				$('#building_reg').prop('disabled', true);
-				$('#building_reg').val('');
-				$('#flat_reg').prop('disabled', true);
-				$('#flat_reg').val('');
-				$('#postcode_reg').prop('disabled', true);
-				$('#postcode_reg').val('');
-				$('#address_reg').prop('disabled', true);
-				$('#address_reg').val('');
-
-				getKladrAJAX('/frontend/Kladr/RegionAllJSON', null, '#region_reg');
-
-			    $('#area_reg').empty();
-			    $('#city_reg').empty();
-			    $('#location_reg').empty();
-			    $('#street_reg').empty();
-			} else {
-				// FOREIGN LAND
-				$('#kladr_reg').hide();
-				$('#address_reg').prop('disabled', false);
-				$('#address_reg').val('');
-			}
-			$('#address_reg_clone').show();
-			if ($('#address_res').val() != '') {
-				$('#address_reg_clone_flag').prop('checked', false);
-			}
-			if ($('#address_reg_clone_flag').prop('checked')) {
-				cloneAddressRegistration();
-			}
+			ChangeCountry('_reg');
 		});
 
 		// region_reg change
 		$('#region_reg').change(function() {
-			var region_reg = $('#region_reg').val();
-			var region_reg_name = $('#region_reg :selected').text();
-
-			getKladrAJAX('/frontend/Kladr/AreaByRegionJSON', region_reg, '#area_reg');
-			getKladrAJAX('/frontend/Kladr/CityByRegionJSON', region_reg, '#city_reg');
-			getKladrAJAX('/frontend/Kladr/LocationByRegionJSON', region_reg, '#location_reg');
-			getKladrAJAX('/frontend/Kladr/StreetByRegionJSON', region_reg, '#street_reg');
-
-		    $('#location_reg').empty();
-		    $('#street_reg').empty();
-		    $('#house_reg').val('');
-		    $('#building_reg').val('');
-		    $('#flat_reg').val('');
-		    getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', region_reg, '#postcode_reg');
-		    var postcode_reg = $('#postcode_reg').val();
-		    if (postcode_reg != '') {
-				postcode_reg = postcode_reg + ', ';
-			}
-		    $('#address_reg').val(postcode_reg + region_reg_name);
-
-		    $('#address_reg_clone').show();
-		    if ($('#address_res').val() != '') {
-				$('#address_reg_clone_flag').prop('checked', false);
-				CountryResShow();
-				AddressResShow();
-			}
-		    if ($('#address_reg_clone_flag').prop('checked')) {
-				cloneAddressRegistration();
-			}
+			ChangeRegion('_reg');
 		});
 
 		// area_reg change
 		$('#area_reg').change(function() {
-			var region_reg_name = $('#region_reg :selected').text();
-			var area_reg = $('#area_reg').val();
-			var area_reg_name = $('#area_reg :selected').text();
-
-			getKladrAJAX('/frontend/Kladr/CityByAreaJSON', area_reg, '#city_reg');
-			getKladrAJAX('/frontend/Kladr/LocationByAreaJSON', area_reg, '#location_reg');
-
-			$('#street_reg').empty();
-		    $('#house_reg').val('');
-		    $('#building_reg').val('');
-		    $('#flat_reg').val('');
-		    getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', area_reg, '#postcode_reg');
-		    var postcode_reg = $('#postcode_reg').val();
-		    if (postcode_reg != '') {
-				postcode_reg = postcode_reg + ', ';
-			}
-		    $('#address_reg').val(postcode_reg + region_reg_name + ', ' + area_reg_name);
-
-			$('#address_reg_clone').show();
-			if ($('#address_res').val() != '') {
-				$('#address_reg_clone_flag').prop('checked', false);
-			}
-			if ($('#address_reg_clone_flag').prop('checked')) {
-				cloneAddressRegistration();
-			}
+			ChangeArea('_reg');
 		});
 
 		// city_reg change
 		$('#city_reg').change(function() {
-			var region_reg_name = $('#region_reg :selected').text();
-			var city_reg = $('#city_reg').val();
-			var city_reg_name = $('#city_reg :selected').text();
-
-			$('#location_reg').empty();
-
-			getKladrAJAX('/frontend/Kladr/LocationByCityJSON', city_reg, '#location_reg');
-			getKladrAJAX('/frontend/Kladr/StreetByCityJSON', city_reg, '#street_reg');
-
-			$('#house_reg').val('');
-		    $('#building_reg').val('');
-		    $('#flat_reg').val('');
-		    getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', city_reg, '#postcode_reg');
-		    var postcode_reg = $('#postcode_reg').val();
-		    if (postcode_reg != '') {
-				postcode_reg = postcode_reg + ', ';
-			}
-			$('#address_reg').val(postcode_reg + region_reg_name + ', ' + city_reg_name);
-
-			$('#address_reg_clone').show();
-			if ($('#address_res').val() != '') {
-				$('#address_reg_clone_flag').prop('checked', false);
-			}
-			if ($('#address_reg_clone_flag').prop('checked')) {
-				cloneAddressRegistration();
-			}
+			ChangeCity('_reg');
 		});
 
 		// location_reg change
 		$('#location_reg').change(function() {
-			var region_reg_name = $('#region_reg :selected').text();
-			var area_reg_name = $('#area_reg :selected').text();
-			var city_reg_name = $('#city_reg :selected').text();
-			var location_reg = $('#location_reg').val();
-			var location_reg_name = $('#location_reg :selected').text();
-
-			getKladrAJAX('/frontend/Kladr/StreetByLocationJSON', location_reg, '#street_reg');
-
-			$('#house_reg').val('');
-		    $('#building_reg').val('');
-		    $('#flat_reg').val('');
-		    getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', location_reg, '#postcode_reg');
-		    var postcode_reg = $('#postcode_reg').val();
-		    if (postcode_reg != '') {
-				postcode_reg = postcode_reg + ', ';
-			}
-			if (city_reg_name == '') {
-				$('#address_reg').val(postcode_reg + region_reg_name + ', ' + area_reg_name + ', ' + location_reg_name);
-			} else {
-				$('#address_reg').val(postcode_reg + region_reg_name + ', ' + city_reg_name + ', ' + location_reg_name);
-			}
-
-			$('#address_reg_clone').show();
-			if ($('#address_res').val() != '') {
-				$('#address_reg_clone_flag').prop('checked', false);
-			}
-			if ($('#address_reg_clone_flag').prop('checked')) {
-				cloneAddressRegistration();
-			}
+			ChangeLocation('_reg');
 		});
 
 		// street_reg change
 		$('#street_reg').change(function() {
-			var region_reg_name = $('#region_reg :selected').text();
-			var area_reg_name = $('#area_reg :selected').text();
-			var city_reg_name = $('#city_reg :selected').text();
-			var location_reg_name = $('#location_reg :selected').text();
-			var street_reg = $('#street_reg').val();
-			var street_reg_name = $('#street_reg :selected').text();
-
-			$('#house_reg').prop('disabled', false);
-			$('#house_reg').val('');
-		    $('#building_reg').prop('disabled', false);
-		    $('#building_reg').val('');
-			getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', street_reg, '#postcode_reg');
-		    var postcode_reg = $('#postcode_reg').val();
-		    if (postcode_reg != '') {
-				postcode_reg = postcode_reg + ', ';
-			}
-			if (city_reg_name == '') {
-				$('#address_reg').val(postcode_reg + region_reg_name + ', ' + area_reg_name + ', ' + location_reg_name + ', ' + street_reg_name);
-			} else {
-				$('#address_reg').val(postcode_reg + region_reg_name + ', ' + city_reg_name + ', ' + street_reg_name);
-			}
-
-			$('#address_reg_clone').show();
-			if ($('#address_res').val() != '') {
-				$('#address_reg_clone_flag').prop('checked', false);
-			}
-			if ($('#address_reg_clone_flag').prop('checked')) {
-				cloneAddressRegistration();
-			}
+			ChangeStreet('_reg');
 		});
 
 		// house_reg change
 		$('#house_reg').change(function() {
-			var region_reg_name = $('#region_reg :selected').text();
-			var area_reg_name = $('#area_reg :selected').text();
-			var city_reg_name = $('#city_reg :selected').text();
-			var location_reg_name = $('#location_reg :selected').text();
-			var street_reg_name = $('#street_reg :selected').text();
-			var house_reg = $('#house_reg').val();
-
-			$('#flat_reg').prop('disabled', false);
-			$('#flat_reg').val('');
-			var postcode_reg = $('#postcode_reg').val();
-		    if (postcode_reg != '') {
-				postcode_reg = postcode_reg + ', ';
-			}
-			if (city_reg_name == '') {
-				$('#address_reg').val(postcode_reg + region_reg_name + ', ' + area_reg_name + ', ' + location_reg_name + ', ' + street_reg_name + ', дом ' + house_reg);
-			} else {
-				$('#address_reg').val(postcode_reg + region_reg_name + ', ' + city_reg_name + ', ' + street_reg_name + ', дом ' + house_reg);
-			}
-
-			$('#address_reg_clone').show();
-			if ($('#address_res').val() != '') {
-				$('#address_reg_clone_flag').prop('checked', false);
-			}
-			if ($('#address_reg_clone_flag').prop('checked')) {
-				cloneAddressRegistration();
-			}
+			ChangeHouse('_reg');
 		});
 
 		// building_reg change
 		$('#building_reg').change(function() {
-			var region_reg_name = $('#region_reg :selected').text();
-			var area_reg_name = $('#area_reg :selected').text();
-			var city_reg_name = $('#city_reg :selected').text();
-			var location_reg_name = $('#location_reg :selected').text();
-			var street_reg_name = $('#street_reg :selected').text();
-			var house_reg = $('#house_reg').val();
-			var building_reg = $('#building_reg').val();
-
-			$('#flat_reg').prop('disabled', false);
-			$('#flat_reg').val('');
-			var postcode_reg = $('#postcode_reg').val();
-		    if (postcode_reg != '') {
-				postcode_reg = postcode_reg + ', ';
-			}
-			if (city_reg_name == '') {
-				$('#address_reg').val(postcode_reg + region_reg_name + ', ' + area_reg_name + ', ' + location_reg_name + ', ' + street_reg_name + ', дом ' + house_reg + ', корпус ' + building_reg);
-			} else {
-				$('#address_reg').val(postcode_reg + region_reg_name + ', ' + city_reg_name + ', ' + street_reg_name + ', дом ' + house_reg + ', корпус ' + building_reg);
-			}
-
-			$('#address_reg_clone').show();
-			if ($('#address_res').val() != '') {
-				$('#address_reg_clone_flag').prop('checked', false);
-			}
-			if ($('#address_reg_clone_flag').prop('checked')) {
-				cloneAddressRegistration();
-			}
+			ChangeBuilding('_reg');
 		});
 
 		// flat_reg change
 		$('#flat_reg').change(function() {
-			var region_reg_name = $('#region_reg :selected').text();
-			var area_reg_name = $('#area_reg :selected').text();
-			var city_reg_name = $('#city_reg :selected').text();
-			var location_reg_name = $('#location_reg :selected').text();
-			var street_reg_name = $('#street_reg :selected').text();
-			var house_reg = $('#house_reg').val();
-			var building_reg = $('#building_reg').val();
-			var flat_reg = $('#flat_reg').val();
-			var postcode_reg = $('#postcode_reg').val();
-		    if (postcode_reg != '') {
-				postcode_reg = postcode_reg + ', ';
-			}
-			if (city_reg_name == '') {
-				$('#address_reg').val(postcode_reg + region_reg_name + ', ' + area_reg_name + ', ' + location_reg_name + ', ' + street_reg_name + ', дом ' + house_reg + ', корпус ' + building_reg + ', квартира ' + flat_reg);
-			} else {
-				$('#address_reg').val(postcode_reg + region_reg_name + ', ' + city_reg_name + ', ' + street_reg_name + ', дом ' + house_reg + ', корпус ' + building_reg + ', квартира ' + flat_reg);
-			}
-
-			$('#address_reg_clone').show();
-			if ($('#address_res').val() != '') {
-				$('#address_reg_clone_flag').prop('checked', false);
-			}
-			if ($('#address_reg_clone_flag').prop('checked')) {
-				cloneAddressRegistration();
-			}
+			AddressCreate('_reg');
+			AddressClone('_reg');
 		});
 
 		// postcode_reg change
 		$('#postcode_reg').change(function() {
-			var address_reg;
-			var region_reg_name = $('#region_reg :selected').text();
-			var area_reg_name = $('#area_reg :selected').text();
-			var city_reg_name = $('#city_reg :selected').text();
-			var location_reg_name = $('#location_reg :selected').text();
-			var street_reg_name = $('#street_reg :selected').text();
-			var house_reg = $('#house_reg').val();
-			var building_reg = $('#building_reg').val();
-			var flat_reg = $('#flat_reg').val();
-			var postcode_reg = $('#postcode_reg').val();
-			if (postcode_reg != '') {
-				address_reg = postcode_reg + ', ';
-			} else {
-				address_reg = '';
-			}
-			// region, area, city, location, street
-			if (city_reg_name == '') {
-				address_reg = address_reg + region_reg_name + ', ' + area_reg_name + ', ' + location_reg_name + ', ' + street_reg_name;
-			} else {
-				address_reg = address_reg + region_reg_name + ', ' + city_reg_name + ', ' + street_reg_name;
-			}
-			// house
-			if (house_reg != '') {
-				address_reg = address_reg + ', дом ' + house_reg;
-			}
-			// building
-			if (building_reg != '') {
-				address_reg = address_reg + ', корпус ' + building_reg;
-			}
-			// flat
-			if (flat_reg != '') {
-				address_reg = address_reg + ', квартира ' + flat_reg;
-			}
-
-			$('#address_reg').val(address_reg);
-
-			$('#address_reg_clone').show();
-			if ($('#address_res').val() != '') {
-				$('#address_reg_clone_flag').prop('checked', false);
-			}
-			if ($('#address_reg_clone_flag').prop('checked')) {
-				cloneAddressRegistration();
-			}
+			AddressCreate('_reg');
+			AddressClone('_reg');
 		});
 
 		// kladr_reg not found
@@ -1451,274 +1169,54 @@ use frontend\models\Model_Resume as Model_Resume;
 
 		// contry_res change
 		$('#country_res').change(function() {
-			var country_res = $('#country_res').val();
-			var country_res_name = $('#country_res :selected').text();
-			if (country_res == '643') {
-				// MOTHER LAND
-				$('#kladr_res').show();
-				$('#house_res').prop('disabled', true);
-				$('#house_res').val('');
-				$('#building_res').prop('disabled', true);
-				$('#building_res').val('');
-				$('#flat_res').prop('disabled', true);
-				$('#flat_res').val('');
-				$('#postcode_res').prop('disabled', true);
-				$('#postcode_res').val('');
-				$('#address_res').prop('disabled', true);
-				$('#address_res').val('');
-
-				getKladrAJAX('/frontend/Kladr/RegionAllJSON', null, '#region_res');
-
-			    $('#area_res').empty();
-			    $('#city_res').empty();
-			    $('#location_res').empty();
-			    $('#street_res').empty();
-			} else {
-				// FOREIGN LAND
-				$('#kladr_res').hide();
-				$('#address_res').prop('disabled', false);
-				$('#address_res').val('');
-			}
-			$('#address_reg_clone').show();
-			$('#address_reg_clone_flag').prop('checked', false);
+			ChangeCountry('_res');
 		});
 
 		// region_res change
 		$('#region_res').change(function() {
-			var region_res = $('#region_res').val();
-			var region_res_name = $('#region_res :selected').text();
-
-			getKladrAJAX('/frontend/Kladr/AreaByRegionJSON', region_res, '#area_res');
-		    getKladrAJAX('/frontend/Kladr/CityByRegionJSON', region_res, '#city_res');
-		    getKladrAJAX('/frontend/Kladr/LocationByRegionJSON', region_res, '#location_res');
-			getKladrAJAX('/frontend/Kladr/StreetByRegionJSON', region_res, '#street_res');
-
-		    $('#location_res').empty();
-		    $('#street_res').empty();
-		    $('#house_res').val('');
-		    $('#building_res').val('');
-		    $('#flat_res').val('');
-		    getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', region_res, '#postcode_res');
-		    var postcode_res = $('#postcode_res').val();
-		    if (postcode_res != '') {
-				postcode_res = postcode_res + ', ';
-			}
-			$('#address_res').val(postcode_res + region_res_name);
-
-		    $('#address_reg_clone_flag').prop('checked', false);
+			ChangeRegion('_res');
 		});
 
 		// area_res change
 		$('#area_res').change(function() {
-			var region_res_name = $('#region_res :selected').text();
-			var area_res = $('#area_res').val();
-			var area_res_name = $('#area_res :selected').text();
-
-			getKladrAJAX('/frontend/Kladr/CityByAreaJSON', area_res, '#city_res');
-			getKladrAJAX('/frontend/Kladr/LocationByAreaJSON', area_res, '#location_res');
-
-			$('#street_res').empty();
-		    $('#house_res').val('');
-		    $('#building_res').val('');
-		    $('#flat_res').val('');
-		    getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', area_res, '#postcode_res');
-		    var postcode_res = $('#postcode_res').val();
-		    if (postcode_res != '') {
-				postcode_res = postcode_res + ', ';
-			}
-			$('#address_res').val(postcode_res + region_res_name + ', ' + area_res_name);
-
-			$('#address_reg_clone_flag').prop('checked', false);
+			ChangeArea('_res');
 		});
 
 		// city_res change
 		$('#city_res').change(function() {
-			var region_res_name = $('#region_res :selected').text();
-			var city_res = $('#city_res').val();
-			var city_res_name = $('#city_res :selected').text();
-
-			$('#location_res').empty();
-
-			getKladrAJAX('/frontend/Kladr/StreetByCityJSON', city_res, '#street_res');
-
-			$('#house_res').val('');
-		    $('#building_res').val('');
-		    $('#flat_res').val('');
-		    getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', city_res, '#postcode_res');
-		    var postcode_res = $('#postcode_res').val();
-		    if (postcode_res != '') {
-				postcode_res = postcode_res + ', ';
-			}
-			$('#address_res').val(postcode_res + region_res_name + ', ' + city_res_name);
-
-			$('#address_reg_clone_flag').prop('checked', false);
+			ChangeCity('_res');
 		});
 
 		// location_res change
 		$('#location_res').change(function() {
-			var region_res_name = $('#region_res :selected').text();
-			var area_res_name = $('#area_res :selected').text();
-			var city_res_name = $('#city_res :selected').text();
-			var location_res = $('#location_res').val();
-			var location_res_name = $('#location_res :selected').text();
-
-			getKladrAJAX('/frontend/Kladr/StreetByLocationJSON', location_res, '#street_res');
-
-			$('#house_res').val('');
-		    $('#building_res').val('');
-		    $('#flat_res').val('');
-		    getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', location_res, '#postcode_res');
-		    var postcode_res = $('#postcode_res').val();
-		    if (postcode_res != '') {
-				postcode_res = postcode_res + ', ';
-			}
-			if (city_res_name == '') {
-				$('#address_res').val(postcode_res + region_res_name + ', ' + area_res_name + ', ' + location_res_name);
-			} else {
-				$('#address_res').val(postcode_res + region_res_name + ', ' + city_res_name + ', ' + location_res_name);
-			}
-
-			$('#address_reg_clone_flag').prop('checked', false);
+			ChangeLocation('_res');
 		});
 
 		// street_res change
 		$('#street_res').change(function() {
-			var region_res_name = $('#region_res :selected').text();
-			var area_res_name = $('#area_res :selected').text();
-			var city_res_name = $('#city_res :selected').text();
-			var location_res_name = $('#location_res :selected').text();
-			var street_res = $('#street_res').val();
-			var street_res_name = $('#street_res :selected').text();
-
-			$('#house_res').prop('disabled', false);
-			$('#house_res').val('');
-			$('#building_res').prop('disabled', false);
-			$('#building_res').val('');
-			getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', street_res, '#postcode_res');
-		    var postcode_res = $('#postcode_res').val();
-		    if (postcode_res != '') {
-				postcode_res = postcode_res + ', ';
-			}
-			if (city_res_name == '') {
-				$('#address_res').val(postcode_res + region_res_name + ', ' + area_res_name + ', ' + location_res_name + ', ' + street_res_name);
-			} else {
-				$('#address_res').val(postcode_res + region_res_name + ', ' + city_res_name + ', ' + street_res_name);
-			}
-
-			$('#address_reg_clone_flag').prop('checked', false);
+			ChangeStreet('_res');
 		});
 
 		// house_res change
 		$('#house_res').change(function() {
-			var region_res_name = $('#region_res :selected').text();
-			var area_res_name = $('#area_res :selected').text();
-			var city_res_name = $('#city_res :selected').text();
-			var location_res_name = $('#location_res :selected').text();
-			var street_res_name = $('#street_res :selected').text();
-			var house_res = $('#house_res').val();
-
-			$('#flat_res').prop('disabled', false);
-			$('#flat_res').val('');
-			var postcode_res = $('#postcode_res').val();
-		    if (postcode_res != '') {
-				postcode_res = postcode_res + ', ';
-			}
-			if (city_res_name == '') {
-				$('#address_res').val(postcode_res + region_res_name + ', ' + area_res_name + ', ' + location_res_name + ', ' + street_res_name + ', дом ' + house_res);
-			} else {
-				$('#address_res').val(postcode_res + region_res_name + ', ' + city_res_name + ', ' + street_res_name + ', дом ' + house_res);
-			}
-
-			$('#address_reg_clone_flag').prop('checked', false);
+			ChangeHouse('_res');
 		});
 
 		// building_res change
 		$('#building_res').change(function() {
-			var region_res_name = $('#region_res :selected').text();
-			var area_res_name = $('#area_res :selected').text();
-			var city_res_name = $('#city_res :selected').text();
-			var location_res_name = $('#location_res :selected').text();
-			var street_res_name = $('#street_res :selected').text();
-			var house_res = $('#house_res').val();
-			var building_res = $('#building_res').val();
-
-			$('#flat_res').prop('disabled', false);
-			$('#flat_res').val('');
-			var postcode_res = $('#postcode_res').val();
-		    if (postcode_res != '') {
-				postcode_res = postcode_res + ', ';
-			}
-			if (city_res_name == '') {
-				$('#address_res').val(postcode_res + region_res_name + ', ' + area_res_name + ', ' + location_res_name + ', ' + street_res_name + ', дом ' + house_res + ', корпус ' + building_res);
-			} else {
-				$('#address_res').val(postcode_res + region_res_name + ', ' + city_res_name + ', ' + street_res_name + ', дом ' + house_res + ', корпус ' + building_res);
-			}
-
-			$('#address_reg_clone_flag').prop('checked', false);
+			ChangeBuilding('_res');
 		});
 
 		// flat_res change
 		$('#flat_res').change(function() {
-			var region_res_name = $('#region_res :selected').text();
-			var area_res_name = $('#area_res :selected').text();
-			var city_res_name = $('#city_res :selected').text();
-			var location_res_name = $('#location_res :selected').text();
-			var street_res_name = $('#street_res :selected').text();
-			var house_res = $('#house_res').val();
-			var building_res = $('#building_res').val();
-			var flat_res = $('#flat_res').val();
-			var postcode_res = $('#postcode_res').val();
-		    if (postcode_res != '') {
-				postcode_res = postcode_res + ', ';
-			}
-			if (city_res_name == '') {
-				$('#address_res').val(postcode_res + region_res_name + ', ' + area_res_name + ', ' + location_res_name + ', ' + street_res_name + ', дом ' + house_res + ', корпус ' + building_res + ', квартира ' + flat_res);
-			} else {
-				$('#address_res').val(postcode_res + region_res_name + ', ' + city_res_name + ', ' + street_res_name + ', дом ' + house_res + ', корпус ' + building_res + ', квартира ' + flat_res);
-			}
-
-			$('#address_reg_clone_flag').prop('checked', false);
+			AddressCreate('_res');
+			AddressClone('_res');
 		});
 
 		// postcode_res change
 		$('#postcode_res').change(function() {
-			var address_res;
-			var region_res_name = $('#region_res :selected').text();
-			var area_res_name = $('#area_res :selected').text();
-			var city_res_name = $('#city_res :selected').text();
-			var location_res_name = $('#location_res :selected').text();
-			var street_res_name = $('#street_res :selected').text();
-			var house_res = $('#house_res').val();
-			var building_res = $('#building_res').val();
-			var flat_res = $('#flat_res').val();
-			var postcode_res = $('#postcode_res').val();
-			if (postcode_res != '') {
-				address_res = postcode_res + ', ';
-			} else {
-				address_res = '';
-			}
-			// region, area, city, location, street
-			if (city_res_name == '') {
-				address_res = address_res + region_res_name + ', ' + area_res_name + ', ' + location_res_name + ', ' + street_res_name;
-			} else {
-				address_res = address_res + region_res_name + ', ' + city_res_name + ', ' + street_res_name;
-			}
-			// house
-			if (house_res != '') {
-				address_res = address_res + ', дом ' + house_res;
-			}
-			// building
-			if (building_res != '') {
-				address_res = address_res + ', корпус ' + building_res;
-			}
-			// flat
-			if (flat_res != '') {
-				address_res = address_res + ', квартира ' + flat_res;
-			}
-
-			$('#address_res').val(address_res);
-
-			$('#address_reg_clone_flag').prop('checked', false);
+			AddressCreate('_res');
+			AddressClone('_res');
 		});
 
 		// kladr_res not found
@@ -1776,7 +1274,9 @@ use frontend\models\Model_Resume as Model_Resume;
 		// submit click
 		$('#btn_save').click(function() {
 			$('#citizenship').prop('disabled', false);
+			$('#postcode_reg').prop('disabled', false);
 			$('#address_reg').prop('disabled', false);
+			$('#postcode_res').prop('disabled', false);
 			$('#address_res').prop('disabled', false);
 		});
 	}
@@ -2195,6 +1695,7 @@ use frontend\models\Model_Resume as Model_Resume;
 	{
 		startLoadingAnimation();
 		$.ajax({
+		  async: false,
 	      url: url,
 	      type: 'POST',
 	      data: {format: 'json'},
@@ -2220,9 +1721,42 @@ use frontend\models\Model_Resume as Model_Resume;
 	    stopLoadingAnimation();
 	}
 
+	function getHousePostcode(url, code, house, control)
+	{
+		var found;
+		startLoadingAnimation();
+		$.ajax({
+	      async: false,
+	      url: url,
+	      type: 'POST',
+	      data: {format: 'json'},
+		  dataType: 'json',
+		  data: {code: code},
+	      success: function(result) {
+			if (!jQuery.isEmptyObject(result) && result.length) {
+				found = 0;
+				$.each(result, function(key, value){
+					if (house == value.kladr_name) {
+						found = 1;
+						$(control).val(value.postcode);
+						$(control).prop('disabled', true);
+					}
+				});
+			}
+	      },
+	      error: function(xhr, status, error) {
+		      console.log('Request Failed: ' + status + ' ' + error + ' ' + xhr.status + ' ' + xhr.statusText);
+		  }
+	    });
+	    stopLoadingAnimation();
+	    if (found == 0) {
+			$(control).val('');
+			$(control).prop('disabled', false);
+		}
+	}
+
 	function getPostcodeAJAX(url, code, control)
 	{
-		var postcode;
 		startLoadingAnimation();
 		$.ajax({
 	      async: false,
@@ -2394,6 +1928,289 @@ use frontend\models\Model_Resume as Model_Resume;
 	function CountryResHide() {
 		$("label[for='country_res']").hide();
 		$('#country_res').hide();
+	}
+
+	function ChangeCountry(adr) {
+		var country = $('#country' + adr).val();
+		if (country == '643') {
+			// MOTHER LAND
+			// prepare
+			$('#kladr' + adr).show();
+			getKladrAJAX('/frontend/Kladr/RegionAllJSON', null, '#region' + adr);
+			$('#house' + adr).prop('disabled', true);
+			$('#building' + adr).prop('disabled', true);
+			$('#flat' + adr).prop('disabled', true);
+			$('#postcode' + adr).prop('disabled', true);
+			$('#address' + adr).prop('disabled', true);
+			// clear
+			$('#area' + adr).empty();
+		    $('#city' + adr).empty();
+		    $('#location' + adr).empty();
+		    $('#street' + adr).empty();
+			$('#house' + adr).val('');
+			$('#building' + adr).val('');
+			$('#flat' + adr).val('');
+			$('#postcode' + adr).val('');
+			$('#address' + adr).val('');
+		} else {
+			// FOREIGN LAND
+			$('#kladr' + adr).hide();
+			$('#address' + adr).prop('disabled', false);
+			$('#address' + adr).val('');
+		}
+		AddressClone(adr);
+	}
+
+	function ChangeRegion(adr) {
+		var region = $('#region' + adr).val();
+		// prepare
+		getKladrAJAX('/frontend/Kladr/AreaByRegionJSON', region, '#area' + adr);
+		getKladrAJAX('/frontend/Kladr/CityByRegionJSON', region, '#city' + adr);
+		getKladrAJAX('/frontend/Kladr/LocationByRegionJSON', region, '#location' + adr);
+		getKladrAJAX('/frontend/Kladr/StreetByRegionJSON', region, '#street' + adr);
+		// clear
+	    $('#location' + adr).empty();
+	    $('#street' + adr).empty();
+	    $('#house' + adr).val('');
+	    $('#building' + adr).val('');
+	    $('#flat' + adr).val('');
+	    // get postcode
+	    getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', region, '#postcode' + adr);
+	    // address
+	    AddressCreate(adr);
+		AddressClone(adr);
+	}
+
+	function ChangeArea(adr) {
+		var region = $('#region' + adr).val();
+		var area = $('#area' + adr).val();
+		// prepare
+		getKladrAJAX('/frontend/Kladr/CityByAreaJSON', area, '#city' + adr);
+		getKladrAJAX('/frontend/Kladr/LocationByAreaJSON', area, '#location' + adr);
+		// clear
+		$('#street' + adr).empty();
+	    $('#house' + adr).val('');
+	    $('#building' + adr).val('');
+	    $('#flat' + adr).val('');
+	    // get postcode
+	    if (area != '') {
+			getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', area, '#postcode' + adr);
+		} else {
+			getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', region, '#postcode' + adr);
+		}
+		// address
+	    AddressCreate(adr);
+		AddressClone(adr);
+	}
+
+	function ChangeCity(adr) {
+		var region = $('#region' + adr).val();
+		var area = $('#area' + adr).val();
+		var city = $('#city' + adr).val();
+		// prepare
+		$('#location' + adr).empty();
+		getKladrAJAX('/frontend/Kladr/LocationByCityJSON', city, '#location' + adr);
+		getKladrAJAX('/frontend/Kladr/StreetByCityJSON', city, '#street' + adr);
+		// clear
+		$('#house' + adr).val('');
+	    $('#building' + adr).val('');
+	    $('#flat' + adr).val('');
+	    // get postcode
+	    if (city != '') {
+			getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', city, '#postcode' + adr);
+		} else if (area != '') {
+			getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', area, '#postcode' + adr);
+		} else {
+			getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', region, '#postcode' + adr);
+		}
+	    // address
+	    AddressCreate(adr);
+		AddressClone(adr);
+	}
+
+	function ChangeLocation(adr) {
+		var region = $('#region' + adr).val();
+		var area = $('#area' + adr).val();
+		var city = $('#city' + adr).val();
+		var location = $('#city' + adr).val();
+		// prepare
+		getKladrAJAX('/frontend/Kladr/StreetByLocationJSON', location, '#street' + adr);
+		// clear
+		$('#house' + adr).val('');
+	    $('#building' + adr).val('');
+	    $('#flat' + adr).val('');
+	    // get postcode
+	    if (location != '') {
+			getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', location, '#postcode' + adr);
+		}
+	    // address
+	    AddressCreate(adr);
+		AddressClone(adr);
+	}
+
+	function ChangeStreet(adr) {
+		var region = $('#region' + adr).val();
+		var area = $('#area' + adr).val();
+		var city = $('#city' + adr).val();
+		var location = $('#city' + adr).val();
+		var street = $('#street' + adr).val();
+		// prepare
+		$('#house' + adr).prop('disabled', false);
+		$('#building' + adr).prop('disabled', false);
+	    // clear
+	    $('#house' + adr).val('');
+	    $('#building' + adr).val('');
+	    $('#flat' + adr).val('');
+		// get postcode
+		if (street != '') {
+			getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', street, '#postcode' + adr);
+		} else if (location != '') {
+			getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', location, '#postcode' + adr);
+		} else if (city != '') {
+			getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', city, '#postcode' + adr);
+		} else if (area != '') {
+			getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', area, '#postcode' + adr);
+		} else {
+			getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', region, '#postcode' + adr);
+		}
+	    // address
+	    AddressCreate(adr);
+		AddressClone(adr);
+	}
+
+	function ChangeHouse(adr) {
+		var region = $('#region' + adr).val();
+		var area = $('#area' + adr).val();
+		var city = $('#city' + adr).val();
+		var location = $('#city' + adr).val();
+		var street = $('#street' + adr).val();
+		var house = $('#house' + adr).val();
+		// prepare
+		$('#building' + adr).prop('disabled', false);
+		$('#flat' + adr).prop('disabled', false);
+		// clear
+		$('#building' + adr).val('');
+		$('#flat' + adr).val('');
+		// get postcode
+		if (house != '') {
+			getHousePostcode('/frontend/Kladr/HouseByStreetJSON', street, house, '#postcode' + adr);
+		} else if (street != '') {
+			getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', street, '#postcode' + adr);
+		} else if (location != '') {
+			getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', location, '#postcode' + adr);
+		} else if (city != '') {
+			getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', city, '#postcode' + adr);
+		} else if (area != '') {
+			getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', area, '#postcode' + adr);
+		} else {
+			getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', region, '#postcode' + adr);
+		}
+		// address
+	    AddressCreate(adr);
+		AddressClone(adr);
+	}
+
+	function ChangeBuilding(adr) {
+		var region = $('#region' + adr).val();
+		var area = $('#area' + adr).val();
+		var city = $('#city' + adr).val();
+		var location = $('#city' + adr).val();
+		var street = $('#street' + adr).val();
+		var house = $('#house' + adr).val();
+		var building = $('#building' + adr).val();
+		// prepare
+		$('#flat_reg').prop('disabled', false);
+		// clear
+		$('#flat_reg').val('');
+		// get postcode
+		if (building != '') {
+			if (house != '') {
+				getHousePostcode('/frontend/Kladr/HouseByStreetJSON', street, house + 'к' + building, '#postcode' + adr);
+			}
+		} else if (house != '') {
+			getHousePostcode('/frontend/Kladr/HouseByStreetJSON', street, house, '#postcode' + adr);
+		} else if (street != '') {
+			getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', street, '#postcode' + adr);
+		} else if (location != '') {
+			getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', location, '#postcode' + adr);
+		} else if (city != '') {
+			getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', city, '#postcode' + adr);
+		} else if (area != '') {
+			getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', area, '#postcode' + adr);
+		} else {
+			getPostcodeAJAX('/frontend/Kladr/PostcodeByCodeJSON', region, '#postcode' + adr);
+		}
+		// address
+	    AddressCreate(adr);
+		AddressClone(adr);
+	}
+
+	function AddressCreate(adr) {
+		var address;
+		var region_name = $('#region' + adr + ' :selected').text();
+		var area_name = $('#area' + adr + ' :selected').text();
+		var city_name = $('#city' + adr + ' :selected').text();
+		var location_name = $('#location' + adr + ' :selected').text();
+		var street_name = $('#street' + adr + ' :selected').text();
+		var house = $('#house' + adr).val();
+		var building = $('#building' + adr).val();
+		var flat = $('#flat' + adr).val();
+		var postcode = $('#postcode' + adr).val();
+		// region
+		if (region_name != '') {
+			address = region_name;
+		}
+		// area
+		if (area_name != '') {
+			address = address + ', ' + area_name;
+		}
+		// city
+		if (city_name != '') {
+			address = address + ', ' + city_name;
+		}
+		// location
+		if (location_name != '') {
+			address = address + ', ' + location_name;
+		}
+		// street
+		if (street_name != '') {
+			address = address + ', ' + street_name;
+		}
+		// house
+		if (house != '') {
+			address = address + ', дом ' + house;
+		}
+		// building
+		if (building != '') {
+			address = address + ', корпус ' + building;
+		}
+		// flat
+		if (flat != '') {
+			address = address + ', квартира ' + flat;
+		}
+		// postcode
+		if (postcode != '') {
+			address = postcode + ', ' + address;
+		}
+		// address
+		$('#address' + adr).val(address);
+	}
+
+	function AddressClone(adr) {
+		if (adr == '_reg') {
+			$('#address_reg_clone').show();
+			AddressResShow();
+			if ($('#address_res').val() != '') {
+				$('#address_reg_clone_flag').prop('checked', false);
+			}
+			if ($('#address_reg_clone_flag').prop('checked')) {
+				cloneAddressRegistration();
+			}
+		}
+		if (adr == '_res') {
+			$('#address_reg_clone').show();
+			$('#address_reg_clone_flag').prop('checked', false);
+		}
 	}
 
 	function AddressResShow() {

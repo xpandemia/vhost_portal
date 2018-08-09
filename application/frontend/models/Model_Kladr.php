@@ -16,6 +16,7 @@ class Model_Kladr extends Db_Helper
 	const CITY = 3;
 	const LOCATION = 4;
 	const STREET = 5;
+	const HOUSE = 6;
 
 	public $db;
 	public $kladr;
@@ -373,6 +374,49 @@ class Model_Kladr extends Db_Helper
 			}
 			if (!empty($street_json)) {
 				return json_encode($street_json);
+			} else {
+				return json_encode(null);
+			}
+		} else {
+			return json_encode(null);
+		}
+	}
+
+	/**
+     * Gets houses by street JSON.
+     *
+     * @return JSON
+     */
+	public function getHouseByStreetJSON($street) : string
+	{
+		if (!empty($street)) {
+			// get kladr
+			$kladr = $this->kladr->getByCode($street);
+			$code_region = $kladr['code_region'];
+			$code_area = $kladr['code_area'];
+			$code_city = $kladr['code_city'];
+			$code_location = $kladr['code_location'];
+			$code_street = $kladr['code_street'];
+			// get houses by street
+			$house_arr = $this->db->rowSelectAll('kladr_code, kladr_name, postcode',
+												'kladr',
+												'level = :level AND code_region = :code_region AND code_area = :code_area AND code_city = :code_city AND code_location = :code_location AND code_street = :code_street AND relevance = :relevance',
+												[':level' => self::HOUSE,
+												':code_region' => $code_region,
+												':code_area' => $code_area,
+												':code_city' => $code_city,
+												':code_location' => $code_location,
+												':code_street' => $code_street,
+												':relevance' => '0'],
+												'kladr_name');
+			foreach ($house_arr as $house_row) {
+				foreach (explode(',', $house_row['kladr_name']) as $value)
+				$house_json[] = ['kladr_code' => $house_row['kladr_code'],
+								'kladr_name' => $value,
+								'postcode' => $house_row['postcode']];
+			}
+			if (!empty($house_json)) {
+				return json_encode($house_json);
 			} else {
 				return json_encode(null);
 			}
