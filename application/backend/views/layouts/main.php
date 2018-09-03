@@ -97,6 +97,14 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 						<span data-toggle="tooltip" data-placement="auto" title="Настройка связи видов образования с типами документов"><i class="fas fa-school fa-2x"></i></span>
 					</a>
 			    </li>
+			    <li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+						<span data-toggle="tooltip" data-placement="auto" title="Интернационализация"><i class="fas fa-language fa-2x"></i></span>
+					</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="<?php echo Basic_Helper::appUrl('Main', LANGS['ctr']); ?>">Языки</a>
+					</div>
+			    </li>
 			    <?php if (isset($_SESSION[APP_CODE]['user_id'])) { ?>
 			    <li class="nav-item">
 					<a class="nav-link" data-toggle="tooltip" title="Выход" href="<?php echo Basic_Helper::appUrl('Main', 'Logout'); ?>">

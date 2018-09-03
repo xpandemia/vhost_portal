@@ -110,9 +110,9 @@ class Model_User extends Model
 	/**
      * Deletes user from database.
      *
-     * @return boolean
+     * @return array
      */
-	public function delete($form)
+	public function delete($form) : array
 	{
 		$form['success_msg'] = null;
 		$form['error_msg'] = null;

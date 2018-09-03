@@ -127,6 +127,16 @@ class Controller_Main extends Controller
 	}
 
 	/**
+     * Calls to langs.
+     *
+     * @return void
+     */
+	function actionLangs() : void
+	{
+		Basic_Helper::redirect(LANGS['hdr'], 202, LANGS['ctr'], 'Index');
+	}
+
+	/**
      * Logs user out.
      *
      * @return mixed

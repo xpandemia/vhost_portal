@@ -47,6 +47,8 @@ use tinyframe\core\Routing as Routing;
 	require_once ROOT_DIR.'/vendors/PHPMailer/src/SMTP.php';
 	// php-pdftk
 	require_once ROOT_DIR.'/vendors/php-pdftk/vendor/autoload.php';
+	// TCPDF
+	require_once ROOT_DIR.'/vendors/TCPDF/examples/tcpdf_include.php';
 
 
 # ---------------------------------------------------------------

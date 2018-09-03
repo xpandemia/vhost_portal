@@ -120,3 +120,8 @@ define('EDUCTYPES_DOCTYPES', array('id' => 'form_eductypes_doctypes',
 									'hdr' => 'Связь документов с видами образования',
 									'ctr' => 'EductypesDoctypes',
 									'act' => 'Save'));
+// Langs
+define('LANGS', array('id' => 'form_langs',
+						'hdr' => 'Язык',
+						'ctr' => 'Langs',
+						'act' => 'Save'));

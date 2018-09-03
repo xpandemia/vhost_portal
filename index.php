@@ -2,11 +2,11 @@
 
 define('APP_NAME', 'Личный кабинет абитуриента');
 define('APP_CODE', 'portalbsu'); // MUST BE UNIQUE
-define('APP_VERSION', '0.5.2a');
+define('APP_VERSION', '0.5.3');
 define('APP_DATA', 'main');
 
 # Личный кабинет абитуриента
-# Build with curiosity by Fiben on Tinyframe 0.2.1
+# Build with curiosity by Fiben on Tinyframe 0.2.2
 
 // These headers tell the browser to not load anything from cache at all
 // and force the browser to make a server request even on a Back click

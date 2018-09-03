@@ -89,9 +89,9 @@ class Model_DictCountries extends Model
 	/**
      * Deletes country from database.
      *
-     * @return boolean
+     * @return array
      */
-	public function delete($form)
+	public function delete($form) : array
 	{
 		$form['success_msg'] = null;
 		$form['error_msg'] = null;
@@ -103,9 +103,9 @@ class Model_DictCountries extends Model
 			$form['error_msg'] = 'Удалять страны, которые используются в адресах, нельзя!';
 		} else {
 			if ($dc->clear() > 0) {
-				$form['success_msg'] = 'Страна № '.$docs->id.' удалена.';
+				$form['success_msg'] = 'Страна № '.$dc->id.' удалена.';
 			} else {
-				$form['error_msg'] = 'Ошибка удаления страны № '.$docs->id.'! Свяжитесь с администратором.';
+				$form['error_msg'] = 'Ошибка удаления страны № '.$dc->id.'! Свяжитесь с администратором.';
 			}
 		}
 		return $form;

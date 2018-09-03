@@ -127,23 +127,29 @@ class Controller_Resume extends Controller
 			} else {
 				Basic_Helper::redirect(APP_NAME, 202, 'Main', 'Index', null, 'Ошибка при получении анкеты!');
 			}
-			($this->form['status'] == $this->resume::STATUS_CREATED && empty($this->form['dt_updated'])) ? $this->form['personal_vis'] = true : $this->form['personal_vis'] = false;
-		$this->form = $this->model->validateForm($this->form, $this->model->rules());
-		$this->form = $this->model->validateFormAdvanced($this->form);
-		$this->form = $this->model->validateAgreement($this->form);
-		$this->form = $this->model->validatePassport($this->form);
-		$this->form = $this->model->validatePassportOld($this->form);
-		if ($this->form['validate']) {
-			$this->form = $this->model->check($this->form);
+		/* check status */
+		if ($this->form['status'] != $this->resume::STATUS_CREATED && $this->form['status'] != $this->resume::STATUS_SAVED) {
+			$this->form['success_msg'] = null;
+			$this->form['error_msg'] = 'Сохранять анкеты можно только с состоянием: <strong>'.mb_convert_case($this->resume::STATUS_CREATED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($this->resume::STATUS_SAVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!';
 		} else {
-			if (empty($this->form['error_msg']))
-			{
-				$this->form['error_msg'] = '<strong>Ошибка при проверке данных анкеты!</strong> Пожалуйста, проверьте все поля ввода.';
-			}
-			if ($this->form['status'] != $this->resume::STATUS_CREATED)
-			{
-				$this->form = $this->model->setAddressReg($this->form);
-				$this->form = $this->model->setAddressRes($this->form);
+			($this->form['status'] == $this->resume::STATUS_CREATED && empty($this->form['dt_updated'])) ? $this->form['personal_vis'] = true : $this->form['personal_vis'] = false;
+			$this->form = $this->model->validateForm($this->form, $this->model->rules());
+			$this->form = $this->model->validateFormAdvanced($this->form);
+			$this->form = $this->model->validateAgreement($this->form);
+			$this->form = $this->model->validatePassport($this->form);
+			$this->form = $this->model->validatePassportOld($this->form);
+			if ($this->form['validate']) {
+				$this->form = $this->model->check($this->form);
+			} else {
+				if (empty($this->form['error_msg']))
+				{
+					$this->form['error_msg'] = '<strong>Ошибка при проверке данных анкеты!</strong> Пожалуйста, проверьте все поля ввода.';
+				}
+				if ($this->form['status'] != $this->resume::STATUS_CREATED)
+				{
+					$this->form = $this->model->setAddressReg($this->form);
+					$this->form = $this->model->setAddressRes($this->form);
+				}
 			}
 		}
 		$this->form = $this->model->unsetScans($this->form);

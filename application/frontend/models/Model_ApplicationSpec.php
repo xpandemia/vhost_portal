@@ -684,7 +684,7 @@ class Model_ApplicationSpec extends Model
 			// bachelors and specialists
 			$data = $this->setAppForPdf($data, $app_row);
 			$data = $this->setResumeForPdf($data);
-	        $data = $this->setPlacesForPdf($data, $id, 5);
+	        $data = $this->setPlacesForPdf($data, $id, 6);
 	        $data = $this->setExamsForPdf($data, $id);
 	        $data = $this->setEducForPdf($data, $app_row['id_docseduc'], 'bachelor');
 	        $data = $this->setForeignLangForPdf($data, $app_row['id_lang']);
@@ -693,7 +693,11 @@ class Model_ApplicationSpec extends Model
 	        $data = $this->setCampusForPdf($data, $app_row['campus']);
 			$data['docsship_personal'] = 'On';
 	        $data = $this->setIaForPdf($data, $id);
-			$pdf->create($data, 'application_bachelor', 'заявление'.$app_row['numb']);
+			if (isset($data['places'])) {
+				$pdf->create($data, 'application_bachelor_field', 'заявление'.$app_row['numb']);
+			} else {
+				$pdf->create($data, 'application_bachelor_table', 'заявление'.$app_row['numb']);
+			}
 		} elseif ($place->getByAppForMagister()) {
 			// magisters
 			$data = $this->setAppForPdf($data, $app_row);
@@ -817,14 +821,18 @@ class Model_ApplicationSpec extends Model
 		$places->pid = $app;
 		$places_arr = $places->getSpecsByAppPdf();
 		$i = 1;
-		foreach ($places_arr as $places_row) {
-			if ($i <= $limit) {
+		if (count($places_arr) <= $limit) {
+			foreach ($places_arr as $places_row) {
 				$spec_arr['place'.$i] = $places_row['place'].' ('.$places_row['edulevel'].')';
 				$spec_arr['eduform'.$i] = $places_row['eduform'];
 				$spec_arr['finance'.$i] = $places_row['finance'];
 				$i++;
-			} else {
-				break;
+			}
+		} else {
+			$spec_arr['places'] = '';
+			foreach ($places_arr as $places_row) {
+				$spec_arr['places'] .= $i.") ".$places_row['place'].", (".$places_row['edulevel']."), ".$places_row['eduform'].", ".$places_row['finance'].";\n";
+				$i++;
 			}
 		}
 		return array_merge($data, $spec_arr);

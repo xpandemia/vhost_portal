@@ -56,17 +56,20 @@ class Model_EductypesDoctypes extends Model
 	/**
      * Deletes eductypes doctypes from database.
      *
-     * @return boolean
+     * @return array
      */
-	public function delete($form)
+	public function delete($form) : array
 	{
+		$form['success_msg'] = null;
+		$form['error_msg'] = null;
 		$ed = new EductypesDoctypes();
 		$ed->id = $form['id'];
 		if ($ed->clear() > 0) {
-			return true;
+			$form['success_msg'] = 'Связь № '.$lang->id.' удалена.';
 		} else {
-			return false;
+			$form['error_msg'] = 'Ошибка удаления связи № '.$ed->id.'! Свяжитесь с администратором.';
 		}
+		return $form;
 	}
 
 	/**

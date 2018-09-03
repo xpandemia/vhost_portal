@@ -23,7 +23,6 @@ use frontend\models\Model_Resume as Model_Resume;
 ?>
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
 	<?php
-	//$pageData->addCSS("sadf"); //это проверка того, что отладчик запустился
         echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
 		echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
 		echo Form_Helper::setFormBegin(RESUME['ctr'], RESUME['act'], RESUME['id'], RESUME['hdr'], 2, '/images/logo_bsu_transparent.gif');
@@ -58,6 +57,7 @@ use frontend\models\Model_Resume as Model_Resume;
 										'error' => $data['name_first_err'],
 										'help' => FIRSTNAME_HELP]);
 		// name_middle
+		echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nЕсли у Вас есть отчество, то обязательно укажите его."), 'alert-warning');
 		echo Form_Helper::setFormInput(['label' => MIDDLENAME_PLC,
 										'control' => 'name_middle',
 										'type' => 'text',

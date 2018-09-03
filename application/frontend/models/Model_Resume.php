@@ -854,11 +854,6 @@ class Model_Resume extends Model
 		$resume = new Resume();
 		$form['success_msg'] = null;
 		$form['error_msg'] = null;
-		/* check status */
-		if ($form['status'] != $resume::STATUS_CREATED && $form['status'] != $resume::STATUS_SAVED) {
-			$form['error_msg'] = 'Сохранять анкеты можно только с состоянием: <strong>'.mb_convert_case($resume::STATUS_CREATED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>, <strong>'.mb_convert_case($resume::STATUS_SAVED_NAME, MB_CASE_UPPER, 'UTF-8').'</strong>!';
-			return $form;
-		}
 		/* personal */
 		$personal = new Personal();
 		$personal->id_user = $_SESSION[APP_CODE]['user_id'];

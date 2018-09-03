@@ -263,7 +263,7 @@ use frontend\models\Model_Application as Model_Application;
 													'error' => $data['remote_err']]);
 				/* save application as PDF */
 				echo '<p></p>';
-				echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nПожалуйста, не вносите изменения в печатную форму заявления.\nПросто распечатайте её, подпишите, отсканируйте и загрузите в электронное заявление."), 'alert-warning');
+				echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nЕсли Вы увидите на экране печатную форму заявления, где большая часть данных отсутствует, <strong>не пытайтесь её распечатывать из браузера</strong>. Вместо это сначала сохраните печатную форму заявления на диск (кнопка <strong>\"Загрузить\"</strong> или <strong>\"Скачать\"</strong>) и распечатайте полученный файл."), 'alert-warning');
 				echo "<h1 style='color:red'>";
 				echo HTML_Helper::setHrefButtonIcon('ApplicationSpec', 'SavePdf/?pid='.$data['id'], 'font-weight-bold', 'fas fa-print fa-3x', 'Сформировать заявление', 1);
 				echo " Сформировать заявление</h1>";

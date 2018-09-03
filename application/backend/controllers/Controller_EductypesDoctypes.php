@@ -78,14 +78,14 @@ class Controller_EductypesDoctypes extends Controller
      */
 	public function actionDelete()
 	{
-		$this->form['id'] = htmlspecialchars($_POST['id']);
-		$this->form['hdr'] = htmlspecialchars($_POST['hdr']);
-		$this->form['ctr'] = htmlspecialchars($_POST['ctr']);
-		if ($this->model->delete($this->form)) {
-			Basic_Helper::redirect($this->form['hdr'], 200, $this->form['ctr'], 'Index');
+		if (isset($_POST['id']) && isset($_POST['hdr']) && isset($_POST['ctr'])) {
+			$this->form['id'] = htmlspecialchars($_POST['id']);
+			$this->form['hdr'] = htmlspecialchars($_POST['hdr']);
+			$this->form['ctr'] = htmlspecialchars($_POST['ctr']);
+			$this->form = $this->model->delete($this->form);
+			return Basic_Helper::redirect($this->form['hdr'], 200, $this->form['ctr'], 'Index', $this->form['success_msg'], $this->form['error_msg']);
 		} else {
-			$this->form['error_msg'] = 'Ошибка удаления связи документов с видами образования!';
-			return $this->view->generate('delete-confirm.php', 'form.php', 'Удаление документа "'.$this->form['hdr'].'"', $this->form);
+			return Basic_Helper::redirect(EDUCTYPES_DOCTYPES['hdr'], 200, EDUCTYPES_DOCTYPES['ctr'], 'Index', null, 'Ошибка удаления связи документов с видами образования!');
 		}
 	}
 

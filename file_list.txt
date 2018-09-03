@@ -16,6 +16,7 @@ PORTALBSU
 |   |   |       Controller_Docs.php - контроллер документов (админка)
 |   |   |       Controller_EduclevelsDoctypes.php - контроллер настройки связи уровней подготовки с типами документов (админка)
 |   |   |       Controller_EductypesDoctypes.php - контроллер настройки связи видов образования с типами документов (админка)
+|   |   |       Controller_Langs.php - контроллер языков (админка)
 |   |   |       Controller_Login.php - контроллер авторизации (админка)
 |   |   |       Controller_Main.php - контроллер главной страницы (админка)
 |   |   |       Controller_User.php - контроллер пользователей (админка)
@@ -29,6 +30,7 @@ PORTALBSU
 |   |   |       Model_Docs.php - модель документов (админка)
 |   |   |       Model_EduclevelsDoctypes.php - модель настройки связи уровней подготовки с типами документов (админка)
 |   |   |       Model_EductypesDoctypes.php - модель настройки связи видов образования с типами документов (админка)
+|   |   |       Model_Langs.php - модель языков (админка)
 |   |   |       Model_Login.php - модель авторизации (админка)
 |   |   |       Model_Main.php - модель главной страницы (админка)
 |   |   |       Model_User.php - модель пользователей (админка)
@@ -53,6 +55,8 @@ PORTALBSU
 |   |   |   |   educlevels-doctypes.php - связи уровней подготовки с типами документов (админка)
 |   |   |   |   eductypes-doctypes-add.php - форма связи видов образования с типами документов (админка)
 |   |   |   |   eductypes-doctypes.php - связи видов образования с типами документов (админка)
+|   |   |   |   langs-add.php - форма языков (админка)
+|   |   |   |   langs.php - языки (админка)
 |   |   |   |   login.php - форма авторизации (админка)
 |   |   |   |   main.php - главная страница (админка)
 |   |   |   |   user-add.php - форма добавления пользователей (админка)
@@ -106,6 +110,7 @@ PORTALBSU
 |   |           Model_IndAchievs.php - модель IND_ACHIEVS (индивидуальные достижения)
 |   |           Model_Kladr.php - модель KLADR (адресный классификатор КЛАДР)
 |   |           Model_KladrAbbrs.php - модель KLADR_ABBRS (адресные сокращения КЛАДР)
+|   |           Model_Langs.php - модель LANGS (языки)
 |   |           Model_Passport.php - модель PASSPORT (паспортные данные)
 |   |           Model_Personal.php - модель PERSONAL (личные данные)
 |   |           Model_Resume.php - модель RESUME (анкеты)
@@ -250,70 +255,6 @@ PORTALBSU
     |           bootstrap.min.js.map
     |
     +---cas - PhpCAS - CAS-авторизация
-    |   |   CAS.php
-    |   |
-    |   \---source
-    |       |   CAS.php
-    |       |
-    |       \---CAS
-    |           |   AuthenticationException.php
-    |           |   Autoload.php
-    |           |   Client.php
-    |           |   CookieJar.php
-    |           |   Exception.php
-    |           |   GracefullTerminationException.php
-    |           |   InvalidArgumentException.php
-    |           |   OutOfSequenceBeforeAuthenticationCallException.php
-    |           |   OutOfSequenceBeforeClientException.php
-    |           |   OutOfSequenceBeforeProxyException.php
-    |           |   OutOfSequenceException.php
-    |           |   ProxiedService.php
-    |           |   ProxyChain.php
-    |           |   ProxyTicketException.php
-    |           |   TypeMismatchException.php
-    |           |
-    |           +---Languages
-    |           |       Catalan.php
-    |           |       ChineseSimplified.php
-    |           |       English.php
-    |           |       French.php
-    |           |       German.php
-    |           |       Greek.php
-    |           |       Japanese.php
-    |           |       LanguageInterface.php
-    |           |       Spanish.php
-    |           |
-    |           +---PGTStorage
-    |           |       AbstractStorage.php
-    |           |       Db.php
-    |           |       File.php
-    |           |
-    |           +---ProxiedService
-    |           |   |   Abstract.php
-    |           |   |   Exception.php
-    |           |   |   Http.php
-    |           |   |   Imap.php
-    |           |   |   Testable.php
-    |           |   |
-    |           |   \---Http
-    |           |           Abstract.php
-    |           |           Get.php
-    |           |           Post.php
-    |           |
-    |           +---ProxyChain
-    |           |       AllowedList.php
-    |           |       Any.php
-    |           |       Interface.php
-    |           |       Trusted.php
-    |           |
-    |           \---Request
-    |                   AbstractRequest.php
-    |                   CurlMultiRequest.php
-    |                   CurlRequest.php
-    |                   Exception.php
-    |                   MultiRequestInterface.php
-    |                   RequestInterface.php
-    |           
     +---fontawesome - Font Awesome (версия 5.0.4) - набор масштабируемых векторных иконок
     |       fontawesome-all.js
     |       
@@ -323,84 +264,7 @@ PORTALBSU
     +---maskedinput - JQuery Masked Input (версия 1.4.1) - "маски" ввода
     |       jquery.maskedinput.min.js
     |
-    +---php-pdftk - PDF toolkit PHP (версия 0.4.4) - работа с PDF
-    |   |   .gitignore
-    |   |   .travis.yml
-    |   |   composer.json
-    |   |   composer.lock
-    |   |   LICENSE
-    |   |   phpunit.xml.dist
-    |   |   README.md
-    |   |
-    |   +---src
-    |   |       Command.php
-    |   |       DataFields.php
-    |   |       FdfFile.php
-    |   |       Pdf.php
-    |   |       XfdfFile.php
-    |   |
-    |   +---tests
-    |   |   |   bootstrap.php
-    |   |   |   CommandTest.php
-    |   |   |   DataFieldsTest.php
-    |   |   |   FdfFileTest.php
-    |   |   |   PdfTest.php
-    |   |   |   XfdfFileTest.php
-    |   |   |
-    |   |   \---files
-    |   |           data.fdf
-    |   |           document1.pdf
-    |   |           document2.pdf
-    |   |           fdfdata.fdf
-    |   |           FdfFileTest.fdf
-    |   |           filledform.pdf
-    |   |           form.pdf
-    |   |           XfdfFileTest.xfdf
-    |   |
-    |   \---vendor
-    |       |   autoload.php
-    |       |
-    |       +---composer
-    |       |       autoload_classmap.php
-    |       |       autoload_namespaces.php
-    |       |       autoload_psr4.php
-    |       |       autoload_real.php
-    |       |       autoload_static.php
-    |       |       ClassLoader.php
-    |       |       installed.json
-    |       |       LICENSE
-    |       |
-    |       \---mikehaertl
-    |           +---php-shellcommand
-    |           |   |   .gitignore
-    |           |   |   .travis.yml
-    |           |   |   CHANGELOG.md
-    |           |   |   composer.json
-    |           |   |   LICENSE
-    |           |   |   phpunit.xml.dist
-    |           |   |   README.md
-    |           |   |
-    |           |   +---src
-    |           |   |       Command.php
-    |           |   |
-    |           |   \---tests
-    |           |           bootstrap.php
-    |           |           CommandTest.php
-    |           |
-    |           \---php-tmpfile
-    |               |   .gitignore
-    |               |   .travis.yml
-    |               |   composer.json
-    |               |   LICENSE
-    |               |   phpunit.xml.dist
-    |               |   README.md
-    |               |
-    |               +---src
-    |               |       File.php
-    |               |
-    |               \---tests
-    |                       bootstrap.php
-    |                       FileTest.php
+    +---php-pdftk - PDF toolkit PHP (версия 0.4.4) - работа с PDF формами
     |
     +---PHPMailer - PHPMailer (версия 6.0.3) - работа с эл. почтой
     |   \---src
@@ -408,7 +272,8 @@ PORTALBSU
     |           PHPMailer.php
     |           SMTP.php
     |
-    \---popper - Popper JS (версия 1.12.9) - всплывающие подсказки
-            popper.min.js
-            popper.min.js.map
-                
+    +---popper - Popper JS (версия 1.12.9) - всплывающие подсказки
+    |       popper.min.js
+    |       popper.min.js.map
+    |
+    \---TCPDF - TCPDF (версия 6.2.13) - работа с PDF

@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project name="C:\wamp\wamp64\www\vhost_portalbsu\portalbsu.clpprj">
 	<settings><PM_URL><![CDATA[http://portalbsu.bsu.edu.ru]]></PM_URL><PM_HOME_URL><![CDATA[http://portalbsu.bsu.edu.ru]]></PM_HOME_URL><PM_LIBS><![CDATA[]]></PM_LIBS><PM_FTP_CONNECTION><![CDATA[]]></PM_FTP_CONNECTION><PM_FTP_DIR><![CDATA[]]></PM_FTP_DIR><PM_FTP_UPLOAD_ON_SAVE><![CDATA[INT:0]]></PM_FTP_UPLOAD_ON_SAVE></settings><removed value=";"/><added value=""/><lastopfiles>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\index.php"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Kladr.php"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\layouts\main.php"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_Main.php"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\form_config.php"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\db_config.php"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Kladr.php"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\resume.php"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_TranslateLangs.php"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\translate-langs.php"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_TranslateLangs.php"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_TranslateLangs.php"/>
 	</lastopfiles>
 	<todoblock>
 		<todofile name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\basic_helper.php">
@@ -17,6 +20,11 @@
 		<todofile name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php">
 			<todo name="@TODO would be nice to use php://temp streams here" pos="17;2598"/>
 		</todofile>
+		<todofile name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\tcpdf.php">
+			<todo name="@TODO: create a SMask" pos="40;9176"/>
+			<todo name="@TODO: implement this feature" pos="3;13546"/>
+			<todo name="@TODO: unsupported feature" pos="6;24252"/>
+		</todofile>
 		<todofile name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\cas\source\CAS\ProxiedService\Imap.php">
 			<todo name="@todo add localization integration." pos="13;216"/>
 		</todofile>
@@ -25,6 +33,250 @@
 		</todofile>
 	</todoblock>
 	<filescache>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\tools\tcpdf_addfont.php" crc="1533803435"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\tools\convert_fonts_examples.txt" crc="1533803435"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\tools\.htaccess" crc="1533803435"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\include\barcodes\qrcode.php" crc="1533803435"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\include\barcodes\pdf417.php" crc="1533803435"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\include\barcodes\datamatrix.php" crc="1533803435"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\include\tcpdf_static.php" crc="1533803435"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\include\tcpdf_images.php" crc="1533803435"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\include\tcpdf_fonts.php" crc="1533803435"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\include\tcpdf_font_data.php" crc="1533803435"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\include\tcpdf_filters.php" crc="1533803435"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\include\tcpdf_colors.php" crc="1533803435"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\dejavu-fonts-ttf-2.34\unicover.txt" crc="1533803434"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\dejavu-fonts-ttf-2.34\status.txt" crc="1533803434"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\dejavu-fonts-ttf-2.34\langcover.txt" crc="1533803434"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\dejavu-fonts-ttf-2.33\unicover.txt" crc="1533803434"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\dejavu-fonts-ttf-2.33\status.txt" crc="1533803434"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\dejavu-fonts-ttf-2.33\langcover.txt" crc="1533803434"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\zapfdingbats.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\uni2cid_ak12.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\uni2cid_aj16.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\uni2cid_ag15.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\uni2cid_ac15.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\timesi.php" crc="1535533128"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\timesbi.php" crc="1535533128"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\timesbd.php" crc="1535533128"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\times.php" crc="1535533128"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\symbol.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\stsongstdlight.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\pdfazapfdingbats.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\pdfatimesi.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\pdfatimesbi.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\pdfatimesb.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\pdfatimes.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\pdfasymbol.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\pdfahelveticai.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\pdfahelveticabi.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\pdfahelveticab.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\pdfahelvetica.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\pdfacourieri.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\pdfacourierbi.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\pdfacourierb.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\pdfacourier.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\msungstdlight.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\kozminproregular.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\kozgopromedium.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\hysmyeongjostdmedium.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\helveticai.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\helveticabi.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\helveticab.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\helvetica.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\freeserifi.php" crc="1533803433"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\freeserifbi.php" crc="1533803432"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\freeserifb.php" crc="1533803432"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\freeserif.php" crc="1533803432"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\freesansi.php" crc="1533803432"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\freesansbi.php" crc="1533803432"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\freesansb.php" crc="1533803432"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\freesans.php" crc="1533803431"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\freemonoi.php" crc="1533803431"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\freemonobi.php" crc="1533803431"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\freemonob.php" crc="1533803431"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\freemono.php" crc="1533803431"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\dejavuserifi.php" crc="1533803431"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\dejavuserifcondensedi.php" crc="1533803431"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\dejavuserifcondensedbi.php" crc="1533803430"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\dejavuserifcondensedb.php" crc="1533803430"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\dejavuserifcondensed.php" crc="1533803430"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\dejavuserifbi.php" crc="1533803430"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\dejavuserifb.php" crc="1533803430"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\dejavuserif.php" crc="1533803430"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\dejavusansmonoi.php" crc="1533803429"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\dejavusansmonobi.php" crc="1533803429"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\dejavusansmonob.php" crc="1533803429"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\dejavusansmono.php" crc="1533803429"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\dejavusansi.php" crc="1533803429"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\dejavusansextralight.php" crc="1533803429"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\dejavusanscondensedi.php" crc="1533803429"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\dejavusanscondensedbi.php" crc="1533803429"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\dejavusanscondensedb.php" crc="1533803428"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\dejavusanscondensed.php" crc="1533803428"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\dejavusansbi.php" crc="1533803428"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\dejavusansb.php" crc="1533803428"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\dejavusans.php" crc="1533803428"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\courieri.php" crc="1533803428"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\courierbi.php" crc="1533803428"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\courierb.php" crc="1533803428"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\courier.php" crc="1533803428"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\cid0kr.php" crc="1533803428"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\cid0jp.php" crc="1533803427"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\cid0ct.php" crc="1533803427"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\cid0cs.php" crc="1533803427"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\ariali.php" crc="1535533128"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\arialbi.php" crc="1535533127"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\arial.php" crc="1535533127"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\aefurat.php" crc="1533803427"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\fonts\aealarabiya.php" crc="1533803427"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\zho.php" crc="1533803427"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\yid.php" crc="1533803427"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\urd.php" crc="1533803427"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\ukr.php" crc="1533803427"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\swe.php" crc="1533803427"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\swa.php" crc="1533803427"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\srp.php" crc="1533803427"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\sqi.php" crc="1533803427"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\spa.php" crc="1533803427"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\slv.php" crc="1533803427"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\rus.php" crc="1533803427"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\ron.php" crc="1533803427"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\por.php" crc="1533803427"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\pol.php" crc="1533803427"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\nob.php" crc="1533803427"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\nld.php" crc="1533803427"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\msa.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\mlt.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\mkd.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\kor.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\kat.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\jpn.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\ita.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\ind.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\hye.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\hun.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\hrv.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\heb.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\hat.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\glg.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\gle.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\ger.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\fra.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\far.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\eus.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\est.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\eng.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\dan.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\cym.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\chi.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\ces.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\cat.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\bul.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\bra.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\bel.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\aze.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\ara.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\lang\afr.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\data\utf8test.txt" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\data\table_data_demo.txt" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\data\chapter_demo_2.txt" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\data\chapter_demo_1.txt" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\config\tcpdf_config_alt.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\barcodes\tcpdf_barcodes_2d_include.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\barcodes\tcpdf_barcodes_1d_include.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\barcodes\example_2d_qrcode_svgi.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\barcodes\example_2d_qrcode_svg.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\barcodes\example_2d_qrcode_png.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\barcodes\example_2d_qrcode_html.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\barcodes\example_2d_pdf417_svgi.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\barcodes\example_2d_pdf417_svg.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\barcodes\example_2d_pdf417_png.php" crc="1533803426"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\barcodes\example_2d_pdf417_html.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\barcodes\example_2d_datamatrix_svgi.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\barcodes\example_2d_datamatrix_svg.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\barcodes\example_2d_datamatrix_png.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\barcodes\example_2d_datamatrix_html.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\barcodes\example_1d_svgi.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\barcodes\example_1d_svg.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\barcodes\example_1d_png.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\barcodes\example_1d_html.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\tcpdf_include.php" crc="1533805220"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\index.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_065.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_064.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_063.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_062.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_061.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_060.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_059.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_058.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_057.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_056.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_055.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_054.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_053.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_052.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_051.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_050.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_049.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_048.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_047.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_046.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_045.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_044.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_043.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_042.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_041.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_040.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_039.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_038.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_037.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_036.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_035.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_034.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_033.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_032.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_031.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_030.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_029.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_028.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_027.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_026.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_025.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_024.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_023.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_022.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_021.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_020.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_019.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_018.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_017.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_016.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_015.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_014.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_013.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_012.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_011.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_010.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_009.php" crc="1533803425"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_008.php" crc="1533803424"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_007.php" crc="1533803424"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_006.php" crc="1533803424"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_005.php" crc="1533803424"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_004.php" crc="1533803424"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_003.php" crc="1533803424"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_002.php" crc="1533803424"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\examples\example_001.php" crc="1533803424"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\config\tcpdf_config.php" crc="1533803424"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\tcpdf_parser.php" crc="1533803424"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\tcpdf_import.php" crc="1533803424"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\tcpdf_barcodes_2d.php" crc="1533803424"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\tcpdf_barcodes_1d.php" crc="1533803424"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\tcpdf_autoconfig.php" crc="1533803424"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\tcpdf.php" crc="1533803424"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\LICENSE.TXT" crc="1533803424"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\TCPDF\CHANGELOG.TXT" crc="1533803424"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\popper\popper.min.js" crc="1519134524"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\SMTP.php" crc="1517996994"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\vendors\PHPMailer\src\PHPMailer.php" crc="1517996994"/>
@@ -116,7 +368,7 @@
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\signup.php" crc="1532419535"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\scans-show.php" crc="1527080880"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\scans-delete.php" crc="1527080846"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\resume.php" crc="1533739836"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\resume.php" crc="1534140661"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\reset-pwd.php" crc="1527080771"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\reset-pwd-request.php" crc="1527080763"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\main.php" crc="1532603270"/>
@@ -131,12 +383,12 @@
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\docs-educ-add.php" crc="1533279805"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\delete-confirm.php" crc="1528203691"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\application.php" crc="1533020614"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\application-places-add.php" crc="1533541254"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\application-places-add.php" crc="1534144859"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\application-edit.php" crc="1533041914"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\views\application-add.php" crc="1533279551"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Signup.php" crc="1529580471"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Scans.php" crc="1532602089"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Resume.php" crc="1532419317"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Resume.php" crc="1534144124"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwdRequest.php" crc="1529580509"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ResetPwd.php" crc="1529580545"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Main.php" crc="1531902602"/>
@@ -148,12 +400,12 @@
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_DocsEduc.php" crc="1532419327"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_DictForeignLangs.php" crc="1527058654"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_DictDoctypes.php" crc="1529391067"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php" crc="1533557935"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_ApplicationSpec.php" crc="1535460604"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_Application.php" crc="1533557147"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\models\Model_AdmissionCampaign.php" crc="1527058820"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Signup.php" crc="1524903225"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Scans.php" crc="1528548389"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Resume.php" crc="1531991417"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Resume.php" crc="1534144181"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwdRequest.php" crc="1521444280"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ResetPwd.php" crc="1522843597"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Main.php" crc="1532331581"/>
@@ -162,7 +414,7 @@
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_IndAchievs.php" crc="1531990810"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_EgeDisciplines.php" crc="1532093127"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_Ege.php" crc="1529579178"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_DocsEduc.php" crc="1533293345"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_DocsEduc.php" crc="1534140897"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_DictForeignLangs.php" crc="1526635220"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_DictDoctypes.php" crc="1529391067"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\frontend\controllers\Controller_ApplicationSpec.php" crc="1532523995"/>
@@ -185,9 +437,9 @@
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\helpers\basic_helper.php" crc="1531384852"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\exceptions\upload_exceptions.php" crc="1523279968"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\mail_config.php" crc="1525346049"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\form_config.php" crc="1533539292"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\form_config.php" crc="1535467472"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\files_config.php" crc="1532419247"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\db_config.php" crc="1533644573"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\db_config.php" crc="1535632174"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\cas_config.php" crc="1525346255"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\config\1c_config.php" crc="1528529386"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\view.php" crc="1519981069"/>
@@ -195,6 +447,7 @@
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\model.php" crc="1529067326"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\core\controller.php" crc="1524472164"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_User.php" crc="1533548204"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_TranslateLangs.php" crc="1535467472"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Scans.php" crc="1532518648"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Resume.php" crc="1532013071"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Personal.php" crc="1532351840"/>
@@ -231,18 +484,19 @@
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Contacts.php" crc="1529581191"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationStatus.php" crc="1533019537"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationPlacesExams.php" crc="1532012660"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationPlaces.php" crc="1533560764"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationPlaces.php" crc="1534145013"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_ApplicationAchievs.php" crc="1528462381"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Application.php" crc="1533541174"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_AdmissionCampaign.php" crc="1533566508"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\common\models\Model_Address.php" crc="1531810798"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\web\index.php" crc="1524899656"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\web\.htaccess" crc="1526567822"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\layouts\main.php" crc="1533304420"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\layouts\main.php" crc="1535620048"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\layouts\form.php" crc="1533627389"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\user.php" crc="1533548759"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\user-edit.php" crc="1533109770"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\user-add.php" crc="1533109770"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\translate-langs.php" crc="1535467472"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\main.php" crc="1527845717"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\login.php" crc="1524208872"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\eductypes-doctypes.php" crc="1527841607"/>
@@ -265,6 +519,7 @@
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\dict-countries-add.php" crc="1532348248"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\views\delete-confirm.php" crc="1527836173"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_User.php" crc="1533293885"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_TranslateLangs.php" crc="1535467472"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_Main.php" crc="1531903307"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_Login.php" crc="1524904620"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_EductypesDoctypes.php" crc="1533293826"/>
@@ -276,7 +531,8 @@
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_DictEge.php" crc="1533299016"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\models\Model_DictCountries.php" crc="1533293786"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_User.php" crc="1533117127"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_Main.php" crc="1533627260"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_TranslateLangs.php" crc="1535467472"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_Main.php" crc="1535467472"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_Login.php" crc="1520865508"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_EductypesDoctypes.php" crc="1532337341"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_EduclevelsDoctypes.php" crc="1532337353"/>
@@ -286,12 +542,12 @@
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_DictionaryManager.php" crc="1533626324"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_DictEge.php" crc="1532337071"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\backend\controllers\Controller_DictCountries.php" crc="1532350116"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\bootstrap.php" crc="1529332077"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\todo.txt" crc="1532526622"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\road_map.txt" crc="1533627627"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\index.php" crc="1533644573"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\application\bootstrap.php" crc="1535460861"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\todo.txt" crc="1535460823"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\road_map.txt" crc="1533794150"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\index.php" crc="1534145023"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\file_list.txt" crc="1533627207"/>
-		<file name="C:\wamp\wamp64\www\vhost_portalbsu\change_log.txt" crc="1533734944"/>
+		<file name="C:\wamp\wamp64\www\vhost_portalbsu\change_log.txt" crc="1535552741"/>
 		<file name="C:\wamp\wamp64\www\vhost_portalbsu\.htaccess" crc="1526567802"/>
 	</filescache>
 </project>
