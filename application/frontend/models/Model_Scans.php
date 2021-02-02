@@ -14,10 +14,6 @@ use common\models\Model_IndAchievs as IndAchievs;
 
 class Model_Scans extends Model
 {
-	/*
-		Scans processing
-	*/
-
 	/**
      * Creates scan rules.
      *
@@ -30,6 +26,12 @@ class Model_Scans extends Model
 		$scans_arr = $scans->getByDocument();
 		if ($scans_arr) {
 			foreach ($scans_arr as $scans_row) {
+			    $_t = FILES_EXT_SCANS;
+			    if($scans_row['scan_code'] == 'photo3x4') {
+			        unset($_t['pdf']);
+                    $scans_row['scan_name'] .= ' (кроме PDF)';
+                }
+			    
 				if ($scans_row['required'] == 1) {
 					$rules[$scans_row['scan_code']] = [
 													'type' => 'file',
@@ -37,7 +39,7 @@ class Model_Scans extends Model
 													'required' => ['default' => '', 'msg' => 'Скан-копия "'.ucfirst($scans_row['scan_name']).'" обязательна для заполнения!'],
 													'name' => ['value' => FILES_NAME, 'msg' => 'Имя файла скан-копии "'.ucfirst($scans_row['scan_name']).'" превышает '.FILES_NAME.' знаков!'],
 													'size' => ['value' => FILES_SIZE['value'], 'msg' => 'Размер скан-копии "'.ucfirst($scans_row['scan_name']).'" превышает '.FILES_SIZE['value'].' '.FILES_SIZE['size'].' !'],
-													'ext' => ['value' => FILES_EXT_SCANS, 'msg' => 'Недопустимый тип скан-копии "'.ucfirst($scans_row['scan_name']).'"!'],
+													'ext' => ['value' => $_t, 'msg' => 'Недопустимый тип скан-копии "'.ucfirst($scans_row['scan_name']).'"!'],
 													'success' => 'Скан-копия "'.ucfirst($scans_row['scan_name']).'" заполнена верно.'
 													];
 				} else {
@@ -46,7 +48,7 @@ class Model_Scans extends Model
 													'class' => 'form-control',
 													'name' => ['value' => FILES_NAME, 'msg' => 'Имя файла скан-копии "'.ucfirst($scans_row['scan_name']).'" превышает '.FILES_NAME.' знаков!'],
 													'size' => ['value' => FILES_SIZE['value'], 'msg' => 'Размер скан-копии "'.ucfirst($scans_row['scan_name']).'" превышает '.FILES_SIZE['value'].' '.FILES_SIZE['size'].' !'],
-													'ext' => ['value' => FILES_EXT_SCANS, 'msg' => 'Недопустимый тип скан-копии "'.ucfirst($scans_row['scan_name']).'"!'],
+													'ext' => ['value' => $_t, 'msg' => 'Недопустимый тип скан-копии "'.ucfirst($scans_row['scan_name']).'"!'],
 													'success' => 'Скан-копия "'.ucfirst($scans_row['scan_name']).'" заполнена верно.'
 													];
 				}
@@ -95,6 +97,7 @@ class Model_Scans extends Model
 					$scans->file_size = (int) $form[$scan_code.'_size'];
 					// save
 					$id = $scans->save();
+					
 					if ($id == 0) {
 						$form['success_msg'] = null;
 						$form['error_msg'] = 'Ошибка сохранения скан-копии "'.$dict_scans_row['scan_name'].'"!';

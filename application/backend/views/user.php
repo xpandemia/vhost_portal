@@ -42,19 +42,23 @@ use common\models\Model_User as User;
 		echo HTML_Helper::setTableHeader(['class' => 'thead-dark',
 										'grid' => $user->grid()]);
 		if (isset($data['step'])) {
+		    $data['id'];
 			$user->id = $data['id'];
 			if ($data['step'] == 'prev') {
-				$user_arr = array_reverse($user->getPagePrev());
+                $user_arr = $user->getPagePrev();
 			} else {
-				$user_arr = $user->getPageNext();
+                $user_arr = $user->getPageNext();
 			}
 		} else {
 			$user_arr = $data;
 		}
+		
+		$max_id = $user->getMax();
+		
 		if ($user_arr) {
-			$i = 0;
-			$id_min = 0;
-			$id_max = 0;
+			$i = $max_id;
+			$id_min = $max_id;
+			$id_max = $max_id;
 			echo '<tbody>';
 			foreach ($user_arr as $user_row) {
 				echo HTML_Helper::setTableRow(['grid' => $user->grid(),
@@ -64,13 +68,13 @@ use common\models\Model_User as User;
 																['controller' => USER['ctr'], 'action' => 'Edit/?id='.$user_row['id'], 'class' => 'font-weight-bold', 'icon' => 'far fa-edit fa-2x', 'tooltip' => 'Редактировать'],
 																['controller' => USER['ctr'], 'action' => 'DeleteConfirm/?id='.$user_row['id'].'&hdr=Пользователи&ctr='.USER['ctr'], 'class' => 'text-danger font-weight-bold', 'icon' => 'fas fa-times fa-2x', 'tooltip' => 'Удалить']
 																]]);
-				if ($i === 0) {
+				if ($i === $max_id) {
 					$id_min = $user_row['id'];
 					$id_max = $user_row['id'];
 				} else {
-					$id_max = $user_row['id'];
+                    $id_max = $user_row['id'];
 				}
-				$i++;
+				$i--;
 			}
 			echo '</tbody>';
 		}

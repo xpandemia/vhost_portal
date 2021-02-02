@@ -4,14 +4,26 @@ namespace common\models;
 
 use tinyframe\core\helpers\Db_Helper as Db_Helper;
 
-define('ADRREG', array(
+define('ADRREG', [
 					'name' => 'Адрес регистрации',
 					'plc' => 'Индекс, Область, Район, Город или Населённый пункт, Улица, Дом, Корпус, Квартира',
-					'help' => 'Адрес регистрации должно содержать <strong>'.MSG_INFO_RUS.'</strong>, и быть не более <strong>255</strong> символов длиной.'));
-define('ADRRES', array(
+					'help' => 'Адрес регистрации должно содержать <strong>'.MSG_INFO_RUS.'</strong>, и быть не более <strong>255</strong> символов длиной.']);
+define('ADRRES', [
 					'name' => 'Адрес проживания',
 					'plc' => 'Индекс, Область, Район, Город или Населённый пункт, Улица, Дом, Корпус, Квартира',
-					'help' => 'Адрес проживания должно содержать <strong>'.MSG_INFO_RUS.'</strong>, и быть не более <strong>255</strong> символов длиной.'));
+					'help' => 'Адрес проживания должно содержать <strong>'.MSG_INFO_RUS.'</strong>, и быть не более <strong>255</strong> символов длиной.']);
+
+define('ADRREG_PAYER', [
+    'name' => 'Адрес регистрации',
+    'plc' => 'Индекс, Страна, Область, Район, Город или Населённый пункт, Улица, Дом, Корпус, Квартира',
+    'help' => 'Адрес регистрации должно содержать <strong>'.MSG_INFO_RUS.'</strong>.'
+]);
+
+define('ADRESS_PAYER', [
+    'name' => 'Адрес проживания',
+    'plc' => 'Индекс, Страна, Область, Район, Город или Населённый пункт, Улица, Дом, Корпус, Квартира',
+    'help' => 'Адрес регистрации должно содержать <strong>'.MSG_INFO_RUS.'</strong>.'
+]);
 
 class Model_Address extends Db_Helper
 {

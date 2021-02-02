@@ -148,10 +148,10 @@ class Model_DictEge extends Db_Helper
 									':description' => $this->description]);
 		if (!empty($row)) {
 			return true;
-		} else {
-			return false;
 		}
-	}
+        
+        return false;
+    }
 
 	/**
      * Checks if dictionary ege exists except this ID.
@@ -168,10 +168,10 @@ class Model_DictEge extends Db_Helper
 									':id' => $this->id]);
 		if (!empty($row)) {
 			return true;
-		} else {
-			return false;
 		}
-	}
+        
+        return false;
+    }
 
 	/**
      * Checks if dictionary ege used in ege.
@@ -186,10 +186,10 @@ class Model_DictEge extends Db_Helper
 									[':id' => $this->id]);
 		if (!empty($arr)) {
 			return true;
-		} else {
-			return false;
 		}
-	}
+        
+        return false;
+    }
 
 	/**
      * Saves dictionary ege data to database.

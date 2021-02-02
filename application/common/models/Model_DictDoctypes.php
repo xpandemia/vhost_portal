@@ -83,6 +83,11 @@ class Model_DictDoctypes extends Db_Helper
 		return $this->rowSelectAll('*', self::TABLE_NAME, 'isfolder = :isfolder', [':isfolder' => 0]);
 	}
 
+	public function get()
+    {
+        return $this->rowSelectOne('*', self::TABLE_NAME, 'id = :id', [':id' => $this->id]);
+    }
+
 	/**
      * Gets document type by code.
      *
@@ -185,7 +190,7 @@ class Model_DictDoctypes extends Db_Helper
 									'dict_doctypes INNER JOIN eductypes_doctypes ON dict_doctypes.id = eductypes_doctypes.id_doctype'.
 									' INNER JOIN dict_eductypes ON eductypes_doctypes.id_eductype = dict_eductypes.id',
 									'dict_eductypes.code = :code',
-									[':code' => $this->code_educ]);
+									[':code' => $this->code_educ], NULL, NULL);
 	}
 
 	/**

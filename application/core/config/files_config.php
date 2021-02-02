@@ -15,6 +15,7 @@ define('FILES_TEMP', ROOT_DIR.'/files/temp/');
 define('FILES_SIZE', ['size' => 'MB', 'value' => 2]);
 // upload files extension
 define('FILES_EXT_SCANS', [
+                            'pdf' => 'application/pdf',
 							'jpg' => 'image/jpeg',
 							'png' => 'image/png',
 							'gif' => 'image/gif'

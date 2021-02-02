@@ -95,7 +95,7 @@ use common\models\Model_DocsEduc as DocsEduc;
 											'success' => $data['conds_scs'],
 											'error' => $data['conds_err']]);
 		// remote
-		echo Form_Helper::setFormCheckbox(['label' => 'Прошу разрешить сдачу вступительных испытаний с использованием дистанционных технологий (только для поступающих на платную основу заочной формы обучения)',
+		echo Form_Helper::setFormCheckbox(['label' => 'Прошу разрешить сдачу вступительных испытаний с использованием дистанционных технологий',
 											'control' => 'remote',
 											'class' => $data['remote_cls'],
 											'value' => $data['remote'],

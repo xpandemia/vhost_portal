@@ -1177,7 +1177,13 @@ class phpCAS
         phpCAS::_validateClientExists();
 
         try {
-            return self::$_PHPCAS_CLIENT->getUser();
+            $user = self::$_PHPCAS_CLIENT->getUser();
+            if(mb_substr($user, -9) == '@gmail.ru') {
+                $_t = explode('@', $user);
+                echo 'Почты '.$_t[0].'@<strong>'.$_t[1].'</strong> не существует!.<br> Пожалуйста зарегистрируйтесь и авторизуйтесь, используя почту gmail.<strong>COM</strong><br>';
+                die();
+            }
+            return $user;
         } catch (Exception $e) {
             phpCAS :: error(get_class($e) . ': ' . $e->getMessage());
         }

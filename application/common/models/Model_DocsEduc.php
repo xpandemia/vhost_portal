@@ -223,10 +223,10 @@ class Model_DocsEduc extends Db_Helper
 			$scan_arr = $scan->getByDocrowFull('docs_educ', $doc_educ['id']);
 			$result = array_merge($result, $scan_arr);
 			return $result;
-		} else {
-			return null;
 		}
-	}
+        
+        return null;
+    }
 
 	/**
      * Gets education document by ID for PDF.
@@ -322,10 +322,10 @@ class Model_DocsEduc extends Db_Helper
 										[':campaign_code' => $campaign_code,
 										':id_user' => $_SESSION[APP_CODE]['user_id']],
 										'description ASC');
-		} else {
-			return null;
 		}
-	}
+        
+        return null;
+    }
 
 	/**
      * Gets education documents by user for GRID.
@@ -394,10 +394,8 @@ class Model_DocsEduc extends Db_Helper
 	{
 		$app_arr = $this->rowSelectAll('application.id',
 										'application INNER JOIN docs_educ ON application.id_docseduc = docs_educ.id',
-										'docs_educ.id = :id AND application.status in (:status1, :status2)',
-										[':id' => $this->id,
-										':status1' => Application::STATUS_SENDED,
-										':status2' => Application::STATUS_APPROVED]);
+										'docs_educ.id = :id AND ((application.status in (1,2) and application.type in (1,2)) OR application.status = 1 and application.type = 3) AND application.active = 1',
+										[':id' => $this->id]);
 		if ($app_arr) {
 			return true;
 		} else {

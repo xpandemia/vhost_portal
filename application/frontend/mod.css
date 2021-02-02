@@ -1,0 +1,57 @@
+.container-fluid {
+    margin-top: 10px;
+	margin-bottom:10px;
+}
+.col.col-sm-8.text-center {
+    color: #375641!important;
+}
+
+a {
+    color: #448cbf;
+    
+}
+.row {
+width: 80%;
+margin: auto;
+	}
+.col {display: table-column;}
+.col h4 {
+    font-size: 1.1rem; 
+    display: flex;
+    position: relative;
+    text-align: left;
+	min-width: 18rem;
+}
+
+button, html [type=button] {
+    -webkit-appearance: button;
+    display: table-cell;
+    height: 100%;
+    float: left;
+    margin-right: 5px;
+}
+.h3, h3 {
+    font-size: 1.75rem;
+    color: #88632c;
+}
+.h5, h5 {
+font-size: 1rem;
+}
+.bg-primary {
+    background-color: #0581cb!important;
+}
+
+.footer {
+    background: #efefef;
+    font-weight: 300;
+}
+.col-sm-5 {
+    min-width: min-content;
+}
+
+.col.text-center.text-primary h3 {
+    font-size: 1.1em;
+    font-weight: 400;
+    margin: 30px 0;
+    color: #1970a0;
+}

@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Model_DictEge;
 use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 use tinyframe\core\helpers\Form_Helper as Form_Helper;
 
@@ -15,22 +16,22 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 		echo Form_Helper::setFormBegin(EGE_DSP['ctr'], EGE_DSP['act'], EGE_DSP['id'], EGE_DSP['hdr'], 0, '/images/logo_bsu_transparent.gif');
 	?>
 		<div class="form-group">
-			<input type="hidden" id="id" name="id" value="<?php echo (isset($data['id'])) ? $data['id'] : null; ?>"/>
+			<input type="hidden" id="id" name="id" value="<?php echo $data['id'] ?? NULL; ?>"/>
 		</div>
 	<?php
 		// discipline
-		echo Form_Helper::setFormSelectListDB(['label' => 'Дисциплина',
-												'control' => 'discipline',
-												'class' => $data['discipline_cls'],
-												'required' => 'yes',
-												'required_style' => 'StarUp',
-												'model_class' => 'common\\models\\Model_DictEge',
-												'model_method' => 'getAll',
-												'model_field' => 'code',
-												'model_field_name' => 'description',
-												'value' => $data['discipline'],
-												'success' => $data['discipline_scs'],
-												'error' => $data['discipline_err']]);
+		echo Form_Helper::setFormSelectListDB([ 'label' => 'Дисциплина',
+                                                'control' => 'discipline',
+                                                'class' => $data['discipline_cls'],
+                                                'required' => 'yes',
+                                                'required_style' => 'StarUp',
+                                                'model_class' => Model_DictEge::class,
+                                                'model_method' => 'getAll',
+                                                'model_field' => 'code',
+                                                'model_field_name' => 'description',
+                                                'value' => $data['discipline'],
+                                                'success' => $data['discipline_scs'],
+                                                'error' => $data['discipline_err']]);
 		// points
 		echo Form_Helper::setFormInput(['label' => 'Баллы',
 										'control' => 'points',

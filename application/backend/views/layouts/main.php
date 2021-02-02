@@ -87,6 +87,16 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 						<span data-toggle="tooltip" data-placement="auto" title="Дисциплины ЕГЭ"><i class="fas fa-table fa-2x"></i></span>
 					</a>
 			    </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo Basic_Helper::appUrl('Main', FEATURES['ctr']); ?>">
+                        <span data-toggle="tooltip" data-placement="auto" title="Отличительные признаки"><i class="fab fa-creative-commons-by fa-2x"></i></span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo Basic_Helper::appUrl('Main', TARGET_QUOTA['ctr']); ?>">
+                        <span data-toggle="tooltip" data-placement="auto" title="Целевая квота"><i class="fa fa-address-book fa-2x"></i></span>
+                    </a>
+                </li>
 			    <li class="nav-item">
 					<a class="nav-link" href="<?php echo Basic_Helper::appUrl('Main', EDUCLEVELS_DOCTYPES['ctr']); ?>">
 						<span data-toggle="tooltip" data-placement="auto" title="Настройка связи уровней подготовки с типами документов"><i class="fas fa-graduation-cap fa-2x"></i></span>

@@ -1,5 +1,6 @@
 <?php
 
+
 define('APP_NAME', 'Личный кабинет абитуриента');
 define('APP_CODE', 'portalbsu'); // MUST BE UNIQUE
 define('APP_VERSION', '0.5.3');
@@ -18,7 +19,9 @@ header("Pragma: no-cache"); // HTTP/1.0
 
 // Set your time zone hear
 date_default_timezone_set('Europe/Moscow');
-
+//TODO паша закрыл
+//die("личный кабинет абитуриента закрыт до начала следующей приёмной компании");
+//header("Location:http://abitur.bsu.edu.ru/abitur/priem/app_el/");
 # ---------------------------------------------------------------
 # LOG
 # ---------------------------------------------------------------

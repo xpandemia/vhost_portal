@@ -14,16 +14,17 @@ switch (APP_DATA) {
 		define('DB_HOST', 'localhost'); // MySQL hostname
 		define('DB_USER', 'root'); // MySQL database username
 		define('DB_PASSWORD', ''); // MySQL database password
-		define('DB_NAME', 'portalbsu'); // MySQL database name
+		define('DB_NAME', 'abitur-web'); // MySQL database name
 		break;
-	case 'test':
+	/*case 'test':
 		define('DB_HOST', 'bsu-web03'); // MySQL hostname
 		define('DB_USER', 'ac-admin'); // MySQL database username
 		define('DB_PASSWORD', 'PnKDmaDpqAUVCGagjMyA'); // MySQL database password
 		define('DB_NAME', 'portalbsu'); // MySQL database name
-		break;
+		break;*/
+    case 'test':
 	case 'main':
-		define('DB_HOST', 'localhost'); // MySQL hostname
+		define('DB_HOST', 'bsu-web03'); // MySQL hostname
 		define('DB_USER', 'ac-admin'); // MySQL database username
 		define('DB_PASSWORD', 'PnKDmaDpqAUVCGagjMyA'); // MySQL database password
 		define('DB_NAME', 'abitur-web'); // MySQL database name
@@ -40,9 +41,12 @@ switch (APP_DATA) {
 define('DB_TABLES', array(
 						'address',
 						'admission_campaign',
+						'agreement',
 						'application',
 						'application_achievs',
 						'application_places',
+						'application_confirm',
+						'application_confirm_places',
 						'application_places_exams',
 						'application_status',
 						'contacts',
@@ -75,6 +79,10 @@ define('DB_TABLES', array(
 						'ind_achievs',
 						'kladr',
 						'kladr_abbrs',
+						'features',
+						'privillege_quota',
+                        'privillege_advanced',
+						'target_quota',
 						'passport',
 						'personal',
 						'resume',

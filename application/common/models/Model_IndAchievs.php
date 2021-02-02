@@ -154,10 +154,10 @@ class Model_IndAchievs extends Db_Helper
 			$scan_arr = $scan->getByDocrowFull('ind_achievs', $ia['id']);
 			$result = array_merge($result, $scan_arr);
 			return $result;
-		} else {
-			return null;
 		}
-	}
+        
+        return null;
+    }
 
 	/**
      * Gets individual achievments by user.
@@ -253,15 +253,13 @@ class Model_IndAchievs extends Db_Helper
      *
      * @return boolean
      */
-	public function existsAppGo() : bool
+	public function existsAppGo()
 	{
 		$app_arr = $this->rowSelectAll('application.id',
 										'application INNER JOIN application_achievs ON application_achievs.pid = application.id'.
 										' INNER JOIN ind_achievs ON application_achievs.id_achiev = ind_achievs.id',
-										'ind_achievs.id = :id AND application.status in (:status1, :status2)',
-										[':id' => $this->id,
-										':status1' => Application::STATUS_SENDED,
-										':status2' => Application::STATUS_APPROVED]);
+										'ind_achievs.id = :id AND ((application.type IN (1,2) application.status in (1,2)) OR (application.type IN (3) application.status in (3)))',
+										[':id' => $this->id]);
 		if ($app_arr) {
 			return true;
 		} else {

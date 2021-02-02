@@ -31,9 +31,9 @@ class Model_Kladr extends Db_Helper
 	/**
      * Gets kladr by code.
      *
-     * @return array
+     * @return array | bool
      */
-	public function getByCode($code) : array
+	public function getByCode($code)
 	{
 		return $this->db->rowSelectOne('*',
 										'kladr',
@@ -46,7 +46,7 @@ class Model_Kladr extends Db_Helper
      *
      * @return array
      */
-	public function getRegionAll() : array
+	public function getRegionAll()
 	{
 		$region = $this->db->rowSelectAll('kladr_code, kladr_name, kladr_abbr',
 										'kladr',
@@ -62,7 +62,7 @@ class Model_Kladr extends Db_Helper
      *
      * @return array
      */
-	public function getAreaByRegion() : array
+	public function getAreaByRegion()
 	{
 		// get kladr
 		$kladr = $this->getByCode($this->region);
@@ -83,7 +83,7 @@ class Model_Kladr extends Db_Helper
      *
      * @return array
      */
-	public function getCityByRegion() : array
+	public function getCityByRegion()
 	{
 		// get kladr
 		$kladr = $this->getByCode($this->region);
@@ -105,7 +105,7 @@ class Model_Kladr extends Db_Helper
      *
      * @return array
      */
-	public function getCityByArea() : array
+	public function getCityByArea()
 	{
 		// get kladr
 		$kladr = $this->getByCode($this->area);
@@ -128,7 +128,7 @@ class Model_Kladr extends Db_Helper
      *
      * @return array
      */
-	public function getLocationByRegion() : array
+	public function getLocationByRegion()
 	{
 		// get kladr
 		$kladr = $this->getByCode($this->region);
@@ -151,7 +151,7 @@ class Model_Kladr extends Db_Helper
      *
      * @return array
      */
-	public function getLocationByArea() : array
+	public function getLocationByArea()
 	{
 		// get kladr
 		$kladr = $this->getByCode($this->area);
@@ -174,7 +174,7 @@ class Model_Kladr extends Db_Helper
      *
      * @return array
      */
-	public function getLocationByCity() : array
+	public function getLocationByCity()
 	{
 		// get kladr
 		$kladr = $this->getByCode($this->city);
@@ -199,7 +199,7 @@ class Model_Kladr extends Db_Helper
      *
      * @return array
      */
-	public function getStreetByRegion() : array
+	public function getStreetByRegion()
 	{
 		// get kladr
 		$kladr = $this->getByCode($this->region);
@@ -223,7 +223,7 @@ class Model_Kladr extends Db_Helper
      *
      * @return array
      */
-	public function getStreetByCity() : array
+	public function getStreetByCity()
 	{
 		// get kladr
 		$kladr = $this->getByCode($this->city);
@@ -249,7 +249,7 @@ class Model_Kladr extends Db_Helper
      *
      * @return array
      */
-	public function getStreetByLocation() : array
+	public function getStreetByLocation()
 	{
 		// get kladr
 		$kladr = $this->getByCode($this->location);

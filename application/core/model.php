@@ -19,15 +19,19 @@ class Model
 			> methods for NoSQL;
 			> and others.
 	*/
-
-	/**
+    
+    /**
      * Gets form data.
      *
      * @return array
+     * @throws UploadException
      */
-	public function getForm($rules, $post, $files = null)
+	public function getForm($rules, $post, $files = null, $debug = FALSE)
 	{
 		if (is_array($rules) && is_array($post)) {
+		    if($debug) {
+		        debug_print_object($rules);
+            }
 			foreach ($rules as $field_name => $rule_name_arr) {
 				switch ($rules[$field_name]['type']) {
 					case 'checkbox':
@@ -47,31 +51,29 @@ class Model
 								$form[$field_name.'_name'] = $scans_row['file_name'];
 								$form[$field_name.'_type'] = $scans_row['file_type'];
 								$form[$field_name.'_size'] = $scans_row['file_size'];
-						} else {
-							if (is_array($files)) {
-								if (!empty($_FILES[$field_name]['name'])) {
-									if (!is_array($_FILES[$field_name]['error'])) {
-										if ($_FILES[$field_name]['error'] === UPLOAD_ERR_OK) {
-											$uploadfile = FILES_TEMP.$field_name.'_'.session_id().'.'.Files_Helper::getExtension($_FILES[$field_name]['name']);
-											if (move_uploaded_file($_FILES[$field_name]['tmp_name'], $uploadfile)) {
-												$form[$field_name] = $uploadfile;
-												$form[$field_name.'_name'] = $_FILES[$field_name]['name'];
-												$form[$field_name.'_type'] = $_FILES[$field_name]['type'];
-												$form[$field_name.'_size'] = $_FILES[$field_name]['size'];
-											} else {
-												throw new \RuntimeException('Возможная атака с помощью файловой загрузки!');
-											}
-										} else {
-											throw new UploadException($_FILES[$field_name]['error']);
-										}
-									} else {
-										throw new \RuntimeException('Множественная загрузка файлов!');
-									}
-								}
-							} else {
-								throw new \InvalidArgumentException('На входе функции Model.getForm отсутствует массив файлов!');
-							}
-						}
+						} elseif (is_array($files)) {
+                            if (!empty($_FILES[$field_name]['name'])) {
+                                if (!is_array($_FILES[$field_name]['error'])) {
+                                    if ($_FILES[$field_name]['error'] === UPLOAD_ERR_OK) {
+                                        $uploadfile = FILES_TEMP.$field_name.'_'.session_id().'.'.Files_Helper::getExtension($_FILES[$field_name]['name']);
+                                        if (move_uploaded_file($_FILES[$field_name]['tmp_name'], $uploadfile)) {
+                                            $form[$field_name] = $uploadfile;
+                                            $form[$field_name.'_name'] = $_FILES[$field_name]['name'];
+                                            $form[$field_name.'_type'] = $_FILES[$field_name]['type'];
+                                            $form[$field_name.'_size'] = $_FILES[$field_name]['size'];
+                                        } else {
+                                            throw new \RuntimeException('Возможная атака с помощью файловой загрузки!');
+                                        }
+                                    } else {
+                                        throw new UploadException($_FILES[$field_name]['error']);
+                                    }
+                                } else {
+                                    throw new \RuntimeException('Множественная загрузка файлов!');
+                                }
+                            }
+                        } else {
+                            throw new \InvalidArgumentException('На входе функции Model.getForm отсутствует массив файлов!');
+                        }
 						break;
 					default:
 						if (isset($post[$field_name])) {
@@ -86,15 +88,15 @@ class Model
 				$form[$field_name.'_vis'] = true;
 			}
 			return $form;
-		} else {
-			throw new \InvalidArgumentException('На входе функции Model.getForm могут быть только массивы!');
 		}
-	}
+        
+        throw new \InvalidArgumentException('На входе функции Model.getForm могут быть только массивы!');
+    }
 
 	/**
      * Validates form data.
      *
-     * @return arrau
+     * @return array
      */
 	public function validateForm($form, $rules)
 	{
@@ -102,10 +104,10 @@ class Model
 			$form = $this->resetForm(false, $form, $rules);
 			$form_helper = new Form_Helper();
 			return $form_helper->validate($form, $rules);
-		} else {
-			throw new \InvalidArgumentException('На входе функции Model.validateForm могут быть только массивы!');
 		}
-	}
+        
+        throw new \InvalidArgumentException('На входе функции Model.validateForm могут быть только массивы!');
+    }
 
 	/**
      * Sets form data.
@@ -147,10 +149,10 @@ class Model
 			$form['success_msg'] = null;
 			$form['error_msg'] = null;
 			return $form;
-		} else {
-			throw new \InvalidArgumentException('На входе функции Model.setForm должен быть массив правил!');
 		}
-	}
+        
+        throw new \InvalidArgumentException('На входе функции Model.setForm должен быть массив правил!');
+    }
 
 	/**
      * Resets form data.
@@ -216,6 +218,7 @@ class Model
 			$form[$file.'_scs'] = null;
 			$form['validate'] = false;
 		}
+		
 		return $form;
 	}
 

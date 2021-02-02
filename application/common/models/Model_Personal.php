@@ -196,13 +196,13 @@ class Model_Personal extends Db_Helper
      *
      * @return array
      */
-	public function getCitizenshipByUser()
+	public function getCitizenshipByUser($debug = FALSE)
 	{
 		return $this->rowSelectOne('dict_countries.code, dict_countries.description, dict_countries.abroad',
 								self::TABLE_NAME.' INNER JOIN resume ON '.self::TABLE_NAME.'.id_resume = resume.id'.
 								' INNER JOIN dict_countries ON '.self::TABLE_NAME.'.citizenship = dict_countries.id',
 								'resume.id_user = :id_user',
-								[':id_user' => $_SESSION[APP_CODE]['user_id']]);
+								[':id_user' => $_SESSION[APP_CODE]['user_id']], $debug);
 	}
 
 	/**

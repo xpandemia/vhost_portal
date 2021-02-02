@@ -111,7 +111,7 @@ class Model_ApplicationStatus extends Db_Helper
 			$this->numb = $app_row['numb'];
 			$this->numb1s = $app_row['numb1s'];
 			$this->status = $app_row['status'];
-			return $this->save();
+			//return $this->save();
 		} else {
 			return 0;
 		}
@@ -124,9 +124,11 @@ class Model_ApplicationStatus extends Db_Helper
      */
 	public function save()
 	{
+	    /*
 		$this->dt_created = date('Y-m-d H:i:s');
 		$prepare = $this->prepareInsert(self::TABLE_NAME, $this->rules());
 		return $this->rowInsert($prepare['fields'], self::TABLE_NAME, $prepare['conds'], $prepare['params']);
+	    */
 	}
 
 	/**

@@ -241,6 +241,7 @@ class Pdf
         if ($dropXfa) {
             $this->dropXfa();
         }
+        
         return $this;
     }
 

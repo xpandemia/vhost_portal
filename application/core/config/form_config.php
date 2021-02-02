@@ -52,16 +52,47 @@ define('EGE_DSP', array('id' => 'form_egedsp',
 						'hdr' => 'Дисциплина ЕГЭ',
 						'ctr' => 'EgeDisciplines',
 						'act' => 'Save'));
-// Individual achievments
+
 define('IND_ACHIEVS', array('id' => 'form_indachievs',
-							'hdr' => 'Индивидуальное достижение',
-							'ctr' => 'IndAchievs',
+                            'hdr' => 'Индивидуальное достижение',
+                            'ctr' => 'IndAchievs',
+                            'act' => 'Save'));
+
+define('FEATURES', array('id' => 'form_features',
+                            'hdr' => 'Права на прием без вступительных испытаний ',
+                            'ctr' => 'Features',
+                            'act' => 'Save'));
+
+define('PRIV_QUOTA', array('id' => 'form_privillege_quota',
+                         'hdr' => 'Право на прием на обучение за счет бюджетных ассигнований в пределах особой квоты ',
+                         'ctr' => 'PrivillegeQuota',
+                         'act' => 'Save'));
+
+define('PRIV_ADV', array('id' => 'form_privillege_adv',
+                           'hdr' => 'Преимущественное право зачисления ',
+                           'ctr' => 'PrivillegeAdvanced',
+                           'act' => 'Save'));
+
+// Individual achievments
+define('TARGET_QUOTA', array('id' => 'form_target_quota',
+							'hdr' => 'Целевая квота',
+							'ctr' => 'TargetQuota',
 							'act' => 'Save'));
 // Applications
 define('APP', array('id' => 'form_app',
-					'hdr' => 'Заявление',
+					'hdr' => 'Заявление о приеме на обучение',
 					'ctr' => 'Application',
 					'act' => 'Save'));
+
+define('APP_CONFIRM', array('id' => 'form_app_confirm',
+                    'hdr' => 'Заявление о согласии на зачисление',
+                    'ctr' => 'ApplicationConfirm',
+                    'act' => 'Save'));
+
+define('AGREEMENT', ['id' => 'form_agreement',
+    'hdr'=>'Договор о оплате обучения',
+    'ctr' => 'Agreement',
+    'act' => 'Save']);
 
 /* Backend */
 // Users

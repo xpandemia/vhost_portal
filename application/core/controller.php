@@ -10,7 +10,6 @@ class Controller
 
 		Controllers process users actions
 	*/
-
 	public $model;
 	public $view;
 	

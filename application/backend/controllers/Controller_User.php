@@ -137,11 +137,12 @@ class Controller_User extends Controller
      */
 	public function actionChange()
 	{
+
 		$this->form = $this->model->getForm($this->model->rules_edit(), $_POST);
 		$this->form['id'] = htmlspecialchars($_POST['id']);
 		$this->form['status'] = htmlspecialchars($_POST['status']);
 		$this->form = $this->model->validateForm($this->form, $this->model->rules_edit());
-		if ($this->form['validate']) {
+		if (/*$this->form['validate']*/ false) {
 			$this->form = $this->model->change($this->form);
 			if (!$this->form['error_msg']) {
 				return Basic_Helper::redirect(USER['hdr'], 200, USER['ctr'], USER['act'].'/?id='.$this->form['id'], $this->form['success_msg']);

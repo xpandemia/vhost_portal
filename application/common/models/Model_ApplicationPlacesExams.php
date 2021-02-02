@@ -6,178 +6,191 @@ use tinyframe\core\helpers\Db_Helper as Db_Helper;
 
 class Model_ApplicationPlacesExams extends Db_Helper
 {
-	/*
-		Application places exams processing
-	*/
+    /*
+        Application places exams processing
+    */
 
-	const TABLE_NAME = 'application_places_exams';
+    const TABLE_NAME = 'application_places_exams';
 
-	public $id;
-	public $pid;
-	public $id_user;
-	public $id_test;
-	public $id_discipline;
-	public $points;
-	public $reg_year;
-	public $dt_created;
+    public $id;
+    public $pid;
+    public $id_user;
+    public $id_test;
+    public $id_discipline;
+    public $points;
+    public $reg_year;
+    public $dt_created;
 
-	public $db;
+    public $db;
 
-	public function __construct()
-	{
-		$this->db = Db_Helper::getInstance();
-	}
+    public function __construct()
+    {
+        $this->db = Db_Helper::getInstance();
+    }
 
-	/**
+    /**
      * Application places exams rules.
      *
      * @return array
      */
-	public function rules()
-	{
-		return [
-				'id' => [
-						'required' => 1,
-						'insert' => 0,
-						'update' => 0,
-						'value' => $this->id
-						],
-				'pid' => [
-						'required' => 1,
-						'insert' => 1,
-						'update' => 0,
-						'value' => $this->pid
-						],
-				'id_user' => [
-							'required' => 1,
-							'insert' => 1,
-							'update' => 0,
-							'value' => $this->id_user
-							],
-				'id_test' => [
-							'required' => 1,
-							'insert' => 1,
-							'update' => 0,
-							'value' => $this->id_test
-							],
-				'id_discipline' => [
-									'required' => 1,
-									'insert' => 1,
-									'update' => 0,
-									'value' => $this->id_discipline
-									],
-				'points' => [
-							'required' => 0,
-							'insert' => 1,
-							'update' => 1,
-							'value' => $this->points
-							],
-				'reg_year' => [
-								'required' => 0,
-								'insert' => 1,
-								'update' => 1,
-								'value' => $this->reg_year
-								],
-				'dt_created' => [
-								'required' => 1,
-								'insert' => 1,
-								'update' => 0,
-								'value' => $this->dt_created
-								]
-				];
-	}
+    public function rules()
+    {
+        return [
+            'id' => [
+                'required' => 1,
+                'insert' => 0,
+                'update' => 0,
+                'value' => $this->id
+            ],
+            'pid' => [
+                'required' => 1,
+                'insert' => 1,
+                'update' => 0,
+                'value' => $this->pid
+            ],
+            'id_user' => [
+                'required' => 1,
+                'insert' => 1,
+                'update' => 0,
+                'value' => $this->id_user
+            ],
+            'id_test' => [
+                'required' => 1,
+                'insert' => 1,
+                'update' => 0,
+                'value' => $this->id_test
+            ],
+            'id_discipline' => [
+                'required' => 1,
+                'insert' => 1,
+                'update' => 0,
+                'value' => $this->id_discipline
+            ],
+            'points' => [
+                'required' => 0,
+                'insert' => 1,
+                'update' => 1,
+                'value' => $this->points
+            ],
+            'reg_year' => [
+                'required' => 0,
+                'insert' => 1,
+                'update' => 1,
+                'value' => $this->reg_year
+            ],
+            'dt_created' => [
+                'required' => 1,
+                'insert' => 1,
+                'update' => 0,
+                'value' => $this->dt_created
+            ]
+        ];
+    }
 
-	/**
+    /**
      * Gets exams by place.
      *
      * @return array
      */
-	public function getExamsByPlace()
-	{
-		return $this->rowSelectAll('application_places_exams.id, dict_testing_scopes.code as test_code, dict_discipline.code as discipline_code',
-									'application_places_exams INNER JOIN dict_testing_scopes ON application_places_exams.id_test = dict_testing_scopes.id'.
-									' INNER JOIN dict_discipline ON application_places_exams.id_discipline = dict_discipline.id',
-									'application_places_exams.pid = :pid',
-									[':pid' => $this->pid]);
-	}
+    public function getExamsByPlace()
+    {
+        return $this->rowSelectAll('application_places_exams.id, dict_testing_scopes.code as test_code, dict_discipline.code as discipline_code',
+            'application_places_exams INNER JOIN dict_testing_scopes ON application_places_exams.id_test = dict_testing_scopes.id' .
+            ' INNER JOIN dict_discipline ON application_places_exams.id_discipline = dict_discipline.id',
+            'application_places_exams.pid = :pid',
+            [':pid' => $this->pid]);
+    }
 
-	/**
+    /**
      * Gets full exams by place.
      *
      * @return array
      */
-	public function getExamsByPlaceFull()
-	{
-		return $this->rowSelectAll('*',
-									self::TABLE_NAME,
-									'pid = :pid',
-									[':pid' => $this->pid]);
-	}
+    public function getExamsByPlaceFull()
+    {
+        return $this->rowSelectAll('*',
+            self::TABLE_NAME,
+            'pid = :pid',
+            [':pid' => $this->pid]);
+    }
 
-	/**
+    public function getExamsForChange($disc_code)
+    {
+        return $this->rowSelectAll('ape.id, ape.id_user user_id, dd.code dics_code',
+            'application_places_exams ape
+INNER JOIN dict_discipline dd on ape.id_discipline = dd.id',
+            'ape.pid = :pid AND ape.id_user = :id_user AND dd.code = :disc_code',
+            [
+                ':pid' => $this->pid,
+                ':id_user' => $_SESSION[APP_CODE]['user_id'],
+                ':disc_code' => $disc_code
+            ]);
+    }
+
+    /**
      * Gets exams by application.
      *
      * @return array
      */
-	public function getExamsByApplication()
-	{
-		return $this->rowSelectAll('DISTINCT dict_testing_scopes.code, dict_testing_scopes.description, dict_discipline.code as discipline_code, dict_discipline.discipline_name, application_places_exams.points, application_places_exams.reg_year',
-									'application_places_exams INNER JOIN application_places ON application_places_exams.pid = application_places.id'.
-									' INNER JOIN dict_testing_scopes ON application_places_exams.id_test = dict_testing_scopes.id'.
-									' INNER JOIN dict_discipline ON application_places_exams.id_discipline = dict_discipline.id',
-									'application_places.pid = :pid',
-									[':pid' => $this->pid],
-									'dict_discipline.discipline_name ASC');
-	}
+    public function getExamsByApplication()
+    {
+        return $this->rowSelectAll('DISTINCT dict_testing_scopes.code, dict_testing_scopes.description, dict_discipline.code as discipline_code, dict_discipline.discipline_name, application_places_exams.points, application_places_exams.reg_year',
+            'application_places_exams INNER JOIN application_places ON application_places_exams.pid = application_places.id' .
+            ' INNER JOIN dict_testing_scopes ON application_places_exams.id_test = dict_testing_scopes.id' .
+            ' INNER JOIN dict_discipline ON application_places_exams.id_discipline = dict_discipline.id',
+            'application_places.pid = :pid',
+            [':pid' => $this->pid],
+            'dict_discipline.discipline_name ASC');
+    }
 
-	/**
+    /**
      * Checks if exams exists.
      *
      * @return boolean
      */
-	public function existsExams()
-	{
-		$arr = $this->rowSelectAll('application_places_exams.*',
-									'application_places_exams INNER JOIN application_places ON application_places_exams.pid = application_places.id'.
-									' INNER JOIN dict_testing_scopes ON application_places_exams.id_test = dict_testing_scopes.id',
-									'application_places.pid = :pid AND dict_testing_scopes.description = :description',
-									[':pid' => $this->pid,
-									':description' => 'Экзамен']);
-		if (!empty($arr)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+    public function existsExams()
+    {
+        $arr = $this->rowSelectAll('application_places_exams.*',
+            'application_places_exams INNER JOIN application_places ON application_places_exams.pid = application_places.id' .
+            ' INNER JOIN dict_testing_scopes ON application_places_exams.id_test = dict_testing_scopes.id',
+            'application_places.pid = :pid AND dict_testing_scopes.description = :description',
+            [':pid' => $this->pid,
+                ':description' => 'Экзамен']);
+        if (!empty($arr)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-	/**
+    /**
      * Saves application places exams data to database.
      *
      * @return integer
      */
-	public function save()
-	{
-		$this->id_user = $_SESSION[APP_CODE]['user_id'];
-		$this->dt_created = date('Y-m-d H:i:s');
-		$prepare = $this->prepareInsert(self::TABLE_NAME, $this->rules());
-		return $this->rowInsert($prepare['fields'], self::TABLE_NAME, $prepare['conds'], $prepare['params']);
-	}
+    public function save()
+    {
+        $this->id_user = $_SESSION[APP_CODE]['user_id'];
+        $this->dt_created = date('Y-m-d H:i:s');
+        $prepare = $this->prepareInsert(self::TABLE_NAME, $this->rules());
+        return $this->rowInsert($prepare['fields'], self::TABLE_NAME, $prepare['conds'], $prepare['params']);
+    }
 
-	/**
+    /**
      * Changes testing scope.
      *
      * @return boolean
      */
-	public function changeTest()
-	{
-		return $this->rowUpdate(self::TABLE_NAME,
-								'id_test = :id_test',
-								[':id_test' => $this->id_test],
-								['id' => $this->id]);
-	}
+    public function changeTest()
+    {
+        return $this->rowUpdate(self::TABLE_NAME,
+            'id_test = :id_test',
+            [':id_test' => $this->id_test],
+            ['id' => $this->id]);
+    }
 
-	public function __destruct()
-	{
-		$this->db = null;
-	}
+    public function __destruct()
+    {
+        $this->db = null;
+    }
 }

@@ -53,10 +53,18 @@ FDF;
         $fields = array();
         foreach ($data as $key=>$value) {
             // Always convert to UTF-8
+            /*
             if ($encoding!=='UTF-8' && function_exists('mb_convert_encoding')) {
                 $value = mb_convert_encoding($value,'UTF-8', $encoding);
                 $key = mb_convert_encoding($key,'UTF-8', $encoding);
             }
+            */
+            //echo $key."->".mb_detect_encoding($key).'<br>';
+            //echo $value."->".mb_detect_encoding($value).'<br>';
+            
+            $value = mb_convert_encoding($value,'UTF-8', 'auto');
+            $key = mb_convert_encoding($key,'UTF-8', 'auto');
+            
 
             //Sanitize input for use in XML
             $sanitizedKey = defined('ENT_XML1') ? htmlspecialchars($key, ENT_XML1, 'UTF-8') : htmlspecialchars($key);
@@ -78,7 +86,9 @@ FDF;
                 $target[$final] = $sanitizedValue;
             }
         }
-
+        
+        //die();
+        
         // Use fwrite, since file_put_contents() messes around with character encoding
         $fp = fopen($this->_fileName, 'w');
         fwrite($fp, self::XFDF_HEADER);

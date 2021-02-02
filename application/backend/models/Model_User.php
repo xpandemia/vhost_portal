@@ -135,13 +135,13 @@ class Model_User extends Model
 	public function paginationStart()
 	{
 		$user = new User();
-		$user_row = $user->getMin();
+		$user_row = $user->getMax();
 		if ($user_row) {
 			return ['id' => $user_row['id'], 'page' => 1, 'step' => 'next'];
-		} else {
-			return null;
 		}
-	}
+        
+        return null;
+    }
 
 	/**
      * Gets user page number.
@@ -266,11 +266,12 @@ class Model_User extends Model
 			$user->email = $user_row['email'];
 			$user->role = $user_row['role'];
 			$user->status = $user_row['status'];
-			$user->setUser();
+			$user->setUser(TRUE);
 			return true;
-		} else {
-			echo '<p><strong>Ошибка!</strong> Пользователь с ID '.$id.' не найден!</p>';
-			return false;
 		}
-	}
+        
+        echo '<p><strong>Ошибка!</strong> Пользователь с ID '.$id.' не найден!</p>';
+        
+        return false;
+    }
 }

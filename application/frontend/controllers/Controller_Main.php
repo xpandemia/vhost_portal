@@ -96,6 +96,16 @@ class Controller_Main extends Controller
 	{
 		return Basic_Helper::redirect(EGE['hdr'], 202, EGE['ctr'], 'Index');
 	}
+    
+    function actionFeatures()
+    {
+        return Basic_Helper::redirect(EGE['hdr'], 202, FEATURES['ctr'], 'Index');
+    }
+    
+    function actionTargetHeap()
+    {
+        return Basic_Helper::redirect(EGE['hdr'], 202, TARGET_QUOTA['ctr'], 'Index');
+    }
 
 	/**
      * Calls to individual achievments.
@@ -116,6 +126,16 @@ class Controller_Main extends Controller
 	{
 		return Basic_Helper::redirect('Заявления', 202, APP['ctr'], 'Index');
 	}
+    
+    function actionApplicationConfirm()
+    {
+        return Basic_Helper::redirect(EGE['hdr'], 202, APP_CONFIRM['ctr'], 'Index');
+    }
+
+    function actionAgreement()
+    {
+        return Basic_Helper::redirect(AGREEMENT['hdr'], 202, AGREEMENT['ctr'], 'Index');
+    }
 
 	/**
      * Logs user out.

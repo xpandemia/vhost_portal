@@ -317,6 +317,7 @@ class Model_AdmissionCampaign extends Db_Helper
 				}
 			}
         }
+		
         if ($rows_del == 0 && $rows_ins == 0 && $rows_upd == 0) {
 			$result['success_msg'] = 'Справочник "'.$dict_name.'" не нуждается в обновлении.';
 		} else {

@@ -25,6 +25,7 @@ class Model_Main extends Model
 		} else {
 			Basic_Helper::redirectHome();
 		}
+		
 		$user_row = $user->getByUsername();
 		if ($user_row) {
 			if ($user_row['role'] == $user::ROLE_ADMIN) {

@@ -52,6 +52,7 @@ class Routing
 
 		// call controller action
 		$action = $actionName;
+		
 		if (method_exists($controller, $action)) {
 			$controller->$action();
 		}

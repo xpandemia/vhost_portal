@@ -141,6 +141,7 @@ class Model_DictionaryManager extends Model
 		$dicts = new DictionaryManager();
         $dicts->id = $form['dictionary'];
         $row = $dicts->getById();
+        
         if ($row) {
 			switch ($row['type']) {
 				case $dicts::TYPE_ODATA:
@@ -160,13 +161,12 @@ class Model_DictionaryManager extends Model
 					}
 					break;
 				case $dicts::TYPE_WSDL:
-					// get xml via WSDL
 					$xml = SOAP_Helper::loadWsdl(WSDL_1C, $row['dict_code'], USER_1C, PASSWORD_1C);
 					if ($xml) {
 						// use model
 						$model = new $row['model_class'];
-						// load data
-						$result = $model->load($xml, $row['id'], $row['dict_name'], $row['clear_load']);
+						// load
+                        $result = $model->load($xml, $row['id'], $row['dict_name'], $row['clear_load']);
 						$form['error_msg'] = $result['error_msg'];
 						$form['success_msg'] = $result['success_msg'];
 					} else {

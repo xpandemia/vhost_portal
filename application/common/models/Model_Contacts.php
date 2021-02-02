@@ -14,8 +14,11 @@ define('CONTACT_PHONE_HOME', array(
 									'help' => 'Номер домашнего телефона должен содержать <strong>'.MSG_NUMB.'</strong> и быть не более <strong>45</strong> символов длиной.'));
 define('CONTACT_PHONE_ADD', array(
 									'name' => 'Номер дополнительного телефона',
-									'plc' => '89031234567 Папа, 89101234567 Мама',
+									'plc' => '+79031234567',
 									'help' => 'Номер дополнительного телефона должен содержать <strong>'.MSG_PHONE_ADD.'</strong> и быть не более <strong>45</strong> символов длиной.'));
+
+require_once ('Model_DictFeatures.php');
+require_once ('Model_DictPrivilleges.php');
 
 class Model_Contacts extends Db_Helper
 {
@@ -30,7 +33,7 @@ class Model_Contacts extends Db_Helper
 	const TYPE_PHONE_HOME = 2;
 	const TYPE_PHONE_ADD = 3;
 
-	const TRANS_PHONE_MOBILE = ['+7' => '8', '(' => '', ')' => '', ' ' => '', '-' => ''];
+	const TRANS_PHONE_MOBILE = ['+7' => '+7', '(' => '-', ')' => '-', ' ' => '', '-' => '-'];
 	const TRANS_PHONE_HOME = ['(' => '', ')' => '', '-' => ''];
 
 	public $id;
@@ -128,10 +131,11 @@ class Model_Contacts extends Db_Helper
      */
 	public function getPhoneMobileByResume()
 	{
-		return $this->rowSelectOne('*',
-								self::TABLE_NAME,
-								'id_resume = :id_resume AND type = :type',
-								[':id_resume' => $this->id_resume, ':type' => self::TYPE_PHONE_MOBILE]);
+	    $row = $this->rowSelectOne('*',
+                                   self::TABLE_NAME,
+                                   'id_resume = :id_resume AND type = :type',
+                                   [':id_resume' => $this->id_resume, ':type' => self::TYPE_PHONE_MOBILE]);
+		return $row;
 	}
 
 	/**
@@ -219,7 +223,7 @@ class Model_Contacts extends Db_Helper
      */
 	public static function prettyPhoneMobile($phone_mobile)
 	{
-		return '+7('.substr($phone_mobile,1,3).') '.substr($phone_mobile,4,3).'-'.substr($phone_mobile,7,2).'-'.substr($phone_mobile,9,2);
+		return $phone_mobile;
 	}
 
 	public function __destruct()

@@ -15,6 +15,9 @@ use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 		</div>
 		<div class="">
 			<button type="button" class="btn btn-info" data-toggle="modal" data-target="#helpEge">Инструкция</button>
+            <?php
+            echo HTML_Helper::setUrlHrefButtonIcon('https://vk.com/video-102554211_456239629?list=b18b34a8c207fc6858', 'btn btn-primary', 'fab fa-youtube', 'Видеоинструкция', true);
+            ?>
 		</div>
 		<div class="col text-left">
 			<?php echo HTML_Helper::setHrefButtonIcon('Main', 'Index', 'btn btn-primary', 'fas fa-home', 'На главную'); ?>
@@ -25,7 +28,7 @@ use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 		echo HTML_Helper::setAlert($_SESSION[APP_CODE]['error_msg'], 'alert-danger');
 		echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
 		echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
-		echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nЧтобы добавить <strong>результаты ЕГЭ</strong>, нажмите <i class=\"far fa-file\"></i>\nЧтобы добавить/изменить/удалить <strong>дисциплины ЕГЭ</strong>, нажмите <i class=\"far fa-edit\"></i> на нужных результатах ЕГЭ."), 'alert-warning');
+		echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\n<strong>Если Вы не сдавали ЕГЭ, пропустите этот шаг</strong>\nЧтобы добавить <strong>результаты ЕГЭ</strong>, нажмите <i class=\"far fa-file\"></i>\nЧтобы добавить/изменить/удалить <strong>дисциплины ЕГЭ</strong>, нажмите <i class=\"far fa-edit\"></i> на нужных результатах ЕГЭ."), 'alert-warning');
 		echo HTML_Helper::setGridDB(['model_class' => 'common\\models\\Model_Ege',
 									'model_method' => 'getByUserGrid',
 									'model_filter' => 'id_user',

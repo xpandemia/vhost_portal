@@ -156,7 +156,7 @@ class Model_DictCountries extends Db_Helper
      */
 	public function getAll()
 	{
-		return $this->rowSelectAll('*', self::TABLE_NAME, null, null, 'description');
+		return $this->rowSelectAll('*', self::TABLE_NAME, null, null, 'order_row, description');
 	}
 
 	/**

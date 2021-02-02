@@ -191,10 +191,8 @@ class Model_EgeDisciplines extends Db_Helper
 										' INNER JOIN dict_discipline ON application_places_exams.id_discipline = dict_discipline.id'.
 										' INNER JOIN dict_ege ON dict_discipline.code = dict_ege.code'.
 										' INNER JOIN ege_disciplines ON dict_ege.id = ege_disciplines.id_discipline',
-										'ege_disciplines.id = :id AND application.status in (:status1, :status2) AND dict_testing_scopes.code = :test',
+										'ege_disciplines.id = :id AND dict_testing_scopes.code = :test  AND ((application.status in (1,2) and application.type in (1,2)) OR application.status = 1 and application.type = 3) AND application.active = 1',
 										[':id' => $this->id,
-										':status1' => Application::STATUS_SENDED,
-										':status2' => Application::STATUS_APPROVED,
 										':test' => '000000001']);
 		if ($app_arr) {
 			return true;
@@ -246,7 +244,7 @@ class Model_EgeDisciplines extends Db_Helper
      */
 	public function checkDiscipline()
 	{
-		return $this->rowSelectAll('points, reg_year',
+		$ret = $this->rowSelectAll('points, reg_year',
 									'ege_disciplines INNER JOIN ege ON ege_disciplines.pid = ege.id'.
 									' INNER JOIN dict_ege ON ege_disciplines.id_discipline = dict_ege.id',
 									'dict_ege.code = :code_discipline AND ege.id_user = :id_user AND ege.reg_year >= :reg_year',
@@ -254,6 +252,8 @@ class Model_EgeDisciplines extends Db_Helper
 									':id_user' => $_SESSION[APP_CODE]['user_id'],
 									':reg_year' => date('Y') - 6],
 									'points DESC, reg_year DESC', 1);
+        
+        return ($ret !== FALSE) ? $ret : ['points' => '', 'reg_year' => '2020'];
 	}
 
 	public function __destruct()

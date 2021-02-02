@@ -18,21 +18,24 @@ class Model_ApplicationAchievs extends Db_Helper
 	public $id_achiev;
 	public $dt_created;
 
-	const IA_GTO = '000000004';
+	const IA_GTO               = '000000004';
 	const IA_MEDAL_CERTIFICATE = '000000003';
-	const IA_MEDAL_DIPLOMA = '000000022';
-	const IA_CONTEST_RUS = '000000005';
-	const IA_CONTEST_BSU = '000000002';
-	const IA_SPORTMASTER = '000000023';
-	const IA_GRANTS_PRESIDENT = '000000032';
-	const IA_GRANTS_NAMED = '000000010';
-	const IA_DOCSEDUC_MEDAL = '000000046';
-	const IA_MEDIC_LOCATIONS = '000000035';
-	const IA_ARTICLES_WORLD = '000000041';
-	const IA_ARTICLES_RUS = '000000042';
-	const IA_ARTICLES_VAK_NO = '000000015';
-	const IA_ARTICLES_VAK_YES = '000000039';
-
+	const IA_MEDAL_DIPLOMA     = '000000022';
+	const IA_CONTEST_RUS       = '000000005';
+    const IA_CONTEST_COUNTRY   = '000000045';
+	const IA_CONTEST_BSU       = '000000002';
+	const IA_SPORTMASTER       = '000000023';
+	const IA_GRANTS_PRESIDENT  = '000000032';
+	const IA_GRANTS_NAMED      = '000000010';
+	const IA_DOCSEDUC_MEDAL    = '000000046';
+	const IA_MEDIC_LOCATIONS   = '000000035';
+	const IA_ARTICLES_WORLD    = '000000041';
+	const IA_ARTICLES_RUS      = '000000042';
+	const IA_ARTICLES_VAK_NO   = '000000015';
+	const IA_ARTICLES_VAK_YES  = '000000039';
+	const IA_MEDIC_MID         = '000000047';
+    const IA_MEDIC_HIGH        = '000000048';
+	
 	public $db;
 
 	public function __construct()
@@ -142,10 +145,16 @@ class Model_ApplicationAchievs extends Db_Helper
      */
 	public function getByAppForPdf()
 	{
-		return $this->rowSelectAll('dict_ind_achievs.code',
-									self::TABLE_NAME.' INNER JOIN ind_achievs ON '.self::TABLE_NAME.'.id_achiev = ind_achievs.id'.
-									' INNER JOIN dict_ind_achievs ON ind_achievs.id_achiev = dict_ind_achievs.id',
-									'pid = :pid',
+		return $this->rowSelectAll('dict_ind_achievs.code, ind_achievs.company',
+									'application
+        INNER JOIN admission_campaign
+                       ON application.id_campaign = admission_campaign.id
+        INNER JOIN dict_ind_achievs_ac
+                       ON admission_campaign.code = dict_ind_achievs_ac.campaign_code
+        INNER JOIN dict_ind_achievs
+                       ON dict_ind_achievs.code = dict_ind_achievs_ac.achiev_code AND archive = 0
+        INNER JOIN ind_achievs ON dict_ind_achievs.id = ind_achievs.id_achiev AND ind_achievs.id_user = application.id_user',
+									'application.id = :pid',
 									[':pid' => $this->pid]);
 	}
 

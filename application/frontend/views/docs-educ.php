@@ -16,9 +16,14 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 		</div>
 		<div class="">
 			<button type="button" class="btn btn-info" data-toggle="modal" data-target="#helpDocsEduc">Инструкция</button>
+            <?php
+            echo HTML_Helper::setUrlHrefButtonIcon('https://vk.com/video-102554211_456239634?list=602ef8419218210a7e', 'btn btn-primary', 'fab fa-youtube', 'Видеоинструкция', true);
+            ?>
 		</div>
 		<div class="col text-left">
-			<?php echo HTML_Helper::setHrefButtonIcon('Main', 'Index', 'btn btn-primary', 'fas fa-home', 'На главную'); ?>
+			<?php
+            echo HTML_Helper::setHrefButtonIcon('Main', 'Index', 'btn btn-primary', 'fas fa-home', 'На главную');
+            ?>
 		</div>
 	</div>
 	<?php
