@@ -24,7 +24,7 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
     <!-- Font Awesome -->
     <script defer src="/vendors/fontawesome/fontawesome-all.min.js"></script>
     <link rel="stylesheet" href="/vendors/fontawesome/fontawesome-all.css">
-
+    <link rel="stylesheet" href="/application/frontend/mod.css">
     <style>
         .footer {
             position: fixed;
@@ -101,7 +101,7 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
                                 class="fa fa-address-book fa-2x"></i></span>
                 </a>
             </li>
-            
+
             <li class="nav-item">
                 <a class="nav-link text-white" href="<?php echo Basic_Helper::appUrl('Main', IND_ACHIEVS['ctr']); ?>">
                     <span data-toggle="tooltip" data-placement="auto" title="Индивидуальные достижения"><i

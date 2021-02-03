@@ -357,7 +357,7 @@ class Form_Helper
         if (isset($rules) && is_array($rules)) {
             $label = self::setFormLabelStyle($rules['required'], (isset($rules['required_style'])) ? $rules['required_style'] : NULL, $rules['label']);
 
-            return '<div class="form-group row" id="' . $rules['control'] . '_div">' .
+            return '<div class="flex_row"><div class="form-group row" id="' . $rules['control'] . '_div">' .
                 (($rules['type'] != 'hidden') ? '<div class="">' .
                     HTML_Helper::setLabel($label['class'], $rules['control'], $label['value']) .
                     '</div>' : '') .
@@ -374,7 +374,7 @@ class Form_Helper
                 HTML_Helper::setInvalidFeedback($rules['error']) .
                 ((isset($rules['help'])) ? '<p id="' . $rules['control'] . 'HelpBlock" class="form-text text-muted">' . $rules['help'] . '</p>' : '') .
                 '</div>' .
-                '</div>';
+                '</div></div>';
         } else {
             return '<p class="text-danger">Form_Helper.setFormInput - На входе не массив!</p>';
         }
@@ -395,7 +395,7 @@ class Form_Helper
         if (isset($rules) && is_array($rules)) {
             return '<div class="form-group row">' .
                 '<div class="">' .
-                '<label class="font-weight-bold" for="' . $rules['control'] . '">' . $rules['label'] . '</label>' .
+                '<label id="' . $rules['control'] . '" class="font-weight-bold" for="' . $rules['control'] . '">' . $rules['label'] . '</label>' .
                 '</div>' .
                 '<div class="col">' .
                 '<input type="text" class="form-control" id="' . $rules['control'] . '" name="' . $rules['control'] . '" value="' . $rules['value'] . '">' .
@@ -426,7 +426,7 @@ class Form_Helper
     {
         if (isset($rules) && is_array($rules)) {
             $label = self::setFormLabelStyle($rules['required'], (isset($rules['required_style'])) ? $rules['required_style'] : NULL, $rules['label']);
-            $result = '<div class="form-group row">' .
+            $result = '<div class="form-group row" id="' . $rules['control'] . '_div">' .
                 '<div class="">' .
                 HTML_Helper::setLabel($label['class'], $rules['control'], $label['value']) .
                 '</div>' .
@@ -566,7 +566,7 @@ class Form_Helper
     public static function setFormSelectListBlank($rules): string
     {
         if (isset($rules) && is_array($rules)) {
-            return '<div class="form-group row">' .
+            return '<div class="form-group row" id="' . $rules['control'] . '_div">' .
                 '<div class="">' .
                 '<label class="font-weight-bold" for="' . $rules['control'] . '">' . $rules['label'] . '</label>' .
                 '</div>' .
@@ -680,7 +680,7 @@ class Form_Helper
     public static function setFormSelectListKladr($rules): string
     {
         if (isset($rules) && is_array($rules)) {
-            $result = '<div class="form-group row">' .
+            $result = '<div class="form-group row" id="' . $rules['control'] . '_div">' .
                 '<div class="">' .
                 '<label class="font-weight-bold" for="' . $rules['control'] . '">' . $rules['label'] . '</label>' .
                 '</div>' .

@@ -10,8 +10,8 @@
 	<link rel="stylesheet" href="<?php echo BASEPATH.'/vendors/bootstrap/css/bootstrap.min.css'; ?>">
 	<!-- JavaScript -->
     <script src="<?php echo BASEPATH.'/vendors/bootstrap/js/bootstrap.min.js'; ?>"></script>
-		<link rel="stylesheet" href="/application/frontend/mod.css">
-</head>
+		<link rel="stylesheet" href="/application/frontend/mod.css">// modded
+	</head>
 <body>
 	<?php include ROOT_DIR.'/application/core/views/'.$content_view; ?>
 </body>

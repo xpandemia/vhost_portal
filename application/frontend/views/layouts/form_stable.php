@@ -22,7 +22,7 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 	<!-- Font Awesome -->
 	<script defer src="/vendors/fontawesome/fontawesome-all.min.js"></script>
 	<link rel="stylesheet" href="/vendors/fontawesome/fontawesome-all.css">
-
+<link rel="stylesheet" href="/application/frontend/mod.css">
 	<style>
 		#loadImg{position:absolute; z-index:1000; display:none}
 	</style>
