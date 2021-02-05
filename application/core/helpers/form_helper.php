@@ -393,7 +393,7 @@ class Form_Helper
     public static function setFormInputText($rules): string
     {
         if (isset($rules) && is_array($rules)) {
-            return '<div class="form-group row">' .
+            return '<div class="form-group row" id="' . $rules['control'] . '_div">' .
                 '<div class="">' .
                 '<label id="' . $rules['control'] . '" class="font-weight-bold" for="' . $rules['control'] . '">' . $rules['label'] . '</label>' .
                 '</div>' .
@@ -567,7 +567,7 @@ class Form_Helper
     {
         if (isset($rules) && is_array($rules)) {
             return '<div class="form-group row" id="' . $rules['control'] . '_div">' .
-                '<div class="">' .
+                '<div class="label">' .
                 '<label class="font-weight-bold" for="' . $rules['control'] . '">' . $rules['label'] . '</label>' .
                 '</div>' .
                 '<div class="col">' .
@@ -681,7 +681,7 @@ class Form_Helper
     {
         if (isset($rules) && is_array($rules)) {
             $result = '<div class="form-group row" id="' . $rules['control'] . '_div">' .
-                '<div class="">' .
+                '<div class="label">' .
                 '<label class="font-weight-bold" for="' . $rules['control'] . '">' . $rules['label'] . '</label>' .
                 '</div>' .
                 '<div class="col">' .

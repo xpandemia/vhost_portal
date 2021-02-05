@@ -27,9 +27,10 @@ if ((!isset($data['id']) || empty($data['id'])) && (!isset($data['status']) || e
     echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
     echo Form_Helper::setFormBegin(RESUME['ctr'], RESUME['act'], RESUME['id'], RESUME['hdr'], 2, '/images/logo_bsu_transparent.gif');
     /* help */
-    echo '<button type="button" class="btn btn-info" data-toggle="modal" data-target="#helpResume">Инструкция</button>';
+    echo '<div class="butts">';
+	echo '<button type="button" class="btn btn-info" data-toggle="modal" data-target="#helpResume">Инструкция</button>';
     echo HTML_Helper::setUrlHrefButtonIcon('https://vk.com/video-102554211_456239627?list=fdf16f47698096b8ac', 'btn btn-primary', 'fab fa-youtube', 'Видеоинструкция', true);
-
+	echo '</div>';
     /* status */
     echo Model_Resume::showStatus($data['status']);
     /* personal data */
