@@ -837,7 +837,7 @@ class Form_Helper
             // set help
             $result .= '<div class="col">' .
                 '<div class="alert alert-info">'
-                . nl2br("Чтобы <strong>отменить загрузку файла</strong>, нажмите <strong>\"Выберите файл\"</strong>, затем <strong>\"Отмена\"</strong> в открывшемся диалоге выбора файла.\nЧтобы <strong>удалить загруженный файл</strong>, нажмите <i class=\"fas fas fa-times\"></i>.")
+                . nl2br("Чтобы <strong>удалить загруженный файл</strong>, нажмите <i class=\"fas fas fa-times\"></i>.")
                 . '</div>' .
                 '</div>';
             // using model
@@ -938,7 +938,7 @@ class Form_Helper
      */
     public static function setFormHeaderSub($header)
     {
-        return '<hr><h5>' . $header . '</h5><br>';
+        return '<hr><h5 class="res_section">' . $header . '</h5><br>';
     }
 
     /**

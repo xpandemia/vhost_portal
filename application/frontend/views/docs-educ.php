@@ -1,4 +1,4 @@
-<?php
+				<?php
 
 use tinyframe\core\helpers\Help_Helper as Help_Helper;
 use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
@@ -8,12 +8,14 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 	if (!isset($_SESSION[APP_CODE]['user_name'])) {
 		Basic_Helper::redirectHome();
 	}
-?>
+				?>
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
 	<div class="row">
 		<div class="page_name">
 			<h2>Документы об образовании</h2>
 		</div>
+	</div>
+	<div class="row">
 			<div class="col text-left">
 				
 				<?php
@@ -23,8 +25,12 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 				echo HTML_Helper::setAlert($_SESSION[APP_CODE]['error_msg'], 'alert-danger');
 				?>
 				<button type="button" class="btn btn-info" data-toggle="modal" data-target="#helpDocsEduc">Инструкция</button>
-			
-	<?php
+			</div>
+	</div>
+	<hr>
+	<div class="row">
+			<div class="col text-left">
+				<?php
 	echo HTML_Helper::setGridDB(['model_class' => 'common\\models\\Model_DocsEduc',
 								'model_method' => 'getByUserGrid',
 								'model_filter' => 'id_user',
@@ -35,9 +41,9 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 								'action_edit' => 'Edit',
 								'action_delete' => 'DeleteConfirm',
 								'home_hdr' => 'Документы об образовании']);
-	?>
+				?>
 			</div>
-	</div>		
+	</div>	
 	
 </div>
 

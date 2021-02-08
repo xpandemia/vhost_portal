@@ -25,12 +25,12 @@ if ((!isset($data['id']) || empty($data['id'])) && (!isset($data['status']) || e
     <?php
     echo HTML_Helper::setAlert($data['success_msg'], 'alert-success');
     echo HTML_Helper::setAlert($data['error_msg'], 'alert-danger');
-    echo Form_Helper::setFormBegin(RESUME['ctr'], RESUME['act'], RESUME['id'], RESUME['hdr'], 2, '/images/logo_bsu_transparent.gif');
+    echo Form_Helper::setFormBegin(RESUME['ctr'], RESUME['act'], RESUME['id'], RESUME['hdr']/*, 2, '/images/logo_bsu_transparent.gif'*/);
     /* help */
     echo '<div class="butts">';
+	echo HTML_Helper::setUrlHrefButtonIcon('https://vk.com/video-102554211_456239627?list=fdf16f47698096b8ac', 'btn btn-primary', 'fab fa-youtube', 'Видеоинструкция', true);
 	echo '<button type="button" class="btn btn-info" data-toggle="modal" data-target="#helpResume">Инструкция</button>';
-    echo HTML_Helper::setUrlHrefButtonIcon('https://vk.com/video-102554211_456239627?list=fdf16f47698096b8ac', 'btn btn-primary', 'fab fa-youtube', 'Видеоинструкция', true);
-	echo '</div>';
+    echo '</div>';
     /* status */
     echo Model_Resume::showStatus($data['status']);
     /* personal data */
@@ -42,7 +42,7 @@ if ((!isset($data['id']) || empty($data['id'])) && (!isset($data['status']) || e
         'class' => $data['name_last_cls'],
         'required' => 'yes',
         'required_style' => 'StarUp',
-        'placeholder' => LASTNAME_PLC,
+        //'placeholder' => LASTNAME_PLC,
         'value' => $data['name_last'],
         'success' => $data['name_last_scs'],
         'error' => $data['name_last_err'],
@@ -54,19 +54,19 @@ if ((!isset($data['id']) || empty($data['id'])) && (!isset($data['status']) || e
         'class' => $data['name_first_cls'],
         'required' => 'yes',
         'required_style' => 'StarUp',
-        'placeholder' => FIRSTNAME_PLC,
+        //'placeholder' => FIRSTNAME_PLC,
         'value' => $data['name_first'],
         'success' => $data['name_first_scs'],
         'error' => $data['name_first_err'],
         'help' => FIRSTNAME_HELP]);
     // name_middle
-    echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nЕсли у Вас есть отчество, то обязательно укажите его."), 'alert-warning');
+    // echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nЕсли у Вас есть отчество, то обязательно укажите его."), 'alert-warning');
     echo Form_Helper::setFormInput(['label' => MIDDLENAME_PLC,
         'control' => 'name_middle',
         'type' => 'text',
         'class' => $data['name_middle_cls'],
         'required' => 'no',
-        'placeholder' => MIDDLENAME_PLC,
+        //'placeholder' => MIDDLENAME_PLC,
         'value' => $data['name_middle'],
         'success' => $data['name_middle_scs'],
         'error' => $data['name_middle_err'],
@@ -110,7 +110,7 @@ if ((!isset($data['id']) || empty($data['id'])) && (!isset($data['status']) || e
         'class' => $data['birth_place_cls'],
         'required' => 'yes',
         'required_style' => 'StarUp',
-        'placeholder' => BIRTHPLACE_PLC,
+        //'placeholder' => BIRTHPLACE_PLC,
         'value' => $data['birth_place'],
         'success' => $data['birth_place_scs'],
         'error' => $data['birth_place_err'],
@@ -145,13 +145,13 @@ if ((!isset($data['id']) || empty($data['id'])) && (!isset($data['status']) || e
         'class' => $data['email_cls'],
         'required' => 'yes',
         'required_style' => 'StarUp',
-        'placeholder' => CONTACT_EMAIL['plc'],
+        //'placeholder' => CONTACT_EMAIL['plc'],
         'value' => $data['email'],
         'success' => $data['email_scs'],
         'error' => $data['email_err'],
         'help' => CONTACT_EMAIL['help']]);
     // phones
-    echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nПожалуйста, укажите хотя бы мобильный или домаший номер телефона."), 'alert-warning');
+    //echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nПожалуйста, укажите хотя бы мобильный или домаший номер телефона."), 'alert-warning');
     // phone mobile
     echo Form_Helper::setFormInput(['label' => 'Номер мобильного телефона',
         'control' => 'phone_mobile',
@@ -167,7 +167,7 @@ if ((!isset($data['id']) || empty($data['id'])) && (!isset($data['status']) || e
         'type' => 'text',
         'class' => $data['phone_home_cls'],
         'required' => 'no',
-        'placeholder' => CONTACT_PHONE_HOME['plc'],
+        //'placeholder' => CONTACT_PHONE_HOME['plc'],
         'value' => $data['phone_home'],
         'success' => $data['phone_home_scs'],
         'error' => $data['phone_home_err'],
@@ -178,14 +178,14 @@ if ((!isset($data['id']) || empty($data['id'])) && (!isset($data['status']) || e
         'type' => 'text',
         'class' => $data['phone_add_cls'],
         'required' => 'no',
-        'placeholder' => CONTACT_PHONE_ADD['plc'],
+        //'placeholder' => CONTACT_PHONE_ADD['plc'],
         'value' => $data['phone_add'],
         'success' => $data['phone_add_scs'],
         'error' => $data['phone_add_err'],
         'help' => CONTACT_PHONE_ADD['help']]);
     /* passport */
     echo Form_Helper::setFormHeaderSub('Документ, удостоверяющий личность');
-    echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nПожалуйста, при наличии паспорта, указывайте паспортные данные."), 'alert-warning');
+    // echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nПожалуйста, при наличии паспорта, указывайте паспортные данные."), 'alert-warning');
     // type
     echo Form_Helper::setFormSelectListDB(['label' => 'Тип документа',
         'control' => 'passport_type',
@@ -234,7 +234,7 @@ if ((!isset($data['id']) || empty($data['id'])) && (!isset($data['status']) || e
         'type' => 'text',
         'class' => $data['unit_name_cls'],
         'required' => 'no',
-        'placeholder' => UNITNAME_PLC,
+        //'placeholder' => UNITNAME_PLC,
         'value' => $data['unit_name'],
         'success' => $data['unit_name_scs'],
         'error' => $data['unit_name_err'],
@@ -315,7 +315,7 @@ if ((!isset($data['id']) || empty($data['id'])) && (!isset($data['status']) || e
             'type' => 'text',
             'class' => $data['unit_name_old_cls'],
             'required' => 'no',
-            'placeholder' => UNITNAME_PLC,
+            //'placeholder' => UNITNAME_PLC,
             'value' => $data['unit_name_old'],
             'success' => $data['unit_name_old_scs'],
             'error' => $data['unit_name_old_err'],
@@ -744,6 +744,7 @@ if ((!isset($data['id']) || empty($data['id'])) && (!isset($data['status']) || e
     echo HTML_Helper::setButton(null, 'btn_lang_remove', 'Удалить иностранный язык');
     /* scans */
     echo Form_Helper::setFormHeaderSub('Скан-копии');
+	echo "<div ID=\"scans\">";
     echo Form_Helper::setFormFileListDB(['required' => 'required',
         'required_style' => 'StarUp',
         'model_class' => 'common\\models\\Model_DictScans',
@@ -757,6 +758,7 @@ if ((!isset($data['id']) || empty($data['id'])) && (!isset($data['status']) || e
         'home_hdr' => RESUME['hdr'],
         'home_act' => 'Index',
         'ext' => FILES_EXT_SCANS]);
+	echo "</div>";	
     // personal
     if ($data['personal_vis'] == true) {
         echo Form_Helper::setFormHeaderSub('Согласие');
@@ -776,7 +778,7 @@ if ((!isset($data['id']) || empty($data['id'])) && (!isset($data['status']) || e
             echo HTML_Helper::setHrefButton(RESUME['ctr'], 'Send', 'btn btn-success', 'Отправить', 'После нажатия изменить анкету будет невозможно');
             echo HTML_Helper::setHrefButton(RESUME['ctr'], 'Recall', 'btn btn-warning', 'Отозвать', 'Отзывает данные анкеты');
             echo HTML_Helper::setHrefButton(RESUME['ctr'], 'Reset', 'btn btn-danger', 'Очистить', 'Сбрасывает данные анкеты');
-            echo HTML_Helper::setHrefButtonIcon('Main', 'Index', 'btn btn-primary', 'fas fa-home', 'На главную');
+            /*echo HTML_Helper::setHrefButtonIcon('Main', 'Index', 'btn btn-primary', 'fas fa-home', 'На главную');*/
             ?>
         </div>
     </div>
