@@ -12,7 +12,7 @@ if( !isset($_SESSION[APP_CODE]['user_name']) ) {
 ?>
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
     <div class="row">
-        <div class="">
+        <div class="page_name">
             <h2>Договор о целевом обучении </h2>
         </div>
         <div class="">
@@ -22,7 +22,7 @@ if( !isset($_SESSION[APP_CODE]['user_name']) ) {
             ?>
         </div>
         <div class="col text-left">
-            <?php echo HTML_Helper::setHrefButtonIcon('Main', 'Index', 'btn btn-primary', 'fas fa-home', 'На главную'); ?>
+            <!--?php echo HTML_Helper::setHrefButtonIcon('Main', 'Index', 'btn btn-primary', 'fas fa-home', 'На главную'); ?-->
         </div>
     </div>
     <?php
@@ -40,7 +40,7 @@ if( !isset($_SESSION[APP_CODE]['user_name']) ) {
                                                    'Delete/?id='.$target_quota_container['id'], 'font-weight-bold', 'fas fa-times fa-2x', 'Удалить').'</td>'.
              '</tr></table>';
     } else {
-        echo HTML_Helper::setHrefButton('TargetQuota', 'Add', 'btn btn-success', 'Добавить', 'Добавить');
+        echo HTML_Helper::setHrefButton('TargetQuota', 'Add', 'btn btn-success btn-add', 'Добавить', 'Добавить');
     }
     ?>
 </div>

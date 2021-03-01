@@ -4,7 +4,7 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 
 ?>
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="RU-ru">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -23,7 +23,7 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
     <script src="/vendors/bootstrap/js/bootstrap.min.js"></script>
     <!-- Font Awesome -->
     <script defer src="/vendors/fontawesome/fontawesome-all.min.js"></script>
-    <link rel="stylesheet" href="/vendors/fontawesome/fontawesome-all.css">
+    <link href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" rel="stylesheet"/>
     <link rel="stylesheet" href="/application/frontend/mod.css">
     <style>
         .footer {

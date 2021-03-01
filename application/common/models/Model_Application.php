@@ -852,4 +852,16 @@ INNER JOIN application a on ap.pid = a.id', 'NOW() NOT between dict_speciality.s
             return TRUE;
         }
     }
+    
+    public function getByPlaceId($placeId)
+    {
+        return $this->rowSelectOne('a.*',
+                                   self::TABLE_NAME . ' as a INNER JOIN application_places ap on a.id = ap.pid',
+                                   'ap.id = :place_id and a.id_user = :id_user and ap.id_user and a.active = :active',
+                                   [
+                                       ':place_id' => $placeId,
+                                       ':id_user' => $this->id_user,
+                                       ':active' => 1
+                                   ]);    	
+    }
 }

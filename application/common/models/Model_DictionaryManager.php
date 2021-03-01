@@ -239,6 +239,20 @@ class Model_DictionaryManager extends Db_Helper
 			return false;
 		}
 	}
+	
+	public function existsNameExcept()
+	{
+		$row = $this->rowSelectOne('id',
+									self::TABLE_NAME,
+									'dict_name = :dict_name AND id <> :id',
+									[':dict_name' => $this->dict_name,
+									':id' => $this->id]);
+		if (!empty($row)) {
+			return true;
+		} else {
+			return false;
+		}
+	}	
 
 	/**
      * Checks if dictionary name exists except this ID.

@@ -4,7 +4,7 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
 
 ?>
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru-RU">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -23,9 +23,17 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
     <script src="/vendors/bootstrap/js/bootstrap.min.js"></script>
     <!-- Font Awesome -->
     <script defer src="/vendors/fontawesome/fontawesome-all.min.js"></script>
-    <link rel="stylesheet" href="/vendors/fontawesome/fontawesome-all.css">
-    <link rel="stylesheet" href="/application/frontend/mod.css">
-    <style>
+	<link href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" rel="stylesheet"/>
+    <!-- link rel="stylesheet" href="/vendors/fontawesome/fontawesome-all.css" -->
+    <!-- jquery-toast-plugin -->
+    <link rel="stylesheet" href="/vendors/jquery-toast-plugin/jquery.toast.min.css">
+    <script src="/vendors/jquery-toast-plugin/jquery.toast.min.js"></script>
+	 <style>
+    	/* adjust toast position */
+		.jq-toast-wrap.top-right {
+			top: 80px !important;
+			right: 17px !important;
+		}
         .footer {
             position: fixed;
             left: 0;
@@ -36,6 +44,7 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
             text-align: center;
         }
     </style>
+	 <link rel="stylesheet" href="/application/frontend/mod.css">
 </head>
 <body>
 <div class="container-fluid">
@@ -101,7 +110,7 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
                                 class="fa fa-address-book fa-2x"></i></span>
                 </a>
             </li>
-
+            
             <li class="nav-item">
                 <a class="nav-link text-white" href="<?php echo Basic_Helper::appUrl('Main', IND_ACHIEVS['ctr']); ?>">
                     <span data-toggle="tooltip" data-placement="auto" title="Индивидуальные достижения"><i
@@ -125,9 +134,9 @@ use tinyframe\core\helpers\Basic_Helper as Basic_Helper;
             <li class="nav-item">
                 <a class="nav-link text-white" target="_blank" rel="noopener noreferrer" href="https://vk.com/beluniversity?w=wall-102554211_10198">
                     <span data-toggle="tooltip" data-placement="auto" title="Видеоинструкция">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <i class="fab fa-youtube fa-2x" aria-hidden="true"></i>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        
+                       <i class="fab fa-youtube fa-2x" aria-hidden="true"></i>
+                        
                     </span>
                 </a>
             </li>

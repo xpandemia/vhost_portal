@@ -53,9 +53,10 @@ echo HTML_Helper::setAlert($_SESSION[APP_CODE]['error_msg'], 'alert-danger');
 ?>
 <div class="row">
     <div class="col text-center text-primary">
-        <h3>Схема работы (* - обязательные шаги)</h3>
+        <h3>Схема работы<br>(* — обязательные шаги)</h3>
     </div>
 </div>
+<div id="main_cont">
 <div class="row">
     <div class="col col-sm-5 text-right text-primary">
         <h4>
@@ -70,15 +71,15 @@ echo HTML_Helper::setAlert($_SESSION[APP_CODE]['error_msg'], 'alert-danger');
     $resume->id_user = $_SESSION[APP_CODE]['user_id'];
     $resume_row = $resume->checkByUser();
     if (!$resume_row) {
-        echo '<div class="col col-sm-3 alert alert-danger"><h5>Состояние шага - не пройден</h5></div>';
+        echo '<div class="col col-sm-3 alert alert-danger"><h5>Состояние шага: не пройден</h5></div>';
         echo '<div class="col col-sm-3"></div>';
         echo '<div class="col col-sm-1"></div>';
     } elseif ($resume_row['status'] == $resume::STATUS_CREATED) {
-        echo '<div class="col col-sm-3 alert alert-danger"><h5>Состояние шага - не пройден</h5></div>';
+        echo '<div class="col col-sm-3 alert alert-danger"><h5>Состояние шага: не пройден</h5></div>';
         //echo Model_Resume::showStatus($resume_row['status'], 3);
         echo '<div class="col col-sm-1"></div>';
     } else {
-        echo '<div class="col col-sm-3 alert alert-success"><h5>Состояние шага - пройден</h5></div>';
+        echo '<div class="col col-sm-3 alert alert-success"><h5>Состояние шага: пройден</h5></div>';
         //echo Model_Resume::showStatus($resume_row['status'], 3);
         echo '<div class="col col-sm-1"></div>';
     }
@@ -148,7 +149,7 @@ echo HTML_Helper::setAlert($_SESSION[APP_CODE]['error_msg'], 'alert-danger');
     $priv_adv->id_user = $_SESSION[APP_CODE]['user_id'];
     $priv_adv_arr = $priv_adv->getByUser();
     if ((is_array($feature_arr) && count($feature_arr) > 0) || (is_array($priv_quota_arr) && count($priv_quota_arr) > 0) || (is_array($priv_adv_arr) && count($priv_adv_arr) > 0)) {
-        echo '<div class="col col-sm-3 alert alert-success"><h5>Состояние шага - пройден</h5></div>';
+        echo '<div class="col col-sm-3 alert alert-success"><h5>Состояние шага: пройден</h5></div>';
     } else {
         stepError(0);
     }
@@ -170,7 +171,7 @@ echo HTML_Helper::setAlert($_SESSION[APP_CODE]['error_msg'], 'alert-danger');
     $target_quota_arr = $target_quota->getByUser();
 
     if (is_array($target_quota_arr) && count($target_quota_arr) > 0) {
-        echo '<div class="col col-sm-3 alert alert-success"><h5>Состояние шага - пройден</h5></div>';
+        echo '<div class="col col-sm-3 alert alert-success"><h5>Состояние шага: пройден</h5></div>';
     } else {
         stepError(0);
     }
@@ -249,11 +250,11 @@ echo HTML_Helper::setAlert($_SESSION[APP_CODE]['error_msg'], 'alert-danger');
             }
         }
         if ($rejected == count($app_arr)) {
-            echo '<div class="col col-sm-3 alert alert-warning"><h5>Состояние шага - частично пройден</h5></div>';
+            echo '<div class="col col-sm-3 alert alert-warning"><h5>Состояние шага: частично пройден</h5></div>';
             echo '<div class="col col-sm-3 alert alert-warning"><h5>Все заявления отклонены!</h5></div>';
             echo '<div class="col col-sm-1"></div>';
         } elseif ($sent === 0 && $approved === 0) {
-            echo '<div class="col col-sm-3 alert alert-warning"><h5>Состояние шага - частично пройден</h5></div>';
+            echo '<div class="col col-sm-3 alert alert-warning"><h5>Состояние шага: частично пройден</h5></div>';
             echo '<div class="col col-sm-3 alert alert-warning"><h5>Нет отправленных или принятых заявлений!</h5></div>';
             echo '<div class="col col-sm-1"></div>';
         } else {
@@ -264,6 +265,7 @@ echo HTML_Helper::setAlert($_SESSION[APP_CODE]['error_msg'], 'alert-danger');
     }
     ?>
 </div>
+
 <?php
 echo '<div class="row">';
 echo '<div class="col col-sm-5 text-right text-primary">';
@@ -304,15 +306,15 @@ if ($app_arr) {
     if ($approved > 0) {
         stepSuccess('Согласий ', count($app_arr));
     } elseif ($rejected == count($app_arr)) {
-        echo '<div class="col col-sm-3 alert alert-warning"><h5>Состояние шага - частично пройден</h5></div>';
+        echo '<div class="col col-sm-3 alert alert-warning"><h5>Состояние шага: частично пройден</h5></div>';
         echo '<div class="col col-sm-3 alert alert-warning"><h5>Все согласия на зачисление отклонены!</h5></div>';
         echo '<div class="col col-sm-1"></div>';
     } elseif ($sent === 0) {
-        echo '<div class="col col-sm-3 alert alert-warning"><h5>Состояние шага - частично пройден</h5></div>';
+        echo '<div class="col col-sm-3 alert alert-warning"><h5>Состояние шага: частично пройден</h5></div>';
         echo '<div class="col col-sm-3 alert alert-warning"><h5>Нет отправленных согласий на зачисление!</h5></div>';
         echo '<div class="col col-sm-1"></div>';
     } elseif ($approved === 0) {
-        echo '<div class="col col-sm-3 alert alert-warning"><h5>Состояние шага - частично пройден</h5></div>';
+        echo '<div class="col col-sm-3 alert alert-warning"><h5>Состояние шага: частично пройден</h5></div>';
         echo '<div class="col col-sm-3 alert alert-warning"><h5>Нет принятых согласия на зачисление!</h5></div>';
         echo '<div class="col col-sm-1"></div>';
     }
@@ -328,7 +330,7 @@ if (/*in_array($_SESSION[APP_CODE]['user_id'], [3, 4, 5, 7, 9, 166, 256, 3640, 3
                 <div class="col col-sm-5 text-right text-primary" >
                     <h4>
                         <button type = "button" class="btn btn-info btn-sm" data-toggle = "modal" data-target = "#helpAgree" > Инструкция</button >
-                        <a href = "' . $href . '" > Договор о оплате обучения (только для платной основы обучения)* <i class="fas fa-balance-scale" ></i></a>
+                        <a href = "' . $href . '" > Договор об оплате обучения (только для платной основы обучения)* <i class="fas fa-balance-scale" ></i></a>
                     </h4>
                 </div>';
 
@@ -371,15 +373,15 @@ if (/*in_array($_SESSION[APP_CODE]['user_id'], [3, 4, 5, 7, 9, 166, 256, 3640, 3
         if ($approved > 0) {
             stepSuccess('Договоров ', count($aggr_arr));
         } elseif ($rejected == count($aggr_arr)) {
-            echo '<div class="col col-sm-3 alert alert-warning"><h5>Состояние шага - частично пройден</h5></div>';
-            echo '<div class="col col-sm-3 alert alert-warning"><h5>Все договора об оплате на зачисления отклонены!</h5></div>';
+            echo '<div class="col col-sm-3 alert alert-warning"><h5>Состояние шага: частично пройден</h5></div>';
+            echo '<div class="col col-sm-3 alert alert-warning"><h5>Все договоры об оплате на зачисления отклонены!</h5></div>';
             echo '<div class="col col-sm-1"></div>';
         } elseif ($sent === 0) {
-            echo '<div class="col col-sm-3 alert alert-warning"><h5>Состояние шага - частично пройден</h5></div>';
+            echo '<div class="col col-sm-3 alert alert-warning"><h5>Состояние шага: частично пройден</h5></div>';
             echo '<div class="col col-sm-3 alert alert-warning"><h5>Нет отправленных договоров об оплате!</h5></div>';
             echo '<div class="col col-sm-1"></div>';
         } elseif ($approved === 0) {
-            echo '<div class="col col-sm-3 alert alert-warning"><h5>Состояние шага - частично пройден</h5></div>';
+            echo '<div class="col col-sm-3 alert alert-warning"><h5>Состояние шага: частично пройден</h5></div>';
             echo '<div class="col col-sm-3 alert alert-warning"><h5>Нет принятых договоров об оплате!</h5></div>';
             echo '<div class="col col-sm-1"></div>';
         }
@@ -514,7 +516,7 @@ if (/*in_array($_SESSION[APP_CODE]['user_id'], [3, 4, 5, 7, 9, 166, 256, 3640, 3
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Заявления о согласие на зачисление (инструкция)</h4>
+                <h4 class="modal-title">Заявления о согласии на зачисление (инструкция)</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
@@ -531,7 +533,7 @@ if (/*in_array($_SESSION[APP_CODE]['user_id'], [3, 4, 5, 7, 9, 166, 256, 3640, 3
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Договора (инструкция)</h4>
+                <h4 class="modal-title">Договоры (инструкция)</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
@@ -547,21 +549,22 @@ if (/*in_array($_SESSION[APP_CODE]['user_id'], [3, 4, 5, 7, 9, 166, 256, 3640, 3
 <?php
 function stepSuccess($count_msg = null, $count = null)
 {
-    echo '<div class="col col-sm-3 alert alert-success"><h5>Состояние шага - пройден</h5></div>';
+    echo '<div class="col col-sm-3 alert alert-success"><h5>Состояние шага: пройден</h5></div>';
     if (empty($count_msg) || empty($count)) {
         echo '<div class="col col-sm-3"></div>';
         echo '<div class="col col-sm-1"></div>';
     } else {
-        echo '<div class="col col-sm-3 alert alert-info"><h5>Кол-во ' . $count_msg . ' - ' . $count . '</h5></div>';
+        echo '<div class="col col-sm-3 alert alert-info"><h5>' . $count_msg . ' - ' . $count . '</h5></div>';
         echo '<div class="col col-sm-1"></div>';
     }
 }
 
 function stepError($required = 0)
 {
-    echo '<div class="col col-sm-3 alert alert-' . (($required == 1) ? 'danger' : 'warning') . '"><h5>Состояние шага - не пройден</h5></div>';
+    echo '<div class="col col-sm-3 alert alert-' . (($required == 1) ? 'danger' : 'warning') . '"><h5>Состояние шага: не пройден</h5></div>';
     echo '<div class="col col-sm-3"></div>';
     echo '<div class="col col-sm-1"></div>';
 }
 
 ?>
+</div>

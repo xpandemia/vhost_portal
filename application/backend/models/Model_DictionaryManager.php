@@ -136,7 +136,7 @@ class Model_DictionaryManager extends Model
 	public function renew($form)
 	{
 		set_time_limit(0);
-		ini_set("memory_limit", "128M");
+		ini_set("memory_limit", "256M");
 		// get dictionary
 		$dicts = new DictionaryManager();
         $dicts->id = $form['dictionary'];

@@ -14,14 +14,14 @@ if (!isset($_SESSION[APP_CODE]['user_name'])) {
 ?>
 <div class="container-fluid rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
     <div class="row">
-        <div class="">
+        <div class="page_name">
             <h2>Согласия на зачисление</h2>
         </div>
         <div class="">
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#helpApp">Инструкция</button>
         </div>
         <div class="col text-left">
-            <?php echo HTML_Helper::setHrefButtonIcon('Main', 'Index', 'btn btn-primary', 'fas fa-home', 'На главную'); ?>
+            <!--?php echo HTML_Helper::setHrefButtonIcon('Main', 'Index', 'btn btn-primary', 'fas fa-home', 'На главную'); ?-->
         </div>
     </div>
     <?php

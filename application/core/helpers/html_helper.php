@@ -247,7 +247,7 @@ class HTML_Helper
             // action create
             if( isset($rules['action_add']) ) {
                 $button_label = $rules['button_label'] ?? 'Добавить';
-                $result = self::setHrefButton($rules['controller'], $rules['action_add'], 'btn btn-success', $button_label, $button_label);
+                $result = self::setHrefButton($rules['controller'], $rules['action_add'], 'btn btn-success btn-add', $button_label, $button_label);
             } else {
                 $result = '';
             }
@@ -637,4 +637,24 @@ class HTML_Helper
         
         return NULL;
     }
+    
+    public static function getServerUrl($path)
+	{
+		$protocol = (!empty($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) == 'on' || $_SERVER['HTTPS'] == '1')) ? 'https://' : 'http://';
+		$isProd = strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN';
+		if ($isProd)
+		{
+			$protocol = "https://";
+		}
+		$server = $_SERVER['SERVER_NAME'];
+		if ($isProd)
+		{
+			$port = '';
+		}
+		else
+		{
+			$port = $_SERVER['SERVER_PORT'] ? ':'.$_SERVER['SERVER_PORT'] : '';
+		}
+		return $protocol.$server.$port . $path;
+	}
 }

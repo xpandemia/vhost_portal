@@ -6,7 +6,7 @@ use tinyframe\core\helpers\Basic_Helper;
 use tinyframe\core\helpers\Form_Helper;
 use tinyframe\core\helpers\HTML_Helper;
 
-require_once( '/var/www/html/vhost_portal/application/common/models/Model_DictFeatures.php' );
+require_once( ROOT_DIR.'/application/common/models/Model_DictFeatures.php' );
 
 // check data
 if( !isset($data) ) {
@@ -45,6 +45,7 @@ if( !isset($data) ) {
                                        'type' => 'text',
                                        'class' => $data['doc_issuer_cls'],
                                        'required' => 'yes',
+                                       'required_style' => 'StarUp',
                                        'value' => $data['doc_issuer'],
                                        'success' => $data['doc_issuer_scs'],
                                        'error' => $data['doc_issuer_err']
@@ -56,6 +57,7 @@ if( !isset($data) ) {
                                        'type' => 'text',
                                        'class' => $data['doc_number_cls'],
                                        'required' => 'yes',
+                                       'required_style' => 'StarUp',
                                        'value' => $data['doc_number'],
                                        'success' => $data['doc_number_scs'],
                                        'error' => $data['doc_number_err']
@@ -67,6 +69,7 @@ if( !isset($data) ) {
                                        'type' => 'text',
                                        'class' => $data['doc_date_cls'],
                                        'required' => 'yes',
+                                       'required_style' => 'StarUp',
                                        'value' => $data['doc_date'],
                                        'success' => $data['doc_date_scs'],
                                        'error' => $data['doc_date_err']

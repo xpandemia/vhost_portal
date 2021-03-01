@@ -9,19 +9,19 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 		Basic_Helper::redirectHome();
 	}
 ?>
-<div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
+<div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5" id="ind_achievs">
 	<div class="row">
-		<div class="">
+		<div class="page_name">
 			<h2>Индивидуальные достижения</h2>
 		</div>
-		<div class="">
+		<div class="row">
 			<button type="button" class="btn btn-info" data-toggle="modal" data-target="#helpIndAchievs">Инструкция</button>
             <?php
             echo HTML_Helper::setUrlHrefButtonIcon('https://vk.com/video-102554211_456239632?list=530e2db778877c5e1b', 'btn btn-primary', 'fab fa-youtube', 'Видеоинструкция', true);
             ?>
 		</div>
 		<div class="col text-left">
-			<?php echo HTML_Helper::setHrefButtonIcon('Main', 'Index', 'btn btn-primary', 'fas fa-home', 'На главную'); ?>
+			<!--?php echo HTML_Helper::setHrefButtonIcon('Main', 'Index', 'btn btn-primary', 'fas fa-home', 'На главную'); ?-->
 		</div>
 	</div>
 	<?php

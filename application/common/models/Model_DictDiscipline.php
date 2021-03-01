@@ -111,8 +111,7 @@ class Model_DictDiscipline
             '000000007'
         ];
         
-        //TODO: сделать фильтрацию по актуальному году ПК автоматической
-        $records = $this->rowSelectAll('code, discipline_name name, id', self::TABLE_NAME, 'campaign_code LIKE :camp_code GROUP BY code', [ 'camp_code' => '20%' ], 'name', NULL);
+        $records = $this->rowSelectAll('code, discipline_name name, id', self::TABLE_NAME, 'campaign_code LIKE :camp_code GROUP BY code', [ 'camp_code' => substr(date('Y'), 2).'%' ], 'name', NULL);
         
         $result = [];
         
@@ -161,11 +160,12 @@ class Model_DictDiscipline
      */
     public function getByCode()
     {
+    	$currYear = date('Y');
         return $this->rowSelectOne('id',
                                    self::TABLE_NAME,
                                    'code = :code AND campaign_code like :campaign_code',
                                    [ ':code' => $this->code,
-                                       ':campaign_code' => '20%']);
+                                       ':campaign_code' => substr(date('Y'), 2).'%']);  //for example '21%'
     }
     
     /**

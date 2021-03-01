@@ -416,6 +416,42 @@ class Db_Helper
         }
     }
     
+    public function rowUpdateUnsafe( $tables, $fields, $conds = NULL, $debug = FALSE )
+    {
+        if($debug) {
+            echo '<pre>';
+            echo '</pre>';
+        }
+        
+        try {
+            self::$pdo->beginTransaction();
+            $whereSql = '';
+            if( !empty($conds) ) {
+                $whereSql .= ' WHERE ' . $conds;
+            }
+            
+            if($debug) {
+                echo '<pre>';
+                var_dump('UPDATE '.$tables.' SET '.$fields.$whereSql);
+                echo '</pre>';              
+            }
+            
+            $sql = self::$pdo->prepare('UPDATE '.$tables.' SET '.$fields.$whereSql);
+
+            $sql->execute();
+            self::$pdo->commit();
+            $sql = NULL;
+            
+            return TRUE;
+        } catch ( \PDOException $pdo_err ) {
+            self::$pdo->rollBack();
+            $sql = NULL;
+            echo nl2br('Error MySQL: '.$pdo_err->getMessage()."\n");
+            
+            return FALSE;
+        }
+    }    
+    
     /**
      * Deletes table row.
      *

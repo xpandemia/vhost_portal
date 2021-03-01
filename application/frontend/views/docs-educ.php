@@ -9,7 +9,7 @@ use tinyframe\core\helpers\Form_Helper as Form_Helper;
 		Basic_Helper::redirectHome();
 	}
 				?>
-<div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
+<div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5" id="docs_educ">
 	<div class="row">
 		<div class="page_name">
 			<h2>Документы об образовании</h2>

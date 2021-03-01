@@ -48,8 +48,12 @@ class Basic_Helper
 				self::msgError($error);
 			}
 		}
-		header($_SERVER['SERVER_PROTOCOL'].' '.$header);
-		header("Status: ".http_response_code($response_code));
+		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' && strpos($_SERVER['SERVER_SOFTWARE'], "Microsoft-IIS") !== FALSE) {
+			header("HTTP/1.1 302 Redirect");
+		} else {
+			header($_SERVER['SERVER_PROTOCOL'].' '.$header);
+			header("Status: ".http_response_code($response_code));
+		}		
 		header('Location: '.self::appUrl($controller, $action));
 		exit();
 	}

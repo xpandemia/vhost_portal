@@ -30,6 +30,7 @@ class Model_PrivillegeAdvanced
                 'class' => 'form-control',
                 'pattern' => ['value' => PATTERN_INFO_RUS, 'msg' => 'Для номера можно использовать '.MSG_INFO_RUS.'!'],
                 'width' => ['format' => 'string', 'min' => 1, 'max' => 20, 'msg' => 'Слишком длинный номер!'],
+                'required' => ['default' => '', 'msg' => 'Номер подтверждающего документа обязателен для заполнения!'],
                 'success' => 'Номер заполнен верно.'
             ],
             'doc_issuer' => [
@@ -37,6 +38,7 @@ class Model_PrivillegeAdvanced
                 'class' => 'form-control',
                 'pattern' => ['value' => PATTERN_INFO_RUS, 'msg' => 'Для номера можно использовать '.MSG_INFO_RUS.'!'],
                 'width' => ['format' => 'string', 'min' => 1, 'max' => 1024, 'msg' => 'Слишком длинное название организации выдачи!'],
+                'required' => ['default' => '', 'msg' => 'Необходимо заполнить поле Кем выдан!'],
                 'success' => 'Номер заполнен верно.'
             ],
             'doc_date' => [
@@ -45,6 +47,7 @@ class Model_PrivillegeAdvanced
                 'class' => 'form-control',
                 'pattern' => ['value' => PATTERN_DATE_STRONG, 'msg' => 'Дата выдачи должна быть '.MSG_DATE_STRONG.'!'],
                 'compared' => ['value' => date('d.m.Y'), 'type' => '<', 'msg' => 'Дата выдачи больше текущей даты или равна ей!'],
+                'required' => ['default' => '', 'msg' => 'Необходимо заполнить дату выдачи!'],
                 'success' => 'Дата выдачи заполнена верно.'
             ]
         ];

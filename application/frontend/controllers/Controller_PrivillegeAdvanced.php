@@ -2,8 +2,8 @@
 
 namespace frontend\controllers;
 
-require_once ('/var/www/html/vhost_portal/application/common/models/Model_PrivillegeAdvanced.php');
-require_once ('/var/www/html/vhost_portal/application/frontend/models/Model_PrivillegeAdvanced.php');
+require_once (ROOT_DIR.'/application/common/models/Model_PrivillegeAdvanced.php');
+require_once (ROOT_DIR.'/application/frontend/models/Model_PrivillegeAdvanced.php');
 
 use common\models\Model_Resume as Resume;
 use frontend\models\Model_Features;

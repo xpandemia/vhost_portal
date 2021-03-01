@@ -372,6 +372,20 @@ class Model_ApplicationSpec
                                     }
                                     
                                     $enter->id_discipline = $disc_row['id'];
+                                    //begin Ильяшенко 08.02.2021
+                                    $enter->selected = ApplicationPlacesExams::EXAM_REQUIRED;		// испытание нельзя выбирать
+                                    if ($exams_row['alt_exam_code'] != 'NULL'){
+                                    	$enter->selected = ApplicationPlacesExams::EXAM_NO_SELECTION; // испытание можно выбирать, но оно не выбрано
+                                    }
+                                    else{
+                                    	$filter_ar = array_filter($exams_arr, function($item) use ($exams_row){
+                                    		return $item['alt_exam_code'] === $exams_row['exam_code'];
+                                    	}, ARRAY_FILTER_USE_BOTH);
+                                    	if ($filter_ar){
+                                    		$enter->selected = ApplicationPlacesExams::EXAM_SELECTION; // испытание можно выбирать и оно сейчас выбрано
+                                    	}
+                                    }
+                                    //end Ильяшенко 08.02.2021
                                     $test                 = new Model_DictTestingScopes();
                                     
                                     $test_flag = 'K';

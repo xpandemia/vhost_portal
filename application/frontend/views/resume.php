@@ -228,7 +228,18 @@ if ((!isset($data['id']) || empty($data['id'])) && (!isset($data['status']) || e
         'value' => $data['dt_issue'],
         'success' => $data['dt_issue_scs'],
         'error' => $data['dt_issue_err']]);
-    // unit_name
+    
+	// unit_code
+    echo Form_Helper::setFormInput(['label' => 'Код подразделения',
+        'control' => 'unit_code',
+        'type' => 'text',
+        'class' => $data['unit_code_cls'],
+        'required' => 'no',
+        'value' => $data['unit_code'],
+        'success' => $data['unit_code_scs'],
+        'error' => $data['unit_code_err']]);
+	
+	// unit_name
     echo Form_Helper::setFormInput(['label' => UNITNAME_PLC,
         'control' => 'unit_name',
         'type' => 'text',
@@ -239,15 +250,7 @@ if ((!isset($data['id']) || empty($data['id'])) && (!isset($data['status']) || e
         'success' => $data['unit_name_scs'],
         'error' => $data['unit_name_err'],
         'help' => UNITNAME_HELP]);
-    // unit_code
-    echo Form_Helper::setFormInput(['label' => 'Код подразделения',
-        'control' => 'unit_code',
-        'type' => 'text',
-        'class' => $data['unit_code_cls'],
-        'required' => 'no',
-        'value' => $data['unit_code'],
-        'success' => $data['unit_code_scs'],
-        'error' => $data['unit_code_err']]);
+    
     // dt_end
     echo Form_Helper::setFormInput(['label' => 'Дата окончания действия',
         'control' => 'dt_end',
@@ -521,7 +524,7 @@ if ((!isset($data['id']) || empty($data['id'])) && (!isset($data['status']) || e
         'class' => $data['address_reg_cls'],
         'required' => 'yes',
         'required_style' => 'StarUp',
-        'placeholder' => ADRREG['plc'],
+        /*'placeholder' => ADRREG['plc'],*/
         'value' => $data['address_reg'],
         'success' => $data['address_reg_scs'],
         'error' => $data['address_reg_err'],
@@ -705,7 +708,7 @@ if ((!isset($data['id']) || empty($data['id'])) && (!isset($data['status']) || e
         'class' => $data['address_res_cls'],
         'required' => 'yes',
         'required_style' => 'StarUp',
-        'placeholder' => ADRRES['plc'],
+        /*'placeholder' => ADRRES['plc'],*/
         'value' => $data['address_res'],
         'success' => $data['address_res_scs'],
         'error' => $data['address_res_err'],

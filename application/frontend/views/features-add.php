@@ -7,7 +7,7 @@ use tinyframe\core\helpers\Basic_Helper;
 use tinyframe\core\helpers\Form_Helper;
 use tinyframe\core\helpers\HTML_Helper;
 
-require_once( '/var/www/html/vhost_portal/application/common/models/Model_DictFeatures.php' );
+require_once( ROOT_DIR.'/application/common/models/Model_DictFeatures.php' );
 
 // check data
 if( !isset($data) ) {

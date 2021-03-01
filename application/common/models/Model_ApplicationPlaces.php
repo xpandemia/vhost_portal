@@ -23,9 +23,9 @@ class Model_ApplicationPlaces
     
     const PURPOSE              = 'Целевой';
     
-    const BACHELOR_LIMIT_START = '01.06.2020';
+    const BACHELOR_LIMIT_START = '01.01.2021';
     
-    const BACHELOR_LIMIT_END   = '20.09.2020';
+    const BACHELOR_LIMIT_END   = '31.12.2021';
     
     public $id;
     public $pid;
@@ -1194,11 +1194,11 @@ class Model_ApplicationPlaces
      * @throws \Exception
      */
     public function CondsHighEducFirstBachelor( $pay, $debug = FALSE ): string
-    {
-        if( $pay === 1 ) {
-            return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr = :finance AND dict_speciality.eduprogram_name is null AND (stage_numb = :stage_numb OR stage_numb is null) AND group_name not like (:group_name) AND :dt between stage_dt_begin and stage_dt_end';
+    {   
+        if( $pay === 1 ) {         
+            return 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_finances.abbr = :finance AND (dict_speciality.eduprogram_name is null OR dict_speciality.eduprogram_name = \'\') AND (stage_numb = :stage_numb OR stage_numb is null) AND group_name not like (:group_name) AND :dt between stage_dt_begin and stage_dt_end';
         }
-        
+
         if( APP_DATA === 'test' ) {
             $now = new \DateTime('2020-07-07T15:03:01.012345Z');
         } else {
@@ -1238,7 +1238,7 @@ class Model_ApplicationPlaces
                 echo 'Between BACH<br/>';
             }
             //AND dict_finances.abbr = :finance
-            $ret = 'application.id = :pid AND group_beneficiary = :group_beneficiary AND dict_speciality.eduprogram_name is null AND (stage_numb = :stage_numb OR stage_numb is null) AND group_name not like (:group_name) ';
+            $ret = 'application.id = :pid AND group_beneficiary = :group_beneficiary AND (dict_speciality.eduprogram_name is null OR dict_speciality.eduprogram_name = \'\')AND (stage_numb = :stage_numb OR stage_numb is null) AND group_name not like (:group_name) ';
             if( APP_DATA !== 'test' ) {
                 $ret .= 'AND :dt between stage_dt_begin and stage_dt_end';
             } else {
@@ -1446,13 +1446,14 @@ class Model_ApplicationPlaces
             ];
         }
         
-        $now         = new \DateTime('2020-07-07T15:03:01.012345Z');//new \DateTime;
+        //$now         = new \DateTime('2020-07-07T15:03:01.012345Z');//new \DateTime;
+        $now         = new \DateTime;
         $now         = \DateTime::CreateFromFormat('d.m.Y', $now->format('d.m.Y'));
         $personal    = new Personal();
         $citizenship = $personal->getCitizenshipByUser();
         $country     = new DictCountries();
         
-        $campaiign_year = "19";
+        //$campaiign_year = "19"; //isv: to remove
         
         if( $citizenship['abroad'] == $country::ABROAD_FAR ) {
             $ret = [
@@ -1657,6 +1658,14 @@ class Model_ApplicationPlaces
         
         return $ret;
     }
+    
+    public function get()
+    {
+        return $this->rowSelectOne('*',
+                                   self::TABLE_NAME,
+                                   'id = :id',
+                                   [ ':id' => $this->id ]);
+    }    
     
     private function hasPrivQuota()
     {

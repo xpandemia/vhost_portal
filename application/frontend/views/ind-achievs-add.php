@@ -121,11 +121,11 @@ if( !isset($data) ) {
     <div class="form-group">
         <div class="col">
             <?php
-            echo HTML_Helper::setSubmit('btn btn-success', 'btn_save', 'Сохранить', 'Сохраняет данные индивидуального достижения');
+            echo HTML_Helper::setSubmit('btn btn-success', 'btn_save', 'Сохранить', 'Сохраняет данные');
             if( isset($data['id']) ) {
-                echo HTML_Helper::setHrefButton(IND_ACHIEVS['ctr'], 'Reset', 'btn btn-danger', 'Очистить', 'Сбрасывает данные индивидуального достижения');
+                echo HTML_Helper::setHrefButton(IND_ACHIEVS['ctr'], 'Reset', 'btn btn-danger', 'Очистить', 'Сбрасывает данные');
             } else {
-                echo HTML_Helper::setHrefButton(IND_ACHIEVS['ctr'], 'Reset', 'btn btn-danger', 'Очистить', 'Обнуляет форму ввода');
+                echo HTML_Helper::setHrefButton(IND_ACHIEVS['ctr'], 'Reset', 'btn btn-danger', 'Очистить', 'Очищает форму ввода');
             }
             echo HTML_Helper::setHrefButton(IND_ACHIEVS['ctr'], 'Cancel', 'btn btn-warning', 'Отмена');
             ?>

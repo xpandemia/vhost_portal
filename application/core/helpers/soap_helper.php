@@ -46,7 +46,7 @@ class SOAP_Helper
             throw new \RuntimeException('Ошибка подключения или внутренняя ошибка сервера!');
         } else {
             if($method == 'GetPlanNabora') {
-                $params = ['Year' => 21];
+                $params = ['Year' => substr(date('Y'), 2)];  // for example 'Year' => 21
             }
 
             if($params == NULL) {

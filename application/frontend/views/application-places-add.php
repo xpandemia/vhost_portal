@@ -15,6 +15,10 @@ if( !isset($data) ) {
 $app     = new Application();
 $app->id = $data['pid'];
 $app_row = $app->get();
+// check if active
+if ($app_row['active'] < 1 || $app_row['id_user'] != $_SESSION[APP_CODE]['user_id']) {
+    Basic_Helper::redirect(APP_NAME, 204, APP['ctr'], 'Index', NULL, nl2br("Заявление удалено или неактивно"));
+}
 // check type
 if( $app_row['type'] == $app::TYPE_RECALL ) {
     Basic_Helper::redirect(APP_NAME, 202, APP['ctr'], 'Index', NULL,

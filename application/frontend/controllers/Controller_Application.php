@@ -103,37 +103,76 @@ class Controller_Application extends Controller
 
 	public function actionChangeExam()
     {
-        if(isset($_POST['app_id']) && isset($_POST['dics_code']) && isset($_POST['new_code'])
-            && !empty($_POST['app_id']) && !empty($_POST['dics_code']) && !empty($_POST['new_code'])) {
-            $user_id = $_SESSION[APP_CODE]['user_id'];
+    	$result = "fail";
+        if(isset($_POST['app_place_id']) && isset($_POST['disc_code']) && isset($_POST['new_code'])
+            && !empty($_POST['app_place_id']) && !empty($_POST['disc_code']) && !empty($_POST['new_code'])) 
+        {
+            
+    		$app = new Common_Model_Application();
+    		$app->id_user = $_SESSION[APP_CODE]['user_id'];
+    		$app_row = $app->getByPlaceId($_POST['app_place_id']);
 
-            $app_id = $_POST['app_id'];
-            $dics_code = $_POST['dics_code'];
-            $new_code = $_POST['new_code'];
+    		if ($app_row && ($app_row['status'] == $app::STATUS_CREATED || $app_row['status'] == $app::STATUS_SAVED || $app_row['status'] == $app::STATUS_CHANGED))
+    		{    		     		
+	            $app_place_id = $_POST['app_place_id'];
+	            $disc_code = $_POST['disc_code'];
+	            $new_code = $_POST['new_code'];
 
-            $dict_tests = new Model_DictTestingScopes();
-            $dict_tests->code = $new_code;
-            $dict_test_id = $dict_tests->getByCode();
+	            $dict_tests = new Model_DictTestingScopes();
+	            $dict_tests->code = $new_code;
+	            $dict_test_id = $dict_tests->getByCode();
 
-            $app_place_dao = new Model_ApplicationPlaces();
-            $app_place_dao->pid = $app_id;
-            $app_places = $app_place_dao->getSpecsByApp();
+	            $app_place_dao = new Model_ApplicationPlaces();
+	            $app_place_dao->id = $app_place_id;
+	            $app_place = $app_place_dao->get();
 
-            foreach ($app_places as $app_place) {
                 $app_exams_dao = new Model_ApplicationPlacesExams();
                 $app_exams_dao->pid = $app_place['id'];
-                $app_exams = $app_exams_dao->getExamsForChange($dics_code);
+                $app_exams = $app_exams_dao->getExamsForChange($disc_code);
 
                 foreach ($app_exams as $app_exam) {
                     $app_exams_dao->id = $app_exam['id'];
                     $app_exams_dao->id_test = $dict_test_id['id'];
                     $app_exams_dao->changeTest();
                 }
-            }
+                $result = "ok";
+			}
         }
 
+        print($result);
         die();
     }
+    
+    // begin Ильяшенко 08.02.2021
+    //ajax call
+    public function actionChooseExam(){
+    	$result = "fail";
+    	if (isset($_POST['app_place_id']) && isset($_POST['disc_code']) && !empty($_POST['app_place_id']) && !empty($_POST['disc_code'])){
+    		$app = new Common_Model_Application();
+    		$app->id_user = $_SESSION[APP_CODE]['user_id'];
+    		$app_row = $app->getByPlaceId($_POST['app_place_id']);
+    		if ($app_row && ($app_row['status'] == $app::STATUS_CREATED || $app_row['status'] == $app::STATUS_SAVED || $app_row['status'] == $app::STATUS_CHANGED))
+    		{
+	    		$disc = new Model_DictDiscipline();
+	    		$disc->code = $_POST['disc_code'];
+	    		$disc_row = $disc->getByCode();
+	    		if ($disc_row)
+	    		{
+	    			$app_place = new Model_ApplicationPlacesExams();
+	    			$app_place->pid = $_POST['app_place_id'];
+	    			$app_place->id_user = $_SESSION[APP_CODE]['user_id'];
+	    			$app_place->id_discipline = $disc_row['id'];
+	    			$result = $app_place->changeSelectiveExam();
+	    			if ($result !== FALSE){
+	    				$result = "ok";	
+	    			}
+	    		}
+			}
+    	}
+    	print($result);
+    	die();
+    }
+    // end Ильяшенко 08.02.2021
     
     public function actionRecall()
     {

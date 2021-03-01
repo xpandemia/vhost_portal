@@ -16,6 +16,17 @@ use mikehaertl\shellcommand\Command as BaseCommand;
 class Command
     extends BaseCommand
 {
+	// begin Ильяшенко 12.02.2021
+	// добавлено для возможности формирования pdf на машине разработчика на Windows
+	function __construct() {
+	   parent::__construct();
+	   if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
+	   {
+		   $this->_command = 'java -jar D:/work/vhost_portal/pdftk-all.jar';
+	   }
+	}
+	// end Ильяшенко 12.02.2021
+	
     /**
      * @var string the pdftk binary
      */

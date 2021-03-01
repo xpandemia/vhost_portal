@@ -24,6 +24,10 @@ if (!isset($data)) {
 $app = new Application();
 $app->id = $data['id'];
 $app_row = $app->get();
+//check if app is active and belongs to authenticated user
+if ($app_row['active'] < 1 || $app_row['id_user'] != $_SESSION[APP_CODE]['user_id']) {
+    Basic_Helper::redirect(APP_NAME, 204, APP['ctr'], 'Index', NULL, nl2br("Заявление удалено или неактивно"));
+}
 // get education document
 $docs = new DocsEduc();
 $docs->id = $app_row['id_docseduc'];
@@ -67,19 +71,6 @@ if ($place->getByAppForClinical() && $citizenship['abroad'] == 0) {
 
 $debug = FALSE;
 ?>
-<script>
-    function changeExam(app_id, dics_code) {
-        var new_code = $("#exam" + dics_code).children("option:selected").val();
-        var url = "https://abitur-web.bsu.edu.ru/frontend/Application/ChangeExam";
-        console.log("URL: " + url);
-        $.post(
-            url,
-            {app_id: app_id, dics_code: dics_code, new_code: new_code},
-            function (data, status) {
-                console.log("Data: " + data + "\nStatus: " + status);
-            });
-    }
-</script>
 <div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
     <h2>Заявление № <?php echo $app_row['numb']; ?></h2>
     <?php
@@ -160,12 +151,34 @@ $debug = FALSE;
                 <?php
 
                 $exams = new Model_ApplicationPlacesExams();
-                $exams->pid = $data['id'];
-                $exams_arr = $exams->getExamsByApplication();
-                if ($exams_arr) {
+                $exams->pid = $data['id'];                
+                //$exams_arr = $exams->getExamsByApplication(); // Ильяшенко: заменено на код ниже
+                //begin Ильяшенко 08.02.2021 добавление возможности выбора испытания
+                $exams_arr = $exams->getExamsByApplicationWithSelection();                
+                //begin Ильяшенко 08.02.2021 добавление возможности выбора испытания
+
+                if ($exams_arr) {                
+                	$currPlaceId = NULL;
                     foreach ($exams_arr as $exams_row) {
+                    	if ($currPlaceId !== $exams_row['application_place_id']){                    	
+                        	echo '<tr class="table-secondary"><td colspan="4"><strong>';
+                        	echo $exams_row['speciality_name']. ', ' . $exams_row['finance_name'] . ', ' . $exams_row['eduform_name'] . ', ' . $exams_row['spec_group_name'];
+                        	echo '</strong></td></tr>';
+                        	$currPlaceId = $exams_row['application_place_id'];
+                    	}
                         echo '<tr>';
-                        echo '<td>' . $exams_row['discipline_name'] . '</td>';
+                        echo '<td>';
+                        //begin Ильяшенко 08.02.2021 добавление возможности выбора испытания
+                        $app_place_id = $exams_row['application_place_id'];
+                       	$disableSelection = $app_row['status'] != $app::STATUS_CREATED && $app_row['status'] != $app::STATUS_SAVED && $app_row['status'] != $app::STATUS_CHANGED;                        
+                        if ($exams_row['selected'] == ApplicationPlacesExams::EXAM_NO_SELECTION || $exams_row['selected'] == ApplicationPlacesExams::EXAM_SELECTION){
+                        	$discipline_code = $exams_row['discipline_code'];
+                        	$checkedSelection = $exams_row['selected'] == ApplicationPlacesExams::EXAM_SELECTION;                        	
+                        	echo "<input name=\"exam_selected_$app_place_id\" type=\"radio\" class=\"exam_selected\" value=\"$discipline_code\" data-app_place_id=\"$app_place_id\" " . 
+                        		($checkedSelection ? 'checked' : '') . " " . ($disableSelection ? 'disabled' : '') . "/> ";
+                        }
+                        //end Ильяшенко 08.02.2021 добавление возможности выбора испытания
+                        echo $exams_row['discipline_name'] . '</td>';
                         if ($debug) {
                             echo $exams_row['discipline_name'] . '<br/>';
                         }
@@ -188,7 +201,14 @@ $debug = FALSE;
                                 if ($debug) {
                                     echo 'X: citizenship OK<br>';
                                 }
-                                $disabled = 0;
+                                if ($disableSelection)
+                                {
+                                	$disabled = 1;
+                                }                
+                                else
+                                {                
+	                                $disabled = 0;
+								}
                             }
 
                             if ($test_arr) {
@@ -196,7 +216,7 @@ $debug = FALSE;
                                     echo 'X: test_arr OK<br>';
                                 }
 
-                                echo '<td><select class="form-control" id="exam' . $exams_row['discipline_code'] . '" name="exam' . $exams_row['discipline_code'] . '"' . (($disabled == 1)
+                                echo '<td><select class="form-control exam_type_selected" data-app_place_id="' . $app_place_id . '" data-disc="' . $exams_row['discipline_code'] . '" id="exam' . $exams_row['discipline_code'] . '" name="exam' . $exams_row['discipline_code'] . '"' . (($disabled == 1)
                                         ? ' disabled' : '') . '>';
                                 foreach ($test_arr as $test_row) {
                                     if ($exams_row['code'] === $test_row['code'] && $exams_row['code'] == '000000001') {
@@ -209,11 +229,11 @@ $debug = FALSE;
                                         '</option>';
                                 }
                                 echo '</select>';
-                                echo '<script>';
+                                /*echo '<script>';
                                 echo '$("#exam' . $exams_row['discipline_code'] . '").change(function () {
                                     changeExam("' . $data['id'] . '", "' . $exams_row['discipline_code'] . '");
                                 });';
-                                echo '</script>';
+                                echo '</script>';*/
                             }
                         } elseif ($place->getByAppForMagister() || $place->getByAppForSpecial()) {
                             // magisters, specials
@@ -382,9 +402,10 @@ $debug = FALSE;
             echo '<p></p>';
             echo HTML_Helper::setAlert(nl2br("<strong>Внимание!</strong>\nЕсли Вы увидите на экране печатную форму заявления, где большая часть данных отсутствует, <strong>не пытайтесь её распечатывать из браузера</strong>. Вместо это сначала сохраните печатную форму заявления на диск (кнопка <strong>\"Загрузить\"</strong> или <strong>\"Скачать\"</strong>) и распечатайте полученный файл."),
                 'alert-warning');
-            echo "<h1 style='color:red'>";
-            echo HTML_Helper::setHrefButtonIcon('ApplicationSpec', 'SavePdf/?pid=' . $data['id'], 'font-weight-bold', 'fas fa-print fa-3x', 'Сформировать заявление', 1);
-            echo " Сформировать заявление о приеме в БелГУ</h1>";
+            echo "<div id='Make_app'>";
+            echo HTML_Helper::setHrefButtonIcon('ApplicationSpec', 'SavePdf/?pid=' . $data['id'], 'font-weight-bold', 'fas fa-print fa-3x ', 'Сформировать заявление', 1);
+            echo "</div>";
+			echo "</div>";
             /* scans */
             echo Form_Helper::setFormHeaderSub('Скан-копии');
             echo Form_Helper::setFormFileListDB([
@@ -517,6 +538,65 @@ $debug = FALSE;
 
 <script>
     $(function () {
+    	function displaySuccess(msg){
+        	$.toast({
+			    heading: 'Успех',
+			    text: msg,
+			    showHideTransition: 'slide',
+			    position: 'top-right',
+			    icon: 'success',
+			    hideAfter : 3000
+			});    		
+    	}
+    	
+    	function displayError(msg){
+        	$.toast({
+			    heading: 'Ошибка',
+			    text: msg,
+			    showHideTransition: 'slide',
+			    position: 'top-right',
+			    icon: 'error',
+			    hideAfter : 5000
+			});    		
+    	}    	
+    
         $("#inila").mask("999-999-999-99");
+        
+        $('input:radio.exam_selected').change(function () {        
+        	$el = $(this);
+	        $.post(
+	            "<?= HTML_Helper::getServerUrl('/frontend/Application/ChooseExam') ?>",
+	            {app_place_id: $el.attr('data-app_place_id'), disc_code: $el.val()},
+	            function (data, status) {
+	                if (data === 'ok'){
+	                	displaySuccess('Вступительное испытание успешно обновлено');
+					}
+	                else{
+	                	displayError('Ошибка при сохранении выбранного экзамена. Попробуйте перезагрузить страницу и повторить выбор');
+	                }
+	            }).fail(function() {
+    				displayError('Ошибка при сохранении выбранного экзамена. Попробуйте перезагрузить страницу и повторить выбор');
+  				});
+        });        
+        
+        $('select.exam_type_selected').change(function(){
+        	var app_place_id = $(this).attr('data-app_place_id');
+        	var disc_code = $(this).attr('data-disc');
+	        var new_code = $(this).children("option:selected").val();
+	        var url = "<?= HTML_Helper::getServerUrl('/frontend/Application/ChangeExam') ?>";
+	        $.post(
+	            url,
+	            {app_place_id: app_place_id, disc_code: disc_code, new_code: new_code},
+	            function (data, status) {
+	                if (data === 'ok'){
+	                	displaySuccess('Тип испытания успешно обновлен');
+					}
+	                else{
+	                	displayError('Ошибка при сохранении типа испытания. Попробуйте перезагрузить страницу и повторить выбор');
+	                }
+	            }).fail(function() {
+    				displayError('Ошибка при сохранении типа испытания. Попробуйте перезагрузить страницу и повторить выбор');
+  				});
+        });
     });
 </script>

@@ -8,7 +8,7 @@ use tinyframe\core\helpers\HTML_Helper as HTML_Helper;
 		Basic_Helper::redirectHome();
 	}
 ?>
-<div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5">
+<div class="container rounded bg-light pl-5 pr-5 pt-3 pb-3 mt-5" id="ege">
 	<div class="row">
 		<div class="page_name">
 			<h2>Результаты ЕГЭ</h2>
